@@ -1,0 +1,805 @@
+﻿TECHQUEST: DESIGN AND EVALUATION OF A GAMIFIED REVIEW PLATFORM FOR BSIT STUDENTS OF PATEROS TECHNOLOGICAL COLLEGE
+
+
+TO DO LIST (PROJECT STRUCTURE)
+
+
+2D Game Development
+
+
+Game Development Engine:
+Godot 4
+
+
+Programming Language:
+C#
+
+
+Backend Framework:
+ASP.NET Core Web API
+
+
+Database:
+PostgreSQL
+
+
+Email Service:
+MailKit (Email OTP)
+
+
+Authentication:
+JSON Web Token (JWT)
+
+
+
+
+Phase 1  - Project Setup
+* Create Godot Project
+* Configure C# support
+* Set up project folders
+* Connect Godot to PostgreSQL
+* Configure database connection
+* Initialize Git repository (optional)
+
+
+Testing 
+* Project Runs Successfully
+* Database Connected Successfully
+
+
+Phase 2 - Database Setup
+* Create TechQuest Database
+* Create User Table
+* Create Subject Table
+* Create Question Table
+* Create NPC Table
+* Create Mini Game Table
+* Create Quest Table
+* Create Shop Table
+* Create Inventory Table
+* Create Leaderboard Table
+* Create Multiplayer Room Table
+
+
+Testing
+* Database Connected Successfully?
+* Tables Created Successfully?
+
+
+
+
+Phase 3 - Front Page Setup
+User Interface 
+* Design Front Page 
+* Add Game Logo 
+* Create Login Button Logic
+* Create Exit Button 
+
+
+Testing
+* Login Button Working?
+* Exit Button Working?
+
+
+Developer 
+* Front Page Code Completed ?
+* Front Page Design Completed?
+
+
+
+
+Phase 4 - User Selection
+* Create Student Button
+   * If i click this button go to student login and register page
+* Create Professor Button
+   * If i click this button go to professor login page - no register
+* Create Admin Button
+   * If i click this button go to admin login page - no register
+
+
+Testing 
+* Student Button Working?
+* Professor Button Working?
+* Admin Button Working?
+
+
+Developer
+* User selection code working?
+
+
+Requirement
+* Icon - button - text
+
+
+
+
+
+
+
+
+
+
+
+
+Phase 5 - Login and Register Setup and User Logic
+Login Form
+* Design Student Login Form
+* Design Professor Login Form
+* Design Admin Login Form
+* Create Email Input Field
+* Create Password Input Field
+* Create Login Button
+* Create "Forgot Password?" Link
+
+
+Registration Form (Student Only) 
+* Design Student Registration Form
+* Create First Name Input Field
+* Create Last Name Input Field
+* Create Email Input Field
+* Create Year Level Dropdown
+* Create Password Input Field
+* Create Confirm Password Input Field
+* Create Register Button
+* Display Email OTP Verification Popup after registration
+
+
+Forgot Password 
+* Create Forgot Password Popup Modal
+* Create Email Input Field
+* Create New Password Input Field
+* Create Confirm Password Input Field
+* Create Save Button
+* Display OTP Verification after clicking the Save button
+
+
+Email OTP Verification
+* Create OTP Verification Popup
+* Create 6-digit OTP Input Field
+* Create Confirm Button
+* Create Resend OTP Button
+* After successful verification:
+   * Return to the Registration Form
+   * Display a verified (✔) icon beside the Email field
+
+
+Requirements 
+Student Authentication 
+Login Form
+* Email Input Field
+* Password Input Field
+* Login Button
+* Forgot Password Link
+* Register Button
+Registration Form
+* First Name Input Field
+* Last Name Input Field
+* Email Input Field
+* Year Level Dropdown
+* Password Input Field
+* Confirm Password Input Field
+* Register Button
+* Back button (back to login form)
+* Email OTP Verification Popup
+
+
+Professor Authentication
+Login Form
+* Email Input Field
+* Password Input Field
+* Login Button
+
+
+Administrator Authentication
+Login Form
+* Email Input Field
+* Password Input Field
+* Login Button
+
+
+Forgot Password Requirements
+The Forgot Password popup must contain:
+
+
+* Email Input Field
+* New Password Input Field
+* Confirm Password Input Field
+* Save Button
+
+
+Save Button Behavior
+When the Save button is clicked:
+1. Validate the entered email.
+2. Validate that both passwords match.
+3. Send a 6-digit OTP to the user's email.
+4. Display the OTP Verification popup.
+Email OTP Verification Requirements
+The OTP Verification popup must contain:
+* 6-digit OTP Input Field (Numbers Only)
+* Confirm Button
+* Resend OTP Button
+Confirm Button Behavior
+When the OTP is successfully verified:
+1. Close the OTP popup.
+2. Return to the Registration Form (or Forgot Password form if resetting a password).
+3. Display a ✔ Verified indicator beside the Email field.
+4. Allow the registration or password reset process to continue.
+Resend Button Behavior
+When clicked:
+* Generate a new 6-digit OTP.
+* Send the new OTP to the user's registered email.
+* Invalidate the previous OTP.
+
+
+
+
+Registration Setup/Logic
+* Create User Registration Logic
+* Create email access only for PTC email (@paterostechnologicalcollege.edu.ph)
+* Create email authentication 
+* Create email 6 OTP code send direct to user email        
+* Create admin account direct to the database
+
+
+Login Button Behavior
+Student 
+Student Login Button
+* If i click the login button it will go to student dashboard
+* If the user credential is incorrect, if they click the login button they receive a alert message
+* If correct they will go to their dashboard
+
+
+Professor Login Button
+* If i click the login button it will go to professor dashboard
+* If the user credential is incorrect, if they click the login button they receive a alert message
+* If correct they will go to their dashboard
+
+
+
+
+Admin Login Button
+* If i click the login button it will go to admin dashboard
+* If the user credential is incorrect, if they click the login button they receive a alert message
+* If correct they will go to their dashboard
+
+
+
+
+
+
+
+
+Testing
+Login
+* Student Login Form is working.
+* Professor Login Form is working.
+* Admin Login Form is working.
+* Email validation is working.
+* Password validation is working.
+* Forgot Password link is working.
+
+
+Registration
+* Student Registration Form is working.
+* Required field validation is working.
+* Email validation is working.
+* Password confirmation is working.
+* Year Level selection is working.
+* Register Button is working.
+
+
+Forgot Password
+* Forgot Password popup is working.
+* Password reset validation is working.
+* OTP popup appears after clicking Save.
+
+
+
+
+Email Verification
+* OTP accepts only 6 digits.
+* OTP verification is working.
+* Resend OTP is working.
+* Email verification indicator (✔) is displayed after successful verification.
+
+
+Developer Checklist
+Login
+* Student Login Code is Working
+* Professor Login Code is Working
+* Admin Login Code is Working
+
+
+Registration
+* Student Registration Code is Working
+* Email Validation is Working
+* Password Validation is Working
+* Year Level Selection is Working
+
+
+Forgot Password
+* Forgot Password Code is Working
+* Password Reset Code is Working
+
+
+OTP Verification
+* OTP Generation is Working
+* OTP Sending is Working
+* OTP Verification is Working
+* Resend OTP Function is Working
+* Email Verification Status is Updated Successfully
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Phase 6 - Student Dashboard
+* Create an avatar holder (box type) with a name beside it. Also coins, and points in the lower of the avatar holder
+* Create an image button design:
+   * Home Button Logic
+      * Home Button logic — can I click the home button?
+
+
+   * Game Room
+      * Game Room Button logic — can I click the room button?
+
+
+   * Leaderboard
+      * Leaderboard Button logic — can I click the leaderboard button?
+
+
+   * Shop
+      * Shop Button logic — can I click the shop button?
+
+
+   * Character Customization
+      * Character Customization Button logic — can I click the character customization button?
+
+
+* Create difficulty selection map
+   * Create difficulty selection map (difficulty represented as a building image button)
+
+
+
+
+                Admin Setup/Logic
+* Can insert an image button for difficulty?
+
+
+Student Setup/Logic
+      * Easy 
+         * Can I click the easy button?
+         *  Do I see the easy map?
+      * Medium
+         * Can I click the medium button?
+         * Do I see the medium map?
+      * Hard
+         * Can I click the hard button?
+         * Do I see the hard map?
+
+
+
+
+Phase 7 - Difficulty selection setup
+* Easy = First Year minor subjects
+* Medium = Second Year minor subjects
+* Hard = Third Year minor subjects
+
+
+Selection logic
+* student picks a difficulty, not a subject
+* Randomize subject on entry so the student cannot choose which subject they will answer
+* Link randomized subject to its corresponding NPC appearance on the map
+
+
+
+
+
+
+Testing
+* Difficulty selection working?
+* Subject randomization confirmed on each playthrough?
+
+
+Developer Test
+* Already created a file?
+* The code is completed?
+* The code is working?
+
+
+
+
+
+
+Phase 8 - Adventure Map & NPC Interaction
+* Build walkable map for student to explore
+* Populate map with NPC characters representing the randomized subjects
+* Student can click/interact with an NPC
+* NPC displays a challenge message to the student
+* Student can accept or reject the NPC's challenge
+* Accepted challenge routes to that NPC's mini-game
+* After completing the mini-game, student is linked to the subject's quiz question
+* Create a portal-style transition into the quiz (like a linked door/portal)
+
+
+
+
+Testing 
+* Can the student walk the map and reach each NPC?
+* Does accept/reject work correctly?
+* Does the portal correctly link to the quiz?
+
+
+Developer Test
+* Already created a file?
+* The code is completed?
+* The code is working?
+
+
+Phase 9 — Mini-Game System
+* Talking to the NPC grants a hint for the upcoming question
+* Display an on-screen answer tip while playing the mini-game
+* Mini Game 1 — 4 Pics (guess-the-word style, picture based)
+* Mini Game 2 — Memory (matching/recall style, picture based)
+* Mini Game 3 — TBD (picture based)
+* Mini Game 4 — TBD (picture based)
+* Mini Game 5 — TBD (picture based)
+* Admin Mini Game Management — add/edit mini-game content per subject/NPC
+
+
+Testing
+* Does completing each mini-game generate the correct hint?
+*  Are all 5 mini-games playable and picture based?
+
+
+Developer Test
+* Already created a file?
+* The code is completed?
+* The code is working?
+
+
+
+
+Phase 10 — Quiz & Question System
+* Randomize which subject's question the student receives
+* Student cannot manually choose the subject (surprise mechanic)
+* Display question tied to the NPC/mini-game just completed
+* Score the answer as correct/incorrect and trigger points/coins on success
+
+
+Admin Question Setup/Logic
+* Admin can add a question for each subject
+* Admin can choose which NPC character presents the question
+* Admin can choose which mini-game provides the hint
+* Admin can set the correct answer
+
+
+Admin Subject Setup/Logic
+* Admin can add all minor subjects (1st Sem–2nd Sem, all year levels)
+* Subjects are flagged for randomization
+
+
+Testing 
+* Does the quiz correctly randomize subjects?
+* Does a correct answer award points/coins?
+
+
+Developer Test
+* Already created a file?
+* The code is completed?
+* The code is working?
+
+
+
+
+Phase 11 — Points & Coins System
+* Award points after completing a quiz or a quest
+* Award coins after completing a quiz or a quest
+* Sync earned points to the Leaderboard Table
+* Coins can be spent on shop items (avatars/characters) and on in-game hints
+
+
+Testing
+* Are points/coins credited immediately after completion?
+* Do points reflect correctly on the leaderboard?
+
+
+Developer Test
+* Already created a file?
+* The code is completed?
+* The code is working?
+
+
+Phase 12 — Quest System
+* Student can view the list of active quests (up to 10, admin-added)
+* Each quest runs for a duration of 1 week
+* Provide 3 separate quests, one per difficulty level (Easy/Medium/Hard)
+* Completing a quest awards points and coins
+
+
+Admin Quest Management
+* Admin can add a new quest weekly
+* Admin can update/rotate quests weekly
+* Admin can set the coin reward per quest
+
+
+Testing
+* Can the student view and complete quests?
+* Do quests correctly expire after 1 week?
+
+
+Developer Test
+* Already created a file?
+* The code is completed?
+* The code is working?
+
+
+
+
+Phase 13 — Avatar & Character Customization
+* Student can view owned avatars and characters (built-in)
+* Student can equip/change an owned avatar
+* Student can equip/change an owned full character
+* Purchased shop items reflect visually on the equipped avatar/character
+* Equipped character appearance carries over into the Adventure map
+
+
+Testing
+* Can the student successfully switch avatars/characters?
+* Does purchased gear appear correctly in-game?
+
+
+Developer Test
+* Already created a file?
+* The code is completed?
+* The code is working?
+
+
+
+
+
+
+
+
+
+
+
+
+Phase 14 — Leaderboard Setup
+* Student can view leaderboard ranking of all users based on points
+
+
+Admin Setup
+* Admin can reset the leaderboard
+
+
+Testing
+* Does the leaderboard display accurate, real-time rankings?
+
+
+Developer Test
+* Already created a file?
+* The code is completed?
+* The code is working?
+
+
+
+
+Phase 15 — Shop Setup
+* Student can view and buy built-in characters and avatars using coins
+* Successful purchase routes the item to Character Customization for equipping
+* Student can buy character and avatar items
+
+
+Admin Shop Management
+* Admin can add build in items
+* Admin can set the required coin cost per item
+
+
+Testing
+* Can a student successfully purchase an item?
+* Does the correct coin amount get deducted?
+
+
+Developer Test
+* Already created a file?
+* The code is completed?
+* The code is working?
+
+
+Phase 16 — Profile Management
+* Student can change their display name only
+* Link to Character Customization for appearance changes
+
+
+Testing
+* Can the student successfully update their name?
+
+
+Developer Test
+* Already created a file?
+* The code is completed?
+* The code is working?
+
+
+
+
+Phase 17 — Multiplayer Room Setup
+* Professor Setup
+* Can create a room
+* Receive a room code?
+* Can start the game?
+* Can download the batch-upload format file (Excel format)
+* Can batch-upload a quiz using the format file?
+* Can manage all users/students inside the multiplayer room?
+
+
+Student Setup
+* Can join a room using a code?
+* Can change avatar inside the room?
+* Can answer the multiplayer quiz?
+* Can view the multiplayer result?
+
+
+Testing
+* Room creation and join flow working end-to-end?
+* Batch upload correctly parses the Excel format?
+
+
+Developer Test
+* Already created a file?
+* The code is completed?
+* The code is working?
+
+
+
+
+my updated file structure
+
+
+/asset
+/scene
+/LandingPage
+        LandingPage.cs
+        LandingPage.tscn
+/UserSelection
+        /UserSelection.cs 
+        /UserSelection.tscn
+/Student
+        /AdminLogin.tscn
+/Professor
+        /ProfessorLogin.tscn
+/Admin
+        /AdminLogin.tscn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Forget password requirement
+Email
+New password
+Confirmpassword
+Save button (if click the save button the OTP input will show)
+
+
+Email otp requirement
+6 numbers
+Confirm button (if click this button they back again in register form and the email field has a check)
+Resend button
+
+
+
+
+
+
+STUDENT
+LOGINPANEL
+REGISTER PANEL
+FORGETPASWORDPOPUP
+OTPPOPUP
+
+
+PROFESSOR
+LOGINPANEL
+FORGETPASWORDPOPUP
+OTPPOPUP
+
+
+ADMIN
+LOGINPANEL
+FORGETPASWORDPOPUP
+OTPPOPUP
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fix my prompt only
+Create me asset for my:
+Button
+10 Normal
+10 Hover
+10 Pressed 
+The file name .tres
+
+
+Panel
+10 design
+The file name .tres
+
+
+Icon
+Png
+
+
+Window
+The file name .tres
+
+
+Messagedialog
+The file name .tres
+
+
+
+
+The theme of the design should cool, aesthetic, school type, pixel.
+
+
+
+
+
+
+
+
+create me also for my admin and professor cs file in TechQuestFrontend
+
+
+It same for student but no registration the forgot password is same for admin and professor and student
+
+
+fix my code in my student login
+In my register after verifying my email if i click the register button it will go back to login form
