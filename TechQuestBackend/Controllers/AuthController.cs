@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using TechQuestBackend.Data;
 using TechQuestBackend.Models;
 using TechQuestBackend.Models.DTOs;
@@ -14,883 +18,449 @@ namespace TechQuestBackend.Controllers
         private readonly TechQuestDbContext _db;
         private readonly OTPService _otpService;
         private readonly EmailService _emailService;
+        private readonly IConfiguration _config;
 
         public AuthController(
             TechQuestDbContext db,
             OTPService otpService,
-            EmailService emailService)
+            EmailService emailService,
+            IConfiguration config)
         {
             _db = db;
             _otpService = otpService;
             _emailService = emailService;
+            _config = config;
         }
-
-        // =========================================================
-        // STUDENT LOGIN
-        // POST: /api/Auth/login/student
-        // =========================================================
 
         [HttpPost("login/student")]
-        public async Task<IActionResult> LoginStudent(
-            LoginRequest request)
+        public async Task<IActionResult> LoginStudent(LoginRequest request)
         {
-            if (string.IsNullOrWhiteSpace(request.Email))
-            {
-                return BadRequest("Email is required.");
-            }
-
-            if (string.IsNullOrWhiteSpace(request.Password))
-            {
-                return BadRequest("Password is required.");
-            }
-
-            string email = request.Email.Trim().ToLower();
-
-            var student = await _db.Students
-                .FirstOrDefaultAsync(s =>
-                    s.Email.ToLower() == email);
-
-            if (student == null)
-            {
-                return BadRequest("Invalid email or password.");
-            }
-
-            bool passwordMatches = BCrypt.Net.BCrypt.Verify(
-                request.Password,
-                student.PasswordHash);
-
-            if (!passwordMatches)
-            {
-                return BadRequest("Invalid email or password.");
-            }
-
-            return Ok(new
-            {
-                message = "Login successful."
-            });
+            var result = await AuthenticateUser(request, "student");
+            return result;
         }
-
-        // =========================================================
-        // PROFESSOR LOGIN
-        // POST: /api/Auth/login/professor
-        // =========================================================
 
         [HttpPost("login/professor")]
-        public async Task<IActionResult> LoginProfessor(
-            LoginRequest request)
+        public async Task<IActionResult> LoginProfessor(LoginRequest request)
         {
-            if (string.IsNullOrWhiteSpace(request.Email))
-            {
-                return BadRequest("Email is required.");
-            }
-
-            if (string.IsNullOrWhiteSpace(request.Password))
-            {
-                return BadRequest("Password is required.");
-            }
-
-            string email = request.Email.Trim().ToLower();
-
-            var professor = await _db.Professors
-                .FirstOrDefaultAsync(p =>
-                    p.Email.ToLower() == email);
-
-            if (professor == null)
-            {
-                return BadRequest("Invalid email or password.");
-            }
-
-            bool passwordMatches = BCrypt.Net.BCrypt.Verify(
-                request.Password,
-                professor.PasswordHash);
-
-            if (!passwordMatches)
-            {
-                return BadRequest("Invalid email or password.");
-            }
-
-            return Ok(new
-            {
-                message = "Login successful."
-            });
+            var result = await AuthenticateUser(request, "professor");
+            return result;
         }
-
-        // =========================================================
-        // ADMIN LOGIN
-        // POST: /api/Auth/login/admin
-        // =========================================================
 
         [HttpPost("login/admin")]
-        public async Task<IActionResult> LoginAdmin(
-            LoginRequest request)
+        public async Task<IActionResult> LoginAdmin(LoginRequest request)
         {
-            if (string.IsNullOrWhiteSpace(request.Email))
-            {
-                return BadRequest("Email is required.");
-            }
-
-            if (string.IsNullOrWhiteSpace(request.Password))
-            {
-                return BadRequest("Password is required.");
-            }
-
-            string email = request.Email.Trim().ToLower();
-
-            var admin = await _db.Admins
-                .FirstOrDefaultAsync(a =>
-                    a.Email.ToLower() == email);
-
-            if (admin == null)
-            {
-                return BadRequest("Invalid email or password.");
-            }
-
-            bool passwordMatches = BCrypt.Net.BCrypt.Verify(
-                request.Password,
-                admin.PasswordHash);
-
-            if (!passwordMatches)
-            {
-                return BadRequest("Invalid email or password.");
-            }
-
-            return Ok(new
-            {
-                message = "Login successful."
-            });
+            var result = await AuthenticateUser(request, "admin");
+            return result;
         }
 
-        // =========================================================
-        // STUDENT REGISTRATION
-        // POST: /api/Auth/register/student
-        // =========================================================
-
         [HttpPost("register/student")]
-        public async Task<IActionResult> RegisterStudent(
-            RegisterStudentRequest request)
+        public async Task<IActionResult> RegisterStudent(RegisterStudentRequest request)
         {
-            // =========================
-            // Required Fields
-            // =========================
-
             if (string.IsNullOrWhiteSpace(request.FirstName))
-            {
                 return BadRequest("First name is required.");
-            }
 
             if (string.IsNullOrWhiteSpace(request.LastName))
-            {
                 return BadRequest("Last name is required.");
-            }
 
             if (string.IsNullOrWhiteSpace(request.Email))
-            {
                 return BadRequest("Email is required.");
-            }
 
-            // =========================
-            // PTC Email Validation
-            // =========================
+            if (!IsPTCEmail(request.Email))
+                return BadRequest("Only PTC institutional email is allowed.");
 
-            if (!request.Email.EndsWith(
-                    "@paterostechnologicalcollege.edu.ph",
-                    StringComparison.OrdinalIgnoreCase))
-            {
-                return BadRequest(
-                    "Only PTC institutional email is allowed.");
-            }
-
-            // =========================
-            // Year Level Validation
-            // =========================
-
-            if (request.YearLevel < 1 ||
-                request.YearLevel > 4)
-            {
-                return BadRequest(
-                    "Please select a valid year level.");
-            }
-
-            // =========================
-            // Password Validation
-            // =========================
+            if (request.YearLevel < 1 || request.YearLevel > 4)
+                return BadRequest("Please select a valid year level.");
 
             if (string.IsNullOrWhiteSpace(request.Password))
-            {
                 return BadRequest("Password is required.");
-            }
 
             if (request.Password != request.ConfirmPassword)
-            {
                 return BadRequest("Passwords do not match.");
-            }
 
-            // =========================
-            // Check Existing Student
-            // =========================
+            string email = NormalizeEmail(request.Email);
 
-            bool emailExists = await _db.Students
-                .AnyAsync(s =>
-                    s.Email.ToLower() ==
-                    request.Email.ToLower());
+            if (await _db.Users.AnyAsync(u => u.Email.ToLower() == email))
+                return BadRequest("This email is already registered.");
 
-            if (emailExists)
+            string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+
+            var pendingVerification = new EmailVerification
             {
-                return BadRequest(
-                    "This email is already registered.");
-            }
-
-            // =========================
-            // Hash Password
-            // =========================
-
-            string passwordHash =
-                BCrypt.Net.BCrypt.HashPassword(
-                    request.Password);
-
-            // =========================
-            // Remove Previous Pending Registration
-            // =========================
-
-            var oldPending = await _db.PendingStudents
-                .Where(p =>
-                    p.Email.ToLower() ==
-                    request.Email.ToLower())
-                .ToListAsync();
-
-            foreach (var pending in oldPending)
-            {
-                _db.PendingStudents.Remove(pending);
-            }
-
-            // =========================
-            // Create Pending Student
-            // =========================
-
-            var pendingStudent = new PendingStudent
-            {
+                Email = email,
                 FirstName = request.FirstName.Trim(),
                 LastName = request.LastName.Trim(),
-                Email = request.Email.Trim().ToLower(),
                 YearLevel = request.YearLevel,
-                PasswordHash = passwordHash,
-
-                // Registration expires after 5 minutes
-                Expiration = DateTime.UtcNow.AddMinutes(5),
-
-                Verified = false
-            };
-
-            _db.PendingStudents.Add(pendingStudent);
-
-            // =========================
-            // Generate OTP
-            // =========================
-
-            string otpCode =
-                _otpService.GenerateOTP();
-
-            // =========================
-            // Invalidate Previous OTPs
-            // =========================
-
-            var oldOtps = await _db.OTPs
-                .Where(o =>
-                    o.Email.ToLower() ==
-                    request.Email.ToLower() &&
-                    !o.Used)
-                .ToListAsync();
-
-            foreach (var oldOtp in oldOtps)
-            {
-                oldOtp.Used = true;
-            }
-
-            // =========================
-            // Create New OTP
-            // =========================
-
-            var otp = new OTP
-            {
-                Email = request.Email.Trim().ToLower(),
-                Code = otpCode,
-
-                // OTP expires after 5 minutes
-                Expiration = DateTime.UtcNow.AddMinutes(5),
-
-                Used = false,
+                PendingPasswordHash = passwordHash,
+                OtpCode = _otpService.GenerateOTP(),
+                ExpiresAt = DateTime.UtcNow.AddMinutes(5),
+                IsUsed = false,
                 Attempts = 0
             };
 
-            _db.OTPs.Add(otp);
+            var oldPending = await _db.EmailVerifications
+                .Where(v => v.Email.ToLower() == email && !v.IsUsed)
+                .ToListAsync();
 
-            // =========================
-            // Save Pending Registration + OTP
-            // =========================
-
-            await _db.SaveChangesAsync();
-
-            // =========================
-            // Send OTP
-            // =========================
-
-            bool sent = await _emailService.SendOTP(
-                request.Email,
-                otpCode);
-
-            if (!sent)
+            foreach (var item in oldPending)
             {
-                return StatusCode(
-                    500,
-                    "Failed to send OTP.");
+                item.IsUsed = true;
             }
 
-            // =========================
-            // Success
-            // =========================
+            _db.EmailVerifications.Add(pendingVerification);
+            await _db.SaveChangesAsync();
 
-            return Ok(new
+            bool sent = await _emailService.SendOTP(email, pendingVerification.OtpCode);
+            if (!sent)
             {
-                message =
-                    "OTP sent successfully. Please verify your email."
-            });
-        }
+                _db.EmailVerifications.Remove(pendingVerification);
+                await _db.SaveChangesAsync();
+                return StatusCode(500, "Failed to send OTP.");
+            }
 
-        // =========================================================
-        // VERIFY STUDENT REGISTRATION OTP
-        // POST: /api/Auth/verify-registration-otp
-        // =========================================================
+            return Ok(new { message = "OTP sent successfully. Please verify your email." });
+        }
 
         [HttpPost("verify-registration-otp")]
-        public async Task<IActionResult> VerifyRegistrationOTP(
-            VerifyOTPRequest request)
+        public async Task<IActionResult> VerifyRegistrationOTP(VerifyOTPRequest request)
         {
-            // =========================
-            // Validate Email
-            // =========================
-
             if (string.IsNullOrWhiteSpace(request.Email))
-            {
                 return BadRequest("Email is required.");
-            }
-
-            // =========================
-            // Validate OTP
-            // =========================
 
             if (string.IsNullOrWhiteSpace(request.OTP))
-            {
                 return BadRequest("OTP is required.");
-            }
 
-            if (request.OTP.Length != 6 ||
-                !request.OTP.All(char.IsDigit))
-            {
-                return BadRequest(
-                    "OTP must contain exactly 6 digits.");
-            }
+            if (request.OTP.Length != 6 || !request.OTP.All(char.IsDigit))
+                return BadRequest("OTP must contain exactly 6 digits.");
 
-            string email =
-                request.Email.Trim().ToLower();
+            string email = NormalizeEmail(request.Email);
 
-            // =========================
-            // Find Latest Valid OTP
-            // =========================
-
-            var otp = await _db.OTPs
-                .Where(o =>
-                    o.Email.ToLower() == email &&
-                    !o.Used)
-                .OrderByDescending(o => o.Id)
+            var verification = await _db.EmailVerifications
+                .Where(v => v.Email.ToLower() == email && !v.IsUsed)
+                .OrderByDescending(v => v.Id)
                 .FirstOrDefaultAsync();
 
-            if (otp == null)
+            if (verification == null)
+                return BadRequest("No valid OTP was found.");
+
+            if (verification.Attempts >= 3)
             {
-                return BadRequest(
-                    "No valid OTP was found.");
-            }
-
-            // =========================
-            // Check Maximum Attempts
-            // =========================
-
-            if (otp.Attempts >= 3)
-            {
-                otp.Used = true;
-
+                verification.IsUsed = true;
                 await _db.SaveChangesAsync();
-
-                return BadRequest(
-                    "Maximum OTP attempts exceeded. Please request a new OTP.");
+                return BadRequest("Maximum OTP attempts exceeded. Please request a new OTP.");
             }
 
-            // =========================
-            // Check OTP Expiration
-            // =========================
-
-            if (DateTime.UtcNow > otp.Expiration)
+            if (DateTime.UtcNow > verification.ExpiresAt)
             {
-                otp.Used = true;
-
+                verification.IsUsed = true;
                 await _db.SaveChangesAsync();
-
-                return BadRequest(
-                    "OTP has expired. Please request a new OTP.");
+                return BadRequest("OTP has expired. Please request a new OTP.");
             }
 
-            // =========================
-            // Check OTP Code
-            // =========================
-
-            if (otp.Code != request.OTP)
+            if (verification.OtpCode != request.OTP)
             {
-                otp.Attempts++;
-
+                verification.Attempts++;
                 await _db.SaveChangesAsync();
-
-                return BadRequest(
-                    $"Invalid OTP. Attempt {otp.Attempts} of 3.");
+                return BadRequest($"Invalid OTP. Attempt {verification.Attempts} of 3.");
             }
 
-            // =========================
-            // Find Pending Student
-            // =========================
+            if (string.IsNullOrWhiteSpace(verification.PendingPasswordHash))
+                return BadRequest("Registration data was not found.");
 
-            var pendingStudent =
-                await _db.PendingStudents
-                    .FirstOrDefaultAsync(p =>
-                        p.Email.ToLower() == email);
+            if (await _db.Users.AnyAsync(u => u.Email.ToLower() == email))
+                return BadRequest("This email is already registered.");
 
-            if (pendingStudent == null)
+            var user = new User
             {
-                return BadRequest(
-                    "Pending registration was not found.");
-            }
-
-            // =========================
-            // Check Pending Registration Expiration
-            // =========================
-
-            if (DateTime.UtcNow >
-                pendingStudent.Expiration)
-            {
-                _db.PendingStudents
-                    .Remove(pendingStudent);
-
-                otp.Used = true;
-
-                await _db.SaveChangesAsync();
-
-                return BadRequest(
-                    "Registration has expired. Please register again.");
-            }
-
-            // =========================
-            // Create Student Account
-            // =========================
-
-            var student = new Student
-            {
-                FirstName = pendingStudent.FirstName,
-
-                LastName = pendingStudent.LastName,
-
-                Email = pendingStudent.Email,
-
-                YearLevel = pendingStudent.YearLevel,
-
-                PasswordHash =
-                    pendingStudent.PasswordHash,
-
-                EmailVerified = true
+                FirstName = verification.FirstName,
+                LastName = verification.LastName,
+                YearLevel = verification.YearLevel,
+                Email = email,
+                PasswordHash = verification.PendingPasswordHash,
+                Role = "student",
+                IsEmailVerified = true,
+                CreatedAt = DateTime.UtcNow
             };
 
-            _db.Students.Add(student);
-
-            // =========================
-            // Mark OTP as Used
-            // =========================
-
-            otp.Used = true;
-
-            // =========================
-            // Remove Pending Registration
-            // =========================
-
-            _db.PendingStudents
-                .Remove(pendingStudent);
-
-            // =========================
-            // Save Everything
-            // =========================
-
+            _db.Users.Add(user);
+            verification.IsUsed = true;
             await _db.SaveChangesAsync();
 
-            // =========================
-            // Success
-            // =========================
-
-            return Ok(new
-            {
-                message =
-                    "Email verified successfully. Student account created."
-            });
+            return Ok(new { message = "Email verified successfully. Student account created." });
         }
-
-        // =========================================================
-        // FORGOT PASSWORD
-        // POST: /api/Auth/forgot-password
-        // =========================================================
 
         [HttpPost("forgot-password")]
-        public async Task<IActionResult> ForgotPassword(
-            ForgotPasswordRequest request)
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordRequest request)
         {
             if (string.IsNullOrWhiteSpace(request.Email))
-            {
                 return BadRequest("Email is required.");
-            }
 
-            if (!request.Email.EndsWith(
-                    "@paterostechnologicalcollege.edu.ph",
-                    StringComparison.OrdinalIgnoreCase))
-            {
-                return BadRequest(
-                    "Only PTC institutional email is allowed.");
-            }
+            if (!IsPTCEmail(request.Email))
+                return BadRequest("Only PTC institutional email is allowed.");
 
             if (string.IsNullOrWhiteSpace(request.NewPassword))
-            {
                 return BadRequest("New password is required.");
-            }
 
             if (string.IsNullOrWhiteSpace(request.ConfirmPassword))
-            {
                 return BadRequest("Please confirm your new password.");
-            }
 
             if (request.NewPassword != request.ConfirmPassword)
-            {
                 return BadRequest("Passwords do not match.");
-            }
 
-            string email = request.Email.Trim().ToLower();
+            string email = NormalizeEmail(request.Email);
 
-            bool userExists = await _db.Students.AnyAsync(s =>
-                    s.Email.ToLower() == email) ||
-                await _db.Professors.AnyAsync(p =>
-                    p.Email.ToLower() == email) ||
-                await _db.Admins.AnyAsync(a =>
-                    a.Email.ToLower() == email);
-
-            if (!userExists)
-            {
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == email);
+            if (user == null)
                 return BadRequest("No account found for this email.");
-            }
 
-            string passwordHash = BCrypt.Net.BCrypt.HashPassword(
-                request.NewPassword);
-
-            var oldOtps = await _db.OTPs
-                .Where(o =>
-                    o.Email.ToLower() == email &&
-                    !o.Used)
+            var oldResets = await _db.PasswordResets
+                .Where(r => r.Email.ToLower() == email && !r.IsUsed)
                 .ToListAsync();
 
-            foreach (var oldOtp in oldOtps)
+            foreach (var oldReset in oldResets)
             {
-                oldOtp.Used = true;
+                oldReset.IsUsed = true;
             }
 
             string otpCode = _otpService.GenerateOTP();
+            string newPasswordHash = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
 
-            var otp = new OTP
+            var reset = new PasswordReset
             {
+                UserId = user.Id,
                 Email = email,
-                Code = otpCode,
-                Expiration = DateTime.UtcNow.AddMinutes(5),
-                Used = false,
-                Attempts = 0,
-                PendingPasswordHash = passwordHash
+                OtpCode = otpCode,
+                NewPasswordHash = newPasswordHash,
+                ExpiresAt = DateTime.UtcNow.AddMinutes(5),
+                IsUsed = false,
+                Attempts = 0
             };
 
-            _db.OTPs.Add(otp);
-
+            _db.PasswordResets.Add(reset);
             await _db.SaveChangesAsync();
 
-            bool sent = await _emailService.SendOTP(
-                request.Email,
-                otpCode);
-
+            bool sent = await _emailService.SendOTP(email, otpCode);
             if (!sent)
             {
-                return StatusCode(
-                    500,
-                    "Failed to send OTP.");
+                _db.PasswordResets.Remove(reset);
+                await _db.SaveChangesAsync();
+                return StatusCode(500, "Failed to send OTP.");
             }
 
-            return Ok(new
-            {
-                message =
-                    "OTP sent successfully. Please verify your email."
-            });
+            return Ok(new { message = "OTP sent successfully. Please verify your email." });
         }
-
-        // =========================================================
-        // VERIFY FORGOT PASSWORD OTP
-        // POST: /api/Auth/verify-forgot-password-otp
-        // =========================================================
 
         [HttpPost("verify-forgot-password-otp")]
-        public async Task<IActionResult> VerifyForgotPasswordOTP(
-            VerifyOTPRequest request)
+        public async Task<IActionResult> VerifyForgotPasswordOTP(VerifyOTPRequest request)
         {
             if (string.IsNullOrWhiteSpace(request.Email))
-            {
                 return BadRequest("Email is required.");
-            }
 
             if (string.IsNullOrWhiteSpace(request.OTP))
-            {
                 return BadRequest("OTP is required.");
-            }
 
-            if (request.OTP.Length != 6 ||
-                !request.OTP.All(char.IsDigit))
-            {
-                return BadRequest(
-                    "OTP must contain exactly 6 digits.");
-            }
+            if (request.OTP.Length != 6 || !request.OTP.All(char.IsDigit))
+                return BadRequest("OTP must contain exactly 6 digits.");
 
-            string email = request.Email.Trim().ToLower();
+            string email = NormalizeEmail(request.Email);
 
-            var otp = await _db.OTPs
-                .Where(o =>
-                    o.Email.ToLower() == email &&
-                    !o.Used)
-                .OrderByDescending(o => o.Id)
+            var reset = await _db.PasswordResets
+                .Where(r => r.Email.ToLower() == email && !r.IsUsed)
+                .OrderByDescending(r => r.Id)
                 .FirstOrDefaultAsync();
 
-            if (otp == null)
-            {
+            if (reset == null)
                 return BadRequest("No valid OTP was found.");
-            }
 
-            if (otp.Attempts >= 3)
+            if (reset.Attempts >= 3)
             {
-                otp.Used = true;
+                reset.IsUsed = true;
                 await _db.SaveChangesAsync();
-                return BadRequest(
-                    "Maximum OTP attempts exceeded. Please request a new OTP.");
+                return BadRequest("Maximum OTP attempts exceeded. Please request a new OTP.");
             }
 
-            if (DateTime.UtcNow > otp.Expiration)
+            if (DateTime.UtcNow > reset.ExpiresAt)
             {
-                otp.Used = true;
+                reset.IsUsed = true;
                 await _db.SaveChangesAsync();
-                return BadRequest(
-                    "OTP has expired. Please request a new OTP.");
+                return BadRequest("OTP has expired. Please request a new OTP.");
             }
 
-            if (otp.Code != request.OTP)
+            if (reset.OtpCode != request.OTP)
             {
-                otp.Attempts++;
+                reset.Attempts++;
                 await _db.SaveChangesAsync();
-                return BadRequest(
-                    $"Invalid OTP. Attempt {otp.Attempts} of 3.");
+                return BadRequest($"Invalid OTP. Attempt {reset.Attempts} of 3.");
             }
 
-            if (string.IsNullOrWhiteSpace(otp.PendingPasswordHash))
-            {
-                return BadRequest(
-                    "Password reset request was not found.");
-            }
+            if (string.IsNullOrWhiteSpace(reset.NewPasswordHash))
+                return BadRequest("Password reset request was not found.");
 
-            var student = await _db.Students
-                .FirstOrDefaultAsync(s =>
-                    s.Email.ToLower() == email);
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == email);
+            if (user == null)
+                return BadRequest("No account found for this email.");
 
-            if (student != null)
-            {
-                student.PasswordHash = otp.PendingPasswordHash;
-            }
-            else
-            {
-                var professor = await _db.Professors
-                    .FirstOrDefaultAsync(p =>
-                        p.Email.ToLower() == email);
-
-                if (professor != null)
-                {
-                    professor.PasswordHash = otp.PendingPasswordHash;
-                }
-                else
-                {
-                    var admin = await _db.Admins
-                        .FirstOrDefaultAsync(a =>
-                            a.Email.ToLower() == email);
-
-                    if (admin == null)
-                    {
-                        return BadRequest(
-                            "No account found for this email.");
-                    }
-
-                    admin.PasswordHash = otp.PendingPasswordHash;
-                }
-            }
-
-            otp.Used = true;
+            user.PasswordHash = reset.NewPasswordHash;
+            reset.IsUsed = true;
             await _db.SaveChangesAsync();
 
-            return Ok(new
-            {
-                message = "Password reset successful."
-            });
+            return Ok(new { message = "Password reset successful." });
         }
-
-        // =========================================================
-        // RESEND REGISTRATION OTP
-        // POST: /api/Auth/resend-registration-otp
-        // =========================================================
 
         [HttpPost("resend-registration-otp")]
-        public async Task<IActionResult> ResendRegistrationOTP(
-            VerifyOTPRequest request)
+        public async Task<IActionResult> ResendRegistrationOTP(VerifyOTPRequest request)
         {
             if (string.IsNullOrWhiteSpace(request.Email))
-            {
                 return BadRequest("Email is required.");
-            }
 
-            string email = request.Email.Trim().ToLower();
+            string email = NormalizeEmail(request.Email);
 
-            var pendingStudent = await _db.PendingStudents
-                .FirstOrDefaultAsync(p =>
-                    p.Email.ToLower() == email);
+            var verification = await _db.EmailVerifications
+                .Where(v => v.Email.ToLower() == email && !v.IsUsed)
+                .OrderByDescending(v => v.Id)
+                .FirstOrDefaultAsync();
 
-            if (pendingStudent == null)
+            if (verification == null)
+                return BadRequest("Pending registration was not found.");
+
+            verification.IsUsed = true;
+            var newVerification = new EmailVerification
             {
-                return BadRequest(
-                    "Pending registration was not found.");
-            }
-
-            string otpCode = _otpService.GenerateOTP();
-
-            var oldOtps = await _db.OTPs
-                .Where(o =>
-                    o.Email.ToLower() == email &&
-                    !o.Used)
-                .ToListAsync();
-
-            foreach (var oldOtp in oldOtps)
-            {
-                oldOtp.Used = true;
-            }
-
-            var otp = new OTP
-            {
-                Email = email,
-                Code = otpCode,
-                Expiration = DateTime.UtcNow.AddMinutes(5),
-                Used = false,
-                Attempts = 0,
-                PendingPasswordHash = ""
+                Email = verification.Email,
+                FirstName = verification.FirstName,
+                LastName = verification.LastName,
+                YearLevel = verification.YearLevel,
+                PendingPasswordHash = verification.PendingPasswordHash,
+                OtpCode = _otpService.GenerateOTP(),
+                ExpiresAt = DateTime.UtcNow.AddMinutes(5),
+                IsUsed = false,
+                Attempts = 0
             };
 
-            _db.OTPs.Add(otp);
+            _db.EmailVerifications.Add(newVerification);
             await _db.SaveChangesAsync();
 
-            bool sent = await _emailService.SendOTP(
-                request.Email,
-                otpCode);
-
+            bool sent = await _emailService.SendOTP(email, newVerification.OtpCode);
             if (!sent)
             {
-                return StatusCode(
-                    500,
-                    "Failed to send OTP.");
+                _db.EmailVerifications.Remove(newVerification);
+                await _db.SaveChangesAsync();
+                return StatusCode(500, "Failed to send OTP.");
             }
+
+            return Ok(new { message = "OTP resent successfully." });
+        }
+
+        [HttpPost("resend-forgot-password-otp")]
+        public async Task<IActionResult> ResendForgotPasswordOTP(VerifyOTPRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.Email))
+                return BadRequest("Email is required.");
+
+            string email = NormalizeEmail(request.Email);
+
+            var existingReset = await _db.PasswordResets
+                .Where(r => r.Email.ToLower() == email && !r.IsUsed)
+                .OrderByDescending(r => r.Id)
+                .FirstOrDefaultAsync();
+
+            if (existingReset == null)
+                return BadRequest("No password reset request was found.");
+
+            existingReset.IsUsed = true;
+
+            var newReset = new PasswordReset
+            {
+                UserId = existingReset.UserId,
+                Email = email,
+                OtpCode = _otpService.GenerateOTP(),
+                NewPasswordHash = existingReset.NewPasswordHash,
+                ExpiresAt = DateTime.UtcNow.AddMinutes(5),
+                IsUsed = false,
+                Attempts = 0
+            };
+
+            _db.PasswordResets.Add(newReset);
+            await _db.SaveChangesAsync();
+
+            bool sent = await _emailService.SendOTP(email, newReset.OtpCode);
+            if (!sent)
+            {
+                _db.PasswordResets.Remove(newReset);
+                await _db.SaveChangesAsync();
+                return StatusCode(500, "Failed to send OTP.");
+            }
+
+            return Ok(new { message = "OTP resent successfully." });
+        }
+
+        private async Task<IActionResult> AuthenticateUser(LoginRequest request, string role)
+        {
+            if (string.IsNullOrWhiteSpace(request.Email))
+                return BadRequest("Email is required.");
+
+            if (string.IsNullOrWhiteSpace(request.Password))
+                return BadRequest("Password is required.");
+
+            string email = NormalizeEmail(request.Email);
+
+            var user = await _db.Users
+                .FirstOrDefaultAsync(u => u.Email.ToLower() == email && u.Role.ToLower() == role);
+
+            if (user == null)
+                return BadRequest("Invalid email or password.");
+
+            bool passwordMatches = BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash);
+            if (!passwordMatches)
+                return BadRequest("Invalid email or password.");
+
+            var token = GenerateJwtToken(user);
 
             return Ok(new
             {
-                message = "OTP resent successfully."
+                message = "Login successful.",
+                token,
+                role = user.Role,
+                userId = user.Id,
+                redirectTo = user.Role == "student" ? "student-dashboard" : user.Role == "professor" ? "professor-dashboard" : "admin-dashboard"
             });
         }
 
-        // =========================================================
-        // RESEND FORGOT PASSWORD OTP
-        // POST: /api/Auth/resend-forgot-password-otp
-        // =========================================================
-
-        [HttpPost("resend-forgot-password-otp")]
-        public async Task<IActionResult> ResendForgotPasswordOTP(
-            VerifyOTPRequest request)
+        private string GenerateJwtToken(User user)
         {
-            if (string.IsNullOrWhiteSpace(request.Email))
+            var jwtKey = _config["Jwt:Key"] ?? "TECHQUEST_SECRET_KEY_CHANGE_THIS_TO_A_LONG_RANDOM_VALUE";
+            var jwtIssuer = _config["Jwt:Issuer"] ?? "TechQuestBackend";
+            var jwtAudience = _config["Jwt:Audience"] ?? "TechQuestGodot";
+
+            var claims = new[]
             {
-                return BadRequest("Email is required.");
-            }
-
-            string email = request.Email.Trim().ToLower();
-
-            bool userExists = await _db.Students.AnyAsync(s =>
-                    s.Email.ToLower() == email) ||
-                await _db.Professors.AnyAsync(p =>
-                    p.Email.ToLower() == email) ||
-                await _db.Admins.AnyAsync(a =>
-                    a.Email.ToLower() == email);
-
-            if (!userExists)
-            {
-                return BadRequest("No account found for this email.");
-            }
-
-            string newPassword = "TechQuestTempPassword123!";
-            string passwordHash = BCrypt.Net.BCrypt.HashPassword(
-                newPassword);
-
-            var oldOtps = await _db.OTPs
-                .Where(o =>
-                    o.Email.ToLower() == email &&
-                    !o.Used)
-                .ToListAsync();
-
-            foreach (var oldOtp in oldOtps)
-            {
-                oldOtp.Used = true;
-            }
-
-            string otpCode = _otpService.GenerateOTP();
-
-            var otp = new OTP
-            {
-                Email = email,
-                Code = otpCode,
-                Expiration = DateTime.UtcNow.AddMinutes(5),
-                Used = false,
-                Attempts = 0,
-                PendingPasswordHash = passwordHash
+                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim("userId", user.Id.ToString()),
+                new Claim("role", user.Role),
+                new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName)
             };
 
-            _db.OTPs.Add(otp);
-            await _db.SaveChangesAsync();
+            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
+            var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
 
-            bool sent = await _emailService.SendOTP(
-                request.Email,
-                otpCode);
+            var token = new JwtSecurityToken(
+                issuer: jwtIssuer,
+                audience: jwtAudience,
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(8),
+                signingCredentials: credentials);
 
-            if (!sent)
-            {
-                return StatusCode(
-                    500,
-                    "Failed to send OTP.");
-            }
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
 
-            return Ok(new
-            {
-                message = "OTP resent successfully."
-            });
+        private static string NormalizeEmail(string email)
+        {
+            return email.Trim().ToLower();
+        }
+
+        private static bool IsPTCEmail(string email)
+        {
+            return email.Trim().EndsWith("@paterostechnologicalcollege.edu.ph", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

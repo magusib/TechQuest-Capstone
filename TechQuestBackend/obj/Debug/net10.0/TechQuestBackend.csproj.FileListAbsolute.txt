@@ -275,4 +275,4 @@ C:\Users\22222222222222222222\TechQuest\TechQuestBackend\obj\Debug\net10.0\refin
 C:\Users\22222222222222222222\TechQuest\TechQuestBackend\obj\Debug\net10.0\TechQuestBackend.pdb
 C:\Users\22222222222222222222\TechQuest\TechQuestBackend\obj\Debug\net10.0\TechQuestBackend.genruntimeconfig.cache
 C:\Users\22222222222222222222\TechQuest\TechQuestBackend\obj\Debug\net10.0\ref\TechQuestBackend.dll
-C:\Users\22222222222222222222\TechQuest\TechQuestBackend\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
+C:\Users\22222222222222222222\TechQuest\TechQuestBackend\obj\Debug\net10.0\TechQuestBackend.sourcelink.json
