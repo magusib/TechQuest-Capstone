@@ -1,0 +1,180 @@
+[gd_scene format=3 uid="uid://dhukw6jgar3nq"]
+
+[ext_resource type="Texture2D" uid="uid://fw6dc6tf5doi" path="res://asset/background/landing_page.png" id="1_vv4ep"]
+[ext_resource type="Script" uid="uid://bywdpqe0nufrq" path="res://scene/UserSelection/UserSelection.cs" id="1_wo25a"]
+[ext_resource type="StyleBox" path="res://asset/style/button_secondary_normal.tres" id="3_hvfgd"]
+[ext_resource type="Theme" uid="uid://w25w37577ylx" path="res://asset/theme/TechQuestTheme.tres" id="4_ocnue"]
+
+[sub_resource type="FontFile" id="FontFile_8icjc"]
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/17/0/ascent = 0.0
+cache/0/17/0/descent = 0.0
+cache/0/17/0/underline_position = 0.0
+cache/0/17/0/underline_thickness = 0.0
+cache/0/17/0/scale = 1.0
+cache/0/18/0/ascent = 0.0
+cache/0/18/0/descent = 0.0
+cache/0/18/0/underline_position = 0.0
+cache/0/18/0/underline_thickness = 0.0
+cache/0/18/0/scale = 1.0
+cache/0/19/0/ascent = 0.0
+cache/0/19/0/descent = 0.0
+cache/0/19/0/underline_position = 0.0
+cache/0/19/0/underline_thickness = 0.0
+cache/0/19/0/scale = 1.0
+cache/0/20/0/ascent = 0.0
+cache/0/20/0/descent = 0.0
+cache/0/20/0/underline_position = 0.0
+cache/0/20/0/underline_thickness = 0.0
+cache/0/20/0/scale = 1.0
+cache/0/21/0/ascent = 0.0
+cache/0/21/0/descent = 0.0
+cache/0/21/0/underline_position = 0.0
+cache/0/21/0/underline_thickness = 0.0
+cache/0/21/0/scale = 1.0
+cache/0/22/0/ascent = 0.0
+cache/0/22/0/descent = 0.0
+cache/0/22/0/underline_position = 0.0
+cache/0/22/0/underline_thickness = 0.0
+cache/0/22/0/scale = 1.0
+cache/0/23/0/ascent = 0.0
+cache/0/23/0/descent = 0.0
+cache/0/23/0/underline_position = 0.0
+cache/0/23/0/underline_thickness = 0.0
+cache/0/23/0/scale = 1.0
+cache/0/24/0/ascent = 0.0
+cache/0/24/0/descent = 0.0
+cache/0/24/0/underline_position = 0.0
+cache/0/24/0/underline_thickness = 0.0
+cache/0/24/0/scale = 1.0
+cache/0/25/0/ascent = 0.0
+cache/0/25/0/descent = 0.0
+cache/0/25/0/underline_position = 0.0
+cache/0/25/0/underline_thickness = 0.0
+cache/0/25/0/scale = 1.0
+cache/0/26/0/ascent = 0.0
+cache/0/26/0/descent = 0.0
+cache/0/26/0/underline_position = 0.0
+cache/0/26/0/underline_thickness = 0.0
+cache/0/26/0/scale = 1.0
+cache/0/27/0/ascent = 0.0
+cache/0/27/0/descent = 0.0
+cache/0/27/0/underline_position = 0.0
+cache/0/27/0/underline_thickness = 0.0
+cache/0/27/0/scale = 1.0
+cache/0/28/0/ascent = 0.0
+cache/0/28/0/descent = 0.0
+cache/0/28/0/underline_position = 0.0
+cache/0/28/0/underline_thickness = 0.0
+cache/0/28/0/scale = 1.0
+cache/0/29/0/ascent = 0.0
+cache/0/29/0/descent = 0.0
+cache/0/29/0/underline_position = 0.0
+cache/0/29/0/underline_thickness = 0.0
+cache/0/29/0/scale = 1.0
+cache/0/30/0/ascent = 0.0
+cache/0/30/0/descent = 0.0
+cache/0/30/0/underline_position = 0.0
+cache/0/30/0/underline_thickness = 0.0
+cache/0/30/0/scale = 1.0
+cache/0/31/0/ascent = 0.0
+cache/0/31/0/descent = 0.0
+cache/0/31/0/underline_position = 0.0
+cache/0/31/0/underline_thickness = 0.0
+cache/0/31/0/scale = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8icjc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o2dy6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_emk8k"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ulj5c"]
+bg_color = Color(0.99226946, 0.8456438, 0.84962696, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="UserSelection" type="Control" unique_id=1026883886]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wo25a")
+
+[node name="Background" type="TextureRect" parent="." unique_id=455744963]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_vv4ep")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="." unique_id=965257212]
+layout_mode = 0
+offset_left = 307.0
+offset_top = 424.0
+offset_right = 477.0
+offset_bottom = 477.0
+theme_override_fonts/font = SubResource("FontFile_8icjc")
+theme_override_font_sizes/font_size = 31
+theme_override_styles/normal = SubResource("StyleBoxFlat_8icjc")
+text = "Select User"
+
+[node name="StudentButton" type="Button" parent="." unique_id=1592716539]
+layout_mode = 0
+offset_left = 504.0
+offset_top = 381.0
+offset_right = 674.0
+offset_bottom = 441.0
+theme_override_styles/normal = ExtResource("3_hvfgd")
+text = "Student"
+
+[node name="ProfessorButton" type="Button" parent="." unique_id=1572082555]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 461.0
+offset_right = 670.0
+offset_bottom = 521.0
+theme = ExtResource("4_ocnue")
+theme_override_styles/normal = SubResource("StyleBoxFlat_o2dy6")
+text = "Professor"
+
+[node name="AdminButton" type="Button" parent="." unique_id=407946225]
+layout_mode = 0
+offset_left = 498.0
+offset_top = 558.0
+offset_right = 668.0
+offset_bottom = 618.0
+theme = ExtResource("4_ocnue")
+theme_override_styles/normal = SubResource("StyleBoxFlat_emk8k")
+text = "Admin"
+
+[node name="BackButton" type="Button" parent="." unique_id=1104224701]
+layout_mode = 0
+offset_left = 548.0
+offset_top = 163.0
+offset_right = 652.0
+offset_bottom = 200.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_ulj5c")
+text = "Back"

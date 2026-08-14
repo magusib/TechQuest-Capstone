@@ -1,0 +1,21 @@
+[gd_resource type="Theme" format=3 uid="uid://w25w37577ylx"]
+
+[resource]
+default_font_size = 16
+AcceptDialog/styles/panel = null
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(0.9, 0.93, 1, 1)
+Button/font_sizes/font_size = 16
+Button/styles/disabled = null
+Button/styles/focus = null
+Button/styles/hover = null
+Button/styles/normal = null
+Button/styles/pressed = null
+Label/colors/font_color = Color(0.16, 0.18, 0.22, 1)
+Label/font_sizes/font_size = 16
+Panel/styles/panel = null
+PanelContainer/styles/panel = null
+PopupPanel/styles/panel = null
+Window/styles/embedded_border = null
+Window/styles/embedded_unfocused_border = null
