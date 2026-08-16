@@ -22,17 +22,17 @@ public partial class UserSelection : Control
 
 	private void OnStudentPressed()
 	{
-		GetTree().ChangeSceneToFile("res://scene/Student/StudentLogin.tscn");
+		GetTree().ChangeSceneToFile("res://scene/UserLogin/Student/StudentLogin.tscn");
 	}
 
 	private void OnProfessorPressed()
 	{
-		GetTree().ChangeSceneToFile("res://scene/Professor/ProfessorLogin.tscn");
+		GetTree().ChangeSceneToFile("res://scene/UserLogin/Professor/ProfessorLogin.tscn");
 	}
 
 	private void OnAdminPressed()
 	{
-		GetTree().ChangeSceneToFile("res://scene/Admin/AdminLogin.tscn");
+		GetTree().ChangeSceneToFile("res://scene/Userlogin/Admin/AdminLogin.tscn");
 	}
 
 	private void OnBackPressed()

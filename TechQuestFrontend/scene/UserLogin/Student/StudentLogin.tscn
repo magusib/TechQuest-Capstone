@@ -3,7 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://b4uq7j48menoo" path="res://asset/background/ptc 1.png" id="1_aiqbg"]
 [ext_resource type="Script" uid="uid://gv62nyx4telt" path="res://scene/Student/StudentLogin.cs" id="1_q54ml"]
 [ext_resource type="StyleBox" uid="uid://bofr3y60ei71y" path="res://asset/style/panel_bordered.tres" id="2_yljco"]
-[ext_resource type="Texture2D" uid="uid://cbvkn3bd61r26" path="res://asset/icon/login.png" id="3_1rq70"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xa56u"]
 
@@ -217,16 +216,16 @@ text = "Already Have an Account?"
 [node name="VerifiedIcon" type="TextureRect" parent="RegisterPanel" unique_id=2043393503]
 visible = false
 layout_mode = 0
-offset_left = 317.0
-offset_top = 259.0
-offset_right = 445.0
-offset_bottom = 387.0
-texture = ExtResource("3_1rq70")
+offset_left = 304.0
+offset_top = 250.0
+offset_right = 432.0
+offset_bottom = 378.0
 
 [node name="ForgotPasswordPopup" type="Window" parent="." unique_id=1142372605]
 oversampling_override = 1.0
 position = Vector2i(294, 36)
 size = Vector2i(500, 350)
+visible = false
 theme_override_colors/title_color = Color(0.8560673, 0.8560673, 0.85606724, 1)
 theme_override_colors/title_outline_modulate = Color(1, 1, 1, 1)
 theme_override_styles/embedded_border = SubResource("StyleBoxFlat_xa56u")

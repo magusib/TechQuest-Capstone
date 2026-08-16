@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://bw63big3fpuwh"]
+
+[ext_resource type="Texture2D" uid="uid://4kraosl2m556" path="res://asset/background/ptc.png" id="1_nnof5"]
+
+[node name="StudentProfile" type="Control" unique_id=473532987]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1772561368]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_nnof5")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Panel" type="Panel" parent="." unique_id=957897272]
+layout_mode = 0
+offset_left = 337.0
+offset_top = 46.0
+offset_right = 793.0
+offset_bottom = 611.0
+
+[node name="Label" type="Label" parent="." unique_id=1968731308]
+layout_mode = 0
+offset_left = 494.0
+offset_top = 65.0
+offset_right = 622.0
+offset_bottom = 135.0
+text = "Student Profile"

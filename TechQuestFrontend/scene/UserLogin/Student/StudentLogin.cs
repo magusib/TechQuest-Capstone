@@ -619,7 +619,38 @@ public partial class StudentLogin : Control
 
 		confirmNewPasswordInput.Clear();
 
+		OpenForgotPasswordPopup();
+	}
+
+	private void OpenForgotPasswordPopup()
+	{
+		forgotPasswordPopup.Visible = true;
+		forgotPasswordPopup.Popup();
 		forgotPasswordPopup.PopupCentered();
+		forgotPasswordPopup.GrabFocus();
+	}
+
+	private void OpenOTPPopup()
+	{
+		otpPopup.Visible = true;
+		otpPopup.Popup();
+		otpPopup.PopupCentered();
+		otpPopup.GrabFocus();
+	}
+
+	private void SetForgotPasswordBusy(bool busy)
+	{
+		forgotSaveButton.Disabled = busy;
+		forgotCancelButton.Disabled = busy;
+		forgotSaveButton.Text = busy ? "Sending..." : "Save";
+	}
+
+	private void SetOTPBusy(bool busy)
+	{
+		otpConfirmButton.Disabled = busy;
+		otpResendButton.Disabled = busy;
+		otpCancelButton.Disabled = busy;
+		otpConfirmButton.Text = busy ? "Sending..." : "Confirm";
 	}
 
 
@@ -708,6 +739,7 @@ public partial class StudentLogin : Control
 		isForgotPasswordOTP = true;
 
 		pendingEmail = email;
+		SetForgotPasswordBusy(true);
 
 
 		// Send Forgot Password OTP
@@ -1108,8 +1140,8 @@ public partial class StudentLogin : Control
 			!otpPopup.Visible)
 		{
 			otpInput.Clear();
-
-			otpPopup.PopupCentered();
+			OpenOTPPopup();
+			SetOTPBusy(false);
 
 			ShowMessage(
 				"Registration OTP has been sent to your email."
@@ -1127,10 +1159,10 @@ public partial class StudentLogin : Control
 			!otpPopup.Visible)
 		{
 			forgotPasswordPopup.Hide();
-
 			otpInput.Clear();
-
-			otpPopup.PopupCentered();
+			OpenOTPPopup();
+			SetOTPBusy(false);
+			SetForgotPasswordBusy(false);
 
 			ShowMessage(
 				"Password reset OTP has been sent to your email."
@@ -1184,9 +1216,8 @@ public partial class StudentLogin : Control
 			otpPopup.Visible)
 		{
 			otpPopup.Hide();
-
 			otpInput.Clear();
-
+			SetOTPBusy(false);
 			ShowMessage(
 				"Password reset successful!"
 			);
@@ -1274,7 +1305,8 @@ public partial class StudentLogin : Control
 	{
 		messageDialog.DialogText =
 			message;
-
+		messageDialog.Visible = true;
 		messageDialog.PopupCentered();
+		messageDialog.GrabFocus();
 	}
 }

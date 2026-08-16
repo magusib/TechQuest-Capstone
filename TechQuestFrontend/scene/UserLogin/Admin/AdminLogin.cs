@@ -126,7 +126,38 @@ public partial class AdminLogin : Control
 		forgotEmailInput.Clear();
 		newPasswordInput.Clear();
 		confirmNewPasswordInput.Clear();
+		OpenForgotPasswordPopup();
+	}
+
+	private void OpenForgotPasswordPopup()
+	{
+		forgotPasswordPopup.Visible = true;
+		forgotPasswordPopup.Popup();
 		forgotPasswordPopup.PopupCentered();
+		forgotPasswordPopup.GrabFocus();
+	}
+
+	private void OpenOTPPopup()
+	{
+		otpPopup.Visible = true;
+		otpPopup.Popup();
+		otpPopup.PopupCentered();
+		otpPopup.GrabFocus();
+	}
+
+	private void SetForgotPasswordBusy(bool busy)
+	{
+		forgotSaveButton.Disabled = busy;
+		forgotCancelButton.Disabled = busy;
+		forgotSaveButton.Text = busy ? "Sending..." : "Save";
+	}
+
+	private void SetOTPBusy(bool busy)
+	{
+		otpConfirmButton.Disabled = busy;
+		otpResendButton.Disabled = busy;
+		otpCancelButton.Disabled = busy;
+		otpConfirmButton.Text = busy ? "Sending..." : "Confirm";
 	}
 
 	private void OnForgotPasswordSavePressed()
@@ -168,6 +199,7 @@ public partial class AdminLogin : Control
 		otpAttempts = 0;
 		isForgotPasswordOTP = true;
 		pendingEmail = email;
+		SetForgotPasswordBusy(true);
 
 		var data = new Godot.Collections.Dictionary
 		{
@@ -294,7 +326,9 @@ public partial class AdminLogin : Control
 		{
 			forgotPasswordPopup.Hide();
 			otpInput.Clear();
-			otpPopup.PopupCentered();
+			OpenOTPPopup();
+			SetOTPBusy(false);
+			SetForgotPasswordBusy(false);
 			ShowMessage("Password reset OTP has been sent to your email.");
 			return;
 		}
@@ -346,6 +380,8 @@ public partial class AdminLogin : Control
 	private void ShowMessage(string message)
 	{
 		messageDialog.DialogText = message;
+		messageDialog.Visible = true;
 		messageDialog.PopupCentered();
+		messageDialog.GrabFocus();
 	}
 }

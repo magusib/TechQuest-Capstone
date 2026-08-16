@@ -1,0 +1,233 @@
+[gd_scene format=3 uid="uid://dr5okol8h37u4"]
+
+[ext_resource type="Texture2D" uid="uid://bhn36yyvvyrpc" path="res://asset/background/dashboard.png" id="1_jnscl"]
+[ext_resource type="Texture2D" uid="uid://dkb5xipx3o3oh" path="res://asset/Icons/HomeButton.png" id="2_02m5p"]
+[ext_resource type="Texture2D" uid="uid://2q4kghx84hoh" path="res://asset/Icons/RoomButton.png" id="3_hpqyd"]
+[ext_resource type="Texture2D" uid="uid://82dh0q8gwtkb" path="res://asset/Icons/LeaderboardButton.png" id="4_t4p2h"]
+[ext_resource type="Texture2D" uid="uid://bhrdtv5cistgh" path="res://asset/Icons/ShopButton.png" id="5_6pe8h"]
+[ext_resource type="Texture2D" uid="uid://crr41an3wfhqs" path="res://asset/Icons/CharacterButton.png" id="6_tp0rc"]
+[ext_resource type="Texture2D" uid="uid://mmg524bip6qx" path="res://asset/Icons/StoryButton.png" id="7_k8ova"]
+[ext_resource type="Texture2D" uid="uid://b3ywy4l7escxr" path="res://asset/background/first.png" id="8_jgfm1"]
+[ext_resource type="Texture2D" uid="uid://361evl3lcsf3" path="res://asset/background/medium.png" id="9_ueae1"]
+[ext_resource type="Texture2D" uid="uid://gj3ech0242sn" path="res://asset/background/hard.png" id="10_8a06c"]
+[ext_resource type="Texture2D" uid="uid://cvy6wg86qblrk" path="res://asset/Icons/image.png" id="11_jmqkr"]
+[ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="12_y20va"]
+[ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="13_ngh7r"]
+[ext_resource type="Texture2D" uid="uid://cdy3upgkc6uxf" path="res://asset/Icons/Menu.png" id="14_3ixja"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8icjc"]
+
+[node name="AdminDashboard" type="Control" unique_id=1379097029]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1258692280]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_jnscl")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HomeButton" type="TextureButton" parent="." unique_id=972159739]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 216.0
+offset_right = 132.0
+offset_bottom = 311.0
+texture_normal = ExtResource("2_02m5p")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="RoomButton" type="TextureButton" parent="." unique_id=1950348149]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 336.0
+offset_right = 128.0
+offset_bottom = 431.0
+texture_normal = ExtResource("3_hpqyd")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="LeaderboardButton" type="TextureButton" parent="." unique_id=4217349]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 459.0
+offset_right = 130.0
+offset_bottom = 554.0
+texture_normal = ExtResource("4_t4p2h")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="ShopButton" type="TextureButton" parent="." unique_id=949546385]
+layout_mode = 0
+offset_left = 1003.0
+offset_top = 216.0
+offset_right = 1116.0
+offset_bottom = 311.0
+texture_normal = ExtResource("5_6pe8h")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="CharacterButton" type="TextureButton" parent="." unique_id=1621775346]
+layout_mode = 0
+offset_left = 999.0
+offset_top = 336.0
+offset_right = 1112.0
+offset_bottom = 431.0
+texture_normal = ExtResource("6_tp0rc")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="StorylineButton" type="TextureButton" parent="." unique_id=1774780620]
+layout_mode = 0
+offset_left = 1001.0
+offset_top = 459.0
+offset_right = 1114.0
+offset_bottom = 554.0
+texture_normal = ExtResource("7_k8ova")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="DificultySelectionButton2" type="Control" parent="." unique_id=716137428]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="EasyButton" type="TextureButton" parent="DificultySelectionButton2" unique_id=208908162]
+layout_mode = 0
+offset_left = 210.0
+offset_top = 206.0
+offset_right = 572.0
+offset_bottom = 472.0
+texture_normal = ExtResource("8_jgfm1")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="MediumButton" type="TextureButton" parent="DificultySelectionButton2" unique_id=1039497163]
+layout_mode = 0
+offset_left = 623.0
+offset_top = 282.0
+offset_right = 985.0
+offset_bottom = 548.0
+texture_normal = ExtResource("9_ueae1")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="HardButton" type="TextureButton" parent="DificultySelectionButton2" unique_id=544102024]
+layout_mode = 0
+offset_left = 165.0
+offset_top = 402.0
+offset_right = 527.0
+offset_bottom = 668.0
+texture_normal = ExtResource("10_8a06c")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="TopBar" type="Control" parent="." unique_id=2017695841]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 120.0
+grow_horizontal = 2
+
+[node name="AvatarPanel" type="Panel" parent="TopBar" unique_id=1034283955]
+layout_mode = 0
+offset_right = 342.0
+offset_bottom = 165.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_8icjc")
+
+[node name="Avatar" type="TextureRect" parent="TopBar/AvatarPanel" unique_id=65518752]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 16.0
+offset_right = 148.0
+offset_bottom = 111.0
+texture = ExtResource("11_jmqkr")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PlayerName" type="Label" parent="TopBar/AvatarPanel" unique_id=481293679]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 63.0
+offset_right = 266.0
+offset_bottom = 105.0
+text = "           Admin Name"
+
+[node name="CoinsPanel" type="Panel" parent="TopBar/AvatarPanel" unique_id=246233926]
+visible = false
+layout_mode = 0
+offset_left = 50.0
+offset_top = 124.0
+offset_right = 303.0
+offset_bottom = 176.0
+
+[node name="CoinsIcon" type="TextureRect" parent="TopBar/AvatarPanel/CoinsPanel" unique_id=1811261139]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 7.0
+offset_right = 56.0
+offset_bottom = 47.0
+texture = ExtResource("12_y20va")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CointsLabel" type="Label" parent="TopBar/AvatarPanel/CoinsPanel" unique_id=84199591]
+layout_mode = 0
+offset_left = 122.0
+offset_top = 9.0
+offset_right = 170.0
+offset_bottom = 44.0
+text = "Coins"
+
+[node name="PointsPanel" type="Panel" parent="TopBar/AvatarPanel" unique_id=1492091037]
+visible = false
+layout_mode = 0
+offset_left = 51.0
+offset_top = 186.0
+offset_right = 304.0
+offset_bottom = 238.0
+
+[node name="PointsIcon" type="TextureRect" parent="TopBar/AvatarPanel/PointsPanel" unique_id=363006539]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 7.0
+offset_right = 56.0
+offset_bottom = 47.0
+texture = ExtResource("13_ngh7r")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PointsLabel" type="Label" parent="TopBar/AvatarPanel/PointsPanel" unique_id=1018701895]
+layout_mode = 0
+offset_left = 122.0
+offset_top = 9.0
+offset_right = 170.0
+offset_bottom = 44.0
+text = "Points"
+
+[node name="MenuButton" type="MenuButton" parent="TopBar" unique_id=1957294798]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -68.0
+offset_top = 11.0
+offset_right = -11.0
+offset_bottom = 76.0
+grow_horizontal = 0
+icon = ExtResource("14_3ixja")
+expand_icon = true
+item_count = 2
+popup/item_0/text = "Profile"
+popup/item_0/id = 0
+popup/item_1/text = "Logout"
+popup/item_1/id = 1
