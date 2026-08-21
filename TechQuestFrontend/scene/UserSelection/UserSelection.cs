@@ -32,7 +32,7 @@ public partial class UserSelection : Control
 
 	private void OnAdminPressed()
 	{
-		GetTree().ChangeSceneToFile("res://scene/Userlogin/Admin/AdminLogin.tscn");
+		GetTree().ChangeSceneToFile("res://scene/UserLogin/Admin/AdminLogin.tscn");
 	}
 
 	private void OnBackPressed()

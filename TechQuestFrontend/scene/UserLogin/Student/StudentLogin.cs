@@ -1120,13 +1120,12 @@ public partial class StudentLogin : Control
 			"login",
 			StringComparison.OrdinalIgnoreCase))
 		{
+			StoreSession(responseText);
 			ShowMessage(
 				"Login successful!"
 			);
 
-			GetTree().ChangeSceneToFile(
-				"res://scene/Dashboard/Student Dashboard/StudentDashboard.tscn"
-			);
+			NavigateToRoleDashboard();
 
 			return;
 		}
@@ -1235,6 +1234,36 @@ public partial class StudentLogin : Control
 
 			return;
 		}
+	}
+
+	private void StoreSession(string responseText)
+	{
+		var response = Json.ParseString(responseText).AsGodotDictionary();
+		int userId = response.ContainsKey("userId") ? (int)response["userId"] : 0;
+		string role = response.ContainsKey("role") ? response["role"].ToString() : "student";
+		string firstName = response.ContainsKey("firstName") ? response["firstName"].ToString() : "";
+		string lastName = response.ContainsKey("lastName") ? response["lastName"].ToString() : "";
+		string avatar = response.ContainsKey("avatar") ? response["avatar"].ToString() : "";
+		AccountSession.Current?.SetAccount(userId, role, firstName, lastName, 0, 0, avatar);
+	}
+
+	private void NavigateToRoleDashboard()
+	{
+		string dashboardPath = AccountSession.Current?.Role switch
+		{
+			"student" => "res://scene/Dashboard/UserDashboard/Student Dashboard/StudentDashboard.tscn",
+			"professor" => "res://scene/Dashboard/UserDashboard/Professor Dashboard/ProfessorDashboard.tscn",
+			"admin" => "res://scene/Dashboard/UserDashboard/Admin Dashboard/AdminDashboard.tscn",
+			_ => ""
+		};
+
+		if (string.IsNullOrWhiteSpace(dashboardPath))
+		{
+			ShowMessage("The account role is invalid.");
+			return;
+		}
+
+		GetTree().ChangeSceneToFile(dashboardPath);
 	}
 
 

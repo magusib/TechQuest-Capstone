@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bwr1gx2ftpdgt"]
 
+[ext_resource type="Script" path="res://scene/Dashboard/DashboardController.cs" id="15_controller"]
 [ext_resource type="Texture2D" uid="uid://bhn36yyvvyrpc" path="res://asset/background/dashboard.png" id="1_1ohf6"]
 [ext_resource type="Texture2D" uid="uid://dkb5xipx3o3oh" path="res://asset/Icons/HomeButton.png" id="2_7n8xi"]
 [ext_resource type="Texture2D" uid="uid://b3ywy4l7escxr" path="res://asset/background/first.png" id="2_a03os"]
@@ -24,6 +25,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("15_controller")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1258692280]
 layout_mode = 1

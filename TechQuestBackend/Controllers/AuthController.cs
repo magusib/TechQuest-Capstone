@@ -421,6 +421,9 @@ namespace TechQuestBackend.Controllers
                 token,
                 role = user.Role,
                 userId = user.Id,
+                firstName = user.FirstName,
+                lastName = user.LastName,
+                avatar = user.Avatar,
                 redirectTo = user.Role == "student" ? "student-dashboard" : user.Role == "professor" ? "professor-dashboard" : "admin-dashboard"
             });
         }

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c2h3vls1vdu2g"]
 
-[ext_resource type="Script" path="res://scene/Admin/AdminLogin.cs" id="1_2ebgm"]
+[ext_resource type="Script" path="res://scene/UserLogin/Admin/AdminLogin.cs" id="1_2ebgm"]
 [ext_resource type="Texture2D" uid="uid://4kraosl2m556" path="res://asset/background/ptc.png" id="2_4xa1r"]
 [ext_resource type="StyleBox" uid="uid://bofr3y60ei71y" path="res://asset/style/panel_bordered.tres" id="3_5g4d2"]
 
