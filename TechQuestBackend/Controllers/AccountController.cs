@@ -43,7 +43,26 @@ namespace TechQuestBackend.Controllers
                 })
                 .SingleOrDefaultAsync();
 
-            return user == null ? NotFound() : Ok(user);
+            if (user == null)
+                return NotFound();
+
+            int totalCoins = 0;
+            int totalPoints = 0;
+
+            return Ok(new
+            {
+                user.Id,
+                user.FirstName,
+                user.LastName,
+                user.YearLevel,
+                user.Email,
+                user.Role,
+                user.Avatar,
+                user.CreatedAt,
+                user.IsEmailVerified,
+                totalCoins,
+                totalPoints
+            });
         }
 
         [HttpGet("users")]

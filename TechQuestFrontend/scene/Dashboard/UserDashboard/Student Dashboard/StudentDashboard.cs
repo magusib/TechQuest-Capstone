@@ -1,15 +1,35 @@
 using Godot;
-using System;
 
-public partial class StudentDashbaord : Node
+public partial class StudentDashboard : DashboardBase
 {
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		// Safety: this scene is a Student dashboard.
+		if (UserSession.Role == UserRole.None)
+		{
+			GD.PrintErr("No active user session. Returning to User Selection.");
+			NavigateTo(UserSelectionPath);
+			return;
+		}
+
+		BindNodes();
+		ConnectCommonButtons();
+		SetupCommonDisplay();
+
+		ConfigureStudentPermissions();
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	private void ConfigureStudentPermissions()
 	{
+		SetButtonEnabled(HomeButton, true);
+		SetButtonEnabled(RoomButton, true);
+		SetButtonEnabled(LeaderboardButton, true);
+		SetButtonEnabled(ShopButton, true);
+		SetButtonEnabled(CharacterButton, true);
+		SetButtonEnabled(StorylineButton, true);
+
+		SetButtonEnabled(EasyButton, true);
+		SetButtonEnabled(MediumButton, true);
+		SetButtonEnabled(HardButton, true);
 	}
 }

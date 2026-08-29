@@ -1,15 +1,38 @@
 using Godot;
-using System;
 
-public partial class ProfessorDashboard : Node
+public partial class ProfessorDashboard : DashboardBase
 {
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		if (UserSession.Role == UserRole.None)
+		{
+			GD.PrintErr("No active user session. Returning to User Selection.");
+			NavigateTo(UserSelectionPath);
+			return;
+		}
+
+		BindNodes();
+		ConnectCommonButtons();
+		SetupCommonDisplay();
+
+		ConfigureProfessorPermissions();
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	private void ConfigureProfessorPermissions()
 	{
+		// Professor can access:
+		// Home, Room, Leaderboard, Shop, Storyline, Profile, Logout.
+		// Professor cannot access difficulty maps or Student Character Dashboard.
+
+		SetButtonEnabled(HomeButton, true);
+		SetButtonEnabled(RoomButton, true);
+		SetButtonEnabled(LeaderboardButton, true);
+		SetButtonEnabled(ShopButton, true);
+		SetButtonEnabled(StorylineButton, true);
+
+		SetButtonEnabled(EasyButton, false);
+		SetButtonEnabled(MediumButton, false);
+		SetButtonEnabled(HardButton, false);
+		SetButtonEnabled(CharacterButton, false);
 	}
 }

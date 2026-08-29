@@ -1120,7 +1120,9 @@ public partial class StudentLogin : Control
 			"login",
 			StringComparison.OrdinalIgnoreCase))
 		{
-			StoreSession(responseText);
+			if (!StoreSession(responseText))
+				return;
+
 			ShowMessage(
 				"Login successful!"
 			);
@@ -1236,30 +1238,41 @@ public partial class StudentLogin : Control
 		}
 	}
 
-	private void StoreSession(string responseText)
+	private bool StoreSession(string responseText)
 	{
-		var response = Json.ParseString(responseText).AsGodotDictionary();
-		int userId = response.ContainsKey("userId") ? (int)response["userId"] : 0;
-		string role = response.ContainsKey("role") ? response["role"].ToString() : "student";
-		string firstName = response.ContainsKey("firstName") ? response["firstName"].ToString() : "";
-		string lastName = response.ContainsKey("lastName") ? response["lastName"].ToString() : "";
-		string avatar = response.ContainsKey("avatar") ? response["avatar"].ToString() : "";
-		AccountSession.Current?.SetAccount(userId, role, firstName, lastName, 0, 0, avatar);
+		if (UserSession.TryStartFromLoginResponse(
+			responseText,
+			UserRole.Student,
+			out string errorMessage))
+		{
+			return true;
+		}
+
+		GD.PrintErr(errorMessage);
+		ShowMessage(errorMessage);
+		return false;
 	}
 
 	private void NavigateToRoleDashboard()
 	{
-		string dashboardPath = AccountSession.Current?.Role switch
+		string dashboardPath = UserSession.Role switch
 		{
-			"student" => "res://scene/Dashboard/UserDashboard/Student Dashboard/StudentDashboard.tscn",
-			"professor" => "res://scene/Dashboard/UserDashboard/Professor Dashboard/ProfessorDashboard.tscn",
-			"admin" => "res://scene/Dashboard/UserDashboard/Admin Dashboard/AdminDashboard.tscn",
+			UserRole.Student => "res://scene/Dashboard/UserDashboard/Student Dashboard/StudentDashboard.tscn",
+			UserRole.Professor => "res://scene/Dashboard/UserDashboard/Professor Dashboard/ProfessorDashboard.tscn",
+			UserRole.Admin => "res://scene/Dashboard/UserDashboard/Admin Dashboard/AdminDashboard.tscn",
 			_ => ""
 		};
 
 		if (string.IsNullOrWhiteSpace(dashboardPath))
 		{
 			ShowMessage("The account role is invalid.");
+			return;
+		}
+
+		if (!ResourceLoader.Exists(dashboardPath))
+		{
+			ShowMessage($"Dashboard scene was not found: {dashboardPath}");
+			GD.PrintErr($"Dashboard scene was not found: {dashboardPath}");
 			return;
 		}
 

@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://bwr1gx2ftpdgt"]
 
-[ext_resource type="Script" path="res://scene/Dashboard/DashboardController.cs" id="15_controller"]
 [ext_resource type="Texture2D" uid="uid://bhn36yyvvyrpc" path="res://asset/background/dashboard.png" id="1_1ohf6"]
 [ext_resource type="Texture2D" uid="uid://dkb5xipx3o3oh" path="res://asset/Icons/HomeButton.png" id="2_7n8xi"]
 [ext_resource type="Texture2D" uid="uid://b3ywy4l7escxr" path="res://asset/background/first.png" id="2_a03os"]
@@ -15,17 +14,18 @@
 [ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="12_8tglb"]
 [ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="13_1tjyp"]
 [ext_resource type="Texture2D" uid="uid://cdy3upgkc6uxf" path="res://asset/Icons/Menu.png" id="14_qs01i"]
+[ext_resource type="Script" path="res://scene/Dashboard/UserDashboard/Professor Dashboard/ProfessorDashboard.cs" id="ProfessorDashboardScript"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8icjc"]
 
 [node name="ProfessorDashboard" type="Control" unique_id=1379097029]
+script = ExtResource("ProfessorDashboardScript")
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("15_controller")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1258692280]
 layout_mode = 1

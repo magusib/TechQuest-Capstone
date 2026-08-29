@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://m8r8saovq37w"]
+
+[ext_resource type="PackedScene" uid="uid://c65cdoovlusqa" path="res://scene/AdventureGame/Dificulty/CharacterAnimation/player.tscn" id="1_1lfck"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_8icjc"]
+
+[node name="EasyMap" type="Node2D" unique_id=686103717]
+
+[node name="Player" parent="." unique_id=1836987956 instance=ExtResource("1_1lfck")]
+position = Vector2(-6, 32)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2107854592]
+position = Vector2(39, 62)
+zoom = Vector2(4, 4)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1578525517]
+position = Vector2(39, 93)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=659369218]
+shape = SubResource("WorldBoundaryShape2D_8icjc")

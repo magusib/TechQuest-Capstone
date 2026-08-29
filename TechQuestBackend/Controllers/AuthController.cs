@@ -182,6 +182,8 @@ namespace TechQuestBackend.Controllers
             };
 
             _db.Users.Add(user);
+            await _db.SaveChangesAsync();
+
             verification.IsUsed = true;
             await _db.SaveChangesAsync();
 
@@ -404,12 +406,16 @@ namespace TechQuestBackend.Controllers
             string email = NormalizeEmail(request.Email);
 
             var user = await _db.Users
-                .FirstOrDefaultAsync(u => u.Email.ToLower() == email && u.Role.ToLower() == role);
+                .FirstOrDefaultAsync(u =>
+                    u.Email.ToLower() == email &&
+                    u.Role.ToLower() == role.ToLower());
 
             if (user == null)
                 return BadRequest("Invalid email or password.");
 
-            bool passwordMatches = BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash);
+            bool passwordMatches =
+                BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash);
+
             if (!passwordMatches)
                 return BadRequest("Invalid email or password.");
 
@@ -423,8 +429,14 @@ namespace TechQuestBackend.Controllers
                 userId = user.Id,
                 firstName = user.FirstName,
                 lastName = user.LastName,
+                email = user.Email,
                 avatar = user.Avatar,
-                redirectTo = user.Role == "student" ? "student-dashboard" : user.Role == "professor" ? "professor-dashboard" : "admin-dashboard"
+                redirectTo =
+                    user.Role == "student"
+                        ? "student-dashboard"
+                        : user.Role == "professor"
+                            ? "professor-dashboard"
+                            : "admin-dashboard"
             });
         }
 
