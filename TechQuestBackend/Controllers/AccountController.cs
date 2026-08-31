@@ -49,6 +49,16 @@ namespace TechQuestBackend.Controllers
             int totalCoins = 0;
             int totalPoints = 0;
 
+            if (user.Role == "student")
+            {
+                var profile = await _db.StudentProfiles
+                    .AsNoTracking()
+                    .SingleOrDefaultAsync(item => item.UserId == user.Id);
+
+                totalCoins = profile?.TotalCoins ?? 0;
+                totalPoints = profile?.TotalPoints ?? 0;
+            }
+
             return Ok(new
             {
                 user.Id,

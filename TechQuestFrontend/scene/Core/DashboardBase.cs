@@ -3,6 +3,8 @@ using System;
 
 public abstract partial class DashboardBase : Control
 {
+	private ConfirmationDialog logoutConfirmationDialog;
+
 	// Existing Dashboard nodes
 	protected TextureButton HomeButton;
 	protected TextureButton RoomButton;
@@ -156,6 +158,9 @@ public abstract partial class DashboardBase : Control
 
 	protected const string UserSelectionPath =
 		"res://scene/UserSelection/UserSelection.tscn";
+
+	protected const string LandingPagePath =
+		"res://scene/LandingPage/LandingPage.tscn";
 
 	protected const string StudentRoomPath =
 		"res://scene/Dashboard/Modules/Room/StudentRoom.tscn";
@@ -373,7 +378,7 @@ public abstract partial class DashboardBase : Control
 				break;
 
 			case 1:
-				Logout();
+				ShowLogoutConfirmation();
 				break;
 
 			case 2:
@@ -381,6 +386,37 @@ public abstract partial class DashboardBase : Control
 					NavigateTo(UserSelectionPath);
 				break;
 		}
+	}
+
+	private void ShowLogoutConfirmation()
+	{
+		if (logoutConfirmationDialog == null)
+		{
+			logoutConfirmationDialog = new ConfirmationDialog();
+			logoutConfirmationDialog.Title = "Logout";
+			logoutConfirmationDialog.DialogText = "Are you sure you want to logout?";
+			logoutConfirmationDialog.OkButtonText = "Yes";
+			logoutConfirmationDialog.CancelButtonText = "No";
+			logoutConfirmationDialog.MinSize = new Vector2I(360, 150);
+			logoutConfirmationDialog.Confirmed += ConfirmLogout;
+			logoutConfirmationDialog.Canceled += OnLogoutCancellation;
+			AddChild(logoutConfirmationDialog);
+		}
+
+		logoutConfirmationDialog.PopupCentered();
+		logoutConfirmationDialog.GrabFocus();
+	}
+
+	private void ConfirmLogout()
+	{
+		UserSession.Clear();
+		NavigateTo(LandingPagePath);
+	}
+
+	private void OnLogoutCancellation()
+	{
+		if (logoutConfirmationDialog != null)
+			logoutConfirmationDialog.Hide();
 	}
 
 	protected virtual void OpenProfile()
@@ -403,7 +439,6 @@ public abstract partial class DashboardBase : Control
 
 	protected virtual void Logout()
 	{
-		UserSession.Clear();
-		NavigateTo(UserSelectionPath);
+		ConfirmLogout();
 	}
 }

@@ -22,6 +22,30 @@ namespace TechQuestBackend.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("TechQuestBackend.Models.Character", b =>
+                {
+                    b.Property<int>("CharacterId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CharacterId"));
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("CharacterId");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("StudentId")
+                        .IsUnique();
+
+                    b.ToTable("Character", (string)null);
+                });
+
             modelBuilder.Entity("TechQuestBackend.Models.EmailVerification", b =>
                 {
                     b.Property<int>("Id")
@@ -77,6 +101,198 @@ namespace TechQuestBackend.Migrations
                     b.ToTable("EmailVerifications", (string)null);
                 });
 
+            modelBuilder.Entity("TechQuestBackend.Models.GameResult", b =>
+                {
+                    b.Property<int>("ResultId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ResultId"));
+
+                    b.Property<int>("EarnedCoins")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("EarnedPoints")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("PlayedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ResultId");
+
+                    b.HasIndex("QuestionId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Game_result", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_Game_result_EarnedCoins_NonNegative", "\"EarnedCoins\" >= 0");
+
+                            t.HasCheckConstraint("CK_Game_result_EarnedPoints_NonNegative", "\"EarnedPoints\" >= 0");
+                        });
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.Leaderboard", b =>
+                {
+                    b.Property<int>("LeaderboardId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("LeaderboardId"));
+
+                    b.Property<int?>("RankPosition")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TotalPoints")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.HasKey("LeaderboardId");
+
+                    b.HasIndex("StudentId")
+                        .IsUnique();
+
+                    b.ToTable("Leaderboard", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_Leaderboard_RankPosition_Positive", "\"RankPosition\" IS NULL OR \"RankPosition\" > 0");
+
+                            t.HasCheckConstraint("CK_Leaderboard_TotalPoints_NonNegative", "\"TotalPoints\" >= 0");
+                        });
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.MiniGame", b =>
+                {
+                    b.Property<int>("MiniGameId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("MiniGameId"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("GameName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("GameType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("MiniGameId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.ToTable("Mini_games", (string)null);
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.MultiplayerRoom", b =>
+                {
+                    b.Property<int>("RoomId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RoomId"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("RoomCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("RoomName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)")
+                        .HasDefaultValue("waiting");
+
+                    b.HasKey("RoomId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("RoomCode")
+                        .IsUnique();
+
+                    b.ToTable("Multiplayer_room", (string)null);
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.Npc", b =>
+                {
+                    b.Property<int>("NpcId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("NpcId"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("NpcImage")
+                        .HasColumnType("text");
+
+                    b.Property<string>("NpcName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)")
+                        .HasDefaultValue("active");
+
+                    b.HasKey("NpcId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.ToTable("NPC", (string)null);
+                });
+
             modelBuilder.Entity("TechQuestBackend.Models.PasswordReset", b =>
                 {
                     b.Property<int>("Id")
@@ -117,6 +333,311 @@ namespace TechQuestBackend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PasswordResets", (string)null);
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.ProfessorUpload", b =>
+                {
+                    b.Property<int>("UploadId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UploadId"));
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<int>("ProfessorId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UploadedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.HasKey("UploadId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("ProfessorId");
+
+                    b.ToTable("Professor_uploads", (string)null);
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.Quest", b =>
+                {
+                    b.Property<int>("QuestId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("QuestId"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("QuestTitle")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int>("RewardCoins")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("RewardPoints")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("QuestId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.ToTable("Quest", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_Quest_DateRange", "\"EndDate\" IS NULL OR \"EndDate\" >= \"StartDate\"");
+
+                            t.HasCheckConstraint("CK_Quest_RewardCoins_NonNegative", "\"RewardCoins\" >= 0");
+
+                            t.HasCheckConstraint("CK_Quest_RewardPoints_NonNegative", "\"RewardPoints\" >= 0");
+                        });
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.Question", b =>
+                {
+                    b.Property<int>("QuestionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("QuestionId"));
+
+                    b.Property<string>("CorrectAnswer")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("MiniGameId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("NpcId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("QuestionText")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("Question");
+
+                    b.Property<string>("SubjectName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.HasKey("QuestionId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("MiniGameId");
+
+                    b.HasIndex("NpcId");
+
+                    b.ToTable("Question", (string)null);
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.RoomParticipant", b =>
+                {
+                    b.Property<int>("ParticipantsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ParticipantsId"));
+
+                    b.Property<DateTime>("JoinedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ParticipantsId");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("RoomId", "StudentId")
+                        .IsUnique();
+
+                    b.ToTable("Room_participants", (string)null);
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.RoomResult", b =>
+                {
+                    b.Property<int>("RoomResultId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RoomResultId"));
+
+                    b.Property<DateTime>("CompletedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Score")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("RoomResultId");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("RoomId", "StudentId")
+                        .IsUnique();
+
+                    b.ToTable("Room_result", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_Room_result_Score_NonNegative", "\"Score\" >= 0");
+                        });
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.ShopItem", b =>
+                {
+                    b.Property<int>("ItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ItemId"));
+
+                    b.Property<string>("AvatarItems")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CharacterItems")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("ItemName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<int>("PriceCoins")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.HasKey("ItemId");
+
+                    b.ToTable("Shop_items", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_Shop_items_PriceCoins_NonNegative", "\"PriceCoins\" >= 0");
+                        });
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.StudentProfile", b =>
+                {
+                    b.Property<int>("StudentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("StudentId"));
+
+                    b.Property<int>("TotalCoins")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("TotalPoints")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("StudentId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Student_profile", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_Student_profile_TotalCoins_NonNegative", "\"TotalCoins\" >= 0");
+
+                            t.HasCheckConstraint("CK_Student_profile_TotalPoints_NonNegative", "\"TotalPoints\" >= 0");
+                        });
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.StudentQuest", b =>
+                {
+                    b.Property<int>("StudentQuestId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("StudentQuestId"));
+
+                    b.Property<DateTime?>("CompletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("QuestId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)")
+                        .HasDefaultValue("not_started");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("StudentQuestId");
+
+                    b.HasIndex("QuestId");
+
+                    b.HasIndex("StudentId", "QuestId")
+                        .IsUnique();
+
+                    b.ToTable("Student_Quest", (string)null);
                 });
 
             modelBuilder.Entity("TechQuestBackend.Models.User", b =>
@@ -169,6 +690,302 @@ namespace TechQuestBackend.Migrations
                         .IsUnique();
 
                     b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.UserInventory", b =>
+                {
+                    b.Property<int>("InventoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("InventoryId"));
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("PurchasedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("InventoryId");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("StudentId", "ItemId")
+                        .IsUnique();
+
+                    b.ToTable("User_inventory", (string)null);
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.Character", b =>
+                {
+                    b.HasOne("TechQuestBackend.Models.ShopItem", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TechQuestBackend.Models.StudentProfile", "Student")
+                        .WithOne("Character")
+                        .HasForeignKey("TechQuestBackend.Models.Character", "StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Item");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.GameResult", b =>
+                {
+                    b.HasOne("TechQuestBackend.Models.Question", "Question")
+                        .WithMany("GameResults")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TechQuestBackend.Models.StudentProfile", "Student")
+                        .WithMany("GameResults")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Question");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.Leaderboard", b =>
+                {
+                    b.HasOne("TechQuestBackend.Models.StudentProfile", "Student")
+                        .WithMany("LeaderboardEntries")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.MiniGame", b =>
+                {
+                    b.HasOne("TechQuestBackend.Models.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("CreatedByUser");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.MultiplayerRoom", b =>
+                {
+                    b.HasOne("TechQuestBackend.Models.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("CreatedByUser");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.Npc", b =>
+                {
+                    b.HasOne("TechQuestBackend.Models.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("CreatedByUser");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.ProfessorUpload", b =>
+                {
+                    b.HasOne("TechQuestBackend.Models.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("TechQuestBackend.Models.User", "Professor")
+                        .WithMany()
+                        .HasForeignKey("ProfessorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("Professor");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.Quest", b =>
+                {
+                    b.HasOne("TechQuestBackend.Models.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("CreatedByUser");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.Question", b =>
+                {
+                    b.HasOne("TechQuestBackend.Models.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("TechQuestBackend.Models.MiniGame", "MiniGame")
+                        .WithMany("Questions")
+                        .HasForeignKey("MiniGameId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("TechQuestBackend.Models.Npc", "Npc")
+                        .WithMany("Questions")
+                        .HasForeignKey("NpcId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("MiniGame");
+
+                    b.Navigation("Npc");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.RoomParticipant", b =>
+                {
+                    b.HasOne("TechQuestBackend.Models.MultiplayerRoom", "Room")
+                        .WithMany("Participants")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TechQuestBackend.Models.StudentProfile", "Student")
+                        .WithMany("RoomParticipants")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.RoomResult", b =>
+                {
+                    b.HasOne("TechQuestBackend.Models.MultiplayerRoom", "Room")
+                        .WithMany("Results")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TechQuestBackend.Models.StudentProfile", "Student")
+                        .WithMany("RoomResults")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.StudentProfile", b =>
+                {
+                    b.HasOne("TechQuestBackend.Models.User", "User")
+                        .WithOne()
+                        .HasForeignKey("TechQuestBackend.Models.StudentProfile", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.StudentQuest", b =>
+                {
+                    b.HasOne("TechQuestBackend.Models.Quest", "Quest")
+                        .WithMany("StudentQuests")
+                        .HasForeignKey("QuestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TechQuestBackend.Models.StudentProfile", "Student")
+                        .WithMany("StudentQuests")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Quest");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.UserInventory", b =>
+                {
+                    b.HasOne("TechQuestBackend.Models.ShopItem", "Item")
+                        .WithMany("InventoryItems")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TechQuestBackend.Models.StudentProfile", "Student")
+                        .WithMany("InventoryItems")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Item");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.MiniGame", b =>
+                {
+                    b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.MultiplayerRoom", b =>
+                {
+                    b.Navigation("Participants");
+
+                    b.Navigation("Results");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.Npc", b =>
+                {
+                    b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.Quest", b =>
+                {
+                    b.Navigation("StudentQuests");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.Question", b =>
+                {
+                    b.Navigation("GameResults");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.ShopItem", b =>
+                {
+                    b.Navigation("InventoryItems");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.StudentProfile", b =>
+                {
+                    b.Navigation("Character");
+
+                    b.Navigation("GameResults");
+
+                    b.Navigation("InventoryItems");
+
+                    b.Navigation("LeaderboardEntries");
+
+                    b.Navigation("RoomParticipants");
+
+                    b.Navigation("RoomResults");
+
+                    b.Navigation("StudentQuests");
                 });
 #pragma warning restore 612, 618
         }

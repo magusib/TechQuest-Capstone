@@ -181,11 +181,21 @@ namespace TechQuestBackend.Controllers
                 CreatedAt = DateTime.UtcNow
             };
 
+            await using var transaction = await _db.Database.BeginTransactionAsync();
+
             _db.Users.Add(user);
             await _db.SaveChangesAsync();
 
+            _db.StudentProfiles.Add(new StudentProfile
+            {
+                UserId = user.Id,
+                TotalCoins = 0,
+                TotalPoints = 0
+            });
+
             verification.IsUsed = true;
             await _db.SaveChangesAsync();
+            await transaction.CommitAsync();
 
             return Ok(new { message = "Email verified successfully. Student account created." });
         }
@@ -421,6 +431,15 @@ namespace TechQuestBackend.Controllers
 
             var token = GenerateJwtToken(user);
 
+            StudentProfile? studentProfile = null;
+
+            if (user.Role.Equals("student", StringComparison.OrdinalIgnoreCase))
+            {
+                studentProfile = await _db.StudentProfiles
+                    .AsNoTracking()
+                    .SingleOrDefaultAsync(profile => profile.UserId == user.Id);
+            }
+
             return Ok(new
             {
                 message = "Login successful.",
@@ -429,8 +448,11 @@ namespace TechQuestBackend.Controllers
                 userId = user.Id,
                 firstName = user.FirstName,
                 lastName = user.LastName,
+                yearLevel = user.Role == "student" ? user.YearLevel : null,
                 email = user.Email,
                 avatar = user.Avatar,
+                totalCoins = studentProfile?.TotalCoins ?? 0,
+                totalPoints = studentProfile?.TotalPoints ?? 0,
                 redirectTo =
                     user.Role == "student"
                         ? "student-dashboard"
