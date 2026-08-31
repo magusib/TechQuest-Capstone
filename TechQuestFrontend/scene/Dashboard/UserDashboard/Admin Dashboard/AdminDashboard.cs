@@ -4,9 +4,8 @@ public partial class AdminDashboard : DashboardBase
 {
 	public override void _Ready()
 	{
-		if (UserSession.Role == UserRole.None)
+		if (!RequireRole(UserRole.Admin))
 		{
-			GD.PrintErr("No active user session. Returning to User Selection.");
 			NavigateTo(UserSelectionPath);
 			return;
 		}

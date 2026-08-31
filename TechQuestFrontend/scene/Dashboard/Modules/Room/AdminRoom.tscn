@@ -1,9 +1,26 @@
 [gd_scene format=3 uid="uid://ddds7r5hypo7u"]
 
-[node name="AdminShop" type="Control" unique_id=931071196]
+[ext_resource type="Script" uid="uid://ch5qqsqqhl4oe" path="res://scene/Dashboard/Modules/Room/AdminRoom.cs" id="1_yysdm"]
+
+[node name="AdminRoom" type="Control" unique_id=931071196]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_yysdm")
+
+[node name="AdminRoom" type="Label" parent="." unique_id=2001310932]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Admin Room"
+
+[node name="BackButton" type="Button" parent="." unique_id=1543360117]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 56.0
+offset_right = 126.0
+offset_bottom = 95.0
+text = "Back"

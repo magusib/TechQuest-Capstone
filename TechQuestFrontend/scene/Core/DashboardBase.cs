@@ -157,30 +157,53 @@ public abstract partial class DashboardBase : Control
 	protected const string UserSelectionPath =
 		"res://scene/UserSelection/UserSelection.tscn";
 
-	// These are placeholders until the actual module scenes exist.
-	protected const string RoomDashboardPath =
+	protected const string StudentRoomPath =
 		"res://scene/Dashboard/Modules/Room/StudentRoom.tscn";
 
-	protected const string LeaderboardDashboardPath =
+	protected const string ProfessorRoomPath =
+		"res://scene/Dashboard/Modules/Room/ProfessorRoom.tscn";
+
+	protected const string AdminRoomPath =
+		"res://scene/Dashboard/Modules/Room/AdminRoom.tscn";
+
+	protected const string StudentLeaderboardPath =
 		"res://scene/Dashboard/Modules/Leaderboard/StudentLeaderboard.tscn";
 
-	protected const string ShopDashboardPath =
+	protected const string ProfessorLeaderboardPath =
+		"res://scene/Dashboard/Modules/Leaderboard/ProfessorLeaderboard.tscn";
+
+	protected const string AdminLeaderboardPath =
+		"res://scene/Dashboard/Modules/Leaderboard/AdminLeaderboard.tscn";
+
+	protected const string StudentShopPath =
 		"res://scene/Dashboard/Modules/Shop/StudentShop.tscn";
 
-	protected const string CharacterDashboardPath =
+	protected const string ProfessorShopPath =
+		"res://scene/Dashboard/Modules/Shop/ProfessorShop.tscn";
+
+	protected const string AdminShopPath =
+		"res://scene/Dashboard/Modules/Shop/AdminShop.tscn";
+
+	protected const string StudentCharacterPath =
 		"res://scene/Dashboard/Modules/Character/StudentCharacter.tscn";
 
-	protected const string StorylineDashboardPath =
+	protected const string StudentStorylinePath =
 		"res://scene/Dashboard/Modules/Storyline/StudentStoryline.tscn";
 
+	protected const string ProfessorStorylinePath =
+		"res://scene/Dashboard/Modules/Storyline/ProfessorStoryline.tscn";
+
+	protected const string AdminStorylinePath =
+		"res://scene/Dashboard/Modules/Storyline/AdminStoryline.tscn";
+
 	protected const string EasyMapPath =
-		"res://scene/Difficulty/EasyLevel/EasyLevelMap/EasyLevelMap.tscn";
+		"res://scene//AdventureGame/Difficulty/EasyLevelMap/EasyMap.tscn";
 
 	protected const string MediumMapPath =
-		"res://scene/Difficulty/MediumLevel/MediumLevelMap/MediumLevelMap.tscn";
+		"res://scene/AdventureGame/Difficulty/MediumLevelMap/MediumMap.tscn";
 
 	protected const string HardMapPath =
-		"res://scene/Difficulty/HardLevel/HardLevelMap/HardLevelMap.tscn";
+		"res://scene/AdventureGame/Difficulty/HardLevelMap/HardMap.tscn";
 
 	protected void NavigateTo(string scenePath)
 	{
@@ -236,17 +259,56 @@ public abstract partial class DashboardBase : Control
 
 	protected virtual void OnRoomPressed()
 	{
-		NavigateTo(RoomDashboardPath);
+		switch (UserSession.Role)
+		{
+			case UserRole.Student:
+				NavigateTo(StudentRoomPath);
+				break;
+
+			case UserRole.Professor:
+				NavigateTo(ProfessorRoomPath);
+				break;
+
+			case UserRole.Admin:
+				NavigateTo(AdminRoomPath);
+				break;
+		}
 	}
 
 	protected virtual void OnLeaderboardPressed()
 	{
-		NavigateTo(LeaderboardDashboardPath);
+		switch (UserSession.Role)
+		{
+			case UserRole.Student:
+				NavigateTo(StudentLeaderboardPath);
+				break;
+
+			case UserRole.Professor:
+				NavigateTo(ProfessorLeaderboardPath);
+				break;
+
+			case UserRole.Admin:
+				NavigateTo(AdminLeaderboardPath);
+				break;
+		}
 	}
 
 	protected virtual void OnShopPressed()
 	{
-		NavigateTo(ShopDashboardPath);
+		switch (UserSession.Role)
+		{
+			case UserRole.Student:
+				NavigateTo(StudentShopPath);
+				break;
+
+			case UserRole.Professor:
+				NavigateTo(ProfessorShopPath);
+				break;
+
+			case UserRole.Admin:
+				NavigateTo(AdminShopPath);
+				break;
+		}
 	}
 
 	protected virtual void OnCharacterPressed()
@@ -254,12 +316,25 @@ public abstract partial class DashboardBase : Control
 		if (!RequireRole(UserRole.Student))
 			return;
 
-		NavigateTo(CharacterDashboardPath);
+		NavigateTo(StudentCharacterPath);
 	}
 
 	protected virtual void OnStorylinePressed()
 	{
-		NavigateTo(StorylineDashboardPath);
+		switch (UserSession.Role)
+		{
+			case UserRole.Student:
+				NavigateTo(StudentStorylinePath);
+				break;
+
+			case UserRole.Professor:
+				NavigateTo(ProfessorStorylinePath);
+				break;
+
+			case UserRole.Admin:
+				NavigateTo(AdminStorylinePath);
+				break;
+		}
 	}
 
 	protected virtual void OnEasyPressed()

@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://d35y7s3uq8wo2"]
 
+[ext_resource type="Script" uid="uid://ce7yqhxcm8da6" path="res://scene/Dashboard/Modules/Leaderboard/StudentLeaderboard.cs" id="1_b6kkh"]
+
 [node name="StudentLeaderboard" type="Control" unique_id=2011175438]
 layout_mode = 3
 anchors_preset = 15
@@ -7,3 +9,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_b6kkh")
+
+[node name="StudentLeaderboard" type="Label" parent="." unique_id=1205848239]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "StudentLeaderboard"
+
+[node name="BackButton" type="Button" parent="." unique_id=780617318]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 56.0
+offset_right = 126.0
+offset_bottom = 95.0
+text = "Back"

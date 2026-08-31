@@ -1,9 +1,26 @@
 [gd_scene format=3 uid="uid://bxvpiuvyegexl"]
 
-[node name="StudentLeaderboard" type="Control" unique_id=1931668617]
+[ext_resource type="Script" uid="uid://dyq2fr4yl3k7e" path="res://scene/Dashboard/Modules/Room/StudentRoom.cs" id="1_ftlk2"]
+
+[node name="StudentRoom" type="Control" unique_id=1931668617]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_ftlk2")
+
+[node name="StudentRoom" type="Label" parent="." unique_id=1297113067]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Student Room"
+
+[node name="BackButton" type="Button" parent="." unique_id=1425451928]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 56.0
+offset_right = 126.0
+offset_bottom = 95.0
+text = "Back"

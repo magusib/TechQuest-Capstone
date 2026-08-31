@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bw63big3fpuwh"]
 
+[ext_resource type="Script" uid="uid://diih1vxba7wbq" path="res://scene/Dashboard/UserDashboard/Student Dashboard/StudentProfile.cs" id="1_jduhw"]
 [ext_resource type="Texture2D" uid="uid://4kraosl2m556" path="res://asset/background/ptc.png" id="1_nnof5"]
 
 [node name="StudentProfile" type="Control" unique_id=473532987]
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_jduhw")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1772561368]
 layout_mode = 1
@@ -35,3 +37,11 @@ offset_top = 65.0
 offset_right = 622.0
 offset_bottom = 135.0
 text = "Student Profile"
+
+[node name="BackButton" type="Button" parent="." unique_id=444774344]
+layout_mode = 0
+offset_left = 248.0
+offset_top = 57.0
+offset_right = 337.0
+offset_bottom = 97.0
+text = "Back"

@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bw63big3fpuwh"]
 
+[ext_resource type="Script" uid="uid://c7higuh1432sx" path="res://scene/Dashboard/UserDashboard/Admin Dashboard/AdminProfile.cs" id="1_kn8ht"]
 [ext_resource type="Texture2D" uid="uid://4kraosl2m556" path="res://asset/background/ptc.png" id="1_nnof5"]
 
 [node name="AdminProfile" type="Control" unique_id=473532987]
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_kn8ht")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1772561368]
 layout_mode = 1
@@ -35,3 +37,11 @@ offset_top = 65.0
 offset_right = 622.0
 offset_bottom = 135.0
 text = "Admin Profile"
+
+[node name="BackButton" type="Button" parent="." unique_id=1417247103]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 64.0
+offset_right = 314.0
+offset_bottom = 95.0
+text = "Back"

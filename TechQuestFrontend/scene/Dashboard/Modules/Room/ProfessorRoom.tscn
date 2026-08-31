@@ -1,9 +1,26 @@
 [gd_scene format=3 uid="uid://v1nrbnccu6md"]
 
-[node name="ProfessorShop" type="Control" unique_id=788382029]
+[ext_resource type="Script" uid="uid://b3kswubeyxx4b" path="res://scene/Dashboard/Modules/Room/ProfessorRoom.cs" id="1_sm8m0"]
+
+[node name="ProfessorRoom" type="Control" unique_id=788382029]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_sm8m0")
+
+[node name="ProfessorRoom" type="Label" parent="." unique_id=88037220]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Professor Room"
+
+[node name="BackButton" type="Button" parent="." unique_id=70363397]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 56.0
+offset_right = 126.0
+offset_bottom = 95.0
+text = "Back"

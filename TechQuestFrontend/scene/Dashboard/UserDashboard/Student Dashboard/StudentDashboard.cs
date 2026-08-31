@@ -4,10 +4,8 @@ public partial class StudentDashboard : DashboardBase
 {
 	public override void _Ready()
 	{
-		// Safety: this scene is a Student dashboard.
-		if (UserSession.Role == UserRole.None)
+		if (!RequireRole(UserRole.Student))
 		{
-			GD.PrintErr("No active user session. Returning to User Selection.");
 			NavigateTo(UserSelectionPath);
 			return;
 		}

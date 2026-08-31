@@ -1,14 +1,16 @@
 [gd_scene format=3 uid="uid://bw63big3fpuwh"]
 
 [ext_resource type="Texture2D" uid="uid://4kraosl2m556" path="res://asset/background/ptc.png" id="1_nnof5"]
+[ext_resource type="Script" uid="uid://t7oxblboijow" path="res://scene/Dashboard/UserDashboard/Professor Dashboard/ProfessorProfile.cs" id="1_xt1yg"]
 
-[node name="StudentProfile" type="Control" unique_id=473532987]
+[node name="ProfessorProfile" type="Control" unique_id=473532987]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_xt1yg")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1772561368]
 layout_mode = 1
@@ -34,4 +36,12 @@ offset_left = 494.0
 offset_top = 65.0
 offset_right = 622.0
 offset_bottom = 135.0
-text = "Student Profile"
+text = "Professor Profile"
+
+[node name="BackButton" type="Button" parent="." unique_id=1401688056]
+layout_mode = 0
+offset_left = 262.0
+offset_top = 65.0
+offset_right = 323.0
+offset_bottom = 96.0
+text = "Back"

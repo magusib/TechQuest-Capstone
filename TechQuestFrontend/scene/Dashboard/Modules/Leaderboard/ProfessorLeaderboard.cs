@@ -1,15 +1,20 @@
 using Godot;
 using System;
 
-public partial class ProfessorLeaderboard : Node
+public partial class ProfessorLeaderboard : Control
 {
-	// Called when the node enters the scene tree for the first time.
+	private Button backButton;
+
 	public override void _Ready()
 	{
+		backButton = GetNode<Button>("BackButton");
+		
+		backButton.Pressed += OnBackPressed;
+
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	private void OnBackPressed()
 	{
+		GetTree().ChangeSceneToFile("res://scene/Dashboard/UserDashboard/Professor Dashboard/ProfessorDashboard.tscn");
 	}
 }

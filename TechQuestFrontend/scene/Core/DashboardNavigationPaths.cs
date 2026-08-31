@@ -43,11 +43,11 @@ public static class DashboardNavigationPaths
 		"res://scene/Dashboard/Modules/Storyline/Storyline.tscn";
 
 	public const string EasyMap =
-		"res://scene/Difficulty/EasyLevel/EasyLevelMap/EasyLevelMap.tscn";
+		"res://scene/AdventureGame/Difficulty/EasyLevelMap/EasyMap.tscn";
 
 	public const string MediumMap =
-		"res://scene/Difficulty/MediumLevel/MediumLevelMap/MediumLevelMap.tscn";
+		"res://scene/AdventureGame/Difficulty/MediumLevelMap/MediumMap.tscn";
 
 	public const string HardMap =
-		"res://scene/Difficulty/HardLevel/HardLevelMap/HardLevelMap.tscn";
+		"res://scene/AdventureGame/Difficulty/HardLevelMap/HardMap.tscn";
 }

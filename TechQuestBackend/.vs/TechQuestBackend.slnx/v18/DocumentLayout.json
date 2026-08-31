@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\Models\\StudentProfile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Models\\StudentProfile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -57,10 +61,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\Models\\Student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Models\\Student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -70,23 +70,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "StudentProfile.cs",
-              "DocumentMoniker": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\Models\\StudentProfile.cs",
-              "RelativeDocumentMoniker": "Models\\StudentProfile.cs",
-              "ToolTip": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\Models\\StudentProfile.cs",
-              "RelativeToolTip": "Models\\StudentProfile.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAAAAcAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-24T12:30:17.747Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "PendingStudent.cs",
               "DocumentMoniker": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\Models\\PendingStudent.cs",
               "RelativeDocumentMoniker": "Models\\PendingStudent.cs",
@@ -98,7 +86,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
@@ -110,7 +98,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "EmailService.cs",
               "DocumentMoniker": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\Services\\EmailService.cs",
               "RelativeDocumentMoniker": "Services\\EmailService.cs",
@@ -135,7 +123,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "20260809115515_AddPendingStudent.cs",
               "DocumentMoniker": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\Migrations\\20260809115515_AddPendingStudent.cs",
               "RelativeDocumentMoniker": "Migrations\\20260809115515_AddPendingStudent.cs",
@@ -147,7 +135,31 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-08-09T11:06:29.53Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "StudentProfile.cs",
+              "DocumentMoniker": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\Models\\StudentProfile.cs",
+              "RelativeDocumentMoniker": "Models\\StudentProfile.cs",
+              "ToolTip": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\Models\\StudentProfile.cs",
+              "RelativeToolTip": "Models\\StudentProfile.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAAAAcAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-24T12:30:17.747Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "VerifyOTPRequest.cs",
               "DocumentMoniker": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\Models\\DTOs\\VerifyOTPRequest.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\VerifyOTPRequest.cs",
@@ -159,7 +171,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "OTPService.cs",
               "DocumentMoniker": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\Services\\OTPService.cs",
               "RelativeDocumentMoniker": "Services\\OTPService.cs",
@@ -171,7 +183,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "RegisterStudentRequest.cs",
               "DocumentMoniker": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\Models\\DTOs\\RegisterStudentRequest.cs",
               "RelativeDocumentMoniker": "Models\\DTOs\\RegisterStudentRequest.cs",
@@ -183,7 +195,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "20260809111221_InitialCreate.cs",
               "DocumentMoniker": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\Migrations\\20260809111221_InitialCreate.cs",
               "RelativeDocumentMoniker": "Migrations\\20260809111221_InitialCreate.cs",
@@ -195,7 +207,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "OTP.cs",
               "DocumentMoniker": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\Models\\OTP.cs",
               "RelativeDocumentMoniker": "Models\\OTP.cs",
@@ -207,7 +219,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "Professor.cs",
               "DocumentMoniker": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\Models\\Professor.cs",
               "RelativeDocumentMoniker": "Models\\Professor.cs",
@@ -219,7 +231,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "Admin.cs",
               "DocumentMoniker": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\Models\\Admin.cs",
               "RelativeDocumentMoniker": "Models\\Admin.cs",
@@ -231,7 +243,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "Student.cs",
               "DocumentMoniker": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\Models\\Student.cs",
               "RelativeDocumentMoniker": "Models\\Student.cs",
@@ -240,18 +252,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-08-09T11:09:03.504Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-08-09T11:06:29.53Z"
             }
           ]
         }

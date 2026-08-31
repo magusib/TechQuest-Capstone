@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://bkcwf51pcqajs"]
 
+[ext_resource type="Script" uid="uid://col0h2er2lwnr" path="res://scene/Dashboard/Modules/Shop/ProfessorShop.cs" id="1_37531"]
+
 [node name="ProfessorShop" type="Control" unique_id=49887313]
 layout_mode = 3
 anchors_preset = 15
@@ -7,3 +9,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_37531")
+
+[node name="ProfessorShop" type="Label" parent="." unique_id=359321085]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Professor Shop"
+
+[node name="BackButton" type="Button" parent="." unique_id=1524563099]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 56.0
+offset_right = 126.0
+offset_bottom = 95.0
+text = "Back"

@@ -4,9 +4,8 @@ public partial class ProfessorDashboard : DashboardBase
 {
 	public override void _Ready()
 	{
-		if (UserSession.Role == UserRole.None)
+		if (!RequireRole(UserRole.Professor))
 		{
-			GD.PrintErr("No active user session. Returning to User Selection.");
 			NavigateTo(UserSelectionPath);
 			return;
 		}

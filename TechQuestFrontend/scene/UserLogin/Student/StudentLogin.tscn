@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://chm4d5klm5we6"]
 
 [ext_resource type="Texture2D" uid="uid://b4uq7j48menoo" path="res://asset/background/ptc 1.png" id="1_aiqbg"]
-[ext_resource type="Script" uid="uid://gv62nyx4telt" path="res://scene/Student/StudentLogin.cs" id="1_q54ml"]
+[ext_resource type="Script" uid="uid://gv62nyx4telt" path="res://scene/UserLogin/Student/StudentLogin.cs" id="1_q54ml"]
 [ext_resource type="StyleBox" uid="uid://bofr3y60ei71y" path="res://asset/style/panel_bordered.tres" id="2_yljco"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xa56u"]
@@ -74,6 +74,7 @@ offset_top = 275.0
 offset_right = 402.0
 offset_bottom = 327.0
 placeholder_text = "Enter password"
+secret = true
 
 [node name="ForgotPasswordLink" type="Button" parent="LoginPanel" unique_id=1883308405]
 layout_mode = 0
@@ -186,6 +187,7 @@ offset_top = 358.0
 offset_right = 371.0
 offset_bottom = 389.0
 placeholder_text = "confirm password"
+secret = true
 
 [node name="RegisterButton" type="Button" parent="RegisterPanel" unique_id=972092759]
 layout_mode = 0
@@ -250,6 +252,7 @@ offset_top = 165.0
 offset_right = 375.0
 offset_bottom = 220.0
 placeholder_text = "new password"
+secret = true
 
 [node name="ConfirmPasswordInput" type="LineEdit" parent="ForgotPasswordPopup" unique_id=235639494]
 offset_left = 52.0
@@ -257,6 +260,7 @@ offset_top = 242.0
 offset_right = 373.0
 offset_bottom = 297.0
 placeholder_text = "confirm password"
+secret = true
 
 [node name="SaveButton" type="Button" parent="ForgotPasswordPopup" unique_id=1156968232]
 offset_left = 36.0

@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://cesd6ixnx3jit"]
 
+[ext_resource type="Script" uid="uid://xd243rk36bg1" path="res://scene/Dashboard/Modules/Shop/AdminShop.cs" id="1_b1btb"]
+
 [node name="AdminShop" type="Control" unique_id=1209913628]
 layout_mode = 3
 anchors_preset = 15
@@ -7,3 +9,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_b1btb")
+
+[node name="AdminShop" type="Label" parent="." unique_id=706800279]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Admin Shop"
+
+[node name="BackButton" type="Button" parent="." unique_id=1460081858]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 56.0
+offset_right = 126.0
+offset_bottom = 95.0
+text = "Back"

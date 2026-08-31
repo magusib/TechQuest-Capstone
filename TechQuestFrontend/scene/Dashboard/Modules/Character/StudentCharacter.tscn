@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://3gisy7mq8ith"]
 
+[ext_resource type="Script" uid="uid://cfw76nxcxitqd" path="res://scene/Dashboard/Modules/Character/StudentCharacter.cs" id="1_qnh6h"]
+
 [node name="StudentCharacter" type="Control" unique_id=1703512676]
 layout_mode = 3
 anchors_preset = 15
@@ -7,3 +9,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_qnh6h")
+
+[node name="StudentCharacter" type="Label" parent="." unique_id=1267412623]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Student Character"
+
+[node name="BackButton" type="Button" parent="." unique_id=1789755919]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 56.0
+offset_right = 126.0
+offset_bottom = 95.0
+text = "Back"
