@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TechQuestBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+537af77e01017804b8d97f7e9803b451dfb06539")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4c59edbc752ea0906594176d2848ff05939d39ea")]
 [assembly: System.Reflection.AssemblyProductAttribute("TechQuestBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TechQuestBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

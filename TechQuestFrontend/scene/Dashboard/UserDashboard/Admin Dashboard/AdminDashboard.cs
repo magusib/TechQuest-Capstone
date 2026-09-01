@@ -42,24 +42,18 @@ public partial class AdminDashboard : DashboardBase
 
 		PopupMenu popup = MenuButton.GetPopup();
 
-		// Existing Admin scene needs 3 menu entries:
-		// 0 = Profile, 1 = Logout, 2 = User Management.
 		popup.Clear();
 
 		popup.AddItem("Profile", 0);
 		popup.AddItem("Logout", 1);
-		popup.AddItem("User", 2);
+		popup.AddItem("User Management", 2);
 	}
 
 	protected override void OnMenuItemPressed(long id)
 	{
 		if (id == 2)
 		{
-			// Change this path when User Management scene is created.
-			const string userManagementPath =
-				"res://scene/UserManagement/UserManagement.tscn";
-
-			NavigateTo(userManagementPath);
+			NavigateTo(UserManagementPath);
 			return;
 		}
 

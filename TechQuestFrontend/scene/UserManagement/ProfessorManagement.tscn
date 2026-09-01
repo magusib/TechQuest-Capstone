@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://c1dv16lfetnjm"]
+
+[ext_resource type="Script" uid="uid://bf2337smfrm5a" path="res://scene/UserManagement/ProfessorManagement.cs" id="1_3wde3"]
+[ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="1_iqqm2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mkigk"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="ProfessorManagement" type="Control" unique_id=1731733020]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3wde3")
+
+[node name="Background" type="TextureRect" parent="." unique_id=2068497033]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_iqqm2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="." unique_id=1708155688]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 63.0
+offset_right = 234.0
+offset_bottom = 114.0
+text = "User Management"
+
+[node name="ProfessorButton" type="Button" parent="." unique_id=250644718]
+layout_mode = 0
+offset_left = 687.0
+offset_top = 72.0
+offset_right = 909.0
+offset_bottom = 106.0
+text = "Professor"
+
+[node name="StudentButton" type="Button" parent="." unique_id=504962804]
+layout_mode = 0
+offset_left = 913.0
+offset_top = 69.0
+offset_right = 1135.0
+offset_bottom = 103.0
+text = "Student"
+
+[node name="RegisterButton" type="Button" parent="." unique_id=1997057369]
+layout_mode = 0
+offset_left = 973.0
+offset_top = 11.0
+offset_right = 1100.0
+offset_bottom = 42.0
+text = "Create Account"
+
+[node name="SearchBar" type="LineEdit" parent="." unique_id=139595662]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 99.0
+offset_right = 451.0
+offset_bottom = 135.0
+theme_override_colors/font_color = Color(0.004198928, 0.0010861665, 0.0007995391, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_mkigk")
+text = "Search student by name"
+alignment = 1
+
+[node name="Panel" type="Panel" parent="." unique_id=542514270]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 165.0
+offset_right = 1103.0
+offset_bottom = 585.0
+
+[node name="BackButton" type="Button" parent="." unique_id=554648536]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 18.0
+offset_right = 94.0
+offset_bottom = 49.0
+text = "Back"

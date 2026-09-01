@@ -159,6 +159,9 @@ public abstract partial class DashboardBase : Control
 	protected const string UserSelectionPath =
 		"res://scene/UserSelection/UserSelection.tscn";
 
+	protected const string UserManagementPath =
+		"res://scene/UserManagement/UserManagement.tscn";
+
 	protected const string LandingPagePath =
 		"res://scene/LandingPage/LandingPage.tscn";
 
@@ -383,7 +386,7 @@ public abstract partial class DashboardBase : Control
 
 			case 2:
 				if (UserSession.HasRole(UserRole.Admin))
-					NavigateTo(UserSelectionPath);
+					NavigateTo(UserManagementPath);
 				break;
 		}
 	}

@@ -1,0 +1,224 @@
+[gd_scene format=3 uid="uid://c17mv3l7bw7v8"]
+
+[ext_resource type="Script" uid="uid://cmuplmwcks3n5" path="res://scene/UserManagement/ProfessorRegister.cs" id="1_8kmy4"]
+[ext_resource type="Texture2D" uid="uid://b4uq7j48menoo" path="res://asset/background/ptc 1.png" id="1_ya7sn"]
+[ext_resource type="StyleBox" uid="uid://bofr3y60ei71y" path="res://asset/style/panel_bordered.tres" id="2_8kmy4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya7sn"]
+
+[node name="ProfessorRegister" type="Control" unique_id=1321967028]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8kmy4")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1783726935]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ya7sn")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RegisterPanel" type="Panel" parent="." unique_id=390936990]
+layout_mode = 0
+offset_left = 343.0
+offset_top = 71.0
+offset_right = 769.0
+offset_bottom = 578.0
+theme_override_styles/panel = ExtResource("2_8kmy4")
+
+[node name="RegisterLabel" type="Label" parent="RegisterPanel" unique_id=37814543]
+layout_mode = 0
+offset_left = 119.0
+offset_top = 23.0
+offset_right = 291.0
+offset_bottom = 69.0
+text = "Professor Registration"
+
+[node name="FirstNameInput" type="LineEdit" parent="RegisterPanel" unique_id=1926858488]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 100.0
+offset_right = 343.0
+offset_bottom = 131.0
+placeholder_text = "Enter your firstname"
+
+[node name="LastNameInput" type="LineEdit" parent="RegisterPanel" unique_id=1769952594]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 163.0
+offset_right = 241.0
+offset_bottom = 194.0
+placeholder_text = "Enter your lastname"
+
+[node name="EmailInput" type="LineEdit" parent="RegisterPanel" unique_id=251261048]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 264.0
+offset_right = 368.0
+offset_bottom = 295.0
+placeholder_text = "Enter your PTC email"
+
+[node name="PasswordInput" type="LineEdit" parent="RegisterPanel" unique_id=872218822]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 320.0
+offset_right = 367.0
+offset_bottom = 351.0
+placeholder_text = "Enter your password"
+secret = true
+
+[node name="ConfirmPasswordInput" type="LineEdit" parent="RegisterPanel" unique_id=324290375]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 358.0
+offset_right = 371.0
+offset_bottom = 389.0
+placeholder_text = "confirm password"
+secret = true
+
+[node name="RegisterButton" type="Button" parent="RegisterPanel" unique_id=1662482735]
+layout_mode = 0
+offset_left = 92.0
+offset_top = 398.0
+offset_right = 307.0
+offset_bottom = 440.0
+text = "Register"
+
+[node name="BackToLoginButton" type="Button" parent="RegisterPanel" unique_id=1555773078]
+layout_mode = 0
+offset_left = 233.0
+offset_top = 436.0
+offset_right = 442.0
+offset_bottom = 500.0
+theme_override_colors/font_color = Color(0, 0.19607843, 0.8745098, 1)
+text = "Login"
+flat = true
+
+[node name="LoginLabel" type="Label" parent="RegisterPanel" unique_id=442641437]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 456.0
+offset_right = 167.0
+offset_bottom = 490.0
+text = "Already Have an Account?"
+
+[node name="VerifiedIcon" type="TextureRect" parent="RegisterPanel" unique_id=1882250117]
+visible = false
+layout_mode = 0
+offset_left = 304.0
+offset_top = 250.0
+offset_right = 432.0
+offset_bottom = 378.0
+
+[node name="ForgotPasswordPopup" type="Window" parent="." unique_id=1009100388]
+oversampling_override = 1.0
+position = Vector2i(294, 36)
+size = Vector2i(500, 350)
+visible = false
+theme_override_colors/title_color = Color(0.8560673, 0.8560673, 0.85606724, 1)
+theme_override_colors/title_outline_modulate = Color(1, 1, 1, 1)
+theme_override_styles/embedded_border = SubResource("StyleBoxFlat_ya7sn")
+
+[node name="Title" type="Label" parent="ForgotPasswordPopup" unique_id=1947504365]
+offset_left = 103.0
+offset_top = 9.0
+offset_right = 334.0
+offset_bottom = 71.0
+text = "Reset Password"
+
+[node name="EmailInput" type="LineEdit" parent="ForgotPasswordPopup" unique_id=425187061]
+offset_left = 54.0
+offset_top = 86.0
+offset_right = 375.0
+offset_bottom = 141.0
+placeholder_text = "email"
+
+[node name="NewPasswordInput" type="LineEdit" parent="ForgotPasswordPopup" unique_id=601002925]
+offset_left = 54.0
+offset_top = 165.0
+offset_right = 375.0
+offset_bottom = 220.0
+placeholder_text = "new password"
+secret = true
+
+[node name="ConfirmPasswordInput" type="LineEdit" parent="ForgotPasswordPopup" unique_id=1981445170]
+offset_left = 52.0
+offset_top = 242.0
+offset_right = 373.0
+offset_bottom = 297.0
+placeholder_text = "confirm password"
+secret = true
+
+[node name="SaveButton" type="Button" parent="ForgotPasswordPopup" unique_id=409316766]
+offset_left = 36.0
+offset_top = 309.0
+offset_right = 146.0
+offset_bottom = 345.0
+text = "Save"
+
+[node name="CancelButton" type="Button" parent="ForgotPasswordPopup" unique_id=569804807]
+offset_left = 270.0
+offset_top = 305.0
+offset_right = 380.0
+offset_bottom = 341.0
+text = "Cancel"
+
+[node name="OTPPopup" type="Window" parent="." unique_id=2072802691]
+oversampling_override = 1.0
+position = Vector2i(300, 70)
+size = Vector2i(500, 350)
+visible = false
+
+[node name="Label" type="Label" parent="OTPPopup" unique_id=1045837428]
+offset_left = 137.0
+offset_top = 24.0
+offset_right = 327.0
+offset_bottom = 73.0
+text = "Enter 6-OTP Number"
+
+[node name="OTPInput" type="LineEdit" parent="OTPPopup" unique_id=96021990]
+offset_left = 17.0
+offset_top = 120.0
+offset_right = 476.0
+offset_bottom = 211.0
+
+[node name="ConfirmButton" type="Button" parent="OTPPopup" unique_id=286046916]
+offset_left = 26.0
+offset_top = 242.0
+offset_right = 201.0
+offset_bottom = 289.0
+text = "confirm"
+
+[node name="ResendButton" type="Button" parent="OTPPopup" unique_id=1443171288]
+offset_left = 281.0
+offset_top = 244.0
+offset_right = 456.0
+offset_bottom = 291.0
+text = "Resend"
+
+[node name="CancelButton" type="Button" parent="OTPPopup" unique_id=1128938644]
+offset_left = 148.0
+offset_top = 302.0
+offset_right = 323.0
+offset_bottom = 349.0
+text = "Cancel"
+
+[node name="MessageDialog" type="AcceptDialog" parent="." unique_id=455396223]
+
+[node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=996486211]
+
+[node name="BackButton" type="Button" parent="." unique_id=348621010]
+layout_mode = 0
+offset_left = 269.0
+offset_top = 44.0
+offset_right = 344.0
+offset_bottom = 75.0
+text = "Back"

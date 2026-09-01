@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://c3hrlawgygagm"]
+
+[ext_resource type="Script" uid="uid://ob7pc8m4wpv7" path="res://scene/UserManagement/UserManagement.cs" id="1_ox2vg"]
+[ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_e8j70"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8icjc"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ulj5c"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="UserManagement" type="Control" unique_id=936849928]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ox2vg")
+
+[node name="Background" type="TextureRect" parent="." unique_id=1864255431]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_e8j70")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="." unique_id=422360472]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 44.0
+offset_right = 244.0
+offset_bottom = 95.0
+text = "User Management"
+
+[node name="SearchBar" type="LineEdit" parent="." unique_id=1063912812]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 78.0
+offset_right = 478.0
+offset_bottom = 114.0
+theme_override_colors/font_color = Color(0.004198928, 0.0010861665, 0.0007995391, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_8icjc")
+text = "Search student by name"
+alignment = 1
+
+[node name="ProfessorButton" type="Button" parent="." unique_id=1121919482]
+layout_mode = 0
+offset_left = 687.0
+offset_top = 72.0
+offset_right = 909.0
+offset_bottom = 106.0
+text = "Professor"
+
+[node name="SortYearLevel" type="OptionButton" parent="." unique_id=638183093]
+layout_mode = 0
+offset_left = 927.0
+offset_top = 68.0
+offset_right = 1137.0
+offset_bottom = 105.0
+theme_override_colors/font_color = Color(0.069054775, 0.013340208, 0.018598203, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_ulj5c")
+item_count = 3
+popup/item_0/text = "1st Year"
+popup/item_0/id = 0
+popup/item_1/text = "2nd Year"
+popup/item_1/id = 1
+popup/item_2/text = "3rd Year"
+popup/item_2/id = 2
+
+[node name="Panel" type="Panel" parent="." unique_id=1453105323]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 118.0
+offset_right = 1103.0
+offset_bottom = 585.0
+
+[node name="StudentHeader" type="Node" parent="." unique_id=1862245372]
+
+[node name="StudentList" type="Node" parent="." unique_id=1798164000]
+
+[node name="StudentRow" type="HBoxContainer" parent="StudentList" unique_id=1137969376]
+offset_left = 120.0
+offset_top = 124.0
+offset_right = 295.0
+offset_bottom = 170.0
+
+[node name="Label" type="Label" parent="StudentList/StudentRow" unique_id=2145957348]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="." unique_id=313990320]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 7.0
+offset_right = 86.0
+offset_bottom = 38.0
+text = "Back"

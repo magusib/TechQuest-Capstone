@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://dwfhp46edi4dg"]
+
+[ext_resource type="Texture2D" uid="uid://cwydayrej323" path="res://asset/background/Progress Bar .png" id="1_2toiv"]
+[ext_resource type="Script" uid="uid://b3w1uful2efw0" path="res://scene/MainPage/MainPage.cs" id="1_4cfjs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8icjc"]
+bg_color = Color(0.7891691, 0.24729732, 0.8526301, 1)
+
+[node name="MainPage" type="Control" unique_id=2058191885]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4cfjs")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=820917723]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_2toiv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=334214929]
+layout_mode = 0
+offset_top = 596.0
+offset_right = 1154.0
+offset_bottom = 649.0
+theme_override_colors/font_color = Color(0.97646135, 0.9407407, 0.9300951, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 35
+theme_override_styles/fill = SubResource("StyleBoxFlat_8icjc")

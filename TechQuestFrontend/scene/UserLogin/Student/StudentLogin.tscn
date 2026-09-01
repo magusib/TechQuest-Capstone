@@ -157,11 +157,13 @@ offset_top = 211.0
 offset_right = 204.0
 offset_bottom = 245.0
 selected = 0
-item_count = 2
-popup/item_0/text = "1"
+item_count = 3
+popup/item_0/text = "1st Year"
 popup/item_0/id = 0
-popup/item_1/text = "3"
+popup/item_1/text = "2nd Year"
 popup/item_1/id = 1
+popup/item_2/text = "3rd Year"
+popup/item_2/id = 2
 
 [node name="EmailInput" type="LineEdit" parent="RegisterPanel" unique_id=1824659978]
 layout_mode = 0

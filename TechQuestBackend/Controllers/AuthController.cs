@@ -120,6 +120,70 @@ namespace TechQuestBackend.Controllers
             return Ok(new { message = "OTP sent successfully. Please verify your email." });
         }
 
+        [HttpPost("register/professor")]
+        public async Task<IActionResult> RegisterProfessor(RegisterProfessorRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.FirstName))
+                return BadRequest("First name is required.");
+
+            if (string.IsNullOrWhiteSpace(request.LastName))
+                return BadRequest("Last name is required.");
+
+            if (string.IsNullOrWhiteSpace(request.Email))
+                return BadRequest("Email is required.");
+
+            if (!IsPTCEmail(request.Email))
+                return BadRequest("Only PTC institutional email is allowed.");
+
+            if (string.IsNullOrWhiteSpace(request.Password))
+                return BadRequest("Password is required.");
+
+            if (request.Password != request.ConfirmPassword)
+                return BadRequest("Passwords do not match.");
+
+            string email = NormalizeEmail(request.Email);
+
+            if (await _db.Users.AnyAsync(u => u.Email.ToLower() == email))
+                return BadRequest("This email is already registered.");
+
+            string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+
+            var pendingVerification = new EmailVerification
+            {
+                Email = email,
+                FirstName = request.FirstName.Trim(),
+                LastName = request.LastName.Trim(),
+                YearLevel = null,
+                PendingPasswordHash = passwordHash,
+                OtpCode = _otpService.GenerateOTP(),
+                ExpiresAt = DateTime.UtcNow.AddMinutes(5),
+                IsUsed = false,
+                Attempts = 0
+            };
+
+            var oldPending = await _db.EmailVerifications
+                .Where(v => v.Email.ToLower() == email && !v.IsUsed)
+                .ToListAsync();
+
+            foreach (var item in oldPending)
+            {
+                item.IsUsed = true;
+            }
+
+            _db.EmailVerifications.Add(pendingVerification);
+            await _db.SaveChangesAsync();
+
+            bool sent = await _emailService.SendOTP(email, pendingVerification.OtpCode);
+            if (!sent)
+            {
+                _db.EmailVerifications.Remove(pendingVerification);
+                await _db.SaveChangesAsync();
+                return StatusCode(500, "Failed to send OTP.");
+            }
+
+            return Ok(new { message = "OTP sent successfully. Please verify your email." });
+        }
+
         [HttpPost("verify-registration-otp")]
         public async Task<IActionResult> VerifyRegistrationOTP(VerifyOTPRequest request)
         {
@@ -169,14 +233,16 @@ namespace TechQuestBackend.Controllers
             if (await _db.Users.AnyAsync(u => u.Email.ToLower() == email))
                 return BadRequest("This email is already registered.");
 
+            var role = verification.YearLevel.HasValue ? "student" : "professor";
+
             var user = new User
             {
                 FirstName = verification.FirstName,
                 LastName = verification.LastName,
-                YearLevel = verification.YearLevel,
+                YearLevel = role == "student" ? verification.YearLevel : null,
                 Email = email,
                 PasswordHash = verification.PendingPasswordHash,
-                Role = "student",
+                Role = role,
                 IsEmailVerified = true,
                 CreatedAt = DateTime.UtcNow
             };
@@ -186,18 +252,21 @@ namespace TechQuestBackend.Controllers
             _db.Users.Add(user);
             await _db.SaveChangesAsync();
 
-            _db.StudentProfiles.Add(new StudentProfile
+            if (role == "student")
             {
-                UserId = user.Id,
-                TotalCoins = 0,
-                TotalPoints = 0
-            });
+                _db.StudentProfiles.Add(new StudentProfile
+                {
+                    UserId = user.Id,
+                    TotalCoins = 0,
+                    TotalPoints = 0
+                });
+            }
 
             verification.IsUsed = true;
             await _db.SaveChangesAsync();
             await transaction.CommitAsync();
 
-            return Ok(new { message = "Email verified successfully. Student account created." });
+            return Ok(new { message = $"Email verified successfully. {role} account created." });
         }
 
         [HttpPost("forgot-password")]
