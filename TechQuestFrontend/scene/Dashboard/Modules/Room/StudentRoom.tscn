@@ -1,6 +1,11 @@
 [gd_scene format=3 uid="uid://bxvpiuvyegexl"]
 
 [ext_resource type="Script" uid="uid://dyq2fr4yl3k7e" path="res://scene/Dashboard/Modules/Room/StudentRoom.cs" id="1_ftlk2"]
+[ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_jhxtp"]
+[ext_resource type="Texture2D" uid="uid://dsts8knioaak1" path="res://asset/Icons/logo.png" id="3_clcet"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8icjc"]
+bg_color = Color(0.20152655, 0.20152661, 0.20152646, 1)
 
 [node name="StudentRoom" type="Control" unique_id=1931668617]
 layout_mode = 3
@@ -11,11 +16,66 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ftlk2")
 
+[node name="Background" type="TextureRect" parent="." unique_id=1458411788]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_jhxtp")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Panel" type="Panel" parent="." unique_id=1523147313]
+layout_mode = 0
+offset_left = 353.0
+offset_top = 122.0
+offset_right = 802.0
+offset_bottom = 522.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8icjc")
+
+[node name="Logo" type="TextureRect" parent="." unique_id=1547226188]
+layout_mode = 0
+offset_left = 431.0
+offset_top = 37.0
+offset_right = 738.0
+offset_bottom = 183.0
+texture = ExtResource("3_clcet")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="StudentRoom" type="Label" parent="." unique_id=1297113067]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 535.0
+offset_top = 191.0
+offset_right = 646.0
+offset_bottom = 214.0
 text = "Student Room"
+
+[node name="RoomCode" type="Label" parent="." unique_id=1767920575]
+layout_mode = 0
+offset_left = 388.0
+offset_top = 259.0
+offset_right = 504.0
+offset_bottom = 294.0
+text = "Room Code"
+
+[node name="CodeInput" type="LineEdit" parent="." unique_id=2141597304]
+layout_mode = 0
+offset_left = 411.0
+offset_top = 292.0
+offset_right = 735.0
+offset_bottom = 352.0
+alignment = 1
+
+[node name="JoinRoomButton" type="Button" parent="." unique_id=1490315837]
+layout_mode = 0
+offset_left = 471.0
+offset_top = 422.0
+offset_right = 699.0
+offset_bottom = 479.0
+text = "Join Room"
 
 [node name="BackButton" type="Button" parent="." unique_id=1425451928]
 layout_mode = 0
@@ -24,3 +84,7 @@ offset_top = 56.0
 offset_right = 126.0
 offset_bottom = 95.0
 text = "Back"
+
+[node name="AcceptDialog" type="AcceptDialog" parent="." unique_id=295275713]
+oversampling_override = 1.0
+position = Vector2i(500, 300)

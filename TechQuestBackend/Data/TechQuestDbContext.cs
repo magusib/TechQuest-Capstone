@@ -266,7 +266,7 @@ namespace TechQuestBackend.Data
             {
                 entity.ToTable("Room_participants");
                 entity.HasKey(r => r.ParticipantsId);
-                entity.HasIndex(r => new { r.RoomId, r.StudentId }).IsUnique();
+                entity.HasIndex(r => new { r.RoomId, r.UserId }).IsUnique();
                 entity.Property(r => r.JoinedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.HasOne(r => r.Room)
                     .WithMany(room => room.Participants)
@@ -274,7 +274,7 @@ namespace TechQuestBackend.Data
                     .OnDelete(DeleteBehavior.Cascade);
                 entity.HasOne(r => r.Student)
                     .WithMany(s => s.RoomParticipants)
-                    .HasForeignKey(r => r.StudentId)
+                    .HasForeignKey(r => r.UserId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
 

@@ -1,0 +1,218 @@
+[gd_scene format=3 uid="uid://cnoltwg16gfwm"]
+
+[ext_resource type="Script" uid="uid://jr0dqqq214c3" path="res://scene/Dashboard/Modules/Room/StudentRoomResult.cs" id="1_cah6h"]
+[ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="1_d58qk"]
+
+[node name="StudentRoomResult" type="Control" unique_id=1928203100]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cah6h")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1662961773]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_d58qk")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RoomResult" type="Panel" parent="." unique_id=767478739]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -215.5
+offset_top = -230.0
+offset_right = 215.5
+offset_bottom = 230.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RoomResult" unique_id=361741345]
+layout_mode = 0
+offset_left = 26.5
+offset_top = 19.0
+offset_right = 404.5
+offset_bottom = 460.0
+theme_override_constants/separation = 30
+
+[node name="QuizResultLabel" type="Label" parent="RoomResult/VBoxContainer" unique_id=908099689]
+layout_mode = 2
+text = "Quiz Result"
+horizontal_alignment = 1
+
+[node name="SubjectNameLabel" type="Label" parent="RoomResult/VBoxContainer" unique_id=1300431637]
+layout_mode = 2
+text = "Subject Name"
+horizontal_alignment = 1
+
+[node name="StudentNameLabel" type="Label" parent="RoomResult/VBoxContainer" unique_id=535694269]
+layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="RoomResult/VBoxContainer" unique_id=1406635801]
+layout_mode = 2
+text = "Score: 0/0"
+horizontal_alignment = 1
+
+[node name="CorrectLabel" type="Label" parent="RoomResult/VBoxContainer" unique_id=1213773429]
+layout_mode = 2
+text = "Correct Answer:"
+
+[node name="IncorrectLabel" type="Label" parent="RoomResult/VBoxContainer" unique_id=1740785823]
+layout_mode = 2
+text = "Incorrect Answer:"
+
+[node name="PercentageLabel" type="Label" parent="RoomResult/VBoxContainer" unique_id=285037829]
+layout_mode = 2
+text = "Percentage"
+
+[node name="ReviewButton" type="Button" parent="RoomResult/VBoxContainer" unique_id=494088054]
+layout_mode = 2
+text = "Review Answer"
+
+[node name="BackButton" type="Button" parent="RoomResult/VBoxContainer" unique_id=1433561213]
+layout_mode = 2
+text = "Back"
+
+[node name="QuizReview" type="Window" parent="." unique_id=570497084]
+oversampling_override = 1.0
+initial_position = 1
+size = Vector2i(500, 500)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="QuizReview" unique_id=1945448826]
+offset_left = 14.0
+offset_top = 13.0
+offset_right = 488.0
+offset_bottom = 475.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="QuizReview/ScrollContainer" unique_id=182155134]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="QuizReviewLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer" unique_id=291920291]
+layout_mode = 2
+text = "Quiz Review"
+horizontal_alignment = 1
+
+[node name="SubjectNameLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer" unique_id=802479133]
+layout_mode = 2
+text = "Subject Name:"
+
+[node name="ScoreLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer" unique_id=1178053009]
+layout_mode = 2
+text = "Score:"
+
+[node name="MultipleChoicesPanel" type="Panel" parent="QuizReview/ScrollContainer/VBoxContainer" unique_id=482121091]
+custom_minimum_size = Vector2(0, 350)
+layout_mode = 2
+
+[node name="MultipleChoicesContainer" type="VBoxContainer" parent="QuizReview/ScrollContainer/VBoxContainer/MultipleChoicesPanel" unique_id=1876870597]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 17.0
+offset_right = 448.0
+offset_bottom = 329.0
+theme_override_constants/separation = 20
+
+[node name="QuestionLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/MultipleChoicesPanel/MultipleChoicesContainer" unique_id=682958801]
+layout_mode = 2
+text = "Question "
+horizontal_alignment = 1
+
+[node name="ChoicesA Label" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/MultipleChoicesPanel/MultipleChoicesContainer" unique_id=1698777927]
+layout_mode = 2
+text = "Choices A"
+
+[node name="ChoicesB Label" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/MultipleChoicesPanel/MultipleChoicesContainer" unique_id=752105314]
+layout_mode = 2
+text = "Choices B"
+
+[node name="ChoicesC Label" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/MultipleChoicesPanel/MultipleChoicesContainer" unique_id=420210179]
+layout_mode = 2
+text = "Choices C"
+
+[node name="ChoicesD Label" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/MultipleChoicesPanel/MultipleChoicesContainer" unique_id=848503587]
+layout_mode = 2
+text = "Choices D"
+
+[node name="YourAnswerLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/MultipleChoicesPanel/MultipleChoicesContainer" unique_id=1314418057]
+layout_mode = 2
+text = "Your Answer:"
+
+[node name="CorrectAnswerLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/MultipleChoicesPanel/MultipleChoicesContainer" unique_id=238795945]
+layout_mode = 2
+text = "Correct Answer:"
+
+[node name="TrueOrFalsePanel" type="Panel" parent="QuizReview/ScrollContainer/VBoxContainer" unique_id=935264605]
+custom_minimum_size = Vector2(0, 350)
+layout_mode = 2
+
+[node name="TrueOrFalseContainer" type="VBoxContainer" parent="QuizReview/ScrollContainer/VBoxContainer/TrueOrFalsePanel" unique_id=177361279]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 17.0
+offset_right = 448.0
+offset_bottom = 329.0
+theme_override_constants/separation = 20
+
+[node name="QuestionLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/TrueOrFalsePanel/TrueOrFalseContainer" unique_id=458208044]
+layout_mode = 2
+text = "Question "
+horizontal_alignment = 1
+
+[node name="TrueLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/TrueOrFalsePanel/TrueOrFalseContainer" unique_id=359489025]
+layout_mode = 2
+text = "True"
+
+[node name="FalseLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/TrueOrFalsePanel/TrueOrFalseContainer" unique_id=1760538137]
+layout_mode = 2
+text = "False"
+
+[node name="YourAnswerLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/TrueOrFalsePanel/TrueOrFalseContainer" unique_id=1970239323]
+layout_mode = 2
+text = "Your Answer:"
+
+[node name="CorrectAnswerLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/TrueOrFalsePanel/TrueOrFalseContainer" unique_id=922088242]
+layout_mode = 2
+text = "Correct Answer:"
+
+[node name="IdentificationPanel" type="Panel" parent="QuizReview/ScrollContainer/VBoxContainer" unique_id=473875807]
+custom_minimum_size = Vector2(0, 350)
+layout_mode = 2
+
+[node name="IdentificationContainer" type="VBoxContainer" parent="QuizReview/ScrollContainer/VBoxContainer/IdentificationPanel" unique_id=1403686852]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 17.0
+offset_right = 448.0
+offset_bottom = 329.0
+theme_override_constants/separation = 20
+
+[node name="QuestionLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/IdentificationPanel/IdentificationContainer" unique_id=2144214690]
+layout_mode = 2
+text = "Question "
+horizontal_alignment = 1
+
+[node name="YourAnswerLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/IdentificationPanel/IdentificationContainer" unique_id=1895499282]
+layout_mode = 2
+text = "Your Answer:"
+
+[node name="CorrectAnswerLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/IdentificationPanel/IdentificationContainer" unique_id=1815886789]
+layout_mode = 2
+text = "Correct Answer:"
+
+[node name="BackButton" type="Button" parent="." unique_id=1142632343]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "BackButton"

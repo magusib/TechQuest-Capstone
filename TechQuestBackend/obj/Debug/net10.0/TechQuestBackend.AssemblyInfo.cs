@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TechQuestBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4c59edbc752ea0906594176d2848ff05939d39ea")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d91e54bc66284dcc93208e9c27bc75481bb16aae")]
 [assembly: System.Reflection.AssemblyProductAttribute("TechQuestBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TechQuestBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

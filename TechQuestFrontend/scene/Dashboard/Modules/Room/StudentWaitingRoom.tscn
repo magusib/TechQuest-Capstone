@@ -1,0 +1,151 @@
+[gd_scene format=3 uid="uid://bbn24rd4bm7dq"]
+
+[ext_resource type="Script" uid="uid://b66y70w7anrfj" path="res://scene/Dashboard/Modules/Room/StudentWaitingRoom.cs" id="1_rp77t"]
+[ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_k7wij"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ulj5c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_awoj8"]
+bg_color = Color(0.060530342, 0.060530365, 0.060530297, 1)
+
+[node name="StudentWaitingRoom" type="Control" unique_id=2007119540]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rp77t")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=251558660]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_k7wij")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Header" type="Node" parent="." unique_id=1285236181]
+
+[node name="Panel" type="Panel" parent="Header" unique_id=1694174898]
+offset_right = 1151.0
+offset_bottom = 100.0
+
+[node name="SubjectLabel" type="Label" parent="Header" unique_id=1363783355]
+offset_left = 60.0
+offset_top = 18.0
+offset_right = 184.0
+offset_bottom = 59.0
+text = "Subject:"
+
+[node name="RoomCodePanel" type="Panel" parent="Header" unique_id=33886108]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -137.0
+offset_top = 21.0
+offset_right = 175.0
+offset_bottom = 80.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ulj5c")
+
+[node name="RoomCodeLabel" type="Label" parent="Header/RoomCodePanel" unique_id=1458990828]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 12.0
+offset_right = 180.0
+offset_bottom = 47.0
+text = "Room Code:"
+
+[node name="RoomCode" type="Label" parent="Header/RoomCodePanel" unique_id=1990516983]
+layout_mode = 0
+offset_left = 123.0
+offset_top = 9.0
+offset_right = 286.0
+offset_bottom = 48.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_awoj8")
+
+[node name="StudentCountLabel" type="Label" parent="Header" unique_id=1543575398]
+offset_left = 58.0
+offset_top = 53.0
+offset_right = 204.0
+offset_bottom = 80.0
+text = "Student:"
+
+[node name="Button" type="Button" parent="Header" unique_id=1434547643]
+offset_left = 1056.0
+offset_top = 27.0
+offset_right = 1122.0
+offset_bottom = 62.0
+text = "Back"
+
+[node name="AvatarPanel" type="Panel" parent="." unique_id=1522237358]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -550.5
+offset_top = -209.5
+offset_right = 550.5
+offset_bottom = 236.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StudentScrool" type="ScrollContainer" parent="AvatarPanel" unique_id=2032473577]
+layout_mode = 0
+offset_left = 21.5
+offset_top = 26.5
+offset_right = 1077.5
+offset_bottom = 434.5
+
+[node name="AvatarGridContianer" type="GridContainer" parent="AvatarPanel/StudentScrool" unique_id=1804430120]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 80
+theme_override_constants/v_separation = 50
+columns = 4
+
+[node name="AvatarPanel" type="Panel" parent="AvatarPanel/StudentScrool/AvatarGridContianer" unique_id=395592175]
+custom_minimum_size = Vector2(200, 150)
+layout_mode = 2
+
+[node name="AvatarContainer" type="VBoxContainer" parent="AvatarPanel/StudentScrool/AvatarGridContianer/AvatarPanel" unique_id=187686241]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 11.0
+offset_right = 173.0
+offset_bottom = 93.0
+theme_override_constants/separation = 20
+
+[node name="AvatarTexture" type="TextureRect" parent="AvatarPanel/StudentScrool/AvatarGridContianer/AvatarPanel/AvatarContainer" unique_id=1134113160]
+custom_minimum_size = Vector2(100, 75)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StudentNameLabel" type="Label" parent="AvatarPanel/StudentScrool/AvatarGridContianer/AvatarPanel/AvatarContainer" unique_id=2016235325]
+layout_mode = 2
+text = "Name"
+horizontal_alignment = 1
+
+[node name="ChangeAvatarButton" type="Button" parent="." unique_id=1807733037]
+layout_mode = 0
+offset_left = 245.0
+offset_top = 583.0
+offset_right = 388.0
+offset_bottom = 627.0
+text = "Change Avatar"
+
+[node name="StartButton" type="Button" parent="." unique_id=7934932]
+layout_mode = 0
+offset_left = 748.0
+offset_top = 578.0
+offset_right = 930.0
+offset_bottom = 622.0
+text = "Start"

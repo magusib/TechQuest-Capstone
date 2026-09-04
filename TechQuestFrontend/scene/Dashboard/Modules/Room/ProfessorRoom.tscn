@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://v1nrbnccu6md"]
 
 [ext_resource type="Script" uid="uid://b3kswubeyxx4b" path="res://scene/Dashboard/Modules/Room/ProfessorRoom.cs" id="1_sm8m0"]
+[ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_wkes7"]
 
 [node name="ProfessorRoom" type="Control" unique_id=788382029]
 layout_mode = 3
@@ -11,10 +12,23 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_sm8m0")
 
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1525473957]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_wkes7")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="ProfessorRoom" type="Label" parent="." unique_id=88037220]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 472.0
+offset_top = 21.0
+offset_right = 595.0
+offset_bottom = 44.0
 text = "Professor Room"
 
 [node name="BackButton" type="Button" parent="." unique_id=70363397]
@@ -24,3 +38,139 @@ offset_top = 56.0
 offset_right = 126.0
 offset_bottom = 95.0
 text = "Back"
+
+[node name="CreateRoomButton" type="Button" parent="." unique_id=1346276661]
+layout_mode = 0
+offset_left = 935.0
+offset_top = 99.0
+offset_right = 1054.0
+offset_bottom = 142.0
+text = "Create Room"
+
+[node name="RoomManagementPanel" type="Panel" parent="." unique_id=741532966]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 144.0
+offset_right = 1089.0
+offset_bottom = 618.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="RoomManagementPanel" unique_id=627684477]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 22.0
+offset_right = 1030.0
+offset_bottom = 457.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RoomManagementPanel/ScrollContainer" unique_id=746346884]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 50
+
+[node name="RoomListPanel" type="Panel" parent="RoomManagementPanel/ScrollContainer/VBoxContainer" unique_id=1095668261]
+custom_minimum_size = Vector2(0, 350)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RoomListContainer" type="VBoxContainer" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel" unique_id=200098743]
+layout_mode = 0
+offset_top = 13.0
+offset_right = 1007.0
+offset_bottom = 173.0
+theme_override_constants/separation = 45
+
+[node name="SubjectLabel" type="Label" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer" unique_id=738717871]
+layout_mode = 2
+text = "Subject Name"
+horizontal_alignment = 1
+
+[node name="RoomCodeLabel" type="Label" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer" unique_id=1819120600]
+layout_mode = 2
+text = "Room Code:"
+
+[node name="StudentCountLabel" type="Label" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer" unique_id=1953093648]
+layout_mode = 2
+text = "Student Count:"
+
+[node name="StatusLabel" type="Label" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer" unique_id=105039901]
+layout_mode = 2
+text = "Status:"
+
+[node name="RoomButton" type="HBoxContainer" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer" unique_id=1055253670]
+layout_mode = 2
+theme_override_constants/separation = 150
+alignment = 1
+
+[node name="Manage" type="Button" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer/RoomButton" unique_id=1811676998]
+layout_mode = 2
+text = "Manage"
+
+[node name="Delete" type="Button" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer/RoomButton" unique_id=763940445]
+layout_mode = 2
+text = "Delete"
+
+[node name="CreateRoomWindow" type="Window" parent="." unique_id=414414774]
+oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(500, 450)
+
+[node name="CreateRoomPanel" type="Panel" parent="CreateRoomWindow" unique_id=216906645]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 488.0
+offset_bottom = 438.0
+
+[node name="SubjectNameLabel" type="Label" parent="CreateRoomWindow/CreateRoomPanel" unique_id=932375347]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 57.0
+offset_right = 131.0
+offset_bottom = 84.0
+text = "Subject Name:"
+
+[node name="SubjectNameInput" type="LineEdit" parent="CreateRoomWindow/CreateRoomPanel" unique_id=1815235529]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 94.0
+offset_right = 443.0
+offset_bottom = 145.0
+
+[node name="RoomCodeLabel" type="Label" parent="CreateRoomWindow/CreateRoomPanel" unique_id=1705929181]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 186.0
+offset_right = 127.0
+offset_bottom = 217.0
+text = "RoomCode"
+
+[node name="CodeLabel" type="Label" parent="CreateRoomWindow/CreateRoomPanel" unique_id=1717830761]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 224.0
+offset_right = 436.0
+offset_bottom = 262.0
+text = "----------"
+horizontal_alignment = 1
+
+[node name="SaveButton" type="Button" parent="CreateRoomWindow/CreateRoomPanel" unique_id=376234721]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 353.0
+offset_right = 105.0
+offset_bottom = 384.0
+text = "Save
+"
+
+[node name="CancelButton" type="Button" parent="CreateRoomWindow/CreateRoomPanel" unique_id=284371894]
+layout_mode = 0
+offset_left = 362.0
+offset_top = 354.0
+offset_right = 422.0
+offset_bottom = 385.0
+text = "Cancel"
+
+[node name="DeleteRoomConfirmation" type="ConfirmationDialog" parent="." unique_id=435456129]
+oversampling_override = 1.0
+title = "Are you sure you want to delete this room?"
+initial_position = 2
+ok_button_text = "Delete"

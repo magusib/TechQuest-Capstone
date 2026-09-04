@@ -64,13 +64,13 @@ namespace TechQuestBackend.Controllers
             if (room == null)
                 return NotFound("Room was not found.");
 
-            if (await _db.RoomParticipants.AnyAsync(p => p.RoomId == room.RoomId && p.StudentId == profile.StudentId))
+            if (await _db.RoomParticipants.AnyAsync(p => p.RoomId == room.RoomId && p.UserId == profile.StudentId))
                 return BadRequest("Student already joined this room.");
 
             var participant = new RoomParticipant
             {
                 RoomId = room.RoomId,
-                StudentId = profile.StudentId,
+                UserId = profile.StudentId,
                 JoinedAt = DateTime.UtcNow
             };
 

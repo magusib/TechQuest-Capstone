@@ -1,0 +1,205 @@
+[gd_scene format=3 uid="uid://b3v4ck6j5t5at"]
+
+[ext_resource type="Script" uid="uid://dj81vfo8s86ln" path="res://scene/Dashboard/Modules/Room/ProfessorWaitingRoom.cs" id="1_dr0wb"]
+[ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="1_igeyh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dr0wb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h0pkt"]
+bg_color = Color(0.060530342, 0.060530365, 0.060530297, 1)
+
+[node name="ProfessorWaitingRoom" type="Control" unique_id=1281319834]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dr0wb")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1970746715]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_igeyh")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Header" type="Node" parent="." unique_id=1521383113]
+
+[node name="Panel" type="Panel" parent="Header" unique_id=1897759270]
+offset_right = 1151.0
+offset_bottom = 100.0
+
+[node name="SubjectLabel" type="Label" parent="Header" unique_id=1775501975]
+offset_left = 60.0
+offset_top = 18.0
+offset_right = 184.0
+offset_bottom = 59.0
+text = "Subject:"
+
+[node name="RoomCodePanel" type="Panel" parent="Header" unique_id=1418361053]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -137.0
+offset_top = 21.0
+offset_right = 175.0
+offset_bottom = 80.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dr0wb")
+
+[node name="RoomCodeLabel" type="Label" parent="Header/RoomCodePanel" unique_id=1258694705]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 12.0
+offset_right = 180.0
+offset_bottom = 47.0
+text = "Room Code:"
+
+[node name="RoomCode" type="Label" parent="Header/RoomCodePanel" unique_id=960439480]
+layout_mode = 0
+offset_left = 123.0
+offset_top = 9.0
+offset_right = 286.0
+offset_bottom = 48.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_h0pkt")
+
+[node name="StudentCountLabel" type="Label" parent="Header" unique_id=1836758833]
+offset_left = 58.0
+offset_top = 53.0
+offset_right = 204.0
+offset_bottom = 80.0
+text = "Student Joined:"
+
+[node name="Button" type="Button" parent="Header" unique_id=1260667385]
+offset_left = 1056.0
+offset_top = 27.0
+offset_right = 1122.0
+offset_bottom = 62.0
+text = "Back"
+
+[node name="AvatarPanel" type="Panel" parent="." unique_id=3778710]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -550.5
+offset_top = -146.0
+offset_right = 550.5
+offset_bottom = 308.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StudentScrool" type="ScrollContainer" parent="AvatarPanel" unique_id=1003722978]
+layout_mode = 0
+offset_left = 21.5
+offset_top = 26.5
+offset_right = 1077.5
+offset_bottom = 434.5
+
+[node name="AvatarGridContianer" type="GridContainer" parent="AvatarPanel/StudentScrool" unique_id=938797127]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 80
+theme_override_constants/v_separation = 50
+columns = 4
+
+[node name="AvatarPanel" type="Panel" parent="AvatarPanel/StudentScrool/AvatarGridContianer" unique_id=947685140]
+custom_minimum_size = Vector2(200, 150)
+layout_mode = 2
+
+[node name="AvatarContainer" type="VBoxContainer" parent="AvatarPanel/StudentScrool/AvatarGridContianer/AvatarPanel" unique_id=1147104173]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 11.0
+offset_right = 173.0
+offset_bottom = 93.0
+theme_override_constants/separation = 20
+
+[node name="AvatarTexture" type="TextureRect" parent="AvatarPanel/StudentScrool/AvatarGridContianer/AvatarPanel/AvatarContainer" unique_id=1937232501]
+custom_minimum_size = Vector2(100, 75)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StudentNameLabel" type="Label" parent="AvatarPanel/StudentScrool/AvatarGridContianer/AvatarPanel/AvatarContainer" unique_id=607503754]
+layout_mode = 2
+text = "Name"
+horizontal_alignment = 1
+
+[node name="UplaodQuizButton" type="Button" parent="." unique_id=222074287]
+layout_mode = 0
+offset_left = 674.0
+offset_top = 137.0
+offset_right = 777.0
+offset_bottom = 168.0
+text = "Upload Quiz"
+
+[node name="DownloadFormatButton" type="Button" parent="." unique_id=2137433095]
+layout_mode = 0
+offset_left = 935.0
+offset_top = 137.0
+offset_right = 1099.0
+offset_bottom = 168.0
+text = "Download Format"
+
+[node name="UploadQuizPopup" type="Window" parent="." unique_id=1164952727]
+oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(450, 450)
+
+[node name="UploadQuizPanel" type="Panel" parent="UploadQuizPopup" unique_id=56979141]
+offset_left = 7.0
+offset_top = 7.0
+offset_right = 442.0
+offset_bottom = 443.0
+
+[node name="UploadQuizContainer" type="VBoxContainer" parent="UploadQuizPopup" unique_id=1066095243]
+offset_left = 24.0
+offset_top = 19.0
+offset_right = 430.0
+offset_bottom = 425.0
+theme_override_constants/separation = 30
+
+[node name="UplaodQuizLabel" type="Label" parent="UploadQuizPopup/UploadQuizContainer" unique_id=1063105584]
+layout_mode = 2
+text = "Uplaod Quiz"
+horizontal_alignment = 1
+
+[node name="FileLabel" type="Label" parent="UploadQuizPopup/UploadQuizContainer" unique_id=2030872629]
+layout_mode = 2
+text = "Filename"
+
+[node name="UploadFileButton" type="Button" parent="UploadQuizPopup/UploadQuizContainer" unique_id=1303202311]
+custom_maximum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "UploadFile"
+
+[node name="TimerLabel" type="Label" parent="UploadQuizPopup/UploadQuizContainer" unique_id=277009567]
+layout_mode = 2
+text = "Timer"
+
+[node name="TimerInput" type="LineEdit" parent="UploadQuizPopup/UploadQuizContainer" unique_id=145761108]
+layout_mode = 2
+placeholder_text = "Enter time for each question"
+
+[node name="ButtonContainer" type="HBoxContainer" parent="UploadQuizPopup/UploadQuizContainer" unique_id=1180774843]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="UploadButton" type="Button" parent="UploadQuizPopup/UploadQuizContainer/ButtonContainer" unique_id=1216838903]
+layout_mode = 2
+text = "Upload"
+
+[node name="CancelButton" type="Button" parent="UploadQuizPopup/UploadQuizContainer/ButtonContainer" unique_id=380923621]
+layout_mode = 2
+text = "Cancel"

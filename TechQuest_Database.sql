@@ -234,7 +234,7 @@ CREATE TABLE multiplayer_room (
 CREATE TABLE room_participants (
     participants_id BIGSERIAL PRIMARY KEY,
     room_id         BIGINT NOT NULL,
-    student_id      BIGINT NOT NULL,
+    user_id         BIGINT NOT NULL,
     joined_at       TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_room_participant_room
@@ -242,11 +242,11 @@ CREATE TABLE room_participants (
         ON DELETE CASCADE,
 
     CONSTRAINT fk_room_participant_student
-        FOREIGN KEY (student_id) REFERENCES student_profile(student_id)
+        FOREIGN KEY (user_id) REFERENCES student_profile(student_id)
         ON DELETE CASCADE,
 
     CONSTRAINT uq_room_student
-        UNIQUE (room_id, student_id)
+        UNIQUE (room_id, user_id)
 );
 
 CREATE TABLE professor_uploads (
@@ -297,7 +297,7 @@ CREATE INDEX idx_game_result_question_id ON game_result(question_id);
 CREATE INDEX idx_student_quest_student_id ON student_quest(student_id);
 CREATE INDEX idx_student_quest_quest_id ON student_quest(quest_id);
 CREATE INDEX idx_room_participants_room_id ON room_participants(room_id);
-CREATE INDEX idx_room_participants_student_id ON room_participants(student_id);
+CREATE INDEX idx_room_participants_user_id ON room_participants(user_id);
 CREATE INDEX idx_room_result_room_id ON room_result(room_id);
 CREATE INDEX idx_room_result_student_id ON room_result(student_id);
 CREATE INDEX idx_professor_uploads_professor_id ON professor_uploads(professor_id);

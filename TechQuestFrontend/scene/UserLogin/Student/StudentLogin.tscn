@@ -319,5 +319,6 @@ offset_bottom = 349.0
 text = "Cancel"
 
 [node name="MessageDialog" type="AcceptDialog" parent="." unique_id=1388907412]
+oversampling_override = 1.0
 
 [node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=558005373]

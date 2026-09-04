@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://dieiobmqulsit"]
+
+[ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="1_01xee"]
+
+[node name="ProfessorRoomResult" type="Control" unique_id=1563331723]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="." unique_id=381542336]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_01xee")
+expand_mode = 1
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="RoomResultPanel" type="Panel" parent="." unique_id=2070494999]
+layout_mode = 0
+offset_left = 79.0
+offset_top = 72.0
+offset_right = 1072.0
+offset_bottom = 616.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="RoomResultPanel" unique_id=1115254671]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 66.0
+offset_right = 962.0
+offset_bottom = 513.0
+
+[node name="RoomResultContainer" type="VBoxContainer" parent="RoomResultPanel/ScrollContainer" unique_id=1218041351]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 50
+
+[node name="StudentResultLabel" type="Label" parent="RoomResultPanel/ScrollContainer/RoomResultContainer" unique_id=1454442048]
+layout_mode = 2
+text = "Student Result"
+horizontal_alignment = 1
+
+[node name="SubjectNameLabel" type="Label" parent="RoomResultPanel/ScrollContainer/RoomResultContainer" unique_id=823657537]
+layout_mode = 2
+text = "Subject Name:"
+horizontal_alignment = 1
+
+[node name="RoomCodeLabel" type="Label" parent="RoomResultPanel/ScrollContainer/RoomResultContainer" unique_id=743425734]
+layout_mode = 2
+text = "Room Code:"
+horizontal_alignment = 1
+
+[node name="StudentScorePanel" type="Panel" parent="RoomResultPanel/ScrollContainer/RoomResultContainer" unique_id=1753108110]
+custom_minimum_size = Vector2(0, 130)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StudentScoreContainer" type="VBoxContainer" parent="RoomResultPanel/ScrollContainer/RoomResultContainer/StudentScorePanel" unique_id=725941499]
+layout_mode = 0
+offset_right = 929.0
+offset_bottom = 71.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 50
+
+[node name="StudentNameLabel" type="Label" parent="RoomResultPanel/ScrollContainer/RoomResultContainer/StudentScorePanel/StudentScoreContainer" unique_id=1792974112]
+layout_mode = 2
+text = "Student Name:"
+
+[node name="StudentScoreLabel" type="Label" parent="RoomResultPanel/ScrollContainer/RoomResultContainer/StudentScorePanel/StudentScoreContainer" unique_id=1140325178]
+layout_mode = 2
+text = "Student Score:"
+
+[node name="BackButton" type="Button" parent="." unique_id=1525223564]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 13.0
+offset_right = 92.0
+offset_bottom = 51.0
+text = "Back
+"

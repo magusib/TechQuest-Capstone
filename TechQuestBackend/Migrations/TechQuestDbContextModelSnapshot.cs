@@ -33,7 +33,7 @@ namespace TechQuestBackend.Migrations
                     b.Property<int>("ItemId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("StudentId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("CharacterId");
@@ -485,14 +485,14 @@ namespace TechQuestBackend.Migrations
                     b.Property<int>("RoomId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("StudentId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("ParticipantsId");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("UserId");
 
-                    b.HasIndex("RoomId", "StudentId")
+                    b.HasIndex("RoomId", "UserId")
                         .IsUnique();
 
                     b.ToTable("Room_participants", (string)null);
@@ -862,7 +862,7 @@ namespace TechQuestBackend.Migrations
 
                     b.HasOne("TechQuestBackend.Models.StudentProfile", "Student")
                         .WithMany("RoomParticipants")
-                        .HasForeignKey("StudentId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

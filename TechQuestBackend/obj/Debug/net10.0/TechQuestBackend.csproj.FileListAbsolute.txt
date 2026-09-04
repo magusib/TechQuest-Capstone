@@ -138,8 +138,8 @@ C:\Users\22222222222222222222\capstone\TechQuestBackend\obj\Debug\net10.0\TechQu
 C:\Users\22222222222222222222\capstone\TechQuestBackend\obj\Debug\net10.0\ref\TechQuestBackend.dll
 C:\Users\22222222222222222222\capstone\TechQuestBackend\bin\Debug\net10.0\BCrypt-Net-Next.dll
 C:\Users\22222222222222222222\TechQuest\TechQuestBackend\bin\Debug\net10.0\appsettings.Development.json
-C:\Users\22222222222222222222\TechQuest\TechQuestBackend\bin\Debug\net10.0\TechQuestBackend.staticwebassets.endpoints.json
 C:\Users\22222222222222222222\TechQuest\TechQuestBackend\bin\Debug\net10.0\appsettings.json
+C:\Users\22222222222222222222\TechQuest\TechQuestBackend\bin\Debug\net10.0\TechQuestBackend.staticwebassets.endpoints.json
 C:\Users\22222222222222222222\TechQuest\TechQuestBackend\bin\Debug\net10.0\TechQuestBackend.exe
 C:\Users\22222222222222222222\TechQuest\TechQuestBackend\bin\Debug\net10.0\TechQuestBackend.deps.json
 C:\Users\22222222222222222222\TechQuest\TechQuestBackend\bin\Debug\net10.0\TechQuestBackend.runtimeconfig.json
@@ -260,6 +260,7 @@ C:\Users\22222222222222222222\TechQuest\TechQuestBackend\obj\Debug\net10.0\TechQ
 C:\Users\22222222222222222222\TechQuest\TechQuestBackend\obj\Debug\net10.0\TechQuestBackend.csproj.CoreCompileInputs.cache
 C:\Users\22222222222222222222\TechQuest\TechQuestBackend\obj\Debug\net10.0\TechQuestBackend.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\22222222222222222222\TechQuest\TechQuestBackend\obj\Debug\net10.0\TechQuestBackend.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\22222222222222222222\TechQuest\TechQuestBackend\obj\Debug\net10.0\TechQuestBackend.sourcelink.json
 C:\Users\22222222222222222222\TechQuest\TechQuestBackend\obj\Debug\net10.0\rjimswa.dswa.cache.json
 C:\Users\22222222222222222222\TechQuest\TechQuestBackend\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
 C:\Users\22222222222222222222\TechQuest\TechQuestBackend\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
@@ -275,4 +276,3 @@ C:\Users\22222222222222222222\TechQuest\TechQuestBackend\obj\Debug\net10.0\refin
 C:\Users\22222222222222222222\TechQuest\TechQuestBackend\obj\Debug\net10.0\TechQuestBackend.pdb
 C:\Users\22222222222222222222\TechQuest\TechQuestBackend\obj\Debug\net10.0\TechQuestBackend.genruntimeconfig.cache
 C:\Users\22222222222222222222\TechQuest\TechQuestBackend\obj\Debug\net10.0\ref\TechQuestBackend.dll
-C:\Users\22222222222222222222\TechQuest\TechQuestBackend\obj\Debug\net10.0\TechQuestBackend.sourcelink.json
