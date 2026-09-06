@@ -1,3 +1,4 @@
+
 using Godot;
 
 public partial class Player : CharacterBody2D
@@ -22,38 +23,24 @@ public partial class Player : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		// Gravity
+		float deltaFloat = (float)delta;
+
+		// =========================
+		// GRAVITY
+		// =========================
 		if (!IsOnFloor())
 		{
 			Velocity = new Vector2(
 				Velocity.X,
-				Velocity.Y + gravity * (float)delta
+				Velocity.Y + gravity * deltaFloat
 			);
 		}
 
-		// Jump
-		if (Input.IsActionJustPressed("jump") && IsOnFloor())
-		{
-			Velocity = new Vector2(
-				Velocity.X,
-				JUMP_VELOCITY
-			);
-		}
-
-		// Get movement direction
+		// =========================
+		// MOVEMENT
+		// =========================
 		float direction = Input.GetAxis("move_left", "move_right");
 
-		// Flip character
-		if (direction > 0)
-		{
-			animatedSprite.FlipH = false;
-		}
-		else if (direction < 0)
-		{
-			animatedSprite.FlipH = true;
-		}
-
-		// WALK
 		if (direction != 0)
 		{
 			Velocity = new Vector2(
@@ -61,19 +48,65 @@ public partial class Player : CharacterBody2D
 				Velocity.Y
 			);
 
-			animatedSprite.Play("Walk");
+			// Flip character
+			if (direction > 0)
+			{
+				animatedSprite.FlipH = false;
+			}
+			else if (direction < 0)
+			{
+				animatedSprite.FlipH = true;
+			}
 		}
-		// IDLE
 		else
 		{
 			Velocity = new Vector2(
 				Mathf.MoveToward(Velocity.X, 0, SPEED),
 				Velocity.Y
 			);
-
-			animatedSprite.Play("Idle");
 		}
 
+		// =========================
+		// JUMP
+		// =========================
+		if (Input.IsActionJustPressed("jump") && IsOnFloor())
+		{
+			Velocity = new Vector2(
+				Velocity.X,
+				JUMP_VELOCITY
+			);
+
+			// Play jump animation
+			animatedSprite.Play("Jump");
+		}
+
+		// =========================
+		// ANIMATION
+		// =========================
+
+		// If player is in the air,
+		// keep the Jump animation.
+		if (!IsOnFloor())
+		{
+			animatedSprite.Play("Jump");
+		}
+		else
+		{
+			// Player is on the ground
+
+			if (direction != 0)
+			{
+				animatedSprite.Play("Walk");
+			}
+			else
+			{
+				animatedSprite.Play("Idle");
+			}
+		}
+
+		// =========================
+		// APPLY MOVEMENT
+		// =========================
 		MoveAndSlide();
 	}
 }

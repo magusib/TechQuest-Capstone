@@ -33,7 +33,7 @@ namespace TechQuestBackend.Migrations
                     b.Property<int>("ItemId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("StudentId")
                         .HasColumnType("integer");
 
                     b.HasKey("CharacterId");
@@ -354,6 +354,20 @@ namespace TechQuestBackend.Migrations
                     b.Property<int>("ProfessorId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("QuestionsJson")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValueSql("'[]'::jsonb");
+
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TimerSeconds")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(30);
+
                     b.Property<DateTime>("UploadedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
@@ -364,6 +378,8 @@ namespace TechQuestBackend.Migrations
                     b.HasIndex("CreatedBy");
 
                     b.HasIndex("ProfessorId");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("Professor_uploads", (string)null);
                 });
@@ -506,6 +522,12 @@ namespace TechQuestBackend.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RoomResultId"));
 
+                    b.Property<string>("AnswersJson")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValueSql("'[]'::jsonb");
+
                     b.Property<DateTime>("CompletedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
@@ -522,6 +544,11 @@ namespace TechQuestBackend.Migrations
                     b.Property<int>("StudentId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("TotalQuestions")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
                     b.HasKey("RoomResultId");
 
                     b.HasIndex("StudentId");
@@ -532,6 +559,8 @@ namespace TechQuestBackend.Migrations
                     b.ToTable("Room_result", null, t =>
                         {
                             t.HasCheckConstraint("CK_Room_result_Score_NonNegative", "\"Score\" >= 0");
+
+                            t.HasCheckConstraint("CK_Room_result_TotalQuestions_NonNegative", "\"TotalQuestions\" >= 0");
                         });
                 });
 
@@ -813,9 +842,16 @@ namespace TechQuestBackend.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("TechQuestBackend.Models.MultiplayerRoom", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.Navigation("CreatedByUser");
 
                     b.Navigation("Professor");
+
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("TechQuestBackend.Models.Quest", b =>

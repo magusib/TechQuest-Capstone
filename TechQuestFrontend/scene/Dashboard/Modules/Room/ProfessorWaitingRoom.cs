@@ -1,15 +1,28 @@
 using Godot;
-using System;
 
 public partial class ProfessorWaitingRoom : Control
 {
-	// Called when the node enters the scene tree for the first time.
+	private Label subjectLabel;
+	private Label roomCode;
+	private Label studentCountLabel;
+	private Button backButton;
+
 	public override void _Ready()
 	{
+		subjectLabel = GetNode<Label>("Header/SubjectLabel");
+		roomCode = GetNode<Label>("Header/RoomCodePanel/RoomCode");
+		studentCountLabel = GetNode<Label>("Header/StudentCountLabel");
+		backButton = GetNode<Button>("Header/Button");
+
+		subjectLabel.Text = $"Subject: {MultiplayerRoomState.RoomName}";
+		roomCode.Text = MultiplayerRoomState.RoomCode;
+		studentCountLabel.Text = "Student Joined: 0";
+
+		backButton.Pressed += OnBackPressed;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	private void OnBackPressed()
 	{
+		GetTree().ChangeSceneToFile("res://scene/Dashboard/Modules/Room/ProfessorRoom.tscn");
 	}
 }

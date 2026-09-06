@@ -21,6 +21,7 @@ public static class UserSession
 	public static string FirstName { get; private set; } = "";
 	public static string LastName { get; private set; } = "";
 	public static string Email { get; private set; } = "";
+	public static string Token { get; private set; } = "";
 
 	public static int Coins { get; private set; }
 	public static int Points { get; private set; }
@@ -50,13 +51,15 @@ public static class UserSession
 		string email = "",
 		int coins = 0,
 		int points = 0,
-		string avatarPath = "")
+		string avatarPath = "",
+		string token = "")
 	{
 		Role = role;
 		UserId = userId;
 		FirstName = firstName ?? "";
 		LastName = lastName ?? "";
 		Email = email ?? "";
+		Token = token ?? "";
 
 		// Coins/points are meaningful only for Student.
 		Coins = role == UserRole.Student ? Math.Max(0, coins) : 0;
@@ -111,6 +114,7 @@ public static class UserSession
 		string lastName = GetString(response, "lastName");
 		string email = GetString(response, "email");
 		string avatar = GetString(response, "avatar");
+		string token = GetString(response, "token");
 
 		int coins = role == UserRole.Student
 			? GetInt(response, "totalCoins")
@@ -128,7 +132,8 @@ public static class UserSession
 			email,
 			coins,
 			points,
-			avatar
+			avatar,
+			token
 		);
 
 		return true;
@@ -236,6 +241,7 @@ public static class UserSession
 		FirstName = "";
 		LastName = "";
 		Email = "";
+		Token = "";
 		Coins = 0;
 		Points = 0;
 		AvatarPath = "";

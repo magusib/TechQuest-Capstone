@@ -105,6 +105,10 @@ alignment = 1
 layout_mode = 2
 text = "Manage"
 
+[node name="Close" type="Button" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer/RoomButton" unique_id=771293882]
+layout_mode = 2
+text = "Close"
+
 [node name="Delete" type="Button" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer/RoomButton" unique_id=763940445]
 layout_mode = 2
 text = "Delete"
@@ -113,6 +117,7 @@ text = "Delete"
 oversampling_override = 1.0
 initial_position = 2
 size = Vector2i(500, 450)
+visible = false
 
 [node name="CreateRoomPanel" type="Panel" parent="CreateRoomWindow" unique_id=216906645]
 offset_left = 16.0
@@ -120,57 +125,56 @@ offset_top = 16.0
 offset_right = 488.0
 offset_bottom = 438.0
 
-[node name="SubjectNameLabel" type="Label" parent="CreateRoomWindow/CreateRoomPanel" unique_id=932375347]
+[node name="RoomCodeContainer" type="VBoxContainer" parent="CreateRoomWindow/CreateRoomPanel" unique_id=312041701]
 layout_mode = 0
-offset_left = 19.0
-offset_top = 57.0
-offset_right = 131.0
-offset_bottom = 84.0
+offset_right = 468.0
+offset_bottom = 418.0
+theme_override_constants/separation = 40
+
+[node name="SubjectNameLabel" type="Label" parent="CreateRoomWindow/CreateRoomPanel/RoomCodeContainer" unique_id=932375347]
+layout_mode = 2
 text = "Subject Name:"
 
-[node name="SubjectNameInput" type="LineEdit" parent="CreateRoomWindow/CreateRoomPanel" unique_id=1815235529]
-layout_mode = 0
-offset_left = 29.0
-offset_top = 94.0
-offset_right = 443.0
-offset_bottom = 145.0
+[node name="SubjectNameInput" type="LineEdit" parent="CreateRoomWindow/CreateRoomPanel/RoomCodeContainer" unique_id=1815235529]
+layout_mode = 2
 
-[node name="RoomCodeLabel" type="Label" parent="CreateRoomWindow/CreateRoomPanel" unique_id=1705929181]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 186.0
-offset_right = 127.0
-offset_bottom = 217.0
+[node name="RoomCodeLabel" type="Label" parent="CreateRoomWindow/CreateRoomPanel/RoomCodeContainer" unique_id=1705929181]
+layout_mode = 2
 text = "RoomCode"
 
-[node name="CodeLabel" type="Label" parent="CreateRoomWindow/CreateRoomPanel" unique_id=1717830761]
-layout_mode = 0
-offset_left = 37.0
-offset_top = 224.0
-offset_right = 436.0
-offset_bottom = 262.0
+[node name="CodeLabel" type="Label" parent="CreateRoomWindow/CreateRoomPanel/RoomCodeContainer" unique_id=1717830761]
+layout_mode = 2
 text = "----------"
 horizontal_alignment = 1
 
-[node name="SaveButton" type="Button" parent="CreateRoomWindow/CreateRoomPanel" unique_id=376234721]
-layout_mode = 0
-offset_left = 61.0
-offset_top = 353.0
-offset_right = 105.0
-offset_bottom = 384.0
+[node name="GenerateCodeButton" type="Button" parent="CreateRoomWindow/CreateRoomPanel/RoomCodeContainer" unique_id=681366218]
+layout_mode = 2
+text = "Generate Room Code"
+
+[node name="RoomButtonContainer" type="HBoxContainer" parent="CreateRoomWindow/CreateRoomPanel/RoomCodeContainer" unique_id=1115906463]
+layout_mode = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="SaveButton" type="Button" parent="CreateRoomWindow/CreateRoomPanel/RoomCodeContainer/RoomButtonContainer" unique_id=376234721]
+layout_mode = 2
 text = "Save
 "
 
-[node name="CancelButton" type="Button" parent="CreateRoomWindow/CreateRoomPanel" unique_id=284371894]
-layout_mode = 0
-offset_left = 362.0
-offset_top = 354.0
-offset_right = 422.0
-offset_bottom = 385.0
+[node name="CancelButton" type="Button" parent="CreateRoomWindow/CreateRoomPanel/RoomCodeContainer/RoomButtonContainer" unique_id=284371894]
+layout_mode = 2
 text = "Cancel"
 
 [node name="DeleteRoomConfirmation" type="ConfirmationDialog" parent="." unique_id=435456129]
 oversampling_override = 1.0
 title = "Are you sure you want to delete this room?"
 initial_position = 2
+size = Vector2i(450, 100)
 ok_button_text = "Delete"
+
+[node name="CloseRoomConiframation" type="ConfirmationDialog" parent="." unique_id=68551275]
+oversampling_override = 1.0
+title = "Are you want to close the room?"
+initial_position = 2
+size = Vector2i(300, 100)
+ok_button_text = "Close"

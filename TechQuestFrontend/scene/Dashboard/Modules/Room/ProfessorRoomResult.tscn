@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dieiobmqulsit"]
 
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="1_01xee"]
+[ext_resource type="Script" uid="uid://cwqk80xt863xm" path="res://scene/Dashboard/Modules/Room/ProfessorRoomResult.cs" id="2_fvlsb"]
 
 [node name="ProfessorRoomResult" type="Control" unique_id=1563331723]
 layout_mode = 3
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("2_fvlsb")
 
 [node name="Background" type="TextureRect" parent="." unique_id=381542336]
 layout_mode = 1

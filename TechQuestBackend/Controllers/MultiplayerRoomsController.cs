@@ -23,7 +23,63 @@ namespace TechQuestBackend.Controllers
         [Authorize(Roles = "professor,admin")]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _db.MultiplayerRooms.AsNoTracking().OrderByDescending(r => r.CreatedAt).ToListAsync());
+            int userId = GetUserId();
+            string role = User.FindFirstValue("role") ?? "";
+
+            IQueryable<MultiplayerRoom> query = _db.MultiplayerRooms.AsNoTracking();
+            if (!string.Equals(role, "admin", StringComparison.OrdinalIgnoreCase))
+                query = query.Where(r => r.CreatedBy == userId);
+
+            var roomEntities = await query
+                .Include(r => r.Participants)
+                .OrderByDescending(r => r.CreatedAt)
+                .ToListAsync();
+
+            return Ok(roomEntities.Select(ToRoomSummary));
+        }
+
+        [HttpGet("{roomId:int}")]
+        [Authorize(Roles = "professor,admin,student")]
+        public async Task<IActionResult> GetById(int roomId)
+        {
+            var room = await _db.MultiplayerRooms
+                .Include(r => r.Participants)
+                .AsNoTracking()
+                .SingleOrDefaultAsync(r => r.RoomId == roomId);
+
+            if (room == null)
+                return NotFound("Room was not found.");
+
+            if (!CanAccessRoom(room))
+                return Forbid();
+
+            return Ok(ToRoomSummary(room));
+        }
+
+        [HttpGet("code/{roomCode}")]
+        [Authorize(Roles = "professor,admin,student")]
+        public async Task<IActionResult> GetByCode(string roomCode)
+        {
+            string normalizedCode = NormalizeRoomCode(roomCode);
+            var room = await _db.MultiplayerRooms
+                .Include(r => r.Participants)
+                .AsNoTracking()
+                .SingleOrDefaultAsync(r => r.RoomCode.ToUpper() == normalizedCode);
+
+            if (room == null)
+                return NotFound("Invalid room code");
+
+            if (!CanAccessRoom(room))
+                return Forbid();
+
+            return Ok(ToRoomSummary(room));
+        }
+
+        [HttpPost("generate-code")]
+        [Authorize(Roles = "professor")]
+        public async Task<IActionResult> GenerateCode()
+        {
+            return Ok(new { roomCode = await GenerateUniqueRoomCode() });
         }
 
         [HttpPost]
@@ -33,7 +89,12 @@ namespace TechQuestBackend.Controllers
             if (string.IsNullOrWhiteSpace(request.RoomName))
                 return BadRequest("Room name is required.");
 
-            string roomCode = await GenerateUniqueRoomCode();
+            string roomCode = NormalizeRoomCode(request.RoomCode);
+            if (string.IsNullOrWhiteSpace(roomCode))
+                return BadRequest("Generate room code first.");
+
+            if (await _db.MultiplayerRooms.AnyAsync(r => r.RoomCode.ToUpper() == roomCode))
+                return BadRequest("Room code already exists. Please generate another code.");
 
             var room = new MultiplayerRoom
             {
@@ -46,37 +107,62 @@ namespace TechQuestBackend.Controllers
 
             _db.MultiplayerRooms.Add(room);
             await _db.SaveChangesAsync();
-            return Ok(room);
+            return Ok(ToRoomSummary(room));
+        }
+
+        [HttpDelete("{roomId:int}")]
+        [Authorize(Roles = "professor,admin")]
+        public async Task<IActionResult> Delete(int roomId)
+        {
+            var room = await _db.MultiplayerRooms.SingleOrDefaultAsync(r => r.RoomId == roomId);
+            if (room == null)
+                return NotFound("Room was not found.");
+
+            if (!CanAccessRoom(room))
+                return Forbid();
+
+            _db.MultiplayerRooms.Remove(room);
+            await _db.SaveChangesAsync();
+            return NoContent();
         }
 
         [HttpPost("join")]
         [Authorize(Roles = "student")]
         public async Task<IActionResult> Join(JoinRoomRequest request)
         {
+            string roomCode = NormalizeRoomCode(request.RoomCode);
+            if (string.IsNullOrWhiteSpace(roomCode))
+                return BadRequest("Invalid room code");
+
             int userId = GetUserId();
             var profile = await _db.StudentProfiles.SingleOrDefaultAsync(p => p.UserId == userId);
             if (profile == null)
                 return BadRequest("Student profile was not found.");
 
             var room = await _db.MultiplayerRooms
-                .SingleOrDefaultAsync(r => r.RoomCode == request.RoomCode.Trim());
+                .Include(r => r.Participants)
+                .SingleOrDefaultAsync(r => r.RoomCode.ToUpper() == roomCode);
 
             if (room == null)
-                return NotFound("Room was not found.");
+                return NotFound("Invalid room code");
 
-            if (await _db.RoomParticipants.AnyAsync(p => p.RoomId == room.RoomId && p.UserId == profile.StudentId))
-                return BadRequest("Student already joined this room.");
+            bool alreadyJoined = await _db.RoomParticipants
+                .AnyAsync(p => p.RoomId == room.RoomId && p.UserId == profile.StudentId);
 
-            var participant = new RoomParticipant
+            if (!alreadyJoined)
             {
-                RoomId = room.RoomId,
-                UserId = profile.StudentId,
-                JoinedAt = DateTime.UtcNow
-            };
+                var participant = new RoomParticipant
+                {
+                    RoomId = room.RoomId,
+                    UserId = profile.StudentId,
+                    JoinedAt = DateTime.UtcNow
+                };
 
-            _db.RoomParticipants.Add(participant);
-            await _db.SaveChangesAsync();
-            return Ok(participant);
+                _db.RoomParticipants.Add(participant);
+                await _db.SaveChangesAsync();
+            }
+
+            return Ok(ToRoomJoin(room, profile.StudentId));
         }
 
         [HttpPost("{roomId:int}/results")]
@@ -119,6 +205,46 @@ namespace TechQuestBackend.Controllers
             return code;
         }
 
+        private static string NormalizeRoomCode(string roomCode)
+        {
+            return (roomCode ?? "").Trim().ToUpperInvariant();
+        }
+
+        private static object ToRoomSummary(MultiplayerRoom room)
+        {
+            return new
+            {
+                room.RoomId,
+                room.RoomCode,
+                room.RoomName,
+                room.Status,
+                StudentCount = room.Participants.Count
+            };
+        }
+
+        private static object ToRoomJoin(MultiplayerRoom room, int studentId)
+        {
+            return new
+            {
+                room.RoomId,
+                room.RoomCode,
+                room.RoomName,
+                room.Status,
+                StudentCount = room.Participants.Count,
+                StudentId = studentId
+            };
+        }
+
+        private bool CanAccessRoom(MultiplayerRoom room)
+        {
+            string role = User.FindFirstValue("role") ?? "";
+            if (string.Equals(role, "admin", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(role, "student", StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            return room.CreatedBy == GetUserId();
+        }
+
         private int GetUserId()
         {
             return int.TryParse(User.FindFirstValue("userId"), out int userId) ? userId : 0;
@@ -128,6 +254,8 @@ namespace TechQuestBackend.Controllers
     public class RoomRequest
     {
         public string RoomName { get; set; } = "";
+
+        public string RoomCode { get; set; } = "";
     }
 
     public class JoinRoomRequest

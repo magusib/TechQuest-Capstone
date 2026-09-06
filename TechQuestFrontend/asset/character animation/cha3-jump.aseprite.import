@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cd7uih3yj4s3d"
+path="res://.godot/imported/cha3-jump.aseprite-664893e18f4771bca343102884059c35.res"
+
+[deps]
+
+source_file="res://asset/character animation/cha3-jump.aseprite"
+dest_files=["res://.godot/imported/cha3-jump.aseprite-664893e18f4771bca343102884059c35.res"]
+
+[params]
+

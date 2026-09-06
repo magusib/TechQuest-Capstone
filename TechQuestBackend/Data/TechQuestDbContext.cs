@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿﻿using Microsoft.EntityFrameworkCore;
 using TechQuestBackend.Models;
 
 namespace TechQuestBackend.Data
@@ -283,11 +283,19 @@ namespace TechQuestBackend.Data
                 entity.ToTable("Professor_uploads");
                 entity.HasKey(p => p.UploadId);
                 entity.Property(p => p.FileName).HasMaxLength(255).IsRequired();
+                entity.Property(p => p.QuestionsJson)
+                    .HasColumnType("jsonb")
+                    .HasDefaultValueSql("'[]'::jsonb");
+                entity.Property(p => p.TimerSeconds).HasDefaultValue(30);
                 entity.Property(p => p.UploadedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.HasOne(p => p.Professor)
                     .WithMany()
                     .HasForeignKey(p => p.ProfessorId)
                     .OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(p => p.Room)
+                    .WithMany()
+                    .HasForeignKey(p => p.RoomId)
+                    .OnDelete(DeleteBehavior.Cascade);
                 entity.HasOne(p => p.CreatedByUser)
                     .WithMany()
                     .HasForeignKey(p => p.CreatedBy)
@@ -300,8 +308,13 @@ namespace TechQuestBackend.Data
                 entity.HasKey(r => r.RoomResultId);
                 entity.HasIndex(r => new { r.RoomId, r.StudentId }).IsUnique();
                 entity.Property(r => r.Score).HasDefaultValue(0);
+                entity.Property(r => r.TotalQuestions).HasDefaultValue(0);
+                entity.Property(r => r.AnswersJson)
+                    .HasColumnType("jsonb")
+                    .HasDefaultValueSql("'[]'::jsonb");
                 entity.Property(r => r.CompletedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.HasCheckConstraint("CK_Room_result_Score_NonNegative", "\"Score\" >= 0");
+                entity.HasCheckConstraint("CK_Room_result_TotalQuestions_NonNegative", "\"TotalQuestions\" >= 0");
                 entity.HasOne(r => r.Room)
                     .WithMany(room => room.Results)
                     .HasForeignKey(r => r.RoomId)
