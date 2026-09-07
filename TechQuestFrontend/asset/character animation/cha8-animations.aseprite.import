@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bmfs6614e505j"
+path="res://.godot/imported/cha8-animations.aseprite-065d3c5a16099eb21eb54c3a08074e28.res"
+
+[deps]
+
+source_file="res://asset/character animation/cha8-animations.aseprite"
+dest_files=["res://.godot/imported/cha8-animations.aseprite-065d3c5a16099eb21eb54c3a08074e28.res"]
+
+[params]
+

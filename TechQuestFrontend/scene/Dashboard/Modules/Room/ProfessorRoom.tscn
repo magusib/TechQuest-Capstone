@@ -81,20 +81,16 @@ theme_override_constants/separation = 45
 
 [node name="SubjectLabel" type="Label" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer" unique_id=738717871]
 layout_mode = 2
-text = "Subject Name"
 horizontal_alignment = 1
 
 [node name="RoomCodeLabel" type="Label" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer" unique_id=1819120600]
 layout_mode = 2
-text = "Room Code:"
 
 [node name="StudentCountLabel" type="Label" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer" unique_id=1953093648]
 layout_mode = 2
-text = "Student Count:"
 
 [node name="StatusLabel" type="Label" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer" unique_id=105039901]
 layout_mode = 2
-text = "Status:"
 
 [node name="RoomButton" type="HBoxContainer" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer" unique_id=1055253670]
 layout_mode = 2

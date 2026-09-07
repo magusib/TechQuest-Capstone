@@ -38,6 +38,11 @@ public static class RoomApiClient
 		await SendAsync<object>(HttpMethod.Delete, $"/MultiplayerRooms/{roomId}");
 	}
 
+	public static Task<RoomSummaryDto> CloseRoomAsync(int roomId)
+	{
+		return SendAsync<RoomSummaryDto>(HttpMethod.Post, $"/MultiplayerRooms/{roomId}/close");
+	}
+
 	public static Task<RoomSummaryDto> GetRoomAsync(int roomId)
 	{
 		return SendAsync<RoomSummaryDto>(HttpMethod.Get, $"/MultiplayerRooms/{roomId}");

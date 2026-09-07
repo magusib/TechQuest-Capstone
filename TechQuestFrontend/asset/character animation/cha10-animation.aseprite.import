@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://4dooufxmefjn"
+path="res://.godot/imported/cha10-animation.aseprite-988d1d2429ddb89743ca878f3573b76a.res"
+
+[deps]
+
+source_file="res://asset/character animation/cha10-animation.aseprite"
+dest_files=["res://.godot/imported/cha10-animation.aseprite-988d1d2429ddb89743ca878f3573b76a.res"]
+
+[params]
+

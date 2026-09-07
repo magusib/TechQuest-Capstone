@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cgtipdj5do8tr"]
+
+[ext_resource type="Script" uid="uid://c5ra2jbuqup1g" path="res://scene/AdventureGame/CharacterAnimation/Character.cs" id="1_aaicu"]
+
+[node name="Character5" type="CharacterBody2D" unique_id=1648924303]
+script = ExtResource("1_aaicu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=497304483]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1583382845]

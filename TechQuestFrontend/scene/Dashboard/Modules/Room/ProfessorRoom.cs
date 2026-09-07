@@ -15,10 +15,14 @@ public partial class ProfessorRoom : Control
 	private Button saveButton;
 	private Button cancelButton;
 	private VBoxContainer roomListContainer;
+	private Panel roomListPanel;
 	private ConfirmationDialog deleteRoomConfirmation;
+	private ConfirmationDialog closeRoomConfirmation;
+	private Godot.Collections.Array<Node> roomTemplate;
 
 	private string generatedRoomCode = "";
 	private int pendingDeleteRoomId;
+	private int pendingCloseRoomId;
 
 	public override void _Ready()
 	{
@@ -32,7 +36,11 @@ public partial class ProfessorRoom : Control
 		saveButton = GetNode<Button>("CreateRoomWindow/CreateRoomPanel/RoomCodeContainer/RoomButtonContainer/SaveButton");
 		cancelButton = GetNode<Button>("CreateRoomWindow/CreateRoomPanel/RoomCodeContainer/RoomButtonContainer/CancelButton");
 		roomListContainer = GetNode<VBoxContainer>("RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer");
+		roomListPanel = GetNode<Panel>("RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel");
 		deleteRoomConfirmation = GetNode<ConfirmationDialog>("DeleteRoomConfirmation");
+		closeRoomConfirmation = GetNode<ConfirmationDialog>("CloseRoomConiframation");
+		roomTemplate = roomListContainer.GetChildren();
+		SetRoomTemplateVisible(false);
 
 		backButton.Pressed += OnBackPressed;
 		createRoomButton.Pressed += OnCreateRoomPressed;
@@ -40,6 +48,7 @@ public partial class ProfessorRoom : Control
 		saveButton.Pressed += OnSaveRoomPressed;
 		cancelButton.Pressed += OnCancelCreateRoomPressed;
 		deleteRoomConfirmation.Confirmed += OnDeleteRoomConfirmed;
+		closeRoomConfirmation.Confirmed += OnCloseRoomConfirmed;
 
 		ResetCreateRoomForm();
 		_ = RefreshRoomsAsync();
@@ -144,6 +153,11 @@ public partial class ProfessorRoom : Control
 	private void RenderRooms(List<RoomSummaryDto> rooms)
 	{
 		ClearRoomList();
+		SetRoomTemplateVisible(false);
+
+		float contentHeight = Math.Max(350, rooms.Count * 220 + 30);
+		roomListPanel.CustomMinimumSize = new Vector2(0, contentHeight);
+		roomListContainer.CustomMinimumSize = new Vector2(0, contentHeight - 26);
 
 		if (rooms.Count == 0)
 		{
@@ -157,50 +171,47 @@ public partial class ProfessorRoom : Control
 
 	private Control CreateRoomRow(RoomSummaryDto room)
 	{
-		var panel = new Panel
+		var row = new VBoxContainer
 		{
-			CustomMinimumSize = new Vector2(0, 110),
 			SizeFlagsHorizontal = SizeFlags.ExpandFill
 		};
+		row.AddThemeConstantOverride("separation", 45);
 
-		var row = new HBoxContainer
-		{
-			AnchorRight = 1,
-			AnchorBottom = 1,
-			OffsetLeft = 16,
-			OffsetTop = 14,
-			OffsetRight = -16,
-			OffsetBottom = -14,
-			Alignment = BoxContainer.AlignmentMode.Center
-		};
-		row.AddThemeConstantOverride("separation", 30);
-		panel.AddChild(row);
+		var subjectLabel = (Label)roomTemplate[0].Duplicate();
+		subjectLabel.Text = room.RoomName;
+		subjectLabel.Visible = true;
+		row.AddChild(subjectLabel);
 
-		row.AddChild(CreateLabel(room.RoomName, 220));
-		row.AddChild(CreateLabel($"Code: {room.RoomCode}", 170));
-		row.AddChild(CreateLabel($"Students: {room.StudentCount}", 150));
-		row.AddChild(CreateLabel($"Status: {room.Status}", 150));
+		var roomCodeLabel = (Label)roomTemplate[1].Duplicate();
+		roomCodeLabel.Text = $"Code: {room.RoomCode}";
+		roomCodeLabel.Visible = true;
+		row.AddChild(roomCodeLabel);
 
-		var manageButton = new Button { Text = "Manage", CustomMinimumSize = new Vector2(110, 40) };
+		var studentCountLabel = (Label)roomTemplate[2].Duplicate();
+		studentCountLabel.Text = $"Students: {room.StudentCount}";
+		studentCountLabel.Visible = true;
+		row.AddChild(studentCountLabel);
+
+		var statusLabel = (Label)roomTemplate[3].Duplicate();
+		statusLabel.Text = $"Status: {GetDisplayStatus(room.Status)}";
+		statusLabel.Visible = true;
+		row.AddChild(statusLabel);
+
+		var actionButtons = (HBoxContainer)roomTemplate[4].Duplicate();
+		actionButtons.Visible = true;
+		row.AddChild(actionButtons);
+
+		var manageButton = actionButtons.GetNode<Button>("Manage");
 		manageButton.Pressed += () => OnManageRoomPressed(room);
-		row.AddChild(manageButton);
 
-		var deleteButton = new Button { Text = "Delete", CustomMinimumSize = new Vector2(110, 40) };
+		var closeButton = actionButtons.GetNode<Button>("Close");
+		closeButton.Disabled = IsClosed(room.Status);
+		closeButton.Pressed += () => OnCloseRoomPressed(room.RoomId);
+
+		var deleteButton = actionButtons.GetNode<Button>("Delete");
 		deleteButton.Pressed += () => OnDeleteRoomPressed(room.RoomId);
-		row.AddChild(deleteButton);
 
-		return panel;
-	}
-
-	private static Label CreateLabel(string text, float width)
-	{
-		return new Label
-		{
-			Text = text,
-			CustomMinimumSize = new Vector2(width, 40),
-			VerticalAlignment = VerticalAlignment.Center,
-			AutowrapMode = TextServer.AutowrapMode.WordSmart
-		};
+		return row;
 	}
 
 	private void OnManageRoomPressed(RoomSummaryDto room)
@@ -213,6 +224,29 @@ public partial class ProfessorRoom : Control
 	{
 		pendingDeleteRoomId = roomId;
 		deleteRoomConfirmation.PopupCentered();
+	}
+
+	private void OnCloseRoomPressed(int roomId)
+	{
+		pendingCloseRoomId = roomId;
+		closeRoomConfirmation.PopupCentered();
+	}
+
+	private async void OnCloseRoomConfirmed()
+	{
+		if (pendingCloseRoomId <= 0)
+			return;
+
+		try
+		{
+			await RoomApiClient.CloseRoomAsync(pendingCloseRoomId);
+			pendingCloseRoomId = 0;
+			await RefreshRoomsAsync();
+		}
+		catch (Exception ex)
+		{
+			GD.PrintErr($"Close room failed: {ex.Message}");
+		}
 	}
 
 	private async void OnDeleteRoomConfirmed()
@@ -253,12 +287,36 @@ public partial class ProfessorRoom : Control
 	private void RenderMessage(string message)
 	{
 		ClearRoomList();
-		roomListContainer.AddChild(CreateLabel(message, 500));
+		var messageLabel = new Label
+		{
+			Text = message,
+			SizeFlagsHorizontal = SizeFlags.ExpandFill
+		};
+		roomListContainer.AddChild(messageLabel);
 	}
 
 	private void ClearRoomList()
 	{
 		foreach (Node child in roomListContainer.GetChildren())
-			child.QueueFree();
+		{
+			if (!roomTemplate.Contains(child))
+				child.Free();
+		}
+	}
+
+	private void SetRoomTemplateVisible(bool visible)
+	{
+		foreach (Node templateNode in roomTemplate)
+			((CanvasItem)templateNode).Visible = visible;
+	}
+
+	private static bool IsClosed(string status)
+	{
+		return string.Equals(status, "closed", StringComparison.OrdinalIgnoreCase);
+	}
+
+	private static string GetDisplayStatus(string status)
+	{
+		return IsClosed(status) ? "Close" : "Ongoing";
 	}
 }

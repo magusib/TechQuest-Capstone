@@ -51,7 +51,7 @@ public partial class StudentRoom : Control
 		catch (Exception ex)
 		{
 			GD.PrintErr($"Join room failed: {ex.Message}");
-			ShowError("Invalid room code");
+			ShowError(ex.Message == "The room is closed" ? ex.Message : "Invalid room code");
 		}
 		finally
 		{

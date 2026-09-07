@@ -32,7 +32,7 @@ namespace TechQuestBackend.Controllers
 
             var roomEntities = await query
                 .Include(r => r.Participants)
-                .OrderByDescending(r => r.CreatedAt)
+                .OrderBy(r => r.CreatedAt)
                 .ToListAsync();
 
             return Ok(roomEntities.Select(ToRoomSummary));
@@ -100,12 +100,28 @@ namespace TechQuestBackend.Controllers
             {
                 RoomCode = roomCode,
                 RoomName = request.RoomName.Trim(),
-                Status = "waiting",
+                Status = "ongoing",
                 CreatedAt = DateTime.UtcNow,
                 CreatedBy = GetUserId()
             };
 
             _db.MultiplayerRooms.Add(room);
+            await _db.SaveChangesAsync();
+            return Ok(ToRoomSummary(room));
+        }
+
+        [HttpPost("{roomId:int}/close")]
+        [Authorize(Roles = "professor")]
+        public async Task<IActionResult> Close(int roomId)
+        {
+            var room = await _db.MultiplayerRooms.SingleOrDefaultAsync(r => r.RoomId == roomId);
+            if (room == null)
+                return NotFound("Room was not found.");
+
+            if (!CanAccessRoom(room))
+                return Forbid();
+
+            room.Status = "closed";
             await _db.SaveChangesAsync();
             return Ok(ToRoomSummary(room));
         }
@@ -145,6 +161,9 @@ namespace TechQuestBackend.Controllers
 
             if (room == null)
                 return NotFound("Invalid room code");
+
+            if (string.Equals(room.Status, "closed", StringComparison.OrdinalIgnoreCase))
+                return BadRequest("The room is closed");
 
             bool alreadyJoined = await _db.RoomParticipants
                 .AnyAsync(p => p.RoomId == room.RoomId && p.UserId == profile.StudentId);
