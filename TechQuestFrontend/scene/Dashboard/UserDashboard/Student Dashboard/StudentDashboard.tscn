@@ -214,6 +214,14 @@ offset_right = 170.0
 offset_bottom = 44.0
 text = "Points"
 
+[node name="AvatarButton" type="TextureButton" parent="TopBar/AvatarPanel" unique_id=65518753]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="MenuButton" type="MenuButton" parent="TopBar" unique_id=1957294798]
 layout_mode = 1
 anchors_preset = 1

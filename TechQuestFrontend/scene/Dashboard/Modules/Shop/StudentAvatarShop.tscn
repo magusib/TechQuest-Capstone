@@ -1,0 +1,126 @@
+[gd_scene format=3 uid="uid://bgfr8yocs37xh"]
+
+[ext_resource type="Script" uid="uid://cj3gq1yoq2kon" path="res://scene/Dashboard/Modules/Shop/StudentAvatarShop.cs" id="1_spvis"]
+
+[node name="StudentAvatarShop" type="Control" unique_id=1783287785]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_spvis")
+
+[node name="Background" type="ColorRect" parent="." unique_id=534045386]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.055, 0.12, 0.22, 1)
+
+[node name="ShopPanel" type="Panel" parent="." unique_id=1727227001]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -556.5
+offset_top = -307.0
+offset_right = 556.5
+offset_bottom = 307.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ShopTitle" type="Label" parent="ShopPanel" unique_id=1565942600]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 20.0
+offset_right = 600.0
+offset_bottom = 65.0
+theme_override_font_sizes/font_size = 28
+text = "STUDENT AVATAR SHOP"
+
+[node name="CoinLabel" type="Label" parent="ShopPanel" unique_id=893633003]
+layout_mode = 0
+offset_left = 920.0
+offset_top = 25.0
+offset_right = 1080.0
+offset_bottom = 60.0
+text = "Coins: 0"
+horizontal_alignment = 1
+
+[node name="CategoryButtons" type="HBoxContainer" parent="ShopPanel" unique_id=75127909]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 80.0
+offset_right = 430.0
+offset_bottom = 130.0
+theme_override_constants/separation = 12
+
+[node name="CharacterButton" type="Button" parent="ShopPanel/CategoryButtons" unique_id=1958972354]
+custom_minimum_size = Vector2(180, 45)
+layout_mode = 2
+text = "CHARACTER"
+
+[node name="AvatarButton" type="Button" parent="ShopPanel/CategoryButtons" unique_id=269182367]
+custom_minimum_size = Vector2(180, 45)
+layout_mode = 2
+text = "AVATAR"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ShopPanel" unique_id=11242278]
+layout_mode = 0
+offset_left = 6.5
+offset_top = 144.0
+offset_right = 1106.5
+offset_bottom = 604.0
+horizontal_scroll_mode = 0
+
+[node name="ItemGrid" type="GridContainer" parent="ShopPanel/ScrollContainer" unique_id=1929864174]
+custom_minimum_size = Vector2(1040, 0)
+layout_mode = 2
+theme_override_constants/h_separation = 18
+theme_override_constants/v_separation = 18
+columns = 3
+
+[node name="ItemPanel" type="Panel" parent="." unique_id=105233469]
+layout_mode = 0
+offset_left = 67.0
+offset_top = 180.0
+offset_right = 345.0
+offset_bottom = 525.5
+
+[node name="ItemPlaceholder" type="TextureRect" parent="ItemPanel" unique_id=773155948]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 18.0
+offset_right = 258.0
+offset_bottom = 227.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="ItemPanel" unique_id=1081276900]
+layout_mode = 0
+offset_left = 212.0
+offset_top = 16.0
+offset_right = 260.0
+offset_bottom = 39.0
+text = "Price"
+
+[node name="Label2" type="Label" parent="ItemPanel" unique_id=139562447]
+layout_mode = 0
+offset_left = 119.0
+offset_top = 246.0
+offset_right = 166.0
+offset_bottom = 269.0
+text = "Name"
+
+[node name="PurchaseButton" type="Button" parent="ItemPanel" unique_id=1673182746]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 286.0
+offset_right = 184.0
+offset_bottom = 317.0
+text = "Purchase"

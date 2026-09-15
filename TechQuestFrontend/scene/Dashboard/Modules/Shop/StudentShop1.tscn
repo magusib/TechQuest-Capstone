@@ -1,0 +1,148 @@
+[gd_scene format=3 uid="uid://duyrldduostsm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y2ubs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cwogk"]
+
+[node name="StudentShop" type="Control" unique_id=1842537281]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="." unique_id=485093612]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.055, 0.12, 0.22, 1)
+
+[node name="ShopPanel" type="Panel" parent="." unique_id=918691870]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -561.0
+offset_top = -293.0
+offset_right = 562.0
+offset_bottom = 302.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ShopTitle" type="Label" parent="ShopPanel" unique_id=2140036721]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 20.0
+offset_right = 600.0
+offset_bottom = 65.0
+theme_override_font_sizes/font_size = 28
+text = "STUDENT CHARACTER SHOP"
+
+[node name="CoinPanel" type="PanelContainer" parent="ShopPanel" unique_id=197656322]
+layout_mode = 0
+offset_left = 920.0
+offset_top = 20.0
+offset_right = 1080.0
+offset_bottom = 65.0
+
+[node name="CoinLabel" type="Label" parent="ShopPanel/CoinPanel" unique_id=1538604620]
+layout_mode = 2
+text = "  Coins: 0  "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CategoryButtons" type="HBoxContainer" parent="ShopPanel" unique_id=1987350312]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 80.0
+offset_right = 430.0
+offset_bottom = 130.0
+theme_override_constants/separation = 12
+
+[node name="CharacterButton" type="Button" parent="ShopPanel/CategoryButtons" unique_id=1024565770]
+custom_minimum_size = Vector2(180, 45)
+layout_mode = 2
+text = "CHARACTER"
+
+[node name="AvatarButton" type="Button" parent="ShopPanel/CategoryButtons" unique_id=1243626706]
+custom_minimum_size = Vector2(180, 45)
+layout_mode = 2
+text = "AVATAR"
+
+[node name="ShopContentMargin" type="MarginContainer" parent="ShopPanel" unique_id=1132285598]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -550.0
+offset_top = -141.5
+offset_right = 550.0
+offset_bottom = 288.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ShopPanel/ShopContentMargin" unique_id=859082076]
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="ItemGrid" type="GridContainer" parent="ShopPanel/ShopContentMargin/ScrollContainer" unique_id=1369371085]
+custom_minimum_size = Vector2(1040, 0)
+layout_mode = 2
+theme_override_constants/h_separation = 18
+theme_override_constants/v_separation = 18
+columns = 3
+
+[node name="ItemPanel" type="Panel" parent="." unique_id=1590209042]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 187.0
+offset_right = 358.0
+offset_bottom = 607.0
+
+[node name="ItemPlaceholder" type="TextureRect" parent="ItemPanel" unique_id=722845563]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 13.0
+offset_right = 255.0
+offset_bottom = 365.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="ItemPanel" unique_id=1700177659]
+layout_mode = 0
+offset_left = 208.0
+offset_top = 16.0
+offset_right = 256.0
+offset_bottom = 39.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_y2ubs")
+text = "Price"
+
+[node name="Label2" type="Label" parent="ItemPanel" unique_id=1613786725]
+layout_mode = 0
+offset_left = 117.0
+offset_top = 325.0
+offset_right = 164.0
+offset_bottom = 348.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_cwogk")
+text = "Name"
+
+[node name="PurchaseButton" type="Button" parent="ItemPanel" unique_id=79924185]
+layout_mode = 0
+offset_left = 102.0
+offset_top = 375.0
+offset_right = 182.0
+offset_bottom = 406.0
+text = "Purchase"

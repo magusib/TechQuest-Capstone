@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dhwm52ndb8wca"
+path="res://.godot/imported/hardmap.aseprite-80082eb5d1d8d66d721e2510962fa163.res"
+
+[deps]
+
+source_file="res://asset/sprites/hardmap.aseprite"
+dest_files=["res://.godot/imported/hardmap.aseprite-80082eb5d1d8d66d721e2510962fa163.res"]
+
+[params]
+

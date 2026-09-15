@@ -18,6 +18,7 @@ public abstract partial class DashboardBase : Control
 	protected TextureButton HardButton;
 
 	protected TextureRect Avatar;
+	protected TextureButton AvatarButton;
 	protected Label PlayerName;
 	protected Panel CoinsPanel;
 	protected Panel PointsPanel;
@@ -39,6 +40,7 @@ public abstract partial class DashboardBase : Control
 		HardButton = GetNodeOrNull<TextureButton>("DificultySelectionButton2/HardButton");
 
 		Avatar = GetNodeOrNull<TextureRect>("TopBar/AvatarPanel/Avatar");
+		AvatarButton = GetNodeOrNull<TextureButton>("TopBar/AvatarPanel/AvatarButton");
 		PlayerName = GetNodeOrNull<Label>("TopBar/AvatarPanel/PlayerName");
 		CoinsPanel = GetNodeOrNull<Panel>("TopBar/AvatarPanel/CoinsPanel");
 		PointsPanel = GetNodeOrNull<Panel>("TopBar/AvatarPanel/PointsPanel");
@@ -58,6 +60,8 @@ public abstract partial class DashboardBase : Control
 		ConnectButton(ShopButton, OnShopPressed);
 		ConnectButton(CharacterButton, OnCharacterPressed);
 		ConnectButton(StorylineButton, OnStorylinePressed);
+
+		ConnectButton(AvatarButton, OnAvatarPressed);
 
 		ConnectButton(EasyButton, OnEasyPressed);
 		ConnectButton(MediumButton, OnMediumPressed);
@@ -242,6 +246,11 @@ public abstract partial class DashboardBase : Control
 	// ---------------------------------------------------------
 	// Common button handlers
 	// ---------------------------------------------------------
+
+	protected virtual void OnAvatarPressed()
+	{
+		OpenProfile();
+	}
 
 	protected virtual void OnHomePressed()
 	{
