@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dafiei2phkyqo"
-path="res://.godot/imported/Splash Art Character Design (1).png-7751da1dfab9c5fd9f563dcb9de50187.ctex"
+uid="uid://d2hxhrgxcr6yk"
+path="res://.godot/imported/mediumobject.png-9b140178920222fa2a776d965fb7f20e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://asset/Items/Splash Art Character Design (1).png"
-dest_files=["res://.godot/imported/Splash Art Character Design (1).png-7751da1dfab9c5fd9f563dcb9de50187.ctex"]
+source_file="res://asset/sprites/mediumobject.png"
+dest_files=["res://.godot/imported/mediumobject.png-9b140178920222fa2a776d965fb7f20e.ctex"]
 
 [params]
 

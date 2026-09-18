@@ -1,5 +1,8 @@
 [gd_scene format=3 uid="uid://duyrldduostsm"]
 
+[ext_resource type="Script" uid="uid://dqpupq3kmnutt" path="res://scene/Dashboard/Modules/Shop/StudentShop.cs" id="1_cys1c"]
+[ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_7j4ni"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y2ubs"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cwogk"]
@@ -11,15 +14,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_cys1c")
 
-[node name="Background" type="ColorRect" parent="." unique_id=485093612]
+[node name="Background" type="TextureRect" parent="." unique_id=1347299469]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.055, 0.12, 0.22, 1)
+texture = ExtResource("2_7j4ni")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="ShopPanel" type="Panel" parent="." unique_id=918691870]
 layout_mode = 1
@@ -74,6 +80,14 @@ text = "CHARACTER"
 custom_minimum_size = Vector2(180, 45)
 layout_mode = 2
 text = "AVATAR"
+
+[node name="BackButton" type="Button" parent="ShopPanel" unique_id=2063437221]
+layout_mode = 0
+offset_left = 930.0
+offset_top = 80.0
+offset_right = 1080.0
+offset_bottom = 130.0
+text = "BACK"
 
 [node name="ShopContentMargin" type="MarginContainer" parent="ShopPanel" unique_id=1132285598]
 layout_mode = 1

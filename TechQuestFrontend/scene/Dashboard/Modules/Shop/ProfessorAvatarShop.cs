@@ -1,15 +1,52 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class ProfessorAvatarShop : Control
 {
-	// Called when the node enters the scene tree for the first time.
+	private GridContainer itemGrid;
+	private Panel itemTemplate;
+	private string category = "avatar";
+
 	public override void _Ready()
 	{
+		itemGrid = GetNode<GridContainer>("ShopPanel/ScrollContainer/ItemGrid");
+		itemTemplate = GetNode<Panel>("ItemPanel");
+		GetNode<Button>("ShopPanel/CategoryButtons/CharacterButton").Pressed += () => LoadItems("character");
+		GetNode<Button>("ShopPanel/CategoryButtons/AvatarButton").Pressed += () => LoadItems("avatar");
+		itemTemplate.Visible = false;
+		LoadItems(category);
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	private async void LoadItems(string selectedCategory)
 	{
+		category = selectedCategory;
+		GetNode<Label>("ShopPanel/ShopTitle").Text = category == "character" ? "PROFESSOR CHARACTER SHOP" : "PROFESSOR AVATAR SHOP";
+		foreach (Node child in itemGrid.GetChildren())
+			child.QueueFree();
+
+		try
+		{
+			List<ShopItemDto> items = await ShopApiClient.GetItemsAsync(category);
+			itemGrid.Columns = Math.Max(1, items.Count);
+			foreach (ShopItemDto item in items)
+			{
+				Panel card = (Panel)itemTemplate.Duplicate();
+				card.Visible = true;
+				itemGrid.AddChild(card);
+				card.GetNode<Label>("Label").Text = item.PriceCoins + " Coins";
+				card.GetNode<Label>("Label2").Text = item.ItemName;
+				SetImage(card.GetNode<TextureRect>("ItemPlaceholder"), item.AvatarItems ?? item.CharacterItems);
+			}
+		}
+		catch (Exception error)
+		{
+			GD.PrintErr("Professor avatar shop load failed: " + error.Message);
+		}
+	}
+
+	private static void SetImage(TextureRect image, string path)
+	{
+		image.Texture = ShopApiClient.LoadShopImage(path);
 	}
 }

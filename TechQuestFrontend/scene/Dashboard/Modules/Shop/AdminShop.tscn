@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cesd6ixnx3jit"]
 
 [ext_resource type="Script" uid="uid://xd243rk36bg1" path="res://scene/Dashboard/Modules/Shop/AdminShop.cs" id="1_b1btb"]
+[ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_ufe2e"]
 
 [node name="AdminShop" type="Control" unique_id=1209913628]
 layout_mode = 3
@@ -11,14 +12,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_b1btb")
 
-[node name="Background" type="ColorRect" parent="." unique_id=611398408]
+[node name="Background" type="TextureRect" parent="." unique_id=527559921]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.055, 0.12, 0.22, 1)
+texture = ExtResource("2_ufe2e")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="ShopPanel" type="Panel" parent="." unique_id=1997322233]
 layout_mode = 1
@@ -109,11 +112,11 @@ stretch_mode = 5
 
 [node name="Label" type="Label" parent="ShopPanel/ItemPanel" unique_id=1331391335]
 layout_mode = 0
-offset_left = 212.0
-offset_top = 16.0
-offset_right = 260.0
-offset_bottom = 39.0
-text = "Price"
+offset_left = 182.0
+offset_top = 17.0
+offset_right = 230.0
+offset_bottom = 40.0
+text = "0 Coins"
 
 [node name="Label2" type="Label" parent="ShopPanel/ItemPanel" unique_id=1623749345]
 layout_mode = 0
@@ -202,3 +205,6 @@ text = "CANCEL"
 custom_minimum_size = Vector2(120, 45)
 layout_mode = 2
 text = "ADD ITEM"
+
+[node name="DeleteItemConfirmation" type="ConfirmationDialog" parent="." unique_id=1211649425]
+ok_button_text = "Delete"

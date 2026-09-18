@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://syoi6bfcko7y"]
 
 [ext_resource type="Script" uid="uid://bxhmyi22fxnmb" path="res://scene/Dashboard/Modules/Shop/ProfessorAvatarShop.cs" id="1_s1cbs"]
+[ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_acuoi"]
 
 [node name="ProfessorAvatarShop" type="Control" unique_id=900057000]
 layout_mode = 3
@@ -11,14 +12,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_s1cbs")
 
-[node name="Background" type="ColorRect" parent="." unique_id=1655668587]
+[node name="Background" type="TextureRect" parent="." unique_id=1054725635]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.055, 0.12, 0.22, 1)
+texture = ExtResource("2_acuoi")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="ShopPanel" type="Panel" parent="." unique_id=2065990936]
 layout_mode = 1

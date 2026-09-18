@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bkcwf51pcqajs"]
 
 [ext_resource type="Script" uid="uid://col0h2er2lwnr" path="res://scene/Dashboard/Modules/Shop/ProfessorShop.cs" id="1_37531"]
+[ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_6imhl"]
 
 [node name="ProfessorShop" type="Control" unique_id=49887313]
 layout_mode = 3
@@ -11,14 +12,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_37531")
 
-[node name="Background" type="ColorRect" parent="." unique_id=1527163452]
+[node name="Background" type="TextureRect" parent="." unique_id=1989460788]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.055, 0.12, 0.22, 1)
+texture = ExtResource("2_6imhl")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="ShopPanel" type="Panel" parent="." unique_id=1375873384]
 layout_mode = 1

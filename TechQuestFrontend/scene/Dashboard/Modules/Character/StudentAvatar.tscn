@@ -1,0 +1,128 @@
+[gd_scene format=3 uid="uid://c5m4jb40b51t6"]
+
+[ext_resource type="Script" uid="uid://igw5lvdt3emv" path="res://scene/Dashboard/Modules/Character/StudentAvatar.cs" id="1"]
+[ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="1_h0vdb"]
+
+[node name="StudentAvatar" type="Control" unique_id=1658290712]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Background" type="TextureRect" parent="." unique_id=703278662]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_h0vdb")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AvatarPanel" type="Panel" parent="." unique_id=1438355329]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -580.0
+offset_top = -315.0
+offset_right = 580.0
+offset_bottom = 315.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainContainer" type="VBoxContainer" parent="AvatarPanel" unique_id=1877196417]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = 20.0
+offset_right = -25.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="Header" type="HBoxContainer" parent="AvatarPanel/MainContainer" unique_id=1012877514]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+
+[node name="Title" type="Label" parent="AvatarPanel/MainContainer/Header" unique_id=1870194423]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "AVATAR"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="AvatarPanel/MainContainer/Header" unique_id=1054947186]
+custom_minimum_size = Vector2(55, 45)
+layout_mode = 2
+text = "X"
+
+[node name="CategoryButtons" type="HBoxContainer" parent="AvatarPanel/MainContainer" unique_id=471501423]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="CharacterButton" type="Button" parent="AvatarPanel/MainContainer/CategoryButtons" unique_id=711680137]
+custom_minimum_size = Vector2(180, 45)
+layout_mode = 2
+text = "CHARACTER"
+
+[node name="AvatarButton" type="Button" parent="AvatarPanel/MainContainer/CategoryButtons" unique_id=1856506656]
+custom_minimum_size = Vector2(180, 45)
+layout_mode = 2
+text = "AVATAR"
+
+[node name="AvatarArea" type="PanelContainer" parent="AvatarPanel/MainContainer" unique_id=1783689982]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AvatarScroll" type="ScrollContainer" parent="AvatarPanel/MainContainer/AvatarArea" unique_id=2013122718]
+layout_mode = 2
+vertical_scroll_mode = 0
+
+[node name="AvatarContainer" type="HBoxContainer" parent="AvatarPanel/MainContainer/AvatarArea/AvatarScroll" unique_id=839378021]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="StudentAvatarItem" type="PanelContainer" parent="." unique_id=1466177943]
+custom_minimum_size = Vector2(230, 390)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -115.0
+offset_top = -112.0
+offset_right = 115.0
+offset_bottom = 278.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemContainer" type="VBoxContainer" parent="StudentAvatarItem" unique_id=909549519]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="AvatarImage" type="TextureRect" parent="StudentAvatarItem/ItemContainer" unique_id=1244428905]
+custom_minimum_size = Vector2(0, 240)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AvatarName" type="Label" parent="StudentAvatarItem/ItemContainer" unique_id=1906826780]
+layout_mode = 2
+text = "Avatar"
+horizontal_alignment = 1
+
+[node name="UseButton" type="Button" parent="StudentAvatarItem/ItemContainer" unique_id=21413776]
+layout_mode = 2
+text = "USE"

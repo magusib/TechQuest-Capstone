@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://3gisy7mq8ith"]
 
 [ext_resource type="Script" uid="uid://cfw76nxcxitqd" path="res://scene/Dashboard/Modules/Character/StudentCharacter.cs" id="1_qnh6h"]
+[ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_hy3kk"]
 
-[node name="StudentCharacter" type="Control" unique_id=1703512676]
+[node name="StudentCharacter" type="Control" unique_id=1541581775]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,81 +12,156 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qnh6h")
 
-[node name="Background" type="ColorRect" parent="." unique_id=405020611]
+[node name="Background" type="TextureRect" parent="." unique_id=1732227049]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.055, 0.12, 0.22, 1)
+texture = ExtResource("2_hy3kk")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Panel" type="Panel" parent="." unique_id=17511217]
-layout_mode = 0
-offset_left = 34.0
-offset_top = 40.0
-offset_right = 1121.0
-offset_bottom = 611.0
-
-[node name="Title" type="Label" parent="Panel" unique_id=273093723]
-layout_mode = 0
-offset_left = 30.0
-offset_top = 20.0
-offset_right = 600.0
-offset_bottom = 65.0
-theme_override_font_sizes/font_size = 28
-text = "MY COLLECTION"
-
-[node name="CategoryButtons" type="HBoxContainer" parent="Panel" unique_id=1160779368]
-layout_mode = 0
-offset_left = 30.0
-offset_top = 80.0
-offset_right = 430.0
-offset_bottom = 130.0
-theme_override_constants/separation = 12
-
-[node name="CharacterButton" type="Button" parent="Panel/CategoryButtons" unique_id=61993751]
-custom_minimum_size = Vector2(180, 45)
-layout_mode = 2
-text = "CHARACTER"
-
-[node name="AvatarButton" type="Button" parent="Panel/CategoryButtons" unique_id=150225561]
-custom_minimum_size = Vector2(180, 45)
-layout_mode = 2
-text = "AVATAR"
-
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel" unique_id=930684048]
+[node name="CharacterPanel" type="Panel" parent="." unique_id=1920493992]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -550.0
-offset_top = -230.0
-offset_right = 550.0
-offset_bottom = 288.5
+offset_left = -580.0
+offset_top = -315.0
+offset_right = 580.0
+offset_bottom = 315.0
 grow_horizontal = 2
 grow_vertical = 2
-horizontal_scroll_mode = 0
 
-[node name="ItemGrid" type="GridContainer" parent="Panel/ScrollContainer" unique_id=1460759582]
-custom_minimum_size = Vector2(1040, 0)
+[node name="MainContainer" type="VBoxContainer" parent="CharacterPanel" unique_id=42295068]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = 20.0
+offset_right = -25.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="Header" type="HBoxContainer" parent="CharacterPanel/MainContainer" unique_id=1152967792]
+custom_minimum_size = Vector2(0, 55)
 layout_mode = 2
-theme_override_constants/h_separation = 18
-theme_override_constants/v_separation = 18
-columns = 3
 
-[node name="StudentCharacter" type="Label" parent="." unique_id=1267412623]
-layout_mode = 0
-offset_right = 142.0
-offset_bottom = 23.0
-text = "Student Character"
+[node name="Title" type="Label" parent="CharacterPanel/MainContainer/Header" unique_id=1299509949]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "CHARACTER"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="BackButton" type="Button" parent="." unique_id=1789755919]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 56.0
-offset_right = 126.0
-offset_bottom = 95.0
+[node name="BackButton" type="Button" parent="CharacterPanel/MainContainer/Header" unique_id=287075563]
+custom_minimum_size = Vector2(55, 45)
+layout_mode = 2
 text = "Back"
+
+[node name="CategoryButtons" type="HBoxContainer" parent="CharacterPanel/MainContainer" unique_id=785152520]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="CharacterButton" type="Button" parent="CharacterPanel/MainContainer/CategoryButtons" unique_id=509884418]
+custom_minimum_size = Vector2(180, 45)
+layout_mode = 2
+text = "CHARACTER"
+
+[node name="AvatarButton" type="Button" parent="CharacterPanel/MainContainer/CategoryButtons" unique_id=2133063131]
+custom_minimum_size = Vector2(180, 45)
+layout_mode = 2
+text = "AVATAR"
+
+[node name="CharacterArea" type="PanelContainer" parent="CharacterPanel/MainContainer" unique_id=1187847018]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CharacterScroll" type="ScrollContainer" parent="CharacterPanel/MainContainer/CharacterArea" unique_id=1254384549]
+layout_mode = 2
+vertical_scroll_mode = 0
+
+[node name="CharacterContainer" type="HBoxContainer" parent="CharacterPanel/MainContainer/CharacterArea/CharacterScroll" unique_id=1585073865]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="CharacterStorylinePopup" type="Window" parent="." unique_id=1483819523]
+oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(600, 450)
+visible = false
+
+[node name="MarginContainer" type="MarginContainer" parent="CharacterStorylinePopup" unique_id=310959433]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CharacterStorylinePopup/MarginContainer" unique_id=1825061707]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="CharacterName" type="Label" parent="CharacterStorylinePopup/MarginContainer/VBoxContainer" unique_id=280978298]
+layout_mode = 2
+text = "Character Name"
+horizontal_alignment = 1
+
+[node name="StoryScroll" type="ScrollContainer" parent="CharacterStorylinePopup/MarginContainer/VBoxContainer" unique_id=173795808]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StorylineText" type="Label" parent="CharacterStorylinePopup/MarginContainer/VBoxContainer/StoryScroll" unique_id=1928088225]
+layout_mode = 2
+text = "Character storyline..."
+autowrap_mode = 2
+
+[node name="CloseButton" type="Button" parent="CharacterStorylinePopup/MarginContainer/VBoxContainer" unique_id=798930002]
+layout_mode = 2
+text = "CLOSE"
+
+[node name="StudentCharacterItem" type="PanelContainer" parent="." unique_id=1183966268]
+custom_minimum_size = Vector2(230, 390)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -115.0
+offset_top = -112.0
+offset_right = 115.0
+offset_bottom = 278.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemContainer" type="VBoxContainer" parent="StudentCharacterItem" unique_id=1692691158]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="CharacterImage" type="TextureRect" parent="StudentCharacterItem/ItemContainer" unique_id=870026557]
+custom_minimum_size = Vector2(0, 240)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CharacterName" type="Label" parent="StudentCharacterItem/ItemContainer" unique_id=798388908]
+layout_mode = 2
+text = "Name"
+horizontal_alignment = 1
+
+[node name="StorylineButton" type="Button" parent="StudentCharacterItem/ItemContainer" unique_id=806780479]
+layout_mode = 2
+text = "STORYLINE"
+
+[node name="UseButton" type="Button" parent="StudentCharacterItem/ItemContainer" unique_id=2080224100]
+layout_mode = 2
+text = "USE"

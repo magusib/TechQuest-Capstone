@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://2gi5vvyqtjsp"]
 
 [ext_resource type="Script" uid="uid://b7bvh3ha1yqaq" path="res://scene/Dashboard/Modules/Shop/AdminAvatarShop.cs" id="1_cbxk3"]
+[ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_c7ipx"]
 
 [node name="AdminAvatarShop" type="Control" unique_id=1868944139]
 layout_mode = 3
@@ -11,14 +12,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_cbxk3")
 
-[node name="Background" type="ColorRect" parent="." unique_id=2089537775]
+[node name="Background" type="TextureRect" parent="." unique_id=782485526]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.055, 0.12, 0.22, 1)
+texture = ExtResource("2_c7ipx")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="ShopPanel" type="Panel" parent="." unique_id=4382128]
 layout_mode = 1
@@ -116,14 +119,6 @@ offset_right = 166.0
 offset_bottom = 269.0
 text = "Name"
 
-[node name="PurchaseButton" type="Button" parent="ItemPanel" unique_id=795674022]
-layout_mode = 0
-offset_left = 102.0
-offset_top = 309.0
-offset_right = 182.0
-offset_bottom = 340.0
-text = "Purchase"
-
 [node name="ActionContainer" type="HBoxContainer" parent="ItemPanel" unique_id=88478625]
 layout_mode = 0
 offset_left = 87.0
@@ -140,3 +135,61 @@ text = "Edit"
 layout_mode = 2
 text = "Delete
 "
+
+[node name="AddItemPopup" type="Window" parent="." unique_id=1567676833]
+oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(420, 360)
+visible = false
+
+[node name="MarginContainer" type="MarginContainer" parent="AddItemPopup" unique_id=1571360810]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AddItemPopup/MarginContainer" unique_id=1301936272]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="AddItemPopup/MarginContainer/VBoxContainer" unique_id=1304888278]
+layout_mode = 2
+text = "ADD SHOP ITEM"
+horizontal_alignment = 1
+
+[node name="ImageButton" type="Button" parent="AddItemPopup/MarginContainer/VBoxContainer" unique_id=1769751727]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+text = "SELECT IMAGE (.png / .jpg / .jpeg)"
+
+[node name="ItemName" type="LineEdit" parent="AddItemPopup/MarginContainer/VBoxContainer" unique_id=65074526]
+layout_mode = 2
+placeholder_text = "Item name"
+
+[node name="Price" type="LineEdit" parent="AddItemPopup/MarginContainer/VBoxContainer" unique_id=2076286957]
+layout_mode = 2
+text = "0"
+placeholder_text = "Price in Coins (0 = Free)"
+
+[node name="Buttons" type="HBoxContainer" parent="AddItemPopup/MarginContainer/VBoxContainer" unique_id=2133966717]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="CancelButton" type="Button" parent="AddItemPopup/MarginContainer/VBoxContainer/Buttons" unique_id=21916323]
+custom_minimum_size = Vector2(120, 45)
+layout_mode = 2
+text = "CANCEL"
+
+[node name="AddButton" type="Button" parent="AddItemPopup/MarginContainer/VBoxContainer/Buttons" unique_id=1605511534]
+custom_minimum_size = Vector2(120, 45)
+layout_mode = 2
+text = "ADD ITEM"
+
+[node name="DeleteItemConfirmation" type="ConfirmationDialog" parent="." unique_id=1580278681]
+ok_button_text = "Delete"
