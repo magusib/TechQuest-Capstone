@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://xd243rk36bg1" path="res://scene/Dashboard/Modules/Shop/AdminShop.cs" id="1_b1btb"]
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_ufe2e"]
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0frf0"]
+
 [node name="AdminShop" type="Control" unique_id=1209913628]
 layout_mode = 3
 anchors_preset = 15
@@ -116,6 +118,7 @@ offset_left = 182.0
 offset_top = 17.0
 offset_right = 230.0
 offset_bottom = 40.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_0frf0")
 text = "0 Coins"
 
 [node name="Label2" type="Label" parent="ShopPanel/ItemPanel" unique_id=1623749345]

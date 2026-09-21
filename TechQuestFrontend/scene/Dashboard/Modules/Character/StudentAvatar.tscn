@@ -61,10 +61,10 @@ text = "AVATAR"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CloseButton" type="Button" parent="AvatarPanel/MainContainer/Header" unique_id=1054947186]
+[node name="BackButton" type="Button" parent="AvatarPanel/MainContainer/Header" unique_id=1054947186]
 custom_minimum_size = Vector2(55, 45)
 layout_mode = 2
-text = "X"
+text = "Back"
 
 [node name="CategoryButtons" type="HBoxContainer" parent="AvatarPanel/MainContainer" unique_id=471501423]
 layout_mode = 2
@@ -90,8 +90,26 @@ layout_mode = 2
 vertical_scroll_mode = 0
 
 [node name="AvatarContainer" type="HBoxContainer" parent="AvatarPanel/MainContainer/AvatarArea/AvatarScroll" unique_id=839378021]
+custom_minimum_size = Vector2(1050, 0)
 layout_mode = 2
 theme_override_constants/separation = 20
+alignment = 1
+
+[node name="CarouselArrows" type="HBoxContainer" parent="AvatarPanel/MainContainer" unique_id=1864973220]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="LeftArrow" type="Button" parent="AvatarPanel/MainContainer/CarouselArrows" unique_id=1864973221]
+custom_minimum_size = Vector2(55, 45)
+layout_mode = 2
+text = "←"
+
+[node name="RightArrow" type="Button" parent="AvatarPanel/MainContainer/CarouselArrows" unique_id=1864973222]
+custom_minimum_size = Vector2(55, 45)
+layout_mode = 2
+text = "→"
 
 [node name="StudentAvatarItem" type="PanelContainer" parent="." unique_id=1466177943]
 custom_minimum_size = Vector2(230, 390)

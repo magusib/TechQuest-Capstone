@@ -90,8 +90,26 @@ layout_mode = 2
 vertical_scroll_mode = 0
 
 [node name="CharacterContainer" type="HBoxContainer" parent="CharacterPanel/MainContainer/CharacterArea/CharacterScroll" unique_id=1585073865]
+custom_minimum_size = Vector2(1050, 0)
 layout_mode = 2
 theme_override_constants/separation = 20
+alignment = 1
+
+[node name="CarouselArrows" type="HBoxContainer" parent="CharacterPanel/MainContainer" unique_id=1864973210]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="LeftArrow" type="Button" parent="CharacterPanel/MainContainer/CarouselArrows" unique_id=1864973211]
+custom_minimum_size = Vector2(55, 45)
+layout_mode = 2
+text = "←"
+
+[node name="RightArrow" type="Button" parent="CharacterPanel/MainContainer/CarouselArrows" unique_id=1864973212]
+custom_minimum_size = Vector2(55, 45)
+layout_mode = 2
+text = "→"
 
 [node name="CharacterStorylinePopup" type="Window" parent="." unique_id=1483819523]
 oversampling_override = 1.0

@@ -14,7 +14,7 @@ public partial class ProfessorShop : Control
 		backButton = GetNode<Button>("BackButton");
 		backButton.Pressed += OnBackPressed;
 		itemGrid = GetNode<GridContainer>("ShopPanel/ScrollContainer/ItemGrid");
-		itemTemplate = GetNode<Panel>("ShopPanel/ItemPanel");
+		itemTemplate = GetNode<Panel>("ItemPanel");
 		GetNode<Button>("ShopPanel/CategoryButtons/CharacterButton").Pressed += () => LoadItems("character");
 		GetNode<Button>("ShopPanel/CategoryButtons/AvatarButton").Pressed += () => LoadItems("avatar");
 		itemTemplate.Visible = false;
@@ -31,7 +31,7 @@ public partial class ProfessorShop : Control
 		try
 		{
 			List<ShopItemDto> items = await ShopApiClient.GetItemsAsync(category);
-			itemGrid.Columns = Math.Max(1, items.Count);
+			itemGrid.Columns = 3;
 			foreach (ShopItemDto item in items)
 			{
 				Panel card = (Panel)itemTemplate.Duplicate();
@@ -39,18 +39,27 @@ public partial class ProfessorShop : Control
 				itemGrid.AddChild(card);
 				card.GetNode<Label>("Label").Text = item.PriceCoins + " Coins";
 				card.GetNode<Label>("Label2").Text = item.ItemName;
-				SetImage(card.GetNode<TextureRect>("ItemPlaceholder"), item.CharacterItems ?? item.AvatarItems);
+				string imagePath = category == "avatar" ? item.AvatarItems : item.CharacterItems;
+				SetImage(card.GetNode<TextureRect>("ItemPlaceholder"), imagePath);
 			}
 		}
 		catch (Exception error)
 		{
 			GD.PrintErr("Professor shop load failed: " + error.Message);
+			ShowMessage(error.Message);
 		}
 	}
 
 	private static void SetImage(TextureRect image, string path)
 	{
 		image.Texture = ShopApiClient.LoadShopImage(path);
+	}
+
+	private void ShowMessage(string message)
+	{
+		AcceptDialog dialog = new AcceptDialog { DialogText = message };
+		AddChild(dialog);
+		dialog.PopupCentered();
 	}
 
 	private void OnBackPressed()

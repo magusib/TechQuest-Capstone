@@ -40,7 +40,7 @@ public partial class StudentAvatarShop : Control
 			coinLabel.Text = "Coins: " + coins.TotalCoins;
 
 			List<ShopItemDto> items = await ShopApiClient.GetItemsAsync(category);
-			itemGrid.Columns = Math.Max(1, items.Count);
+			itemGrid.Columns = 3;
 			foreach (ShopItemDto item in items)
 				AddItemCard(item);
 		}

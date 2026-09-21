@@ -28,7 +28,7 @@ public partial class ProfessorAvatarShop : Control
 		try
 		{
 			List<ShopItemDto> items = await ShopApiClient.GetItemsAsync(category);
-			itemGrid.Columns = Math.Max(1, items.Count);
+			itemGrid.Columns = 3;
 			foreach (ShopItemDto item in items)
 			{
 				Panel card = (Panel)itemTemplate.Duplicate();
@@ -36,17 +36,25 @@ public partial class ProfessorAvatarShop : Control
 				itemGrid.AddChild(card);
 				card.GetNode<Label>("Label").Text = item.PriceCoins + " Coins";
 				card.GetNode<Label>("Label2").Text = item.ItemName;
-				SetImage(card.GetNode<TextureRect>("ItemPlaceholder"), item.AvatarItems ?? item.CharacterItems);
+				SetImage(card.GetNode<TextureRect>("ItemPlaceholder"), item.AvatarItems);
 			}
 		}
 		catch (Exception error)
 		{
 			GD.PrintErr("Professor avatar shop load failed: " + error.Message);
+			ShowMessage(error.Message);
 		}
 	}
 
 	private static void SetImage(TextureRect image, string path)
 	{
 		image.Texture = ShopApiClient.LoadShopImage(path);
+	}
+
+	private void ShowMessage(string message)
+	{
+		AcceptDialog dialog = new AcceptDialog { DialogText = message };
+		AddChild(dialog);
+		dialog.PopupCentered();
 	}
 }

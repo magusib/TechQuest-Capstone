@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -48,6 +49,61 @@ public static class ShopApiClient
         });
     }
 
+    public static Task<ShopItemDto> UpdateItemAsync(int itemId, string category, string itemName, int priceCoins, string imagePath)
+    {
+        return SendAsync<ShopItemDto>(HttpMethod.Put, "/Shop/items/" + itemId, new
+        {
+            category,
+            itemName,
+            priceCoins,
+            imagePath
+        });
+    }
+
+    public static Task DeleteItemAsync(int itemId)
+    {
+        return SendAsync<object>(HttpMethod.Delete, "/Shop/items/" + itemId);
+    }
+
+    public static string CopyShopImageToProject(string category, string sourcePath)
+    {
+        if (string.IsNullOrWhiteSpace(sourcePath) || !File.Exists(sourcePath))
+            throw new InvalidOperationException("The selected image could not be found.");
+
+        string extension = Path.GetExtension(sourcePath).ToLowerInvariant();
+        if (extension != ".png" && extension != ".jpg" && extension != ".jpeg")
+            throw new InvalidOperationException("Invalid image format. Use .png, .jpg, or .jpeg.");
+
+        string folderName = category == "avatar" ? "Avatars" : "Characters";
+        string projectFolder = ProjectSettings.GlobalizePath("res://Items/" + folderName);
+        Directory.CreateDirectory(projectFolder);
+
+        string fileName = Path.GetFileNameWithoutExtension(sourcePath);
+        string destinationName = fileName + extension;
+        string destinationPath = Path.Combine(projectFolder, destinationName);
+        int number = 1;
+
+        while (File.Exists(destinationPath))
+        {
+            destinationName = fileName + "_" + number + extension;
+            destinationPath = Path.Combine(projectFolder, destinationName);
+            number++;
+        }
+
+        File.Copy(sourcePath, destinationPath, false);
+        return "res://Items/" + folderName + "/" + destinationName;
+    }
+
+    public static void DeleteCopiedShopImage(string projectPath)
+    {
+        if (string.IsNullOrWhiteSpace(projectPath) || !projectPath.StartsWith("res://"))
+            return;
+
+        string physicalPath = ProjectSettings.GlobalizePath(projectPath);
+        if (File.Exists(physicalPath))
+            File.Delete(physicalPath);
+    }
+
     public static Task<EquipResultDto> EquipAvatarAsync(int itemId)
     {
         return SendAsync<EquipResultDto>(HttpMethod.Post, "/Shop/equip/avatar", new { itemId });
@@ -66,10 +122,14 @@ public static class ShopApiClient
         if (ResourceLoader.Exists(path))
             return GD.Load<Texture2D>(path);
 
-        if (!System.IO.File.Exists(path))
+        string physicalPath = path.StartsWith("res://")
+            ? ProjectSettings.GlobalizePath(path)
+            : path;
+
+        if (!File.Exists(physicalPath))
             return null;
 
-        Image image = Image.LoadFromFile(path);
+        Image image = Image.LoadFromFile(physicalPath);
         return image == null ? null : ImageTexture.CreateFromImage(image);
     }
 

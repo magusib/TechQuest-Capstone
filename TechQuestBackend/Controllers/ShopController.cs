@@ -26,8 +26,17 @@ namespace TechQuestBackend.Controllers
             if (!TryGetCategory(category, out string categoryName))
                 return BadRequest("Category must be character or avatar.");
 
-            var query = _db.ShopItems.AsNoTracking().Where(i =>
-                categoryName == "character" ? i.CharacterItems != null : i.AvatarItems != null);
+            var query = _db.ShopItems.AsNoTracking();
+            if (categoryName == "character")
+            {
+                query = query.Where(i => !string.IsNullOrWhiteSpace(i.CharacterItems)
+                    && string.IsNullOrWhiteSpace(i.AvatarItems));
+            }
+            else
+            {
+                query = query.Where(i => !string.IsNullOrWhiteSpace(i.AvatarItems)
+                    && string.IsNullOrWhiteSpace(i.CharacterItems));
+            }
 
             var items = await query.OrderBy(i => i.ItemId).ToListAsync();
             var ownedIds = new List<int>();
@@ -52,7 +61,7 @@ namespace TechQuestBackend.Controllers
                 i.CharacterItems,
                 i.PriceCoins,
                 i.CreatedAt,
-                Owned = ownedIds.Contains(i.ItemId) || i.PriceCoins == 0
+                Owned = ownedIds.Contains(i.ItemId)
             }));
         }
 
@@ -77,12 +86,22 @@ namespace TechQuestBackend.Controllers
             if (profile == null)
                 return BadRequest("Student profile was not found.");
 
-            var items = await _db.ShopItems
+            var query = _db.ShopItems
                 .AsNoTracking()
-                .Where(i => (categoryName == "character" ? i.CharacterItems != null : i.AvatarItems != null)
-                    && (i.PriceCoins == 0 || i.InventoryItems.Any(v => v.StudentId == profile.StudentId)))
-                .OrderBy(i => i.ItemId)
-                .ToListAsync();
+                .Where(i => i.InventoryItems.Any(v => v.StudentId == profile.StudentId));
+
+            if (categoryName == "character")
+            {
+                query = query.Where(i => !string.IsNullOrWhiteSpace(i.CharacterItems)
+                    && string.IsNullOrWhiteSpace(i.AvatarItems));
+            }
+            else
+            {
+                query = query.Where(i => !string.IsNullOrWhiteSpace(i.AvatarItems)
+                    && string.IsNullOrWhiteSpace(i.CharacterItems));
+            }
+
+            var items = await query.OrderBy(i => i.ItemId).ToListAsync();
 
             return Ok(items);
         }
@@ -201,7 +220,7 @@ namespace TechQuestBackend.Controllers
             if (item == null)
                 return NotFound("Avatar item was not found.");
 
-            bool ownsItem = item.PriceCoins == 0 || await _db.UserInventories
+            bool ownsItem = await _db.UserInventories
                 .AnyAsync(i => i.StudentId == profile.StudentId && i.ItemId == request.ItemId);
             if (!ownsItem)
                 return BadRequest("You can only equip an avatar item you own.");
