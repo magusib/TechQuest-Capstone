@@ -8,6 +8,7 @@ public partial class Character : CharacterBody2D
 
 	private float gravity;
 	private AnimatedSprite2D animatedSprite;
+	private Label nameLabel;
 
 	public override void _Ready()
 	{
@@ -16,6 +17,17 @@ public partial class Character : CharacterBody2D
 			.AsSingle();
 
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		nameLabel = new Label
+		{
+			Text = UserSession.FullName,
+			Position = new Vector2(-60, -50),
+			Size = new Vector2(120, 18),
+			HorizontalAlignment = HorizontalAlignment.Center,
+			MouseFilter = Control.MouseFilterEnum.Ignore,
+			ZIndex = 1
+		};
+		nameLabel.AddThemeFontSizeOverride("font_size", 8);
+		AddChild(nameLabel);
 
 		// Default animation
 		animatedSprite.Play("Idle");

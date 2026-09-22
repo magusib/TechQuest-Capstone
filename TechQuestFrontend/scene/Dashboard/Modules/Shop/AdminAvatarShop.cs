@@ -52,6 +52,7 @@ public partial class AdminAvatarShop : Control
 			{
 				Panel card = (Panel)itemTemplate.Duplicate();
 				card.Visible = true;
+				card.CustomMinimumSize = itemTemplate.Size;
 				itemGrid.AddChild(card);
 				card.GetNode<Label>("Label").Text = item.PriceCoins + " Coins";
 				card.GetNode<Label>("Label2").Text = item.ItemName;

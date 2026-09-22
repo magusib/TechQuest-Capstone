@@ -69,6 +69,7 @@ CREATE TABLE student_profile (
 CREATE TABLE character (
     character_id    BIGSERIAL PRIMARY KEY,
     student_id      BIGINT NOT NULL UNIQUE,
+    item_id         BIGINT NOT NULL,
 
     CONSTRAINT fk_character_student
         FOREIGN KEY (student_id) REFERENCES student_profile(student_id)
@@ -83,6 +84,11 @@ CREATE TABLE shop_items (
     price_coins     INTEGER NOT NULL DEFAULT 0 CHECK (price_coins >= 0),
     created_at      TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE character
+    ADD CONSTRAINT fk_character_item
+    FOREIGN KEY (item_id) REFERENCES shop_items(item_id)
+    ON DELETE RESTRICT;
 
 CREATE TABLE user_inventory (
     inventory_id    BIGSERIAL PRIMARY KEY,

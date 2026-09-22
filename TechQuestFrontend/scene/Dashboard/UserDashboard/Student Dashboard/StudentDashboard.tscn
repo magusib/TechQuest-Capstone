@@ -14,18 +14,18 @@
 [ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="12_y20va"]
 [ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="13_ngh7r"]
 [ext_resource type="Texture2D" uid="uid://cdy3upgkc6uxf" path="res://asset/Icons/Menu.png" id="14_3ixja"]
-[ext_resource type="Script" path="res://scene/Dashboard/UserDashboard/Student Dashboard/StudentDashboard.cs" id="StudentDashboardScript"]
+[ext_resource type="Script" uid="uid://dglhwb03xftaf" path="res://scene/Dashboard/UserDashboard/Student Dashboard/StudentDashboard.cs" id="StudentDashboardScript"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8icjc"]
 
 [node name="StudentDashboard" type="Control" unique_id=1379097029]
-script = ExtResource("StudentDashboardScript")
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("StudentDashboardScript")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1258692280]
 layout_mode = 1
@@ -158,11 +158,11 @@ stretch_mode = 5
 
 [node name="PlayerName" type="Label" parent="TopBar/AvatarPanel" unique_id=481293679]
 layout_mode = 0
-offset_left = 112.0
-offset_top = 63.0
-offset_right = 266.0
-offset_bottom = 105.0
-text = "           Student Name"
+offset_left = 140.0
+offset_top = 65.0
+offset_right = 298.0
+offset_bottom = 107.0
+text = "Student Name"
 
 [node name="CoinsPanel" type="Panel" parent="TopBar/AvatarPanel" unique_id=246233926]
 layout_mode = 0

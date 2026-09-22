@@ -32,7 +32,19 @@ namespace TechQuestBackend.Controllers
                 .Include(c => c.Item)
                 .SingleOrDefaultAsync(c => c.StudentId == profile.StudentId);
 
-            return Ok(selected);
+            if (selected == null)
+                return Ok(null);
+
+            return Ok(new
+            {
+                selected.ItemId,
+                Item = selected.Item == null ? null : new
+                {
+                    selected.Item.ItemId,
+                    selected.Item.ItemName,
+                    selected.Item.CharacterItems
+                }
+            });
         }
 
         [HttpPost("select")]
@@ -49,6 +61,15 @@ namespace TechQuestBackend.Controllers
             if (!ownsItem)
                 return BadRequest("You can only select a character item you own.");
 
+            var item = await _db.ShopItems
+                .AsNoTracking()
+                .SingleOrDefaultAsync(i => i.ItemId == request.ItemId
+                    && !string.IsNullOrWhiteSpace(i.CharacterItems)
+                    && string.IsNullOrWhiteSpace(i.AvatarItems));
+
+            if (item == null)
+                return BadRequest("The selected item is not a valid character item.");
+
             var selected = await _db.Characters.SingleOrDefaultAsync(c => c.StudentId == profile.StudentId);
             if (selected == null)
             {
@@ -61,7 +82,16 @@ namespace TechQuestBackend.Controllers
             }
 
             await _db.SaveChangesAsync();
-            return Ok(selected);
+            return Ok(new
+            {
+                selected.ItemId,
+                Item = new
+                {
+                    item.ItemId,
+                    item.ItemName,
+                    item.CharacterItems
+                }
+            });
         }
 
         private int GetUserId()

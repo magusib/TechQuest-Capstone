@@ -55,6 +55,7 @@ public partial class StudentAvatarShop : Control
 	{
 		Panel card = (Panel)itemTemplate.Duplicate();
 		card.Visible = true;
+		card.CustomMinimumSize = itemTemplate.Size;
 		itemGrid.AddChild(card);
 
 		Label price = card.GetNode<Label>("Label");

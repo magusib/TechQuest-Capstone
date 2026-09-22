@@ -1,3 +1,84 @@
 [gd_scene format=3 uid="uid://cqgh73ine640h"]
 
+[ext_resource type="Script" path="res://scene/AdventureGame/MapPlayerSpawner.cs" id="1_player"]
+[ext_resource type="Texture2D" path="res://asset/Icons/coins.png" id="14_coins"]
+[ext_resource type="Texture2D" path="res://asset/Icons/points.png" id="15_points"]
+[ext_resource type="Script" path="res://scene/AdventureGame/MapHUD.cs" id="16_hud"]
+
 [node name="HardMap" type="Node2D" unique_id=1913086753]
+script = ExtResource("1_player")
+[node name="MapHUDLayer" type="CanvasLayer" parent="."]
+
+[node name="MapHUD" type="Control" parent="MapHUDLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("16_hud")
+
+[node name="TopLeft" type="HBoxContainer" parent="MapHUDLayer/MapHUD"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 250.0
+offset_bottom = 72.0
+theme_override_constants/separation = 10
+
+[node name="HomeButton" type="Button" parent="MapHUDLayer/MapHUD/TopLeft"]
+custom_minimum_size = Vector2(104, 44)
+layout_mode = 2
+text = "HOME"
+
+[node name="QuestButton" type="Button" parent="MapHUDLayer/MapHUD/TopLeft"]
+custom_minimum_size = Vector2(104, 44)
+layout_mode = 2
+text = "QUEST"
+
+[node name="TopRight" type="HBoxContainer" parent="MapHUDLayer/MapHUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -350.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = 72.0
+grow_horizontal = 0
+theme_override_constants/separation = 12
+
+[node name="CoinsPanel" type="HBoxContainer" parent="MapHUDLayer/MapHUD/TopRight"]
+custom_minimum_size = Vector2(155, 44)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CoinIcon" type="TextureRect" parent="MapHUDLayer/MapHUD/TopRight/CoinsPanel"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("14_coins")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CoinsLabel" type="Label" parent="MapHUDLayer/MapHUD/TopRight/CoinsPanel"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "0"
+
+[node name="PointsPanel" type="HBoxContainer" parent="MapHUDLayer/MapHUD/TopRight"]
+custom_minimum_size = Vector2(155, 44)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PointIcon" type="TextureRect" parent="MapHUDLayer/MapHUD/TopRight/PointsPanel"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("15_points")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PointsLabel" type="Label" parent="MapHUDLayer/MapHUD/TopRight/PointsPanel"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "0"

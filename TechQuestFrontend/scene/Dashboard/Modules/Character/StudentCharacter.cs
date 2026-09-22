@@ -11,6 +11,7 @@ public partial class StudentCharacter : Control
 	private HBoxContainer carouselArrows;
 	private List<ShopItemDto> characters = new();
 	private int selectedIndex;
+	private int selectedItemId;
 	private Shader blurShader;
 
 	public override void _Ready()
@@ -34,6 +35,8 @@ public partial class StudentCharacter : Control
 		try
 		{
 			characters = await ShopApiClient.GetOwnedAsync("character");
+			SelectedCharacterDto selectedCharacter = await ShopApiClient.GetSelectedCharacterAsync();
+			selectedItemId = selectedCharacter?.ItemId ?? 0;
 			selectedIndex = 0;
 			RenderCarousel();
 		}
@@ -75,7 +78,10 @@ public partial class StudentCharacter : Control
 		SetImage(image, item.CharacterItems);
 		if (!isCenter)
 			image.Material = new ShaderMaterial { Shader = blurShader };
-		card.GetNode<Button>("ItemContainer/UseButton").Pressed += async () => await Equip(item.ItemId);
+		Button useButton = card.GetNode<Button>("ItemContainer/UseButton");
+		useButton.Text = item.ItemId == selectedItemId ? "IN USE" : "USE";
+		useButton.Disabled = item.ItemId == selectedItemId;
+		useButton.Pressed += async () => await Equip(item.ItemId);
 		card.GetNode<Button>("ItemContainer/StorylineButton").Pressed += () => ShowStoryline(item.ItemName);
 	}
 
@@ -115,12 +121,18 @@ public partial class StudentCharacter : Control
 
 	private async Task Equip(int itemId)
 	{
+		int previousSelectedItemId = selectedItemId;
+		selectedItemId = itemId;
+		RenderCarousel();
+
 		try
 		{
 			await ShopApiClient.EquipCharacterAsync(itemId);
 		}
 		catch (Exception error)
 		{
+			selectedItemId = previousSelectedItemId;
+			RenderCarousel();
 			GD.PrintErr("Character equip failed: " + error.Message);
 		}
 	}

@@ -3,6 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://bi3sb6t03gxab" path="res://asset/sprites/hardmap.png" id="1_dj1ph"]
 [ext_resource type="PackedScene" uid="uid://b2h2rjqx2bhdb" path="res://scene/AdventureGame/Character/Character10.tscn" id="2_yfg5f"]
 [ext_resource type="Texture2D" uid="uid://d2hxhrgxcr6yk" path="res://asset/sprites/mediumobject.png" id="3_mo3ft"]
+[ext_resource type="Script" uid="uid://dyqscyjj3nhq7" path="res://scene/AdventureGame/MapPlayerSpawner.cs" id="4_player"]
+[ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="14_coins"]
+[ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="15_points"]
+[ext_resource type="Script" uid="uid://dwsvnvsudqktq" path="res://scene/AdventureGame/MapHUD.cs" id="16_hud"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yfg5f"]
 texture = ExtResource("1_dj1ph")
@@ -111,12 +115,89 @@ sources/0 = SubResource("TileSetAtlasSource_yfg5f")
 sources/1 = SubResource("TileSetAtlasSource_rqf8b")
 
 [node name="MediumMap" type="Node2D" unique_id=1384875773]
+script = ExtResource("4_player")
+
+[node name="MapHUDLayer" type="CanvasLayer" parent="." unique_id=1922991483]
+
+[node name="MapHUD" type="Control" parent="MapHUDLayer" unique_id=1130906005]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("16_hud")
+
+[node name="TopLeft" type="HBoxContainer" parent="MapHUDLayer/MapHUD" unique_id=1159509323]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 250.0
+offset_bottom = 72.0
+theme_override_constants/separation = 10
+
+[node name="HomeButton" type="Button" parent="MapHUDLayer/MapHUD/TopLeft" unique_id=890823371]
+custom_minimum_size = Vector2(104, 44)
+layout_mode = 2
+text = "HOME"
+
+[node name="QuestButton" type="Button" parent="MapHUDLayer/MapHUD/TopLeft" unique_id=1228358716]
+custom_minimum_size = Vector2(104, 44)
+layout_mode = 2
+text = "QUEST"
+
+[node name="TopRight" type="HBoxContainer" parent="MapHUDLayer/MapHUD" unique_id=1787630759]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -350.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = 72.0
+grow_horizontal = 0
+theme_override_constants/separation = 12
+
+[node name="CoinsPanel" type="HBoxContainer" parent="MapHUDLayer/MapHUD/TopRight" unique_id=2073763571]
+custom_minimum_size = Vector2(155, 44)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CoinIcon" type="TextureRect" parent="MapHUDLayer/MapHUD/TopRight/CoinsPanel" unique_id=508511109]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("14_coins")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CoinsLabel" type="Label" parent="MapHUDLayer/MapHUD/TopRight/CoinsPanel" unique_id=2038747796]
+layout_mode = 2
+text = "0"
+
+[node name="PointsPanel" type="HBoxContainer" parent="MapHUDLayer/MapHUD/TopRight" unique_id=1476278264]
+custom_minimum_size = Vector2(155, 44)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PointIcon" type="TextureRect" parent="MapHUDLayer/MapHUD/TopRight/PointsPanel" unique_id=1100657954]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("15_points")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PointsLabel" type="Label" parent="MapHUDLayer/MapHUD/TopRight/PointsPanel" unique_id=1152178966]
+layout_mode = 2
+text = "0"
 
 [node name="Character10" parent="." unique_id=1648924303 instance=ExtResource("2_yfg5f")]
+visible = false
 z_index = 10
+position = Vector2(0, 136)
 
 [node name="Camera2D" type="Camera2D" parent="Character10" unique_id=2025280748]
-zoom = Vector2(2, 2)
+zoom = Vector2(5, 5)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1448096626]
 tile_map_data = PackedByteArray("AAD2/wcAAAAGAAkAAAD2/wgAAAAHAAoAAAD2/wkAAAAHAAsAAAD3/wcAAAAHAAkAAAD3/wgAAAAIAAoAAAD3/wkAAAAIAAsAAAD4/wcAAAAIAAkAAAD4/wgAAAAJAAoAAAD4/wkAAAAJAAsAAAD5/wcAAAAJAAkAAAD5/wgAAAAKAAoAAAD5/wkAAAAKAAsAAAD6/wcAAAAKAAkAAAD6/wgAAAALAAoAAAD6/wkAAAALAAsAAAD7/wcAAAALAAkAAAD7/wgAAAAHAAoAAAD7/wkAAAAHAAsAAAD8/wcAAAAMAAkAAAD8/wgAAAAIAAoAAAD8/wkAAAAIAAsAAAD9/wcAAAAGAAkAAAD9/wgAAAAJAAoAAAD9/wkAAAAJAAsAAAD+/wcAAAAHAAkAAAD+/wgAAAAKAAoAAAD+/wkAAAAKAAsAAAD//wcAAAAIAAkAAAD//wgAAAALAAoAAAD//wkAAAALAAsAAAAAAAcAAAAJAAkAAAAAAAgAAAAHAAoAAAAAAAkAAAAHAAsAAAABAAcAAAAKAAkAAAABAAgAAAAIAAoAAAABAAkAAAAIAAsAAAACAAcAAAALAAkAAAACAAgAAAAJAAoAAAACAAkAAAAJAAsAAAADAAcAAAAGAAkAAAADAAgAAAAKAAoAAAADAAkAAAAKAAsAAAAEAAcAAAAHAAkAAAAEAAgAAAAHAAoAAAAEAAkAAAAHAAsAAAAFAAcAAAAIAAkAAAAFAAgAAAAIAAoAAAAFAAkAAAAIAAsAAAAGAAcAAAAJAAkAAAAGAAgAAAAJAAoAAAAGAAkAAAAJAAsAAAAHAAcAAAAKAAkAAAAHAAgAAAAKAAoAAAAHAAkAAAAKAAsAAAAIAAcAAAALAAkAAAAIAAgAAAALAAoAAAAIAAkAAAALAAsAAAAJAAcAAAAMAAkAAAAJAAgAAAAKAAoAAAAJAAkAAAAKAAsAAAAKAAcAAAAMAAkAAAAKAAgAAAALAAoAAAAKAAkAAAALAAsAAAD2/woAAAAHAAwAAAD3/woAAAAIAAwAAAD4/woAAAAJAAwAAAD5/woAAAAKAAwAAAD6/woAAAALAAwAAAD7/woAAAAHAAwAAAD8/woAAAAIAAwAAAD9/woAAAAJAAwAAAD+/woAAAAKAAwAAAD//woAAAALAAwAAAAAAAoAAAAHAAwAAAABAAoAAAAIAAwAAAACAAoAAAAJAAwAAAADAAoAAAAKAAwAAAAEAAoAAAAHAAwAAAAFAAoAAAAIAAwAAAAGAAoAAAAJAAwAAAAHAAoAAAAKAAwAAAAIAAoAAAALAAwAAAAJAAoAAAAKAAwAAAAKAAoAAAALAAwAAAD7/wUAAQAHAAcAAAD7/wYAAQAHAAgAAAD8/wUAAQAIAAcAAAD8/wYAAQAIAAgAAAD9/wUAAQAHAAcAAAD9/wYAAQAHAAgAAAD+/wUAAQAIAAcAAAD+/wYAAQAIAAgAAAABAAUAAQAEAAcAAAABAAYAAQAEAAgAAAACAAUAAQAFAAcAAAACAAYAAQAFAAgAAAAEAAYAAQADAAoAAAADAAYAAQACAAoAAAAFAAYAAQACAAoAAAA=")

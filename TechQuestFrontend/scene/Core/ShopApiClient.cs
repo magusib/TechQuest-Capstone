@@ -38,6 +38,11 @@ public static class ShopApiClient
         return SendAsync<List<ShopItemDto>>(HttpMethod.Get, "/Shop/owned?category=" + category);
     }
 
+    public static Task<SelectedCharacterDto> GetSelectedCharacterAsync()
+    {
+        return SendAsync<SelectedCharacterDto>(HttpMethod.Get, "/Character/selected");
+    }
+
     public static Task<ShopItemDto> AddItemAsync(string category, string itemName, int priceCoins, string imagePath)
     {
         return SendAsync<ShopItemDto>(HttpMethod.Post, "/Shop/items", new
@@ -209,4 +214,10 @@ public class EquipResultDto
 {
     public int ItemId { get; set; }
     public string Avatar { get; set; }
+}
+
+public class SelectedCharacterDto
+{
+    public int ItemId { get; set; }
+    public ShopItemDto Item { get; set; }
 }
