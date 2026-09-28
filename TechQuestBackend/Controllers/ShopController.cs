@@ -59,6 +59,7 @@ namespace TechQuestBackend.Controllers
                 i.ItemName,
                 i.AvatarItems,
                 i.CharacterItems,
+                i.Storyline,
                 i.PriceCoins,
                 i.CreatedAt,
                 Owned = ownedIds.Contains(i.ItemId)
@@ -130,6 +131,25 @@ namespace TechQuestBackend.Controllers
             return Ok(item);
         }
 
+        [HttpPut("character/{itemId:int}/storyline")]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> UpdateCharacterStoryline(int itemId, StorylineRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.Storyline))
+                return BadRequest("Storyline is required.");
+
+            var item = await _db.ShopItems.FindAsync(itemId);
+            if (item == null)
+                return NotFound("Shop item was not found.");
+
+            if (string.IsNullOrWhiteSpace(item.CharacterItems) || !string.IsNullOrWhiteSpace(item.AvatarItems))
+                return BadRequest("Storylines can only be added to character items.");
+
+            item.Storyline = request.Storyline.Trim();
+            await _db.SaveChangesAsync();
+            return Ok(item);
+        }
+
         [HttpPut("items/{itemId:int}")]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateItem(int itemId, ShopItemRequest request)
@@ -147,6 +167,8 @@ namespace TechQuestBackend.Controllers
             item.ItemName = request.ItemName.Trim();
             item.AvatarItems = category == "avatar" ? request.ImagePath : null;
             item.CharacterItems = category == "character" ? request.ImagePath : null;
+            if (category == "avatar")
+                item.Storyline = null;
             item.PriceCoins = request.PriceCoins;
 
             await _db.SaveChangesAsync();
@@ -283,6 +305,11 @@ namespace TechQuestBackend.Controllers
     public class PurchaseItemRequest
     {
         public int ItemId { get; set; }
+    }
+
+    public class StorylineRequest
+    {
+        public string Storyline { get; set; } = "";
     }
 
     public class EquipItemRequest

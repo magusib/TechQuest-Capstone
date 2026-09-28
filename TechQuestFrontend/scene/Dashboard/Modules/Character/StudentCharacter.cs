@@ -24,6 +24,7 @@ public partial class StudentCharacter : Control
 		GetNode<Button>("CharacterPanel/MainContainer/CategoryButtons/AvatarButton").Pressed += OnAvatarPressed;
 		GetNode<Button>("CharacterPanel/MainContainer/CarouselArrows/LeftArrow").Pressed += MoveLeft;
 		GetNode<Button>("CharacterPanel/MainContainer/CarouselArrows/RightArrow").Pressed += MoveRight;
+		GetNode<Button>("CharacterStorylinePopup/MarginContainer/VBoxContainer/CloseButton").Pressed += storylinePopup.Hide;
 		characterContainer.Alignment = BoxContainer.AlignmentMode.Center;
 		blurShader = CreateBlurShader();
 		itemTemplate.Visible = false;
@@ -82,7 +83,7 @@ public partial class StudentCharacter : Control
 		useButton.Text = item.ItemId == selectedItemId ? "IN USE" : "USE";
 		useButton.Disabled = item.ItemId == selectedItemId;
 		useButton.Pressed += async () => await Equip(item.ItemId);
-		card.GetNode<Button>("ItemContainer/StorylineButton").Pressed += () => ShowStoryline(item.ItemName);
+		card.GetNode<Button>("ItemContainer/StorylineButton").Pressed += () => ShowStoryline(item);
 	}
 
 	private ShopItemDto GetItem(int offset)
@@ -137,11 +138,13 @@ public partial class StudentCharacter : Control
 		}
 	}
 
-	private void ShowStoryline(string name)
+	private void ShowStoryline(ShopItemDto item)
 	{
-		GetNode<Label>("CharacterStorylinePopup/MarginContainer/VBoxContainer/CharacterName").Text = name;
-		GetNode<Label>("CharacterStorylinePopup/MarginContainer/VBoxContainer/StoryScroll/StorylineText").Text = "No storyline is stored for this character yet.";
-		GetNode<Button>("CharacterStorylinePopup/MarginContainer/VBoxContainer/CloseButton").Pressed += storylinePopup.Hide;
+		GetNode<Label>("CharacterStorylinePopup/MarginContainer/VBoxContainer/CharacterName").Text = item.ItemName;
+		GetNode<Label>("CharacterStorylinePopup/MarginContainer/VBoxContainer/StoryScroll/StorylineText").Text =
+			string.IsNullOrWhiteSpace(item.Storyline)
+				? "No storyline is stored for this character yet."
+				: item.Storyline;
 		storylinePopup.PopupCentered();
 	}
 

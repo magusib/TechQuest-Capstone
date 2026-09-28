@@ -1,6 +1,43 @@
-[gd_scene format=3 uid="uid://d1iyvt25s8u3s"]
+[gd_scene format=3 uid="uid://b6ibsvovtd4iy"]
 
-[ext_resource type="Script" uid="uid://jxaaba0rwpd7" path="res://scene/Dashboard/Modules/Leaderboard/AdminLeaderboard.cs" id="1_d2mi3"]
+[ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_u8pjn"]
+[ext_resource type="Script" path="res://scene/Dashboard/Modules/Leaderboard/AdminLeaderboard.cs" id="3_admin_leaderboard"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d2mi3"]
+bg_color = Color(0.035, 0.09, 0.17, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.19, 0.4, 0.65, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u8pjn"]
+bg_color = Color(0.1, 0.3, 0.55, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.35, 0.65, 0.95, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oledf"]
+bg_color = Color(0.07, 0.18, 0.31, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2, 0.48, 0.75, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [node name="AdminLeaderboard" type="Control" unique_id=595879347]
 layout_mode = 3
@@ -9,19 +46,348 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_d2mi3")
+script = ExtResource("3_admin_leaderboard")
 
-[node name="AdminLeaderboard" type="Label" parent="." unique_id=1481112439]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Admin Leaderboard"
+[node name="Background" type="TextureRect" parent="." unique_id=553317356]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_u8pjn")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="BackButton" type="Button" parent="." unique_id=383373982]
+[node name="LeaderboardPanel" type="PanelContainer" parent="." unique_id=633242151]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -555.0
+offset_top = -290.0
+offset_right = 557.0
+offset_bottom = 304.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d2mi3")
+
+[node name="MainVBox" type="VBoxContainer" parent="LeaderboardPanel" unique_id=1662421622]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Header" type="HBoxContainer" parent="LeaderboardPanel/MainVBox" unique_id=814307770]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="LeaderboardPanel/MainVBox/Header" unique_id=457865448]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.91, 0.96, 1, 1)
+theme_override_font_sizes/font_size = 28
+text = "LEADERBOARD"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BackButton" type="Button" parent="LeaderboardPanel/MainVBox/Header" unique_id=86198070]
+custom_minimum_size = Vector2(55, 45)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_u8pjn")
+text = "Back"
+
+[node name="Top3Panel" type="Control" parent="LeaderboardPanel/MainVBox" unique_id=1099150923]
+custom_minimum_size = Vector2(0, 190)
+layout_mode = 2
+
+[node name="SecondPlace" type="PanelContainer" parent="LeaderboardPanel/MainVBox/Top3Panel" unique_id=741634151]
+custom_minimum_size = Vector2(280, 175)
 layout_mode = 0
-offset_left = 20.0
-offset_top = 56.0
-offset_right = 126.0
-offset_bottom = 95.0
-text = "Back
-"
+offset_left = 74.0
+offset_top = 30.0
+offset_right = 354.0
+offset_bottom = 205.0
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_oledf")
+
+[node name="CardVBox" type="VBoxContainer" parent="LeaderboardPanel/MainVBox/Top3Panel/SecondPlace" unique_id=201572604]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="RankLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/SecondPlace/CardVBox" unique_id=1708912130]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "🥈  2ND PLACE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AvatarCircle" type="TextureRect" parent="LeaderboardPanel/MainVBox/Top3Panel/SecondPlace/CardVBox" unique_id=1187994151]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NameLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/SecondPlace/CardVBox" unique_id=177389274]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Student"
+horizontal_alignment = 1
+
+[node name="PointsLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/SecondPlace/CardVBox" unique_id=173774641]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.8, 1, 1)
+text = "0 POINTS"
+horizontal_alignment = 1
+
+[node name="FirstPlace" type="PanelContainer" parent="LeaderboardPanel/MainVBox/Top3Panel" unique_id=1568861160]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 0
+offset_left = 404.0
+offset_right = 704.0
+offset_bottom = 180.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_oledf")
+
+[node name="CardVBox" type="VBoxContainer" parent="LeaderboardPanel/MainVBox/Top3Panel/FirstPlace" unique_id=1300006498]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="RankLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/FirstPlace/CardVBox" unique_id=184366890]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "🥇  1ST PLACE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AvatarCircle" type="TextureRect" parent="LeaderboardPanel/MainVBox/Top3Panel/FirstPlace/CardVBox" unique_id=1986748262]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/FirstPlace/CardVBox" unique_id=772433092]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Student"
+horizontal_alignment = 1
+
+[node name="PointsLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/FirstPlace/CardVBox" unique_id=1919555188]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.8, 1, 1)
+text = "0 POINTS"
+horizontal_alignment = 1
+
+[node name="ThirdPlace" type="PanelContainer" parent="LeaderboardPanel/MainVBox/Top3Panel" unique_id=505753822]
+custom_minimum_size = Vector2(280, 175)
+layout_mode = 0
+offset_left = 754.0
+offset_top = 30.0
+offset_right = 1034.0
+offset_bottom = 210.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_oledf")
+
+[node name="CardVBox" type="VBoxContainer" parent="LeaderboardPanel/MainVBox/Top3Panel/ThirdPlace" unique_id=16068834]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="RankLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/ThirdPlace/CardVBox" unique_id=838753612]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "🥉  3RD PLACE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AvatarCircle" type="TextureRect" parent="LeaderboardPanel/MainVBox/Top3Panel/ThirdPlace/CardVBox" unique_id=588470961]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/ThirdPlace/CardVBox" unique_id=541127617]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Student"
+horizontal_alignment = 1
+
+[node name="PointsLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/ThirdPlace/CardVBox" unique_id=1106125182]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.8, 1, 1)
+text = "0 POINTS"
+horizontal_alignment = 1
+
+[node name="RankingHeader" type="HBoxContainer" parent="LeaderboardPanel/MainVBox" unique_id=851857170]
+custom_minimum_size = Vector2(0, 74)
+layout_mode = 2
+offset_transform_position = Vector2(0, 60)
+theme_override_constants/separation = 5
+
+[node name="RankLabel" type="Label" parent="LeaderboardPanel/MainVBox/RankingHeader" unique_id=1634502312]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "RANK"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NameLabel" type="Label" parent="LeaderboardPanel/MainVBox/RankingHeader" unique_id=1130629661]
+custom_minimum_size = Vector2(459, 0)
+layout_mode = 2
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="YearLevelLabel" type="Label" parent="LeaderboardPanel/MainVBox/RankingHeader" unique_id=1559308878]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "YEAR LEVEL"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PointsLabel" type="Label" parent="LeaderboardPanel/MainVBox/RankingHeader" unique_id=1912263348]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "POINTS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RankingScroll" type="ScrollContainer" parent="LeaderboardPanel/MainVBox" unique_id=1557346992]
+custom_minimum_size = Vector2(0, 215)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="RankingList" type="VBoxContainer" parent="LeaderboardPanel/MainVBox/RankingScroll" unique_id=1901148995]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="BottomButtons" type="HBoxContainer" parent="LeaderboardPanel/MainVBox" unique_id=892299960]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="PreviousRankingButton" type="Button" parent="LeaderboardPanel/MainVBox/BottomButtons" unique_id=2142506250]
+custom_minimum_size = Vector2(220, 45)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_u8pjn")
+text = "PREVIOUS RANKING"
+
+[node name="ResetLeaderboardButton" type="Button" parent="LeaderboardPanel/MainVBox/BottomButtons" unique_id=1629758202]
+custom_minimum_size = Vector2(220, 45)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_u8pjn")
+text = "RESET LEADERBOARD"
+
+[node name="PreviousRankingPopup" type="Control" parent="." unique_id=35748856]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PopupPanel" type="PanelContainer" parent="PreviousRankingPopup" unique_id=2029394061]
+layout_mode = 0
+offset_left = 330.0
+offset_top = 130.0
+offset_right = 950.0
+offset_bottom = 555.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_d2mi3")
+
+[node name="PopupVBox" type="VBoxContainer" parent="PreviousRankingPopup/PopupPanel" unique_id=1403551691]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="PreviousRankingPopup/PopupPanel/PopupVBox" unique_id=279513354]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "PREVIOUS RANKING"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InfoLabel" type="Label" parent="PreviousRankingPopup/PopupPanel/PopupVBox" unique_id=717009302]
+layout_mode = 2
+text = "Top 3 before the latest leaderboard reset"
+horizontal_alignment = 1
+
+[node name="PreviousTop3" type="VBoxContainer" parent="PreviousRankingPopup/PopupPanel/PopupVBox" unique_id=1463888438]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="First" type="Label" parent="PreviousRankingPopup/PopupPanel/PopupVBox/PreviousTop3" unique_id=659490564]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "🥇  Student  —  0 Points"
+horizontal_alignment = 1
+
+[node name="Second" type="Label" parent="PreviousRankingPopup/PopupPanel/PopupVBox/PreviousTop3" unique_id=138412551]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "🥈  Student  —  0Points"
+horizontal_alignment = 1
+
+[node name="Third" type="Label" parent="PreviousRankingPopup/PopupPanel/PopupVBox/PreviousTop3" unique_id=647863806]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "🥉  Student  —  0 Points"
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="PreviousRankingPopup/PopupPanel/PopupVBox" unique_id=1910438335]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_u8pjn")
+text = "CLOSE"
+
+[node name="ResetConfirmationPopup" type="Control" parent="." unique_id=1526034590]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PopupPanel" type="PanelContainer" parent="ResetConfirmationPopup" unique_id=159855589]
+layout_mode = 0
+offset_left = 310.0
+offset_top = 190.0
+offset_right = 970.0
+offset_bottom = 485.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_d2mi3")
+
+[node name="PopupVBox" type="VBoxContainer" parent="ResetConfirmationPopup/PopupPanel" unique_id=926880651]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="ResetConfirmationPopup/PopupPanel/PopupVBox" unique_id=95174522]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "RESET LEADERBOARD?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MessageLabel" type="Label" parent="ResetConfirmationPopup/PopupPanel/PopupVBox" unique_id=192960611]
+layout_mode = 2
+text = "All students' current points will become 0.
+The current Top 3 must be saved as the Previous Ranking."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="ResetConfirmationPopup/PopupPanel/PopupVBox" unique_id=655728282]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="CancelButton" type="Button" parent="ResetConfirmationPopup/PopupPanel/PopupVBox/Buttons" unique_id=930814305]
+custom_minimum_size = Vector2(150, 45)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_u8pjn")
+text = "CANCEL"
+
+[node name="ConfirmButton" type="Button" parent="ResetConfirmationPopup/PopupPanel/PopupVBox/Buttons" unique_id=1280566535]
+custom_minimum_size = Vector2(150, 45)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_u8pjn")
+text = "RESET"

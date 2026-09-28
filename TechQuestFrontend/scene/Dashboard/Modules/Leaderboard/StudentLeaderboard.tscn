@@ -1,26 +1,356 @@
-[gd_scene format=3 uid="uid://d35y7s3uq8wo2"]
+[gd_scene format=3 uid="uid://b1t1ir20urw4w"]
 
-[ext_resource type="Script" uid="uid://ce7yqhxcm8da6" path="res://scene/Dashboard/Modules/Leaderboard/StudentLeaderboard.cs" id="1_b6kkh"]
+[ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="1_b6kkh"]
+[ext_resource type="Script" path="res://scene/Dashboard/Modules/Leaderboard/StudentLeaderboard.cs" id="2_leaderboard"]
 
-[node name="StudentLeaderboard" type="Control" unique_id=2011175438]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o7nk0"]
+bg_color = Color(0.035, 0.09, 0.17, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.19, 0.4, 0.65, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_77xh0"]
+bg_color = Color(0.1, 0.3, 0.55, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.35, 0.65, 0.95, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_51x5x"]
+bg_color = Color(0.07, 0.18, 0.31, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2, 0.48, 0.75, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b6kkh"]
+bg_color = Color(0.035, 0.09, 0.17, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.19, 0.4, 0.65, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j2dyh"]
+bg_color = Color(0.1, 0.3, 0.55, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.35, 0.65, 0.95, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="StudentLeaderboard" type="Control" unique_id=7211369]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_b6kkh")
+script = ExtResource("2_leaderboard")
 
-[node name="StudentLeaderboard" type="Label" parent="." unique_id=1205848239]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "StudentLeaderboard"
+[node name="Background" type="TextureRect" parent="." unique_id=1369248978]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_b6kkh")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="BackButton" type="Button" parent="." unique_id=780617318]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 56.0
-offset_right = 126.0
-offset_bottom = 95.0
+[node name="LeaderboardPanel" type="PanelContainer" parent="." unique_id=1397800751]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -555.0
+offset_top = -290.0
+offset_right = 557.0
+offset_bottom = 304.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o7nk0")
+
+[node name="MainVBox" type="VBoxContainer" parent="LeaderboardPanel" unique_id=2027033212]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Header" type="HBoxContainer" parent="LeaderboardPanel/MainVBox" unique_id=100543346]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="LeaderboardPanel/MainVBox/Header" unique_id=1906842814]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.91, 0.96, 1, 1)
+theme_override_font_sizes/font_size = 28
+text = "LEADERBOARD"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BackButton" type="Button" parent="LeaderboardPanel/MainVBox/Header" unique_id=4803679]
+custom_minimum_size = Vector2(55, 45)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_77xh0")
 text = "Back"
+
+[node name="Top3Panel" type="Control" parent="LeaderboardPanel/MainVBox" unique_id=1619106143]
+custom_minimum_size = Vector2(0, 190)
+layout_mode = 2
+
+[node name="SecondPlace" type="PanelContainer" parent="LeaderboardPanel/MainVBox/Top3Panel" unique_id=1982501348]
+custom_minimum_size = Vector2(280, 175)
+layout_mode = 0
+offset_left = 74.0
+offset_top = 30.0
+offset_right = 354.0
+offset_bottom = 205.0
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_51x5x")
+
+[node name="CardVBox" type="VBoxContainer" parent="LeaderboardPanel/MainVBox/Top3Panel/SecondPlace" unique_id=1112521652]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="RankLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/SecondPlace/CardVBox" unique_id=1940000191]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "🥈  2ND PLACE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AvatarCircle" type="TextureRect" parent="LeaderboardPanel/MainVBox/Top3Panel/SecondPlace/CardVBox" unique_id=1326435889]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NameLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/SecondPlace/CardVBox" unique_id=1499126046]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Student"
+horizontal_alignment = 1
+
+[node name="PointsLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/SecondPlace/CardVBox" unique_id=932368389]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.8, 1, 1)
+text = "0 POINTS"
+horizontal_alignment = 1
+
+[node name="FirstPlace" type="PanelContainer" parent="LeaderboardPanel/MainVBox/Top3Panel" unique_id=91393493]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 0
+offset_left = 404.0
+offset_right = 704.0
+offset_bottom = 180.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_51x5x")
+
+[node name="CardVBox" type="VBoxContainer" parent="LeaderboardPanel/MainVBox/Top3Panel/FirstPlace" unique_id=1636698556]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="RankLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/FirstPlace/CardVBox" unique_id=1308766018]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "🥇  1ST PLACE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AvatarCircle" type="TextureRect" parent="LeaderboardPanel/MainVBox/Top3Panel/FirstPlace/CardVBox" unique_id=1034531081]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/FirstPlace/CardVBox" unique_id=413761969]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Student"
+horizontal_alignment = 1
+
+[node name="PointsLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/FirstPlace/CardVBox" unique_id=1599132418]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.8, 1, 1)
+text = "0 POINTS"
+horizontal_alignment = 1
+
+[node name="ThirdPlace" type="PanelContainer" parent="LeaderboardPanel/MainVBox/Top3Panel" unique_id=549271810]
+custom_minimum_size = Vector2(280, 175)
+layout_mode = 0
+offset_left = 754.0
+offset_top = 30.0
+offset_right = 1034.0
+offset_bottom = 210.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_51x5x")
+
+[node name="CardVBox" type="VBoxContainer" parent="LeaderboardPanel/MainVBox/Top3Panel/ThirdPlace" unique_id=1821860676]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="RankLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/ThirdPlace/CardVBox" unique_id=1702845695]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "🥉  3RD PLACE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AvatarCircle" type="TextureRect" parent="LeaderboardPanel/MainVBox/Top3Panel/ThirdPlace/CardVBox" unique_id=179265303]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/ThirdPlace/CardVBox" unique_id=386411971]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Student"
+horizontal_alignment = 1
+
+[node name="PointsLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/ThirdPlace/CardVBox" unique_id=889704440]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.8, 1, 1)
+text = "0 POINTS"
+horizontal_alignment = 1
+
+[node name="RankingHeader" type="HBoxContainer" parent="LeaderboardPanel/MainVBox" unique_id=655755418]
+custom_minimum_size = Vector2(0, 74)
+layout_mode = 2
+offset_transform_position = Vector2(0, 60)
+theme_override_constants/separation = 5
+
+[node name="RankLabel" type="Label" parent="LeaderboardPanel/MainVBox/RankingHeader" unique_id=1246446910]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "RANK"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NameLabel" type="Label" parent="LeaderboardPanel/MainVBox/RankingHeader" unique_id=708247808]
+custom_minimum_size = Vector2(459, 0)
+layout_mode = 2
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="YearLevelLabel" type="Label" parent="LeaderboardPanel/MainVBox/RankingHeader" unique_id=471947840]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "YEAR LEVEL"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PointsLabel" type="Label" parent="LeaderboardPanel/MainVBox/RankingHeader" unique_id=720734053]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "POINTS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RankingScroll" type="ScrollContainer" parent="LeaderboardPanel/MainVBox" unique_id=1621691118]
+custom_minimum_size = Vector2(0, 215)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="RankingList" type="VBoxContainer" parent="LeaderboardPanel/MainVBox/RankingScroll" unique_id=1995105172]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="BottomButtons" type="HBoxContainer" parent="LeaderboardPanel/MainVBox" unique_id=1310404832]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="PreviousRankingButton" type="Button" parent="LeaderboardPanel/MainVBox/BottomButtons" unique_id=1008160838]
+custom_minimum_size = Vector2(220, 45)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_77xh0")
+text = "PREVIOUS RANKING"
+
+[node name="PreviousRankingPopup" type="Control" parent="." unique_id=1715061258]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PopupPanel" type="PanelContainer" parent="PreviousRankingPopup" unique_id=1122988207]
+layout_mode = 0
+offset_left = 330.0
+offset_top = 130.0
+offset_right = 950.0
+offset_bottom = 555.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_b6kkh")
+
+[node name="PopupVBox" type="VBoxContainer" parent="PreviousRankingPopup/PopupPanel" unique_id=67273422]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="PreviousRankingPopup/PopupPanel/PopupVBox" unique_id=27166184]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "PREVIOUS RANKING"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InfoLabel" type="Label" parent="PreviousRankingPopup/PopupPanel/PopupVBox" unique_id=1604115061]
+layout_mode = 2
+text = "Top 3 before the latest leaderboard reset"
+horizontal_alignment = 1
+
+[node name="PreviousTop3" type="VBoxContainer" parent="PreviousRankingPopup/PopupPanel/PopupVBox" unique_id=355372235]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="First" type="Label" parent="PreviousRankingPopup/PopupPanel/PopupVBox/PreviousTop3" unique_id=1374238644]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "🥇  Student  —  0 Points"
+horizontal_alignment = 1
+
+[node name="Second" type="Label" parent="PreviousRankingPopup/PopupPanel/PopupVBox/PreviousTop3" unique_id=352474160]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "🥈  Student  —  0Points"
+horizontal_alignment = 1
+
+[node name="Third" type="Label" parent="PreviousRankingPopup/PopupPanel/PopupVBox/PreviousTop3" unique_id=1997061325]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "🥉  Student  —  0 Points"
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="PreviousRankingPopup/PopupPanel/PopupVBox" unique_id=972022318]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_j2dyh")
+text = "CLOSE"

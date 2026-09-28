@@ -1,20 +1,7 @@
-using Godot;
-using System;
-
-public partial class AdminLeaderboard : Control
+public partial class AdminLeaderboard : LeaderboardBase
 {
-	private Button backButton;
-
-	public override void _Ready()
+	protected override string GetBackScene()
 	{
-		backButton = GetNode<Button>("BackButton");
-		
-		backButton.Pressed += OnBackPressed;
-
-	}
-
-	private void OnBackPressed()
-	{
-		GetTree().ChangeSceneToFile("res://scene/Dashboard/UserDashboard/Admin Dashboard/AdminDashboard.tscn");
+		return "res://scene/Dashboard/UserDashboard/Admin Dashboard/AdminDashboard.tscn";
 	}
 }

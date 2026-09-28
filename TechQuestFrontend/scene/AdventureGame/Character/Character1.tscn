@@ -448,7 +448,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8icjc"]
-radius = 10.29563
+radius = 7.0
 
 [node name="Character1" type="CharacterBody2D" unique_id=1836987956]
 z_index = 10
@@ -456,7 +456,7 @@ script = ExtResource("1_emybg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=885136006]
 texture_filter = 1
-scale = Vector2(0.3, 0.3)
+scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_3f7a4")
 animation = &"Idle"
 frame_progress = 0.10059787
@@ -483,5 +483,5 @@ metadata/_aseprite_wizard_config_ = {
 metadata/_aseprite_wizard_source_file_hash_ = "f40c68354fefef72bc6317634275d5ef"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1363358577]
-position = Vector2(-1, 15)
+position = Vector2(0, 10)
 shape = SubResource("CircleShape2D_8icjc")

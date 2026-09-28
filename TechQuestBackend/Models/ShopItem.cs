@@ -10,6 +10,8 @@ namespace TechQuestBackend.Models
 
         public string? CharacterItems { get; set; }
 
+        public string? Storyline { get; set; }
+
         public int PriceCoins { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

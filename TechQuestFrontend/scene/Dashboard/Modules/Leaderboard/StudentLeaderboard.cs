@@ -1,20 +1,7 @@
-using Godot;
-using System;
-
-public partial class StudentLeaderboard : Control
+public partial class StudentLeaderboard : LeaderboardBase
 {
-	private Button backButton;
-
-	public override void _Ready()
+	protected override string GetBackScene()
 	{
-		backButton = GetNode<Button>("BackButton");
-		
-		backButton.Pressed += OnBackPressed;
-
-	}
-
-	private void OnBackPressed()
-	{
-		GetTree().ChangeSceneToFile("res://scene/Dashboard/UserDashboard/Student Dashboard/StudentDashboard.tscn");
+		return "res://scene/Dashboard/UserDashboard/Student Dashboard/StudentDashboard.tscn";
 	}
 }

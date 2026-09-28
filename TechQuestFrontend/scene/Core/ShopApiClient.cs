@@ -65,6 +65,14 @@ public static class ShopApiClient
         });
     }
 
+    public static Task<ShopItemDto> UpdateStorylineAsync(int itemId, string storyline)
+    {
+        return SendAsync<ShopItemDto>(HttpMethod.Put, "/Shop/character/" + itemId + "/storyline", new
+        {
+            storyline
+        });
+    }
+
     public static Task DeleteItemAsync(int itemId)
     {
         return SendAsync<object>(HttpMethod.Delete, "/Shop/items/" + itemId);
@@ -195,6 +203,7 @@ public class ShopItemDto
     public string ItemName { get; set; } = "";
     public string AvatarItems { get; set; }
     public string CharacterItems { get; set; }
+    public string Storyline { get; set; }
     public int PriceCoins { get; set; }
     public bool Owned { get; set; }
 }

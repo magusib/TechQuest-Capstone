@@ -124,7 +124,7 @@ public partial class StudentAvatar : Control
 
 	private void OnClosePressed()
 	{
-		QueueFree();
+		GetTree().ChangeSceneToFile("res://scene/Dashboard/UserDashboard/Student Dashboard/StudentDashboard.tscn");
 	}
 
 	private void OnCharacterPressed()

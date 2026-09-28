@@ -14,6 +14,10 @@ public partial class AdminShop : Control
 	private Button imageButton;
 	private Button popupActionButton;
 	private Label popupTitle;
+	private Window storylinePopup;
+	private Label storylineCharacter;
+	private TextEdit storylineInput;
+	private ShopItemDto storylineItem;
 	private ConfirmationDialog deleteConfirmation;
 	private string selectedImage = "";
 	private string existingImagePath = "";
@@ -33,6 +37,9 @@ public partial class AdminShop : Control
 		imageButton = GetNode<Button>("AddItemPopup/MarginContainer/VBoxContainer/ImageButton");
 		popupTitle = GetNode<Label>("AddItemPopup/MarginContainer/VBoxContainer/Title");
 		popupActionButton = GetNode<Button>("AddItemPopup/MarginContainer/VBoxContainer/Buttons/AddButton");
+		storylinePopup = GetNode<Window>("StorylinePopup");
+		storylineCharacter = GetNode<Label>("StorylinePopup/MarginContainer/VBoxContainer/CharacterName");
+		storylineInput = GetNode<TextEdit>("StorylinePopup/MarginContainer/VBoxContainer/StorylineInput");
 		deleteConfirmation = GetNode<ConfirmationDialog>("DeleteItemConfirmation");
 
 		GetNode<Button>("ShopPanel/CategoryButtons/CharacterButton").Pressed += () => LoadItems("character");
@@ -40,6 +47,8 @@ public partial class AdminShop : Control
 		GetNode<Button>("ShopPanel/AddItemButton").Pressed += OpenAddItem;
 		GetNode<Button>("AddItemPopup/MarginContainer/VBoxContainer/Buttons/CancelButton").Pressed += () => addItemPopup.Hide();
 		popupActionButton.Pressed += SaveItem;
+		GetNode<Button>("StorylinePopup/MarginContainer/VBoxContainer/Buttons/CancelButton").Pressed += storylinePopup.Hide;
+		GetNode<Button>("StorylinePopup/MarginContainer/VBoxContainer/Buttons/SaveButton").Pressed += SaveStoryline;
 		deleteConfirmation.Confirmed += ConfirmDelete;
 		imageButton.Pressed += SelectImage;
 		itemTemplate.Visible = false;
@@ -76,6 +85,13 @@ public partial class AdminShop : Control
 		SetImage(card.GetNode<TextureRect>("ItemPlaceholder"), category == "avatar" ? item.AvatarItems : item.CharacterItems);
 		card.GetNode<Button>("ActionContainer/EditButton").Pressed += () => OpenEditItem(item);
 		card.GetNode<Button>("ActionContainer/DeleteButton").Pressed += () => AskDelete(item);
+		Button storylineButton = card.GetNode<Button>("ActionContainer/StorylineButton");
+		storylineButton.Visible = category == "character";
+		if (category == "character")
+		{
+			storylineButton.Text = string.IsNullOrWhiteSpace(item.Storyline) ? "ADD STORYLINE" : "EDIT STORYLINE";
+			storylineButton.Pressed += () => OpenStoryline(item);
+		}
 	}
 
 	private void ClearItems()
@@ -126,6 +142,35 @@ public partial class AdminShop : Control
 		};
 		AddChild(dialog);
 		dialog.PopupCenteredRatio();
+	}
+
+	private void OpenStoryline(ShopItemDto item)
+	{
+		storylineItem = item;
+		storylineCharacter.Text = "Character: " + item.ItemName;
+		storylineInput.Text = item.Storyline ?? "";
+		storylinePopup.PopupCentered();
+	}
+
+	private async void SaveStoryline()
+	{
+		if (storylineItem == null || string.IsNullOrWhiteSpace(storylineInput.Text))
+		{
+			ShowMessage("Storyline is required.");
+			return;
+		}
+
+		try
+		{
+			await ShopApiClient.UpdateStorylineAsync(storylineItem.ItemId, storylineInput.Text.Trim());
+			storylinePopup.Hide();
+			LoadItems(category);
+		}
+		catch (Exception error)
+		{
+			GD.PrintErr("Storyline save failed: " + error.Message);
+			ShowMessage(error.Message);
+		}
 	}
 
 	private async void SaveItem()

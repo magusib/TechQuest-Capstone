@@ -146,6 +146,11 @@ layout_mode = 2
 text = "Delete
 "
 
+[node name="StorylineButton" type="Button" parent="ShopPanel/ItemPanel/ActionContainer" unique_id=1543896058]
+layout_mode = 2
+visible = false
+text = "ADD STORYLINE"
+
 [node name="BackButton" type="Button" parent="." unique_id=1460081858]
 layout_mode = 0
 offset_left = 996.0
@@ -211,3 +216,57 @@ text = "ADD ITEM"
 
 [node name="DeleteItemConfirmation" type="ConfirmationDialog" parent="." unique_id=1211649425]
 ok_button_text = "Delete"
+
+[node name="StorylinePopup" type="Window" parent="." unique_id=1211649426]
+initial_position = 2
+size = Vector2i(560, 430)
+visible = false
+
+[node name="MarginContainer" type="MarginContainer" parent="StorylinePopup" unique_id=1211649427]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="StorylinePopup/MarginContainer" unique_id=1211649428]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="StorylinePopup/MarginContainer/VBoxContainer" unique_id=1211649429]
+layout_mode = 2
+text = "CHARACTER STORYLINE"
+horizontal_alignment = 1
+
+[node name="CharacterName" type="Label" parent="StorylinePopup/MarginContainer/VBoxContainer" unique_id=1211649430]
+layout_mode = 2
+text = "Character:"
+
+[node name="StorylineLabel" type="Label" parent="StorylinePopup/MarginContainer/VBoxContainer" unique_id=1211649431]
+layout_mode = 2
+text = "Storyline:"
+
+[node name="StorylineInput" type="TextEdit" parent="StorylinePopup/MarginContainer/VBoxContainer" unique_id=1211649432]
+custom_minimum_size = Vector2(0, 230)
+layout_mode = 2
+placeholder_text = "Write the character's storyline..."
+wrap_mode = 1
+
+[node name="Buttons" type="HBoxContainer" parent="StorylinePopup/MarginContainer/VBoxContainer" unique_id=1211649433]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="CancelButton" type="Button" parent="StorylinePopup/MarginContainer/VBoxContainer/Buttons" unique_id=1211649434]
+custom_minimum_size = Vector2(120, 45)
+layout_mode = 2
+text = "CANCEL"
+
+[node name="SaveButton" type="Button" parent="StorylinePopup/MarginContainer/VBoxContainer/Buttons" unique_id=1211649435]
+custom_minimum_size = Vector2(120, 45)
+layout_mode = 2
+text = "SAVE"

@@ -35,6 +35,10 @@ namespace TechQuestBackend.Data
 
         public DbSet<Leaderboard> Leaderboards { get; set; }
 
+        public DbSet<LeaderboardHistory> LeaderboardHistories { get; set; }
+
+        public DbSet<LeaderboardHistoryEntry> LeaderboardHistoryEntries { get; set; }
+
         public DbSet<Quest> Quests { get; set; }
 
         public DbSet<StudentQuest> StudentQuests { get; set; }
@@ -112,6 +116,7 @@ namespace TechQuestBackend.Data
                 entity.ToTable("Shop_items");
                 entity.HasKey(s => s.ItemId);
                 entity.Property(s => s.ItemName).HasMaxLength(150).IsRequired();
+                entity.Property(s => s.Storyline).HasColumnType("text");
                 entity.Property(s => s.PriceCoins).HasDefaultValue(0);
                 entity.Property(s => s.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.HasCheckConstraint("CK_Shop_items_PriceCoins_NonNegative", "\"PriceCoins\" >= 0");
@@ -211,6 +216,27 @@ namespace TechQuestBackend.Data
                 entity.HasOne(l => l.Student)
                     .WithMany(s => s.LeaderboardEntries)
                     .HasForeignKey(l => l.StudentId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<LeaderboardHistory>(entity =>
+            {
+                entity.ToTable("LeaderboardHistories");
+                entity.HasKey(h => h.LeaderboardHistoryId);
+                entity.Property(h => h.ResetAt).IsRequired();
+            });
+
+            modelBuilder.Entity<LeaderboardHistoryEntry>(entity =>
+            {
+                entity.ToTable("LeaderboardHistoryEntries", table =>
+                {
+                    table.HasCheckConstraint("CK_LeaderboardHistoryEntries_TotalPoints_NonNegative", "\"TotalPoints\" >= 0");
+                    table.HasCheckConstraint("CK_LeaderboardHistoryEntries_RankPosition_OneToThree", "\"RankPosition\" BETWEEN 1 AND 3");
+                });
+                entity.HasKey(h => h.LeaderboardHistoryEntryId);
+                entity.HasOne(h => h.History)
+                    .WithMany(h => h.Entries)
+                    .HasForeignKey(h => h.LeaderboardHistoryId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
 

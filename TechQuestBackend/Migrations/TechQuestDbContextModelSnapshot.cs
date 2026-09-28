@@ -179,6 +179,68 @@ namespace TechQuestBackend.Migrations
                         });
                 });
 
+            modelBuilder.Entity("TechQuestBackend.Models.LeaderboardHistory", b =>
+                {
+                    b.Property<int>("LeaderboardHistoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("LeaderboardHistoryId"));
+
+                    b.Property<DateTime>("ResetAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("LeaderboardHistoryId");
+
+                    b.ToTable("LeaderboardHistories", (string)null);
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.LeaderboardHistoryEntry", b =>
+                {
+                    b.Property<int>("LeaderboardHistoryEntryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("LeaderboardHistoryEntryId"));
+
+                    b.Property<string>("Avatar")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("LeaderboardHistoryId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RankPosition")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TotalPoints")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("YearLevel")
+                        .HasColumnType("integer");
+
+                    b.HasKey("LeaderboardHistoryEntryId");
+
+                    b.HasIndex("LeaderboardHistoryId");
+
+                    b.ToTable("LeaderboardHistoryEntries", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_LeaderboardHistoryEntries_RankPosition_OneToThree", "\"RankPosition\" BETWEEN 1 AND 3");
+
+                            t.HasCheckConstraint("CK_LeaderboardHistoryEntries_TotalPoints_NonNegative", "\"TotalPoints\" >= 0");
+                        });
+                });
+
             modelBuilder.Entity("TechQuestBackend.Models.MiniGame", b =>
                 {
                     b.Property<int>("MiniGameId")
@@ -593,6 +655,9 @@ namespace TechQuestBackend.Migrations
                         .HasColumnType("integer")
                         .HasDefaultValue(0);
 
+                    b.Property<string>("Storyline")
+                        .HasColumnType("text");
+
                     b.HasKey("ItemId");
 
                     b.ToTable("Shop_items", null, t =>
@@ -799,6 +864,17 @@ namespace TechQuestBackend.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("TechQuestBackend.Models.LeaderboardHistoryEntry", b =>
+                {
+                    b.HasOne("TechQuestBackend.Models.LeaderboardHistory", "History")
+                        .WithMany("Entries")
+                        .HasForeignKey("LeaderboardHistoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("History");
+                });
+
             modelBuilder.Entity("TechQuestBackend.Models.MiniGame", b =>
                 {
                     b.HasOne("TechQuestBackend.Models.User", "CreatedByUser")
@@ -973,6 +1049,11 @@ namespace TechQuestBackend.Migrations
                     b.Navigation("Item");
 
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.LeaderboardHistory", b =>
+                {
+                    b.Navigation("Entries");
                 });
 
             modelBuilder.Entity("TechQuestBackend.Models.MiniGame", b =>
