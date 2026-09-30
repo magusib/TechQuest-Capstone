@@ -3,6 +3,12 @@
 [ext_resource type="Script" uid="uid://c7higuh1432sx" path="res://scene/Dashboard/UserDashboard/Admin Dashboard/AdminProfile.cs" id="1_kn8ht"]
 [ext_resource type="Texture2D" uid="uid://4kraosl2m556" path="res://asset/background/ptc.png" id="1_nnof5"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2fwtk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ue6ar"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sj1ty"]
+
 [node name="AdminProfile" type="Control" unique_id=473532987]
 layout_mode = 3
 anchors_preset = 15
@@ -23,25 +29,180 @@ texture = ExtResource("1_nnof5")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Panel" type="Panel" parent="." unique_id=957897272]
-layout_mode = 0
-offset_left = 337.0
-offset_top = 46.0
-offset_right = 793.0
-offset_bottom = 611.0
+[node name="MainPanel" type="Panel" parent="." unique_id=1485081737]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -228.0
+offset_top = -282.5
+offset_right = 228.0
+offset_bottom = 282.5
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Label" type="Label" parent="." unique_id=1968731308]
+[node name="ProfileLabel" type="Label" parent="MainPanel" unique_id=2001994687]
 layout_mode = 0
-offset_left = 494.0
-offset_top = 65.0
-offset_right = 622.0
-offset_bottom = 135.0
+offset_left = 6.0
+offset_top = 25.0
+offset_right = 462.0
+offset_bottom = 48.0
 text = "Admin Profile"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InformationPanel" type="Panel" parent="MainPanel" unique_id=855762185]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -198.0
+offset_top = -156.0
+offset_right = 208.0
+offset_bottom = 272.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UplaodButton" type="Button" parent="MainPanel/InformationPanel" unique_id=41292749]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.5
+offset_top = -107.5
+offset_right = 59.5
+offset_bottom = -76.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Uplaod Avatar"
+
+[node name="FirstnameLabel" type="Label" parent="MainPanel/InformationPanel" unique_id=832188173]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 209.0
+offset_right = 178.0
+offset_bottom = 247.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_2fwtk")
+text = "First Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LastnameLabel" type="Label" parent="MainPanel/InformationPanel" unique_id=307837418]
+layout_mode = 0
+offset_left = 211.0
+offset_top = 209.0
+offset_right = 395.0
+offset_bottom = 244.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_ue6ar")
+text = "Last Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EmailLabel" type="Label" parent="MainPanel/InformationPanel" unique_id=1607663175]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 287.0
+offset_right = 367.0
+offset_bottom = 317.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_sj1ty")
+text = "Email"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AvatarHolder" type="TextureRect" parent="MainPanel" unique_id=1601590847]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -98.0
+offset_top = -220.0
+offset_right = 98.0
+offset_bottom = -92.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": false,
+"pending_changes": {
+"convert_fps_field": 60.0,
+"convert_ms_field": 16.0,
+"convert_to_fps": false,
+"embed_tex": true,
+"i_mode": 0,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"scale": "1.0",
+"slice": "",
+"source": "",
+"source_uid": -1
+},
+"slice_section": false
+}
+
+[node name="AddAvatarPopup" type="Window" parent="." unique_id=1539411725]
+oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(420, 200)
+visible = false
+
+[node name="MarginContainer" type="MarginContainer" parent="AddAvatarPopup" unique_id=1822287635]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AddAvatarPopup/MarginContainer" unique_id=1948012929]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="AddAvatarPopup/MarginContainer/VBoxContainer" unique_id=1334392737]
+layout_mode = 2
+text = "ADD AVATAR IMAGE"
+horizontal_alignment = 1
+
+[node name="ImageButton" type="Button" parent="AddAvatarPopup/MarginContainer/VBoxContainer" unique_id=78833070]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+text = "SELECT IMAGE (.png / .jpg / .jpeg)"
+
+[node name="Buttons" type="HBoxContainer" parent="AddAvatarPopup/MarginContainer/VBoxContainer" unique_id=1968992233]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="CancelButton" type="Button" parent="AddAvatarPopup/MarginContainer/VBoxContainer/Buttons" unique_id=362844045]
+custom_minimum_size = Vector2(120, 45)
+layout_mode = 2
+text = "CANCEL"
+
+[node name="SaveButton" type="Button" parent="AddAvatarPopup/MarginContainer/VBoxContainer/Buttons" unique_id=100789954]
+custom_minimum_size = Vector2(120, 45)
+layout_mode = 2
+text = "SAVE"
 
 [node name="BackButton" type="Button" parent="." unique_id=1417247103]
 layout_mode = 0
-offset_left = 256.0
-offset_top = 64.0
-offset_right = 314.0
-offset_bottom = 95.0
+offset_left = 553.0
+offset_top = 537.0
+offset_right = 611.0
+offset_bottom = 568.0
 text = "Back"

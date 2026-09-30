@@ -11,6 +11,7 @@ public static class MultiplayerRoomState
 	public static List<RoomQuizQuestionDto> Questions { get; set; } = new();
 	public static List<RoomAnswerDto> Answers { get; set; } = new();
 	public static int Score { get; set; }
+	public static bool ReturnToWaitingRoom { get; set; }
 
 	public static void SetRoom(int roomId, string roomCode, string roomName, int studentId = 0)
 	{
@@ -40,6 +41,7 @@ public static class MultiplayerRoomState
 		Questions.Clear();
 		Answers.Clear();
 		Score = 0;
+		ReturnToWaitingRoom = false;
 	}
 }
 

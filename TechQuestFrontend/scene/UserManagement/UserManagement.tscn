@@ -3,12 +3,6 @@
 [ext_resource type="Script" uid="uid://ob7pc8m4wpv7" path="res://scene/UserManagement/UserManagement.cs" id="1_ox2vg"]
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_e8j70"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8icjc"]
-bg_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ulj5c"]
-bg_color = Color(1, 1, 1, 1)
-
 [node name="UserManagement" type="Control" unique_id=936849928]
 layout_mode = 3
 anchors_preset = 15
@@ -29,73 +23,116 @@ texture = ExtResource("2_e8j70")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="." unique_id=422360472]
-layout_mode = 0
-offset_left = 30.0
-offset_top = 44.0
-offset_right = 244.0
-offset_bottom = 95.0
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=532348991]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 24
+
+[node name="MainVBox" type="VBoxContainer" parent="MarginContainer" unique_id=1744177667]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TopBar" type="HBoxContainer" parent="MarginContainer/MainVBox" unique_id=1671465954]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/MainVBox/TopBar" unique_id=1455384538]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 28
 text = "User Management"
+vertical_alignment = 1
 
-[node name="SearchBar" type="LineEdit" parent="." unique_id=1063912812]
-layout_mode = 0
-offset_left = 58.0
-offset_top = 78.0
-offset_right = 478.0
-offset_bottom = 114.0
-theme_override_colors/font_color = Color(0.004198928, 0.0010861665, 0.0007995391, 1)
-theme_override_styles/normal = SubResource("StyleBoxFlat_8icjc")
-text = "Search student by name"
-alignment = 1
+[node name="Back" type="Button" parent="MarginContainer/MainVBox/TopBar" unique_id=343353968]
+custom_minimum_size = Vector2(52, 44)
+layout_mode = 2
+text = "Back"
 
-[node name="ProfessorButton" type="Button" parent="." unique_id=1121919482]
-layout_mode = 0
-offset_left = 687.0
-offset_top = 72.0
-offset_right = 909.0
-offset_bottom = 106.0
-text = "Professor"
+[node name="UserTypeContainer" type="HBoxContainer" parent="MarginContainer/MainVBox" unique_id=1085778623]
+layout_mode = 2
+theme_override_constants/separation = 8
 
-[node name="SortYearLevel" type="OptionButton" parent="." unique_id=638183093]
-layout_mode = 0
-offset_left = 927.0
-offset_top = 68.0
-offset_right = 1137.0
-offset_bottom = 105.0
-theme_override_colors/font_color = Color(0.069054775, 0.013340208, 0.018598203, 1)
-theme_override_styles/normal = SubResource("StyleBoxFlat_ulj5c")
-item_count = 3
-popup/item_0/text = "1st Year"
-popup/item_0/id = 0
-popup/item_1/text = "2nd Year"
-popup/item_1/id = 1
-popup/item_2/text = "3rd Year"
-popup/item_2/id = 2
+[node name="StudentButton" type="Button" parent="MarginContainer/MainVBox/UserTypeContainer" unique_id=1157920412]
+custom_minimum_size = Vector2(120, 42)
+layout_mode = 2
+text = "Students"
 
-[node name="Panel" type="Panel" parent="." unique_id=1453105323]
-layout_mode = 0
-offset_left = 85.0
-offset_top = 118.0
-offset_right = 1103.0
-offset_bottom = 585.0
+[node name="ProfessorButton" type="Button" parent="MarginContainer/MainVBox/UserTypeContainer" unique_id=241481987]
+custom_minimum_size = Vector2(120, 42)
+layout_mode = 2
+text = "Professors"
 
-[node name="StudentHeader" type="Node" parent="." unique_id=1862245372]
+[node name="StudentPanel" type="PanelContainer" parent="MarginContainer/MainVBox" unique_id=967148084]
+layout_mode = 2
+size_flags_vertical = 3
 
-[node name="StudentList" type="Node" parent="." unique_id=1798164000]
+[node name="StudentContent" type="VBoxContainer" parent="MarginContainer/MainVBox/StudentPanel" unique_id=464156753]
+layout_mode = 2
+theme_override_constants/separation = 10
 
-[node name="StudentRow" type="HBoxContainer" parent="StudentList" unique_id=1137969376]
-offset_left = 120.0
-offset_top = 124.0
-offset_right = 295.0
-offset_bottom = 170.0
+[node name="StudentToolbar" type="HBoxContainer" parent="MarginContainer/MainVBox/StudentPanel/StudentContent" unique_id=1536467310]
+layout_mode = 2
+theme_override_constants/separation = 10
 
-[node name="Label" type="Label" parent="StudentList/StudentRow" unique_id=2145957348]
+[node name="SearchStudentInput" type="LineEdit" parent="MarginContainer/MainVBox/StudentPanel/StudentContent/StudentToolbar" unique_id=1526617515]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Search students by name or email..."
+
+[node name="SortYearLevelButton" type="OptionButton" parent="MarginContainer/MainVBox/StudentPanel/StudentContent/StudentToolbar" unique_id=1150253909]
+custom_minimum_size = Vector2(190, 42)
 layout_mode = 2
 
-[node name="BackButton" type="Button" parent="." unique_id=313990320]
-layout_mode = 0
-offset_left = 9.0
-offset_top = 7.0
-offset_right = 86.0
-offset_bottom = 38.0
-text = "Back"
+[node name="StudentHeader" type="HBoxContainer" parent="MarginContainer/MainVBox/StudentPanel/StudentContent" unique_id=184113229]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NameHeader" type="Label" parent="MarginContainer/MainVBox/StudentPanel/StudentContent/StudentHeader" unique_id=435751988]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+text = "Name"
+vertical_alignment = 1
+
+[node name="EmailHeader" type="Label" parent="MarginContainer/MainVBox/StudentPanel/StudentContent/StudentHeader" unique_id=1571002782]
+custom_minimum_size = Vector2(330, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Email"
+vertical_alignment = 1
+
+[node name="YearLevelHeader" type="Label" parent="MarginContainer/MainVBox/StudentPanel/StudentContent/StudentHeader" unique_id=2063203524]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "Year Level"
+vertical_alignment = 1
+
+[node name="ActionHeader" type="Label" parent="MarginContainer/MainVBox/StudentPanel/StudentContent/StudentHeader" unique_id=2002060757]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+text = "Action"
+vertical_alignment = 1
+
+[node name="StudentScrollContainer" type="ScrollContainer" parent="MarginContainer/MainVBox/StudentPanel/StudentContent" unique_id=179162721]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="StudentList" type="VBoxContainer" parent="MarginContainer/MainVBox/StudentPanel/StudentContent/StudentScrollContainer" unique_id=1898766756]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="DeleteConfirmationDialog" type="ConfirmationDialog" parent="." unique_id=134702873]
+oversampling_override = 1.0
+title = "Delete User"
+size = Vector2i(341, 100)
+dialog_text = "Are you sure you want to delete this user?"

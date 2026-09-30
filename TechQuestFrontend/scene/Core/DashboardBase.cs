@@ -101,20 +101,22 @@ public abstract partial class DashboardBase : Control
 		SetAvatar();
 	}
 
-	private void SetAvatar()
+	private async void SetAvatar()
 	{
 		if (Avatar == null || string.IsNullOrWhiteSpace(UserSession.AvatarPath))
 			return;
 
-		if (!ResourceLoader.Exists(UserSession.AvatarPath))
+		TextureRect avatar = Avatar;
+		try
 		{
-			GD.PrintErr($"Avatar resource not found: {UserSession.AvatarPath}");
-			return;
+			Texture2D texture = await AccountApiClient.LoadAvatarAsync(UserSession.AvatarPath);
+			if (IsInstanceValid(avatar) && texture != null)
+				avatar.Texture = texture;
 		}
-
-		Texture2D texture = GD.Load<Texture2D>(UserSession.AvatarPath);
-		if (texture != null)
-			Avatar.Texture = texture;
+		catch (Exception error)
+		{
+			GD.PrintErr($"Dashboard avatar load failed: {error.Message}");
+		}
 	}
 
 	protected void SetButtonEnabled(BaseButton button, bool enabled)

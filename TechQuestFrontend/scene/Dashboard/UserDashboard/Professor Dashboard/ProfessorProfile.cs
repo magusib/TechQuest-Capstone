@@ -1,20 +1,4 @@
-using Godot;
-using System;
-
-public partial class ProfessorProfile : Control
+public partial class ProfessorProfile : UserProfileBase
 {
-	private Button backButton;
-
-	public override void _Ready()
-	{
-		backButton = GetNode<Button>("BackButton");
-		
-		backButton.Pressed += OnBackPressed;
-
-	}
-
-	private void OnBackPressed()
-	{
-		GetTree().ChangeSceneToFile("res://scene/Dashboard/UserDashboard/Professor Dashboard/ProfessorDashboard.tscn");
-	}
+	protected override string DashboardScenePath => "res://scene/Dashboard/UserDashboard/Professor Dashboard/ProfessorDashboard.tscn";
 }

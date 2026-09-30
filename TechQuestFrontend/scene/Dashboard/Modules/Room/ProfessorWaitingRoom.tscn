@@ -150,10 +150,19 @@ offset_right = 1099.0
 offset_bottom = 168.0
 text = "Download Format"
 
+[node name="ResultsButton" type="Button" parent="." unique_id=587163240]
+layout_mode = 0
+offset_left = 798.0
+offset_top = 137.0
+offset_right = 920.0
+offset_bottom = 168.0
+text = "Student Results"
+
 [node name="UploadQuizPopup" type="Window" parent="." unique_id=1164952727]
 oversampling_override = 1.0
 initial_position = 2
 size = Vector2i(450, 450)
+visible = false
 
 [node name="UploadQuizPanel" type="Panel" parent="UploadQuizPopup" unique_id=56979141]
 offset_left = 7.0

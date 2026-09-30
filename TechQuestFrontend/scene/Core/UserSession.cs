@@ -21,6 +21,7 @@ public static class UserSession
 	public static string FirstName { get; private set; } = "";
 	public static string LastName { get; private set; } = "";
 	public static string Email { get; private set; } = "";
+	public static int? YearLevel { get; private set; }
 	public static string Token { get; private set; } = "";
 
 	public static int Coins { get; private set; }
@@ -152,6 +153,17 @@ public static class UserSession
 
 		if (!string.IsNullOrWhiteSpace(avatarPath))
 			AvatarPath = avatarPath;
+	}
+
+	public static void UpdateAvatar(string avatarPath)
+	{
+		if (!string.IsNullOrWhiteSpace(avatarPath))
+			AvatarPath = avatarPath;
+	}
+
+	public static void UpdateYearLevel(int? yearLevel)
+	{
+		YearLevel = yearLevel;
 	}
 
 	public static void UpdateProfile(

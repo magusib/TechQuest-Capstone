@@ -3,9 +3,6 @@
 [ext_resource type="Script" uid="uid://bf2337smfrm5a" path="res://scene/UserManagement/ProfessorManagement.cs" id="1_3wde3"]
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="1_iqqm2"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mkigk"]
-bg_color = Color(1, 1, 1, 1)
-
 [node name="ProfessorManagement" type="Control" unique_id=1731733020]
 layout_mode = 3
 anchors_preset = 15
@@ -26,60 +23,113 @@ texture = ExtResource("1_iqqm2")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="." unique_id=1708155688]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 63.0
-offset_right = 234.0
-offset_bottom = 114.0
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1256545073]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 24
+
+[node name="MainVBox" type="VBoxContainer" parent="MarginContainer" unique_id=1531952179]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TopBar" type="HBoxContainer" parent="MarginContainer/MainVBox" unique_id=271348349]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/MainVBox/TopBar" unique_id=1969766100]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 28
 text = "User Management"
+vertical_alignment = 1
 
-[node name="ProfessorButton" type="Button" parent="." unique_id=250644718]
-layout_mode = 0
-offset_left = 687.0
-offset_top = 72.0
-offset_right = 909.0
-offset_bottom = 106.0
-text = "Professor"
-
-[node name="StudentButton" type="Button" parent="." unique_id=504962804]
-layout_mode = 0
-offset_left = 913.0
-offset_top = 69.0
-offset_right = 1135.0
-offset_bottom = 103.0
-text = "Student"
-
-[node name="RegisterButton" type="Button" parent="." unique_id=1997057369]
-layout_mode = 0
-offset_left = 973.0
-offset_top = 11.0
-offset_right = 1100.0
-offset_bottom = 42.0
-text = "Create Account"
-
-[node name="SearchBar" type="LineEdit" parent="." unique_id=139595662]
-layout_mode = 0
-offset_left = 31.0
-offset_top = 99.0
-offset_right = 451.0
-offset_bottom = 135.0
-theme_override_colors/font_color = Color(0.004198928, 0.0010861665, 0.0007995391, 1)
-theme_override_styles/normal = SubResource("StyleBoxFlat_mkigk")
-text = "Search student by name"
-alignment = 1
-
-[node name="Panel" type="Panel" parent="." unique_id=542514270]
-layout_mode = 0
-offset_left = 85.0
-offset_top = 165.0
-offset_right = 1103.0
-offset_bottom = 585.0
-
-[node name="BackButton" type="Button" parent="." unique_id=554648536]
-layout_mode = 0
-offset_left = 17.0
-offset_top = 18.0
-offset_right = 94.0
-offset_bottom = 49.0
+[node name="Back" type="Button" parent="MarginContainer/MainVBox/TopBar" unique_id=769993113]
+custom_minimum_size = Vector2(52, 44)
+layout_mode = 2
 text = "Back"
+
+[node name="UserTypeContainer" type="HBoxContainer" parent="MarginContainer/MainVBox" unique_id=364178086]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="StudentButton" type="Button" parent="MarginContainer/MainVBox/UserTypeContainer" unique_id=735586878]
+custom_minimum_size = Vector2(120, 42)
+layout_mode = 2
+text = "Students"
+
+[node name="ProfessorButton" type="Button" parent="MarginContainer/MainVBox/UserTypeContainer" unique_id=2093893961]
+custom_minimum_size = Vector2(120, 42)
+layout_mode = 2
+text = "Professors"
+
+[node name="RegisterButton" type="Button" parent="MarginContainer/MainVBox/UserTypeContainer" unique_id=1511453620]
+custom_minimum_size = Vector2(170, 44)
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(650, 0)
+text = "CREATE ACCOUNT"
+
+[node name="ProfessorPanel" type="PanelContainer" parent="MarginContainer/MainVBox" unique_id=80713733]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ProfessorContent" type="VBoxContainer" parent="MarginContainer/MainVBox/ProfessorPanel" unique_id=2083515010]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ProfessorToolbar" type="HBoxContainer" parent="MarginContainer/MainVBox/ProfessorPanel/ProfessorContent" unique_id=1753540546]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="SearchProfessorInput" type="LineEdit" parent="MarginContainer/MainVBox/ProfessorPanel/ProfessorContent/ProfessorToolbar" unique_id=1766430756]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Search professors by name or email..."
+
+[node name="ProfessorHeader" type="HBoxContainer" parent="MarginContainer/MainVBox/ProfessorPanel/ProfessorContent" unique_id=10097571]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NameHeader" type="Label" parent="MarginContainer/MainVBox/ProfessorPanel/ProfessorContent/ProfessorHeader" unique_id=525368756]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+text = "Name"
+vertical_alignment = 1
+
+[node name="EmailHeader" type="Label" parent="MarginContainer/MainVBox/ProfessorPanel/ProfessorContent/ProfessorHeader" unique_id=898105316]
+custom_minimum_size = Vector2(330, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Email"
+vertical_alignment = 1
+
+[node name="ActionHeader" type="Label" parent="MarginContainer/MainVBox/ProfessorPanel/ProfessorContent/ProfessorHeader" unique_id=2013972744]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+text = "Action"
+vertical_alignment = 1
+
+[node name="ProfessorScrollContainer" type="ScrollContainer" parent="MarginContainer/MainVBox/ProfessorPanel/ProfessorContent" unique_id=167846112]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ProfessorList" type="VBoxContainer" parent="MarginContainer/MainVBox/ProfessorPanel/ProfessorContent/ProfessorScrollContainer" unique_id=1979356634]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="DeleteConfirmationDialog" type="ConfirmationDialog" parent="." unique_id=562528651]
+oversampling_override = 1.0
+title = "Delete User"
+size = Vector2i(341, 100)
+dialog_text = "Are you sure you want to delete this user?"

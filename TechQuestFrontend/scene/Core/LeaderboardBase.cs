@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 public partial class LeaderboardBase : Control
 {
@@ -188,7 +189,7 @@ public partial class LeaderboardBase : Control
 			nameLabel.Text = GetName(student);
 		if (pointsLabel != null)
 			pointsLabel.Text = GetInt(student, "totalPoints") + " POINTS";
-		SetAvatar(avatar, GetString(student, "avatar"));
+		_ = SetAvatarAsync(avatar, GetString(student, "avatar"));
 	}
 
 	private void DisplayEmptyPlace(int rank)
@@ -304,12 +305,20 @@ public partial class LeaderboardBase : Control
 		};
 	}
 
-	private void SetAvatar(TextureRect display, string avatarPath)
+	private async Task SetAvatarAsync(TextureRect display, string avatarPath)
 	{
-		if (display == null)
+		if (display == null || string.IsNullOrWhiteSpace(avatarPath))
 			return;
-		display.Texture = !string.IsNullOrWhiteSpace(avatarPath) && ResourceLoader.Exists(avatarPath)
-			? GD.Load<Texture2D>(avatarPath)
-			: null;
+
+		try
+		{
+			Texture2D texture = await AccountApiClient.LoadAvatarAsync(avatarPath);
+			if (IsInstanceValid(display) && texture != null)
+				display.Texture = texture;
+		}
+		catch (Exception error)
+		{
+			GD.PrintErr($"Leaderboard avatar load failed: {error.Message}");
+		}
 	}
 }

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b6ibsvovtd4iy"]
 
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_u8pjn"]
-[ext_resource type="Script" path="res://scene/Dashboard/Modules/Leaderboard/AdminLeaderboard.cs" id="3_admin_leaderboard"]
+[ext_resource type="Script" uid="uid://dvb2sq12ny0et" path="res://scene/Dashboard/Modules/Leaderboard/AdminLeaderboard.cs" id="3_admin_leaderboard"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d2mi3"]
 bg_color = Color(0.035, 0.09, 0.17, 0.98)
@@ -162,6 +162,8 @@ vertical_alignment = 1
 [node name="AvatarCircle" type="TextureRect" parent="LeaderboardPanel/MainVBox/Top3Panel/FirstPlace/CardVBox" unique_id=1986748262]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
 
 [node name="NameLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/FirstPlace/CardVBox" unique_id=772433092]
 layout_mode = 2
@@ -198,6 +200,8 @@ vertical_alignment = 1
 [node name="AvatarCircle" type="TextureRect" parent="LeaderboardPanel/MainVBox/Top3Panel/ThirdPlace/CardVBox" unique_id=588470961]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
 
 [node name="NameLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/ThirdPlace/CardVBox" unique_id=541127617]
 layout_mode = 2

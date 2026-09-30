@@ -23,7 +23,11 @@ namespace TechQuestBackend.Controllers
         [Authorize(Roles = "professor,admin")]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _db.ProfessorUploads.AsNoTracking().OrderByDescending(u => u.UploadedAt).ToListAsync());
+            return Ok(await _db.ProfessorUploads
+                .Where(upload => upload.RoomId == null)
+                .AsNoTracking()
+                .OrderByDescending(upload => upload.UploadedAt)
+                .ToListAsync());
         }
 
         [HttpPost("metadata")]

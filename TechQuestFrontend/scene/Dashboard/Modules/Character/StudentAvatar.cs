@@ -114,7 +114,15 @@ public partial class StudentAvatar : Control
 	{
 		try
 		{
-			await ShopApiClient.EquipAvatarAsync(itemId);
+			EquipResultDto result = await ShopApiClient.EquipAvatarAsync(itemId);
+			UserSession.UpdateAvatar(result.Avatar);
+			if (MultiplayerRoomState.ReturnToWaitingRoom)
+			{
+				MultiplayerRoomState.ReturnToWaitingRoom = false;
+				GetTree().ChangeSceneToFile("res://scene/Dashboard/Modules/Room/StudentWaitingRoom.tscn");
+			}
+			else
+				GetTree().ChangeSceneToFile("res://scene/Dashboard/UserDashboard/Student Dashboard/StudentProfile.tscn");
 		}
 		catch (Exception error)
 		{
@@ -124,7 +132,13 @@ public partial class StudentAvatar : Control
 
 	private void OnClosePressed()
 	{
-		GetTree().ChangeSceneToFile("res://scene/Dashboard/UserDashboard/Student Dashboard/StudentDashboard.tscn");
+		if (MultiplayerRoomState.ReturnToWaitingRoom)
+		{
+			MultiplayerRoomState.ReturnToWaitingRoom = false;
+			GetTree().ChangeSceneToFile("res://scene/Dashboard/Modules/Room/StudentWaitingRoom.tscn");
+		}
+		else
+			GetTree().ChangeSceneToFile("res://scene/Dashboard/UserDashboard/Student Dashboard/StudentDashboard.tscn");
 	}
 
 	private void OnCharacterPressed()
