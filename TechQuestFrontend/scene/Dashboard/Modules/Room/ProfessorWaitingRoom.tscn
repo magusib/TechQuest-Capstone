@@ -198,7 +198,7 @@ text = "Timer"
 
 [node name="TimerInput" type="LineEdit" parent="UploadQuizPopup/UploadQuizContainer" unique_id=145761108]
 layout_mode = 2
-placeholder_text = "Enter time for each question"
+placeholder_text = "5 seconds or 5 minutes"
 
 [node name="ButtonContainer" type="HBoxContainer" parent="UploadQuizPopup/UploadQuizContainer" unique_id=1180774843]
 layout_mode = 2

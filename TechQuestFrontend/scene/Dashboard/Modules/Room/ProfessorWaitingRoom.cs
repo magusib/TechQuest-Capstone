@@ -1,4 +1,5 @@
 using Godot;
+using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -50,15 +51,15 @@ public partial class ProfessorWaitingRoom : Control
 		{
 			FileMode = FileDialog.FileModeEnum.OpenFile,
 			Access = FileDialog.AccessEnum.Filesystem,
-			Filters = new string[] { "*.csv ; CSV quiz" },
-			Title = "Select quiz CSV"
+			Filters = new string[] { "*.xlsx ; Excel quiz", "*.csv ; CSV quiz" },
+			Title = "Select quiz file"
 		};
 		exportDialog = new FileDialog
 		{
 			FileMode = FileDialog.FileModeEnum.SaveFile,
 			Access = FileDialog.AccessEnum.Filesystem,
-			Filters = new string[] { "*.csv ; CSV template" },
-			CurrentFile = "TechQuest-Quiz-Template.csv",
+			Filters = new string[] { "*.xlsx ; Excel template" },
+			CurrentFile = "TechQuest-Quiz-Template.xlsx",
 			Title = "Save quiz template"
 		};
 		AddChild(importDialog);
@@ -146,21 +147,23 @@ public partial class ProfessorWaitingRoom : Control
 	{
 		if (string.IsNullOrWhiteSpace(selectedQuizPath))
 		{
-			ShowUploadMessage("Select a CSV quiz file first.");
+			ShowUploadMessage("Select an Excel or CSV quiz file first.");
 			return;
 		}
-		if (!int.TryParse(timerInput.Text, out int timerSeconds) || timerSeconds < 1)
+		if (!TryParseTimerSeconds(timerInput.Text, out int timerSeconds))
 		{
-			ShowUploadMessage("Enter a question timer of at least 1 second.");
+			ShowUploadMessage("Enter the timer as a number followed by seconds or minutes, such as 5 seconds or 5 minutes.");
 			return;
 		}
 
 		try
 		{
-			List<RoomQuizQuestionDto> questions = ParseQuizCsv(FileAccess.GetFileAsString(selectedQuizPath));
+			List<RoomQuizQuestionDto> questions = System.IO.Path.GetExtension(selectedQuizPath).Equals(".xlsx", StringComparison.OrdinalIgnoreCase)
+				? ParseQuizXlsx(selectedQuizPath)
+				: ParseQuizCsv(FileAccess.GetFileAsString(selectedQuizPath));
 			if (questions.Count == 0)
 			{
-				ShowUploadMessage("The CSV does not contain any complete questions.");
+				ShowUploadMessage("The file does not contain any complete questions.");
 				return;
 			}
 
@@ -173,6 +176,30 @@ public partial class ProfessorWaitingRoom : Control
 		{
 			ShowUploadMessage(exception.Message);
 		}
+	}
+
+	private bool TryParseTimerSeconds(string value, out int timerSeconds)
+	{
+		timerSeconds = 0;
+		string[] parts = value.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+		if (parts.Length != 2 || !int.TryParse(parts[0], out int amount) || amount < 1)
+			return false;
+
+		if (parts[1].Equals("second", StringComparison.OrdinalIgnoreCase) || parts[1].Equals("seconds", StringComparison.OrdinalIgnoreCase))
+		{
+			timerSeconds = amount;
+			return true;
+		}
+
+		if (parts[1].Equals("minute", StringComparison.OrdinalIgnoreCase) || parts[1].Equals("minutes", StringComparison.OrdinalIgnoreCase))
+		{
+			if (amount > int.MaxValue / 60)
+				return false;
+			timerSeconds = amount * 60;
+			return true;
+		}
+
+		return false;
 	}
 
 	private List<RoomQuizQuestionDto> ParseQuizCsv(string csvText)
@@ -198,6 +225,37 @@ public partial class ProfessorWaitingRoom : Control
 				ChoiceC = columns[5],
 				ChoiceD = columns[6],
 				CorrectAnswer = columns[7]
+			});
+		}
+		return questions;
+	}
+
+	private List<RoomQuizQuestionDto> ParseQuizXlsx(string path)
+	{
+		List<RoomQuizQuestionDto> questions = new();
+		using XLWorkbook workbook = new(path);
+		IXLWorksheet worksheet = workbook.Worksheet(1);
+		foreach (IXLRow row in worksheet.RowsUsed())
+		{
+			if (row.RowNumber() == 1)
+				continue;
+
+			string question = row.Cell(3).GetString().Trim();
+			string questionType = NormalizeQuestionType(row.Cell(2).GetString());
+			string correctAnswer = row.Cell(8).GetString().Trim();
+			if (string.IsNullOrWhiteSpace(question) || string.IsNullOrWhiteSpace(questionType) || string.IsNullOrWhiteSpace(correctAnswer))
+				continue;
+
+			questions.Add(new RoomQuizQuestionDto
+			{
+				Type = questionType,
+				SubjectName = MultiplayerRoomState.RoomName,
+				Question = question,
+				ChoiceA = row.Cell(4).GetString().Trim(),
+				ChoiceB = row.Cell(5).GetString().Trim(),
+				ChoiceC = row.Cell(6).GetString().Trim(),
+				ChoiceD = row.Cell(7).GetString().Trim(),
+				CorrectAnswer = correctAnswer
 			});
 		}
 		return questions;
@@ -249,9 +307,9 @@ public partial class ProfessorWaitingRoom : Control
 	{
 		try
 		{
-			string template = FileAccess.GetFileAsString("res://asset/QuizTemplate/TechQuest-Quiz-Template.csv");
+			byte[] template = FileAccess.GetFileAsBytes("res://asset/QuizTemplate/TechQuest-Quiz-Template.xlsx");
 			using FileAccess output = FileAccess.Open(path, FileAccess.ModeFlags.Write);
-			output.StoreString(template);
+			output.StoreBuffer(template);
 		}
 		catch (Exception exception)
 		{

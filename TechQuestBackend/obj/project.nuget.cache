@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "n8unDrashoE=",
+  "dgSpecHash": "K+IqooJvFsg=",
   "success": true,
-  "projectFilePath": "C:\\Users\\22222222222222222222\\TechQuest\\TechQuestBackend\\TechQuestBackend.csproj",
+  "projectFilePath": "C:\\Users\\22222222222222222222\\TechQuest-Capstone\\TechQuestBackend\\TechQuestBackend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\22222222222222222222\\.nuget\\packages\\bcrypt.net-next\\4.2.0\\bcrypt.net-next.4.2.0.nupkg.sha512",
     "C:\\Users\\22222222222222222222\\.nuget\\packages\\bouncycastle.cryptography\\2.6.2\\bouncycastle.cryptography.2.6.2.nupkg.sha512",
