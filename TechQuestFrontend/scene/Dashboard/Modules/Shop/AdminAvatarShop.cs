@@ -29,7 +29,7 @@ public partial class AdminAvatarShop : Control
 		popupActionButton = GetNode<Button>("AddItemPopup/MarginContainer/VBoxContainer/Buttons/AddButton");
 		deleteConfirmation = GetNode<ConfirmationDialog>("DeleteItemConfirmation");
 		GetNode<Button>("ShopPanel/AddItemButton").Pressed += OpenAddItem;
-		GetNode<Button>("AddItemPopup/MarginContainer/VBoxContainer/Buttons/CancelButton").Pressed += () => GetNode<Window>("AddItemPopup").Hide();
+		GetNode<Button>("AddItemPopup/MarginContainer/VBoxContainer/Buttons/CancelButton").Pressed += () => GetNode<Panel>("AddItemPopup").Hide();
 		popupActionButton.Pressed += SaveItem;
 		deleteConfirmation.Confirmed += ConfirmDelete;
 		imageButton.Pressed += SelectImage;
@@ -84,7 +84,7 @@ public partial class AdminAvatarShop : Control
 		popupTitle.Text = "ADD SHOP ITEM";
 		popupActionButton.Text = "ADD ITEM";
 		imageButton.Text = "SELECT IMAGE (.png / .jpg / .jpeg)";
-		GetNode<Window>("AddItemPopup").PopupCentered();
+		GetNode<Panel>("AddItemPopup").Show();
 	}
 
 	private void OpenEditItem(ShopItemDto item)
@@ -99,7 +99,7 @@ public partial class AdminAvatarShop : Control
 		imageButton.Text = string.IsNullOrWhiteSpace(existingImagePath)
 			? "SELECT IMAGE (.png / .jpg / .jpeg)"
 			: existingImagePath.GetFile();
-		GetNode<Window>("AddItemPopup").PopupCentered();
+		GetNode<Panel>("AddItemPopup").Show();
 	}
 
 	private void SelectImage()
@@ -146,7 +146,7 @@ public partial class AdminAvatarShop : Control
 					ShopApiClient.DeleteCopiedShopImage(existingImagePath);
 			}
 
-			GetNode<Window>("AddItemPopup").Hide();
+			GetNode<Panel>("AddItemPopup").Hide();
 			LoadItems(category);
 		}
 		catch (Exception error)

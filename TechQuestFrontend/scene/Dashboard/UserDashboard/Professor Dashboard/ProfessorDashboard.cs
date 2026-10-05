@@ -27,7 +27,7 @@ public partial class ProfessorDashboard : DashboardBase
 		SetButtonEnabled(RoomButton, true);
 		SetButtonEnabled(LeaderboardButton, true);
 		SetButtonEnabled(ShopButton, true);
-		SetButtonEnabled(StorylineButton, true);
+		SetButtonEnabled(TutorialButton, true);
 
 		SetButtonEnabled(EasyButton, false);
 		SetButtonEnabled(MediumButton, false);

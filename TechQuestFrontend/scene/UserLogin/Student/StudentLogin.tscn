@@ -4,8 +4,6 @@
 [ext_resource type="Script" uid="uid://gv62nyx4telt" path="res://scene/UserLogin/Student/StudentLogin.cs" id="1_q54ml"]
 [ext_resource type="StyleBox" uid="uid://bofr3y60ei71y" path="res://asset/style/panel_bordered.tres" id="2_yljco"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xa56u"]
-
 [node name="StudentLogin" type="Control" unique_id=1063139679]
 layout_mode = 3
 anchors_preset = 15
@@ -225,16 +223,16 @@ offset_top = 250.0
 offset_right = 432.0
 offset_bottom = 378.0
 
-[node name="ForgotPasswordPopup" type="Window" parent="." unique_id=1142372605]
-oversampling_override = 1.0
-position = Vector2i(294, 36)
-size = Vector2i(500, 350)
+[node name="ForgotPasswordPopup" type="Panel" parent="." unique_id=304798729]
 visible = false
-theme_override_colors/title_color = Color(0.8560673, 0.8560673, 0.85606724, 1)
-theme_override_colors/title_outline_modulate = Color(1, 1, 1, 1)
-theme_override_styles/embedded_border = SubResource("StyleBoxFlat_xa56u")
+layout_mode = 0
+offset_left = 294.0
+offset_top = 36.0
+offset_right = 794.0
+offset_bottom = 386.0
 
 [node name="Title" type="Label" parent="ForgotPasswordPopup" unique_id=574100144]
+layout_mode = 0
 offset_left = 103.0
 offset_top = 9.0
 offset_right = 334.0
@@ -242,6 +240,7 @@ offset_bottom = 71.0
 text = "Reset Password"
 
 [node name="EmailInput" type="LineEdit" parent="ForgotPasswordPopup" unique_id=600439757]
+layout_mode = 0
 offset_left = 54.0
 offset_top = 86.0
 offset_right = 375.0
@@ -249,6 +248,7 @@ offset_bottom = 141.0
 placeholder_text = "email"
 
 [node name="NewPasswordInput" type="LineEdit" parent="ForgotPasswordPopup" unique_id=1175401699]
+layout_mode = 0
 offset_left = 54.0
 offset_top = 165.0
 offset_right = 375.0
@@ -257,6 +257,7 @@ placeholder_text = "new password"
 secret = true
 
 [node name="ConfirmPasswordInput" type="LineEdit" parent="ForgotPasswordPopup" unique_id=235639494]
+layout_mode = 0
 offset_left = 52.0
 offset_top = 242.0
 offset_right = 373.0
@@ -265,6 +266,7 @@ placeholder_text = "confirm password"
 secret = true
 
 [node name="SaveButton" type="Button" parent="ForgotPasswordPopup" unique_id=1156968232]
+layout_mode = 0
 offset_left = 36.0
 offset_top = 309.0
 offset_right = 146.0
@@ -272,19 +274,23 @@ offset_bottom = 345.0
 text = "Save"
 
 [node name="CancelButton" type="Button" parent="ForgotPasswordPopup" unique_id=1104737187]
+layout_mode = 0
 offset_left = 270.0
 offset_top = 305.0
 offset_right = 380.0
 offset_bottom = 341.0
 text = "Cancel"
 
-[node name="OTPPopup" type="Window" parent="." unique_id=1292995153]
-oversampling_override = 1.0
-position = Vector2i(300, 70)
-size = Vector2i(500, 350)
+[node name="OTPPopup" type="Panel" parent="." unique_id=227663193]
 visible = false
+layout_mode = 0
+offset_left = 300.0
+offset_top = 70.0
+offset_right = 800.0
+offset_bottom = 420.0
 
 [node name="Label" type="Label" parent="OTPPopup" unique_id=116146035]
+layout_mode = 0
 offset_left = 137.0
 offset_top = 24.0
 offset_right = 327.0
@@ -292,12 +298,14 @@ offset_bottom = 73.0
 text = "Enter 6-OTP Number"
 
 [node name="OTPInput" type="LineEdit" parent="OTPPopup" unique_id=1298448976]
+layout_mode = 0
 offset_left = 17.0
 offset_top = 120.0
 offset_right = 476.0
 offset_bottom = 211.0
 
 [node name="ConfirmButton" type="Button" parent="OTPPopup" unique_id=102427100]
+layout_mode = 0
 offset_left = 26.0
 offset_top = 242.0
 offset_right = 201.0
@@ -305,6 +313,7 @@ offset_bottom = 289.0
 text = "confirm"
 
 [node name="ResendButton" type="Button" parent="OTPPopup" unique_id=1219291953]
+layout_mode = 0
 offset_left = 281.0
 offset_top = 244.0
 offset_right = 456.0
@@ -312,6 +321,7 @@ offset_bottom = 291.0
 text = "Resend"
 
 [node name="CancelButton" type="Button" parent="OTPPopup" unique_id=167432441]
+layout_mode = 0
 offset_left = 148.0
 offset_top = 302.0
 offset_right = 323.0
@@ -320,5 +330,6 @@ text = "Cancel"
 
 [node name="MessageDialog" type="AcceptDialog" parent="." unique_id=1388907412]
 oversampling_override = 1.0
+position = Vector2i(0, 36)
 
 [node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=558005373]

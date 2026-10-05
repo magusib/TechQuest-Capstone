@@ -57,7 +57,7 @@ public partial class StudentLogin : Control
 	// FORGOT PASSWORD
 	// =========================================================
 
-	private Window forgotPasswordPopup;
+	private Panel forgotPasswordPopup;
 
 	private LineEdit forgotEmailInput;
 	private LineEdit newPasswordInput;
@@ -71,7 +71,7 @@ public partial class StudentLogin : Control
 	// OTP
 	// =========================================================
 
-	private Window otpPopup;
+	private Panel otpPopup;
 
 	private LineEdit otpInput;
 
@@ -185,7 +185,7 @@ public partial class StudentLogin : Control
 		// =====================================================
 
 		forgotPasswordPopup =
-			GetNode<Window>("ForgotPasswordPopup");
+			GetNode<Panel>("ForgotPasswordPopup");
 
 		forgotEmailInput =
 			GetNode<LineEdit>(
@@ -218,7 +218,7 @@ public partial class StudentLogin : Control
 		// =====================================================
 
 		otpPopup =
-			GetNode<Window>("OTPPopup");
+			GetNode<Panel>("OTPPopup");
 
 		otpInput =
 			GetNode<LineEdit>("OTPPopup/OTPInput");
@@ -624,17 +624,13 @@ public partial class StudentLogin : Control
 
 	private void OpenForgotPasswordPopup()
 	{
-		forgotPasswordPopup.Visible = true;
-		forgotPasswordPopup.Popup();
-		forgotPasswordPopup.PopupCentered();
+		forgotPasswordPopup.Show();
 		forgotPasswordPopup.GrabFocus();
 	}
 
 	private void OpenOTPPopup()
 	{
-		otpPopup.Visible = true;
-		otpPopup.Popup();
-		otpPopup.PopupCentered();
+		otpPopup.Show();
 		otpPopup.GrabFocus();
 	}
 

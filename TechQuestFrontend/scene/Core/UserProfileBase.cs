@@ -16,7 +16,7 @@ public partial class UserProfileBase : Control
 	public override void _Ready()
 	{
 		avatarHolder = GetNodeOrNull<TextureRect>("MainPanel/AvatarHolder");
-		backButton = GetNodeOrNull<Button>("BackButton");
+		backButton = GetNodeOrNull<Button>("MainPanel/BackButton");
 		uploadButton = GetNodeOrNull<Button>("MainPanel/InformationPanel/UplaodButton");
 		firstNameLabel = GetNodeOrNull<Label>("MainPanel/InformationPanel/FirstnameLabel");
 		lastNameLabel = GetNodeOrNull<Label>("MainPanel/InformationPanel/LastnameLabel");
@@ -110,6 +110,12 @@ public partial class UserProfileBase : Control
 
 	private void OnBackPressed()
 	{
+		if (GetParent() is DashboardBase)
+		{
+			Hide();
+			return;
+		}
+
 		if (!string.IsNullOrWhiteSpace(DashboardScenePath))
 			GetTree().ChangeSceneToFile(DashboardScenePath);
 	}

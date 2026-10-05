@@ -8,13 +8,13 @@ public partial class AdminShop : Control
 	private Button backButton;
 	private GridContainer itemGrid;
 	private Panel itemTemplate;
-	private Window addItemPopup;
+	private Panel addItemPopup;
 	private LineEdit itemName;
 	private LineEdit price;
 	private Button imageButton;
 	private Button popupActionButton;
 	private Label popupTitle;
-	private Window storylinePopup;
+	private Panel storylinePopup;
 	private Label storylineCharacter;
 	private TextEdit storylineInput;
 	private ShopItemDto storylineItem;
@@ -31,13 +31,13 @@ public partial class AdminShop : Control
 		backButton.Pressed += OnBackPressed;
 		itemGrid = GetNode<GridContainer>("ShopPanel/ScrollContainer/ItemGrid");
 		itemTemplate = GetNode<Panel>("ShopPanel/ItemPanel");
-		addItemPopup = GetNode<Window>("AddItemPopup");
+		addItemPopup = GetNode<Panel>("AddItemPopup");
 		itemName = GetNode<LineEdit>("AddItemPopup/MarginContainer/VBoxContainer/ItemName");
 		price = GetNode<LineEdit>("AddItemPopup/MarginContainer/VBoxContainer/Price");
 		imageButton = GetNode<Button>("AddItemPopup/MarginContainer/VBoxContainer/ImageButton");
 		popupTitle = GetNode<Label>("AddItemPopup/MarginContainer/VBoxContainer/Title");
 		popupActionButton = GetNode<Button>("AddItemPopup/MarginContainer/VBoxContainer/Buttons/AddButton");
-		storylinePopup = GetNode<Window>("StorylinePopup");
+		storylinePopup = GetNode<Panel>("StorylinePopup");
 		storylineCharacter = GetNode<Label>("StorylinePopup/MarginContainer/VBoxContainer/CharacterName");
 		storylineInput = GetNode<TextEdit>("StorylinePopup/MarginContainer/VBoxContainer/StorylineInput");
 		deleteConfirmation = GetNode<ConfirmationDialog>("DeleteItemConfirmation");
@@ -110,7 +110,7 @@ public partial class AdminShop : Control
 		popupTitle.Text = "ADD SHOP ITEM";
 		popupActionButton.Text = "ADD ITEM";
 		imageButton.Text = "SELECT IMAGE (.png / .jpg / .jpeg)";
-		addItemPopup.PopupCentered();
+		addItemPopup.Show();
 	}
 
 	private void OpenEditItem(ShopItemDto item)
@@ -125,7 +125,7 @@ public partial class AdminShop : Control
 		imageButton.Text = string.IsNullOrWhiteSpace(existingImagePath)
 			? "SELECT IMAGE (.png / .jpg / .jpeg)"
 			: existingImagePath.GetFile();
-		addItemPopup.PopupCentered();
+		addItemPopup.Show();
 	}
 
 	private void SelectImage()
@@ -149,7 +149,7 @@ public partial class AdminShop : Control
 		storylineItem = item;
 		storylineCharacter.Text = "Character: " + item.ItemName;
 		storylineInput.Text = item.Storyline ?? "";
-		storylinePopup.PopupCentered();
+		storylinePopup.Show();
 	}
 
 	private async void SaveStoryline()

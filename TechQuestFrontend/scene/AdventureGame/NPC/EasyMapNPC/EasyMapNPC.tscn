@@ -1,0 +1,166 @@
+[gd_scene format=3 uid="uid://egrojnlyayb8"]
+
+[ext_resource type="Script" uid="uid://le2hdg81aq8i" path="res://scene/AdventureGame/NPC/EasyMapNPC/EasyMapNpc.cs" id="1_ab3mw"]
+[ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="1_j6da1"]
+
+[node name="EasyMapNPC" type="Control" unique_id=1446251825]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ab3mw")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1711639220]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_j6da1")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EasyMapNPC" type="Label" parent="." unique_id=1548093978]
+layout_mode = 0
+offset_left = 520.0
+offset_top = 32.0
+offset_right = 630.0
+offset_bottom = 55.0
+text = "Easy Map NPC"
+
+[node name="AddButton" type="Button" parent="." unique_id=820621198]
+layout_mode = 0
+offset_left = 958.0
+offset_top = 118.0
+offset_right = 1110.0
+offset_bottom = 151.0
+text = "Add NPC"
+
+[node name="BackButton" type="Button" parent="." unique_id=1657237641]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 19.0
+offset_right = 125.0
+offset_bottom = 60.0
+text = "Back"
+
+[node name="NPCList" type="Panel" parent="." unique_id=1189919634]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -536.0
+offset_top = -160.0
+offset_right = 544.0
+offset_bottom = 311.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="NPCList" unique_id=1042031985]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="NPCList/ScrollContainer" unique_id=929039911]
+layout_mode = 2
+columns = 3
+
+[node name="NPCPanel" type="Panel" parent="NPCList" unique_id=1349188051]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 20.0
+offset_right = 318.0
+offset_bottom = 451.0
+
+[node name="NPCPlaceholder" type="TextureRect" parent="NPCList/NPCPanel" unique_id=154197928]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 13.0
+offset_right = 255.0
+offset_bottom = 365.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NameLabel" type="Label" parent="NPCList/NPCPanel" unique_id=1317842761]
+layout_mode = 0
+offset_left = 117.0
+offset_top = 325.0
+offset_right = 164.0
+offset_bottom = 348.0
+text = "Name"
+
+[node name="ActionContainer" type="HBoxContainer" parent="NPCList/NPCPanel" unique_id=396432238]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 396.0
+offset_right = 203.0
+offset_bottom = 427.0
+theme_override_constants/separation = 30
+
+[node name="DeployButton" type="Button" parent="NPCList/NPCPanel/ActionContainer" unique_id=1834322904]
+layout_mode = 2
+text = "Deploy"
+
+[node name="DeleteButton" type="Button" parent="NPCList/NPCPanel/ActionContainer" unique_id=882978160]
+layout_mode = 2
+text = "Delete
+"
+
+[node name="AddNPCPopup" type="Window" parent="." unique_id=250819290]
+oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(420, 360)
+visible = false
+
+[node name="MarginContainer" type="MarginContainer" parent="AddNPCPopup" unique_id=1505046222]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AddNPCPopup/MarginContainer" unique_id=1583224188]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="AddNPCPopup/MarginContainer/VBoxContainer" unique_id=1767751415]
+layout_mode = 2
+text = "ADD NPC "
+horizontal_alignment = 1
+
+[node name="ImageButton" type="Button" parent="AddNPCPopup/MarginContainer/VBoxContainer" unique_id=1047917910]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+text = "SELECT IMAGE (.png / .jpg / .jpeg)"
+
+[node name="NPCName" type="LineEdit" parent="AddNPCPopup/MarginContainer/VBoxContainer" unique_id=1433361492]
+layout_mode = 2
+placeholder_text = "NPC Name"
+
+[node name="Buttons" type="HBoxContainer" parent="AddNPCPopup/MarginContainer/VBoxContainer" unique_id=1619862849]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="CancelButton" type="Button" parent="AddNPCPopup/MarginContainer/VBoxContainer/Buttons" unique_id=984694678]
+custom_minimum_size = Vector2(120, 45)
+layout_mode = 2
+text = "CANCEL"
+
+[node name="AddButton" type="Button" parent="AddNPCPopup/MarginContainer/VBoxContainer/Buttons" unique_id=2065961434]
+custom_minimum_size = Vector2(120, 45)
+layout_mode = 2
+text = "ADD ITEM"

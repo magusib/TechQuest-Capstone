@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cpf1w7e4cq6sr"]
+
+[ext_resource type="Script" uid="uid://bh1r7ueh8ehxm" path="res://scene/AdventureGame/NPC/NpcControl.cs" id="1_xswu6"]
+
+[node name="MediumMapNPC2" type="StaticBody2D" unique_id=258689471]
+script = ExtResource("1_xswu6")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1870677327]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=533666770]
+
+[node name="HighlightSprite" type="Sprite2D" parent="." unique_id=1494814330]
+
+[node name="InteractionArea" type="Area2D" parent="." unique_id=1849562945]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="InteractionArea" unique_id=1899494130]

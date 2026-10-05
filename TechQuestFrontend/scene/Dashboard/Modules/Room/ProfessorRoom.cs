@@ -8,7 +8,7 @@ public partial class ProfessorRoom : Control
 	private Button backButton;
 	private Button createRoomButton;
 
-	private Window createRoomWindow;
+	private Panel createRoomWindow;
 	private LineEdit subjectNameInput;
 
 	private Label roomCodeLabel;
@@ -43,7 +43,7 @@ public partial class ProfessorRoom : Control
 
 		createRoomButton = GetNode<Button>("CreateRoomButton");
 
-		createRoomWindow = GetNode<Window>("CreateRoomWindow");
+		createRoomWindow = GetNode<Panel>("CreateRoomWindow");
 
 		subjectNameInput = GetNode<LineEdit>(
 			"CreateRoomWindow/CreateRoomPanel/RoomCodeContainer/SubjectNameInput"
@@ -195,7 +195,7 @@ public partial class ProfessorRoom : Control
 	{
 		ResetCreateRoomForm();
 
-		createRoomWindow.PopupCentered();
+		createRoomWindow.Show();
 	}
 
 	// ============================================================

@@ -11,7 +11,7 @@ public abstract partial class DashboardBase : Control
 	protected TextureButton LeaderboardButton;
 	protected TextureButton ShopButton;
 	protected TextureButton CharacterButton;
-	protected TextureButton StorylineButton;
+	protected TextureButton TutorialButton;
 
 	protected TextureButton EasyButton;
 	protected TextureButton MediumButton;
@@ -28,12 +28,12 @@ public abstract partial class DashboardBase : Control
 
 	protected virtual void BindNodes()
 	{
-		HomeButton = GetNodeOrNull<TextureButton>("HomeButton");
-		RoomButton = GetNodeOrNull<TextureButton>("RoomButton");
-		LeaderboardButton = GetNodeOrNull<TextureButton>("LeaderboardButton");
-		ShopButton = GetNodeOrNull<TextureButton>("ShopButton");
-		CharacterButton = GetNodeOrNull<TextureButton>("CharacterButton");
-		StorylineButton = GetNodeOrNull<TextureButton>("StorylineButton");
+		HomeButton = GetNodeOrNull<TextureButton>("HomePanel/HomeButton");
+		RoomButton = GetNodeOrNull<TextureButton>("RoomPanel/RoomButton");
+		LeaderboardButton = GetNodeOrNull<TextureButton>("LeaderboardPanel/LeaderboardButton");
+		ShopButton = GetNodeOrNull<TextureButton>("ShopPanel/ShopButton");
+		CharacterButton = GetNodeOrNull<TextureButton>("CharacterPanel/CharacterButton");
+		TutorialButton = GetNodeOrNull<TextureButton>("TutorialPanel/TutorialButton");
 
 		EasyButton = GetNodeOrNull<TextureButton>("DificultySelectionButton2/EasyButton");
 		MediumButton = GetNodeOrNull<TextureButton>("DificultySelectionButton2/MediumButton");
@@ -59,7 +59,7 @@ public abstract partial class DashboardBase : Control
 		ConnectButton(LeaderboardButton, OnLeaderboardPressed);
 		ConnectButton(ShopButton, OnShopPressed);
 		ConnectButton(CharacterButton, OnCharacterPressed);
-		ConnectButton(StorylineButton, OnStorylinePressed);
+		ConnectButton(TutorialButton, OnTutorialPressed);
 
 		ConnectButton(AvatarButton, OnAvatarPressed);
 
@@ -202,13 +202,13 @@ public abstract partial class DashboardBase : Control
 		"res://scene/Dashboard/Modules/Character/StudentCharacter.tscn";
 
 	protected const string StudentStorylinePath =
-		"res://scene/Dashboard/Modules/Storyline/StudentStoryline.tscn";
+		"res://scene/Dashboard/Modules/Tutorial/StudentTutorial.tscn";
 
 	protected const string ProfessorStorylinePath =
-		"res://scene/Dashboard/Modules/Storyline/ProfessorStoryline.tscn";
+		"res://scene/Dashboard/Modules/Tutorial/ProfessorTutorial.tscn";
 
 	protected const string AdminStorylinePath =
-		"res://scene/Dashboard/Modules/Storyline/AdminStoryline.tscn";
+		"res://scene/Dashboard/Modules/Tutorial/AdminTutorial.tscn";
 
 	protected const string EasyMapPath =
 		"res://scene//AdventureGame/Difficulty/EasyLevelMap/EasyMap.tscn";
@@ -338,22 +338,33 @@ public abstract partial class DashboardBase : Control
 		NavigateTo(StudentCharacterPath);
 	}
 
-	protected virtual void OnStorylinePressed()
+	protected virtual void OnTutorialPressed()
 	{
-		switch (UserSession.Role)
+		if (UserSession.Role == UserRole.Student)
 		{
-			case UserRole.Student:
-				NavigateTo(StudentStorylinePath);
-				break;
-
-			case UserRole.Professor:
-				NavigateTo(ProfessorStorylinePath);
-				break;
-
-			case UserRole.Admin:
-				NavigateTo(AdminStorylinePath);
-				break;
+			string popupName = UserSession.Role switch
+			{
+				UserRole.Student => "StudentTutorialPopup",
+				UserRole.Professor => "ProfessorTutorialPopup",
+				UserRole.Admin => "AdminTutorialPopup",
+				_ => ""
+			};
+			Control tutorialPopup = GetNodeOrNull<Control>(popupName);
+			if (tutorialPopup != null)
+			{
+				tutorialPopup.Visible = true;
+				return;
+			}
 		}
+
+		string tutorialPath = UserSession.Role switch
+		{
+			UserRole.Student => StudentStorylinePath,
+			UserRole.Professor => ProfessorStorylinePath,
+			UserRole.Admin => AdminStorylinePath,
+			_ => ""
+		};
+		NavigateTo(tutorialPath);
 	}
 
 	protected virtual void OnEasyPressed()
@@ -435,20 +446,29 @@ public abstract partial class DashboardBase : Control
 
 	protected virtual void OpenProfile()
 	{
-		switch (UserSession.Role)
+		string popupName = UserSession.Role switch
 		{
-			case UserRole.Student:
-				NavigateTo(StudentProfilePath);
-				break;
+			UserRole.Student => "StudentProfilePopup",
+			UserRole.Professor => "ProfessorProfilePopup",
+			UserRole.Admin => "AdminProfilePopup",
+			_ => ""
+		};
 
-			case UserRole.Professor:
-				NavigateTo(ProfessorProfilePath);
-				break;
-
-			case UserRole.Admin:
-				NavigateTo(AdminProfilePath);
-				break;
+		Control profilePopup = GetNodeOrNull<Control>(popupName);
+		if (profilePopup != null)
+		{
+			profilePopup.Visible = true;
+			return;
 		}
+
+		string profilePath = UserSession.Role switch
+		{
+			UserRole.Student => StudentProfilePath,
+			UserRole.Professor => ProfessorProfilePath,
+			UserRole.Admin => AdminProfilePath,
+			_ => ""
+		};
+		NavigateTo(profilePath);
 	}
 
 	protected virtual void Logout()

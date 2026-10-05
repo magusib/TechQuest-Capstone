@@ -10,7 +10,9 @@ public partial class StudentRoomResult : Control
 	private Label correctLabel;
 	private Label incorrectLabel;
 	private Label percentageLabel;
-	private Window reviewWindow;
+	private Label reviewSubjectLabel;
+	private Label reviewScoreLabel;
+	private Panel reviewPanel;
 	private VBoxContainer reviewContainer;
 	private Panel multipleChoiceTemplate;
 	private Panel trueFalseTemplate;
@@ -25,8 +27,10 @@ public partial class StudentRoomResult : Control
 		correctLabel = GetNode<Label>("RoomResult/VBoxContainer/CorrectLabel");
 		incorrectLabel = GetNode<Label>("RoomResult/VBoxContainer/IncorrectLabel");
 		percentageLabel = GetNode<Label>("RoomResult/VBoxContainer/PercentageLabel");
-		reviewWindow = GetNode<Window>("QuizReview");
+		reviewPanel = GetNode<Panel>("QuizReview");
 		reviewContainer = GetNode<VBoxContainer>("QuizReview/ScrollContainer/VBoxContainer");
+		reviewSubjectLabel = GetNode<Label>("QuizReview/ScrollContainer/VBoxContainer/SubjectNameLabel");
+		reviewScoreLabel = GetNode<Label>("QuizReview/ScrollContainer/VBoxContainer/ScoreLabel");
 		multipleChoiceTemplate = GetNode<Panel>("QuizReview/ScrollContainer/VBoxContainer/MultipleChoicesPanel");
 		trueFalseTemplate = GetNode<Panel>("QuizReview/ScrollContainer/VBoxContainer/TrueOrFalsePanel");
 		identificationTemplate = GetNode<Panel>("QuizReview/ScrollContainer/VBoxContainer/IdentificationPanel");
@@ -36,7 +40,8 @@ public partial class StudentRoomResult : Control
 		multipleChoiceTemplate.Visible = false;
 		trueFalseTemplate.Visible = false;
 		identificationTemplate.Visible = false;
-		GetNode<Button>("RoomResult/VBoxContainer/ReviewButton").Pressed += () => reviewWindow.PopupCentered();
+		GetNode<Button>("RoomResult/VBoxContainer/ReviewButton").Pressed += reviewPanel.Show;
+		GetNode<Button>("QuizReview/CloseButton").Pressed += reviewPanel.Hide;
 		GetNode<Button>("BackButton").Pressed += OnBackPressed;
 		GetNode<Button>("RoomResult/VBoxContainer/BackButton").Pressed += OnBackPressed;
 		_ = LoadResultAsync();
@@ -44,10 +49,14 @@ public partial class StudentRoomResult : Control
 
 	private async Task LoadResultAsync()
 	{
+		int reportedScore = MultiplayerRoomState.Score;
+		int reportedTotal = MultiplayerRoomState.Questions.Count;
 		try
 		{
 			RoomResultDto result = await RoomApiClient.GetMyResultAsync(MultiplayerRoomState.RoomId);
-			MultiplayerRoomState.Score = result.Score;
+			reportedScore = result.Score;
+			reportedTotal = result.TotalQuestions;
+			MultiplayerRoomState.Score = reportedScore;
 			MultiplayerRoomState.Answers = result.Answers ?? new();
 		}
 		catch (Exception exception)
@@ -60,7 +69,7 @@ public partial class StudentRoomResult : Control
 			}
 		}
 
-		int total = MultiplayerRoomState.Answers.Count;
+		int total = reportedTotal > 0 ? reportedTotal : MultiplayerRoomState.Answers.Count;
 		int correct = 0;
 		foreach (RoomAnswerDto answer in MultiplayerRoomState.Answers)
 		{
@@ -68,14 +77,31 @@ public partial class StudentRoomResult : Control
 				correct++;
 			AddReviewItem(answer);
 		}
+		if (MultiplayerRoomState.Answers.Count == 0)
+			correct = reportedScore;
 
 		int incorrect = total - correct;
-		subjectLabel.Text = $"Subject: {MultiplayerRoomState.RoomName}";
+		string subjectName = MultiplayerRoomState.RoomName;
+		if (string.IsNullOrWhiteSpace(subjectName))
+		{
+			foreach (RoomAnswerDto answer in MultiplayerRoomState.Answers)
+			{
+				if (!string.IsNullOrWhiteSpace(answer.SubjectName))
+				{
+					subjectName = answer.SubjectName;
+					break;
+				}
+			}
+		}
+
+		subjectLabel.Text = $"Subject: {subjectName}";
 		studentLabel.Text = "Student result";
-		scoreLabel.Text = $"Score: {correct}/{total}";
+		scoreLabel.Text = $"Score: {reportedScore}/{total}";
 		correctLabel.Text = $"Correct answers: {correct}";
 		incorrectLabel.Text = $"Incorrect answers: {incorrect}";
 		percentageLabel.Text = $"Percentage: {(total == 0 ? 0 : correct * 100 / total)}%";
+		reviewSubjectLabel.Text = $"Subject: {subjectName}";
+		reviewScoreLabel.Text = scoreLabel.Text;
 	}
 
 	private void AddReviewItem(RoomAnswerDto answer)
@@ -155,4 +181,5 @@ public partial class StudentRoomResult : Control
 	{
 		GetTree().ChangeSceneToFile("res://scene/Dashboard/UserDashboard/Student Dashboard/StudentDashboard.tscn");
 	}
+
 }

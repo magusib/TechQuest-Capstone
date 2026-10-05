@@ -147,7 +147,6 @@ text = "Delete
 "
 
 [node name="StorylineButton" type="Button" parent="ShopPanel/ItemPanel/ActionContainer" unique_id=1543896058]
-visible = false
 layout_mode = 2
 text = "ADD STORYLINE"
 
@@ -159,13 +158,23 @@ offset_right = 1102.0
 offset_bottom = 95.0
 text = "Back"
 
-[node name="AddItemPopup" type="Window" parent="." unique_id=390157023]
-oversampling_override = 1.0
-initial_position = 2
-size = Vector2i(420, 360)
+[node name="AddItemPopup" type="Panel" parent="." unique_id=73385839]
 visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = -180.0
+offset_right = 210.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="AddItemPopup" unique_id=2074521845]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -217,13 +226,23 @@ text = "ADD ITEM"
 [node name="DeleteItemConfirmation" type="ConfirmationDialog" parent="." unique_id=1211649425]
 ok_button_text = "Delete"
 
-[node name="StorylinePopup" type="Window" parent="." unique_id=1211649426]
-oversampling_override = 1.0
-initial_position = 2
-size = Vector2i(560, 430)
+[node name="StorylinePopup" type="Panel" parent="." unique_id=1144022071]
 visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -215.0
+offset_right = 280.0
+offset_bottom = 215.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="StorylinePopup" unique_id=1211649427]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

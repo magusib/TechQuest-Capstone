@@ -1,0 +1,117 @@
+[gd_scene format=3 uid="uid://du1wjyf2tggkf"]
+
+[ext_resource type="Script" uid="uid://bir448gpc5yum" path="res://scene/Dashboard/Modules/Tutorial/AdminTutorial.cs" id="1_32dci"]
+[ext_resource type="Texture2D" uid="uid://dk37jnjagjxht" path="res://asset/Icons/exis.png" id="2_4hako"]
+[ext_resource type="Texture2D" uid="uid://djkcmxvc8psqv" path="res://asset/Icons/next.png" id="3_q2qxb"]
+[ext_resource type="Texture2D" uid="uid://yvumvh0cbira" path="res://asset/Icons/previous.png" id="4_qh83j"]
+
+[node name="AdminTutorial" type="Control" unique_id=771159583]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_32dci")
+
+[node name="MainPanel" type="Panel" parent="." unique_id=973801025]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -488.0
+offset_top = -253.5
+offset_right = 488.0
+offset_bottom = 253.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HeaderPanel" type="Panel" parent="MainPanel" unique_id=270731857]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 58.5
+grow_horizontal = 2
+
+[node name="AdminTutorial" type="Label" parent="MainPanel/HeaderPanel" unique_id=445812191]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.0
+offset_top = -11.5
+offset_right = 62.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Admin Tutorial"
+
+[node name="BackButton" type="Button" parent="MainPanel/HeaderPanel" unique_id=736844715]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -52.0
+offset_top = -20.5
+offset_right = -7.0
+offset_bottom = 20.5
+grow_horizontal = 0
+grow_vertical = 2
+icon = ExtResource("2_4hako")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="TutorialPanel" type="Panel" parent="MainPanel" unique_id=918685856]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -462.0
+offset_top = -165.0
+offset_right = 462.0
+offset_bottom = 205.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NextButton" type="Button" parent="MainPanel" unique_id=329880424]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 151.5
+offset_top = -48.0
+offset_right = 248.5
+grow_horizontal = 2
+grow_vertical = 0
+icon = ExtResource("3_q2qxb")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="PreviousButton" type="Button" parent="MainPanel" unique_id=1969976375]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -248.5
+offset_top = -48.0
+offset_right = -151.5
+grow_horizontal = 2
+grow_vertical = 0
+icon = ExtResource("4_qh83j")
+flat = true
+icon_alignment = 1
+expand_icon = true

@@ -1,15 +1,108 @@
 [gd_scene format=3 uid="uid://cqgh73ine640h"]
 
-[ext_resource type="Script" path="res://scene/AdventureGame/MapPlayerSpawner.cs" id="1_player"]
-[ext_resource type="Texture2D" path="res://asset/Icons/coins.png" id="14_coins"]
-[ext_resource type="Texture2D" path="res://asset/Icons/points.png" id="15_points"]
-[ext_resource type="Script" path="res://scene/AdventureGame/MapHUD.cs" id="16_hud"]
+[ext_resource type="Script" uid="uid://dyqscyjj3nhq7" path="res://scene/AdventureGame/MapPlayerSpawner.cs" id="1_player"]
+[ext_resource type="Script" uid="uid://daw7ow7fn8bgu" path="res://scene/AdventureGame/AdminMapHUD.cs" id="5_yeg5t"]
+[ext_resource type="Texture2D" uid="uid://bn0ujdckc35lr" path="res://asset/sprites/hardmap.png" id="6_dsamx"]
+[ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="14_coins"]
+[ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="15_points"]
+[ext_resource type="Script" uid="uid://dwsvnvsudqktq" path="res://scene/AdventureGame/MapHUD.cs" id="16_hud"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4b1mq"]
+texture = ExtResource("6_dsamx")
+texture_region_size = Vector2i(32, 32)
+11:21/0 = 0
+12:21/0 = 0
+14:21/0 = 0
+15:21/0 = 0
+16:21/0 = 0
+17:21/0 = 0
+11:22/0 = 0
+12:22/0 = 0
+13:22/0 = 0
+14:22/0 = 0
+13:23/0 = 0
+14:23/0 = 0
+3:24/0 = 0
+6:24/0 = 0
+8:24/0 = 0
+9:24/0 = 0
+10:24/0 = 0
+11:24/0 = 0
+12:24/0 = 0
+3:25/0 = 0
+4:25/0 = 0
+6:25/0 = 0
+6:25/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -10.514814, 16, -10.196184, 16, 16, -16, 16)
+7:25/0 = 0
+7:25/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -10.514814, 16, -10.196184, 16, 16, -16, 16)
+8:25/0 = 0
+8:25/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -10.514814, 16, -10.196184, 16, 16, -16, 16)
+9:25/0 = 0
+9:25/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -10.514814, 16, -10.196184, 16, 16, -16, 16)
+10:25/0 = 0
+10:25/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -10.514814, 16, -10.196184, 16, 16, -16, 16)
+11:25/0 = 0
+11:25/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -10.514814, 16, -10.196184, 16, 16, -16, 16)
+12:25/0 = 0
+12:25/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -10.514814, 16, -10.196184, 16, 16, -16, 16)
+6:26/0 = 0
+6:26/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, -0.31863022, -16, -0.31863022, 16, -16, 16)
+7:26/0 = 0
+8:26/0 = 0
+9:26/0 = 0
+10:26/0 = 0
+11:26/0 = 0
+12:26/0 = 0
+12:26/0/physics_layer_0/polygon_0/points = PackedVector2Array(0.63726044, -16, 16, -16, 16, 16, 0.31863022, 16)
+6:27/0 = 0
+6:27/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, -0.31863022, -16, -0.31863022, 16, -16, 16)
+7:27/0 = 0
+8:27/0 = 0
+9:27/0 = 0
+10:27/0 = 0
+11:27/0 = 0
+12:27/0 = 0
+12:27/0/physics_layer_0/polygon_0/points = PackedVector2Array(0.63726044, -16, 16, -16, 16, 16, 0.31863022, 16)
+16:27/0 = 0
+17:27/0 = 0
+6:28/0 = 0
+6:28/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, -0.31863022, -16, -0.31863022, 16, -16, 16)
+7:28/0 = 0
+8:28/0 = 0
+9:28/0 = 0
+10:28/0 = 0
+11:28/0 = 0
+12:28/0 = 0
+12:28/0/physics_layer_0/polygon_0/points = PackedVector2Array(0.63726044, -16, 16, -16, 16, 16, 0.31863022, 16)
+14:28/0 = 0
+16:28/0 = 0
+17:28/0 = 0
+6:29/0 = 0
+6:29/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+7:29/0 = 0
+7:29/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+8:29/0 = 0
+8:29/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+9:29/0 = 0
+9:29/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+10:29/0 = 0
+10:29/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+11:29/0 = 0
+11:29/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+12:29/0 = 0
+12:29/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_8icjc"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_4b1mq")
 
 [node name="HardMap" type="Node2D" unique_id=1913086753]
 script = ExtResource("1_player")
-[node name="MapHUDLayer" type="CanvasLayer" parent="."]
 
-[node name="MapHUD" type="Control" parent="MapHUDLayer"]
+[node name="MapHUDLayer" type="CanvasLayer" parent="." unique_id=484715452]
+
+[node name="MapHUD" type="Control" parent="MapHUDLayer" unique_id=255316038]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,7 +112,7 @@ grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("16_hud")
 
-[node name="TopLeft" type="HBoxContainer" parent="MapHUDLayer/MapHUD"]
+[node name="TopLeft" type="HBoxContainer" parent="MapHUDLayer/MapHUD" unique_id=371529517]
 layout_mode = 0
 offset_left = 24.0
 offset_top = 24.0
@@ -27,17 +120,17 @@ offset_right = 250.0
 offset_bottom = 72.0
 theme_override_constants/separation = 10
 
-[node name="HomeButton" type="Button" parent="MapHUDLayer/MapHUD/TopLeft"]
+[node name="HomeButton" type="Button" parent="MapHUDLayer/MapHUD/TopLeft" unique_id=1509298415]
 custom_minimum_size = Vector2(104, 44)
 layout_mode = 2
 text = "HOME"
 
-[node name="QuestButton" type="Button" parent="MapHUDLayer/MapHUD/TopLeft"]
+[node name="QuestButton" type="Button" parent="MapHUDLayer/MapHUD/TopLeft" unique_id=647877370]
 custom_minimum_size = Vector2(104, 44)
 layout_mode = 2
 text = "QUEST"
 
-[node name="TopRight" type="HBoxContainer" parent="MapHUDLayer/MapHUD"]
+[node name="TopRight" type="HBoxContainer" parent="MapHUDLayer/MapHUD" unique_id=888327900]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -49,36 +142,91 @@ offset_bottom = 72.0
 grow_horizontal = 0
 theme_override_constants/separation = 12
 
-[node name="CoinsPanel" type="HBoxContainer" parent="MapHUDLayer/MapHUD/TopRight"]
+[node name="CoinsPanel" type="HBoxContainer" parent="MapHUDLayer/MapHUD/TopRight" unique_id=506416112]
 custom_minimum_size = Vector2(155, 44)
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="CoinIcon" type="TextureRect" parent="MapHUDLayer/MapHUD/TopRight/CoinsPanel"]
+[node name="CoinIcon" type="TextureRect" parent="MapHUDLayer/MapHUD/TopRight/CoinsPanel" unique_id=1923788338]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("14_coins")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="CoinsLabel" type="Label" parent="MapHUDLayer/MapHUD/TopRight/CoinsPanel"]
+[node name="CoinsLabel" type="Label" parent="MapHUDLayer/MapHUD/TopRight/CoinsPanel" unique_id=705182269]
 layout_mode = 2
-size_flags_vertical = 4
 text = "0"
 
-[node name="PointsPanel" type="HBoxContainer" parent="MapHUDLayer/MapHUD/TopRight"]
+[node name="PointsPanel" type="HBoxContainer" parent="MapHUDLayer/MapHUD/TopRight" unique_id=671096693]
 custom_minimum_size = Vector2(155, 44)
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="PointIcon" type="TextureRect" parent="MapHUDLayer/MapHUD/TopRight/PointsPanel"]
+[node name="PointIcon" type="TextureRect" parent="MapHUDLayer/MapHUD/TopRight/PointsPanel" unique_id=335221428]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("15_points")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="PointsLabel" type="Label" parent="MapHUDLayer/MapHUD/TopRight/PointsPanel"]
+[node name="PointsLabel" type="Label" parent="MapHUDLayer/MapHUD/TopRight/PointsPanel" unique_id=649132927]
 layout_mode = 2
-size_flags_vertical = 4
 text = "0"
+
+[node name="AdminMapHUD" type="Control" parent="MapHUDLayer" unique_id=271881732]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_yeg5t")
+
+[node name="TopLeft" type="HBoxContainer" parent="MapHUDLayer/AdminMapHUD" unique_id=1780935323]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 250.0
+offset_bottom = 72.0
+theme_override_constants/separation = 10
+
+[node name="HomeButton" type="Button" parent="MapHUDLayer/AdminMapHUD/TopLeft" unique_id=94585294]
+custom_minimum_size = Vector2(104, 44)
+layout_mode = 2
+text = "HOME"
+
+[node name="QuestButton" type="Button" parent="MapHUDLayer/AdminMapHUD/TopLeft" unique_id=2055108448]
+custom_minimum_size = Vector2(104, 44)
+layout_mode = 2
+text = "ADD QUEST"
+
+[node name="TopRight" type="VBoxContainer" parent="MapHUDLayer/AdminMapHUD" unique_id=782684803]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -142.0
+offset_top = 50.0
+offset_right = -22.0
+offset_bottom = 183.0
+grow_horizontal = 0
+theme_override_constants/separation = 20
+
+[node name="DeployNPCButton" type="Button" parent="MapHUDLayer/AdminMapHUD/TopRight" unique_id=2111175700]
+layout_mode = 2
+text = "Deploy NPC"
+
+[node name="ManageNPCButton" type="Button" parent="MapHUDLayer/AdminMapHUD/TopRight" unique_id=654614471]
+layout_mode = 2
+text = "Manage NPC"
+
+[node name="ManageQuestButton" type="Button" parent="MapHUDLayer/AdminMapHUD/TopRight" unique_id=551880630]
+layout_mode = 2
+text = "Manage Quest"
+
+[node name="TileMap" type="TileMap" parent="." unique_id=534624237]
+tile_set = SubResource("TileSet_8icjc")
+format = 2
+layer_0/tile_data = PackedInt32Array(196601, 393216, 25, 196602, 458752, 25, 196603, 524288, 25, 196604, 589824, 25, 196605, 655360, 25, 196606, 720896, 25, 196607, 786432, 25, 131072, 393216, 25, 131073, 458752, 25, 131074, 524288, 25, 131075, 589824, 25, 131076, 655360, 25, 131077, 720896, 25, 131078, 786432, 25, 131079, 393216, 25, 131080, 458752, 25, 131081, 524288, 25, 131082, 589824, 25, 131083, 655360, 25, 131084, 720896, 25, 131085, 786432, 25, 131086, 393216, 25, 131087, 458752, 25, 131088, 524288, 25, 131089, 589824, 25, 131090, 655360, 25, 131091, 720896, 25, 131092, 786432, 25, 131093, 393216, 25, 131094, 458752, 25, 131095, 524288, 25, 131096, 589824, 25, 131097, 655360, 25, 131098, 720896, 25, 131099, 786432, 25, 131100, 393216, 25, 131101, 458752, 25, 131102, 524288, 25, 131103, 589824, 25, 131104, 655360, 25, 131105, 720896, 25, 131106, 786432, 25, 131107, 393216, 25, 131108, 458752, 25, 131109, 524288, 25, 131110, 589824, 25, 131111, 655360, 25, 131112, 720896, 25, 131113, 786432, 25, 262137, 393216, 29, 262138, 458752, 29, 262139, 524288, 29, 262140, 589824, 29, 262141, 655360, 29, 262142, 720896, 29, 262143, 786432, 29, 196608, 393216, 29, 196609, 458752, 29, 196610, 524288, 29, 196611, 589824, 29, 196612, 655360, 29, 196613, 720896, 29, 196614, 786432, 29, 196615, 393216, 29, 196616, 458752, 29, 196617, 524288, 29, 196618, 589824, 29, 196619, 655360, 29, 196620, 720896, 29, 196621, 786432, 29, 196622, 393216, 29, 196623, 458752, 29, 196624, 524288, 29, 196625, 589824, 29, 196626, 655360, 29, 196627, 720896, 29, 196628, 786432, 29, 196629, 393216, 29, 196630, 458752, 29, 196631, 524288, 29, 196632, 589824, 29, 196633, 655360, 29, 196634, 720896, 29, 196635, 786432, 29, 196636, 393216, 29, 196637, 458752, 29, 196638, 524288, 29, 196639, 589824, 29, 196640, 655360, 29, 196641, 720896, 29, 196642, 786432, 29, 196643, 393216, 29, 196644, 458752, 29, 196645, 524288, 29, 196646, 589824, 29, 196647, 655360, 29, 196648, 720896, 29, 196649, 786432, 29, 327673, 458752, 26, 393209, 458752, 27, 458745, 458752, 28, 327674, 524288, 26, 393210, 524288, 27, 458746, 524288, 28, 327675, 589824, 26, 393211, 589824, 27, 458747, 589824, 28, 327676, 655360, 26, 393212, 655360, 27, 458748, 655360, 28, 327677, 720896, 26, 393213, 720896, 27, 458749, 720896, 28, 327678, 458752, 26, 393214, 458752, 27, 458750, 458752, 28, 327679, 524288, 26, 393215, 524288, 27, 458751, 524288, 28, 262144, 589824, 26, 327680, 589824, 27, 393216, 589824, 28, 262145, 655360, 26, 327681, 655360, 27, 393217, 655360, 28, 262146, 720896, 26, 327682, 720896, 27, 393218, 720896, 28, 262147, 458752, 26, 327683, 458752, 27, 393219, 458752, 28, 262148, 524288, 26, 327684, 524288, 27, 393220, 524288, 28, 262149, 589824, 26, 327685, 589824, 27, 393221, 589824, 28, 262150, 655360, 26, 327686, 655360, 27, 393222, 655360, 28, 262151, 720896, 26, 327687, 720896, 27, 393223, 720896, 28, 262152, 458752, 26, 327688, 458752, 27, 393224, 458752, 28, 262153, 524288, 26, 327689, 524288, 27, 393225, 524288, 28, 262154, 589824, 26, 327690, 589824, 27, 393226, 589824, 28, 262155, 655360, 26, 327691, 655360, 27, 393227, 655360, 28, 262156, 720896, 26, 327692, 720896, 27, 393228, 720896, 28, 262157, 458752, 26, 327693, 458752, 27, 393229, 458752, 28, 262158, 524288, 26, 327694, 524288, 27, 393230, 524288, 28, 262159, 589824, 26, 327695, 589824, 27, 393231, 589824, 28, 262160, 655360, 26, 327696, 655360, 27, 393232, 655360, 28, 262161, 720896, 26, 327697, 720896, 27, 393233, 720896, 28, 262162, 458752, 26, 327698, 458752, 27, 393234, 458752, 28, 262163, 524288, 26, 327699, 524288, 27, 393235, 524288, 28, 262164, 589824, 26, 327700, 589824, 27, 393236, 589824, 28, 262165, 655360, 26, 327701, 655360, 27, 393237, 655360, 28, 262166, 720896, 26, 327702, 720896, 27, 393238, 720896, 28, 262167, 458752, 26, 327703, 458752, 27, 393239, 458752, 28, 262168, 524288, 26, 327704, 524288, 27, 393240, 524288, 28, 262169, 589824, 26, 327705, 589824, 27, 393241, 589824, 28, 262170, 655360, 26, 327706, 655360, 27, 393242, 655360, 28, 262171, 720896, 26, 327707, 720896, 27, 393243, 720896, 28, 262172, 458752, 26, 327708, 458752, 27, 393244, 458752, 28, 262173, 524288, 26, 327709, 524288, 27, 393245, 524288, 28, 262174, 589824, 26, 327710, 589824, 27, 393246, 589824, 28, 262175, 655360, 26, 327711, 655360, 27, 393247, 655360, 28, 262176, 720896, 26, 327712, 720896, 27, 393248, 720896, 28, 262177, 458752, 26, 327713, 458752, 27, 393249, 458752, 28, 262178, 524288, 26, 327714, 524288, 27, 393250, 524288, 28, 262179, 589824, 26, 327715, 589824, 27, 393251, 589824, 28, 262180, 655360, 26, 327716, 655360, 27, 393252, 655360, 28, 262181, 458752, 26, 327717, 458752, 27, 393253, 458752, 28, 262182, 524288, 26, 327718, 524288, 27, 393254, 524288, 28, 262183, 589824, 26, 327719, 589824, 27, 393255, 589824, 28, 262184, 655360, 26, 327720, 655360, 27, 393256, 655360, 28, 262185, 720896, 26, 327721, 720896, 27, 393257, 720896, 28)

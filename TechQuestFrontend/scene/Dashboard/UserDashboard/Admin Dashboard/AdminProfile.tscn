@@ -1,15 +1,15 @@
 [gd_scene format=3 uid="uid://bw63big3fpuwh"]
 
 [ext_resource type="Script" uid="uid://c7higuh1432sx" path="res://scene/Dashboard/UserDashboard/Admin Dashboard/AdminProfile.cs" id="1_kn8ht"]
-[ext_resource type="Texture2D" uid="uid://4kraosl2m556" path="res://asset/background/ptc.png" id="1_nnof5"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2fwtk"]
+[ext_resource type="Texture2D" uid="uid://dk37jnjagjxht" path="res://asset/Icons/exis.png" id="3_2fwtk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ue6ar"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sj1ty"]
 
-[node name="AdminProfile" type="Control" unique_id=473532987]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0nmdx"]
+
+[node name="AdminProfilePopup" type="Control" unique_id=473532987]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,18 +18,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_kn8ht")
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=1772561368]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("1_nnof5")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="MainPanel" type="Panel" parent="." unique_id=1485081737]
+[node name="MainPanel" type="Panel" parent="." unique_id=1599620424]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -37,85 +26,70 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -228.0
-offset_top = -282.5
-offset_right = 228.0
-offset_bottom = 282.5
+offset_top = -174.0
+offset_right = 225.0
+offset_bottom = 170.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ProfileLabel" type="Label" parent="MainPanel" unique_id=2001994687]
+[node name="ProfileLabel" type="Label" parent="MainPanel" unique_id=2089437122]
 layout_mode = 0
-offset_left = 6.0
-offset_top = 25.0
-offset_right = 462.0
-offset_bottom = 48.0
+offset_left = 4.0
+offset_top = 10.0
+offset_right = 460.0
+offset_bottom = 33.0
 text = "Admin Profile"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="InformationPanel" type="Panel" parent="MainPanel" unique_id=855762185]
+[node name="InformationPanel" type="Panel" parent="MainPanel" unique_id=837041579]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -198.0
-offset_top = -156.0
-offset_right = 208.0
-offset_bottom = 272.0
+offset_left = -200.0
+offset_top = -77.0
+offset_right = 200.0
+offset_bottom = 160.75
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="UplaodButton" type="Button" parent="MainPanel/InformationPanel" unique_id=41292749]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -59.5
-offset_top = -107.5
-offset_right = 59.5
-offset_bottom = -76.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Uplaod Avatar"
-
-[node name="FirstnameLabel" type="Label" parent="MainPanel/InformationPanel" unique_id=832188173]
+[node name="FirstnameLabel" type="Label" parent="MainPanel/InformationPanel" unique_id=404595038]
 layout_mode = 0
-offset_left = 19.0
-offset_top = 209.0
-offset_right = 178.0
-offset_bottom = 247.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_2fwtk")
+offset_left = 12.5
+offset_top = 95.75
+offset_right = 155.5
+offset_bottom = 118.75
+theme_override_styles/normal = SubResource("StyleBoxFlat_ue6ar")
 text = "First Name"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LastnameLabel" type="Label" parent="MainPanel/InformationPanel" unique_id=307837418]
+[node name="LastnameLabel" type="Label" parent="MainPanel/InformationPanel" unique_id=1521619883]
 layout_mode = 0
-offset_left = 211.0
-offset_top = 209.0
-offset_right = 395.0
-offset_bottom = 244.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_ue6ar")
+offset_left = 211.5
+offset_top = 95.75
+offset_right = 395.5
+offset_bottom = 118.75
+theme_override_styles/normal = SubResource("StyleBoxFlat_sj1ty")
 text = "Last Name"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="EmailLabel" type="Label" parent="MainPanel/InformationPanel" unique_id=1607663175]
+[node name="EmailLabel" type="Label" parent="MainPanel/InformationPanel" unique_id=656040781]
 layout_mode = 0
-offset_left = 36.0
-offset_top = 287.0
-offset_right = 367.0
-offset_bottom = 317.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_sj1ty")
+offset_left = 32.5
+offset_top = 132.75
+offset_right = 363.5
+offset_bottom = 162.75
+theme_override_styles/normal = SubResource("StyleBoxFlat_0nmdx")
 text = "Email"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AvatarHolder" type="TextureRect" parent="MainPanel" unique_id=1601590847]
+[node name="AvatarHolder" type="TextureRect" parent="MainPanel" unique_id=62855951]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -123,9 +97,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -98.0
-offset_top = -220.0
+offset_top = -132.0
 offset_right = 98.0
-offset_bottom = -92.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 1
@@ -153,13 +127,24 @@ metadata/_aseprite_wizard_interface_config_ = {
 "slice_section": false
 }
 
-[node name="AddAvatarPopup" type="Window" parent="." unique_id=1539411725]
+[node name="BackButton" type="Button" parent="MainPanel" unique_id=1294309845]
+layout_mode = 0
+offset_left = 408.0
+offset_top = 3.0
+offset_right = 451.0
+offset_bottom = 38.0
+icon = ExtResource("3_2fwtk")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="AddAvatarPopup" type="Window" parent="MainPanel" unique_id=140961657]
 oversampling_override = 1.0
 initial_position = 2
 size = Vector2i(420, 200)
 visible = false
 
-[node name="MarginContainer" type="MarginContainer" parent="AddAvatarPopup" unique_id=1822287635]
+[node name="MarginContainer" type="MarginContainer" parent="MainPanel/AddAvatarPopup" unique_id=38082744]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -170,39 +155,46 @@ theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 25
 theme_override_constants/margin_bottom = 25
 
-[node name="VBoxContainer" type="VBoxContainer" parent="AddAvatarPopup/MarginContainer" unique_id=1948012929]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainPanel/AddAvatarPopup/MarginContainer" unique_id=285747824]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Title" type="Label" parent="AddAvatarPopup/MarginContainer/VBoxContainer" unique_id=1334392737]
+[node name="Title" type="Label" parent="MainPanel/AddAvatarPopup/MarginContainer/VBoxContainer" unique_id=949159063]
 layout_mode = 2
 text = "ADD AVATAR IMAGE"
 horizontal_alignment = 1
 
-[node name="ImageButton" type="Button" parent="AddAvatarPopup/MarginContainer/VBoxContainer" unique_id=78833070]
+[node name="ImageButton" type="Button" parent="MainPanel/AddAvatarPopup/MarginContainer/VBoxContainer" unique_id=1680482598]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 text = "SELECT IMAGE (.png / .jpg / .jpeg)"
 
-[node name="Buttons" type="HBoxContainer" parent="AddAvatarPopup/MarginContainer/VBoxContainer" unique_id=1968992233]
+[node name="Buttons" type="HBoxContainer" parent="MainPanel/AddAvatarPopup/MarginContainer/VBoxContainer" unique_id=1825091189]
 layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="CancelButton" type="Button" parent="AddAvatarPopup/MarginContainer/VBoxContainer/Buttons" unique_id=362844045]
+[node name="CancelButton" type="Button" parent="MainPanel/AddAvatarPopup/MarginContainer/VBoxContainer/Buttons" unique_id=1058438174]
 custom_minimum_size = Vector2(120, 45)
 layout_mode = 2
 text = "CANCEL"
 
-[node name="SaveButton" type="Button" parent="AddAvatarPopup/MarginContainer/VBoxContainer/Buttons" unique_id=100789954]
+[node name="SaveButton" type="Button" parent="MainPanel/AddAvatarPopup/MarginContainer/VBoxContainer/Buttons" unique_id=1485523419]
 custom_minimum_size = Vector2(120, 45)
 layout_mode = 2
 text = "SAVE"
 
-[node name="BackButton" type="Button" parent="." unique_id=1417247103]
-layout_mode = 0
-offset_left = 553.0
-offset_top = 537.0
-offset_right = 611.0
-offset_bottom = 568.0
-text = "Back"
+[node name="UplaodButton" type="Button" parent="MainPanel" unique_id=908009217]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -59.5
+offset_top = -52.0
+offset_right = 59.5
+offset_bottom = -21.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Uplaod Avatar"

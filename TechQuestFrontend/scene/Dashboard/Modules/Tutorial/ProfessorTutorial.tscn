@@ -1,0 +1,117 @@
+[gd_scene format=3 uid="uid://cmwvves4q23wy"]
+
+[ext_resource type="Script" uid="uid://iek1hn2gpuhu" path="res://scene/Dashboard/Modules/Tutorial/ProfessorTutorial.cs" id="1_oeymo"]
+[ext_resource type="Texture2D" uid="uid://dk37jnjagjxht" path="res://asset/Icons/exis.png" id="2_oarlt"]
+[ext_resource type="Texture2D" uid="uid://djkcmxvc8psqv" path="res://asset/Icons/next.png" id="3_18y6u"]
+[ext_resource type="Texture2D" uid="uid://yvumvh0cbira" path="res://asset/Icons/previous.png" id="4_nttjl"]
+
+[node name="ProfessorTutorial" type="Control" unique_id=771159583]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_oeymo")
+
+[node name="MainPanel" type="Panel" parent="." unique_id=1323648833]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -488.0
+offset_top = -253.5
+offset_right = 488.0
+offset_bottom = 253.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HeaderPanel" type="Panel" parent="MainPanel" unique_id=1051248770]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 58.5
+grow_horizontal = 2
+
+[node name="ProfessorTutorial" type="Label" parent="MainPanel/HeaderPanel" unique_id=749108936]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.0
+offset_top = -11.5
+offset_right = 62.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Professor Tutorial"
+
+[node name="BackButton" type="Button" parent="MainPanel/HeaderPanel" unique_id=365412190]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -52.0
+offset_top = -20.5
+offset_right = -7.0
+offset_bottom = 20.5
+grow_horizontal = 0
+grow_vertical = 2
+icon = ExtResource("2_oarlt")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="TutorialPanel" type="Panel" parent="MainPanel" unique_id=1236785663]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -462.0
+offset_top = -165.0
+offset_right = 462.0
+offset_bottom = 205.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NextButton" type="Button" parent="MainPanel" unique_id=205674831]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 151.5
+offset_top = -48.0
+offset_right = 248.5
+grow_horizontal = 2
+grow_vertical = 0
+icon = ExtResource("3_18y6u")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="PreviousButton" type="Button" parent="MainPanel" unique_id=215888206]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -248.5
+offset_top = -48.0
+offset_right = -151.5
+grow_horizontal = 2
+grow_vertical = 0
+icon = ExtResource("4_nttjl")
+flat = true
+icon_alignment = 1
+expand_icon = true

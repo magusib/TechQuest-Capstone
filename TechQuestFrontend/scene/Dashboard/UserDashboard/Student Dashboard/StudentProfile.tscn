@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bw63big3fpuwh"]
 
 [ext_resource type="Script" uid="uid://diih1vxba7wbq" path="res://scene/Dashboard/UserDashboard/Student Dashboard/StudentProfile.cs" id="1_jduhw"]
-[ext_resource type="Texture2D" uid="uid://4kraosl2m556" path="res://asset/background/ptc.png" id="1_nnof5"]
+[ext_resource type="Texture2D" uid="uid://dk37jnjagjxht" path="res://asset/Icons/exis.png" id="3_xrdo8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrdo8"]
 
@@ -11,7 +11,7 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_unv7x"]
 
-[node name="StudentProfile" type="Control" unique_id=473532987]
+[node name="StudentProfilePopup" type="Control" unique_id=473532987]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,17 +19,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jduhw")
-
-[node name="TextureRect" type="TextureRect" parent="." unique_id=1772561368]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("1_nnof5")
-expand_mode = 1
-stretch_mode = 5
 
 [node name="MainPanel" type="Panel" parent="." unique_id=227836943]
 layout_mode = 1
@@ -39,18 +28,18 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -228.0
-offset_top = -282.5
-offset_right = 228.0
-offset_bottom = 282.5
+offset_top = -174.0
+offset_right = 225.0
+offset_bottom = 170.5
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ProfileLabel" type="Label" parent="MainPanel" unique_id=1968731308]
 layout_mode = 0
-offset_left = 6.0
-offset_top = 25.0
-offset_right = 462.0
-offset_bottom = 48.0
+offset_left = 4.0
+offset_top = 10.0
+offset_right = 460.0
+offset_bottom = 33.0
 text = "Student Profile"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -62,19 +51,19 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -198.0
-offset_top = -156.0
-offset_right = 208.0
-offset_bottom = 272.0
+offset_left = -200.0
+offset_top = -77.0
+offset_right = 200.0
+offset_bottom = 160.75
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="FirstnameLabel" type="Label" parent="MainPanel/InformationPanel" unique_id=900413173]
 layout_mode = 0
-offset_left = 14.0
-offset_top = 160.0
-offset_right = 173.0
-offset_bottom = 198.0
+offset_left = 12.5
+offset_top = 95.75
+offset_right = 155.5
+offset_bottom = 118.75
 theme_override_styles/normal = SubResource("StyleBoxFlat_xrdo8")
 text = "First Name"
 horizontal_alignment = 1
@@ -82,10 +71,10 @@ vertical_alignment = 1
 
 [node name="LastnameLabel" type="Label" parent="MainPanel/InformationPanel" unique_id=1704902825]
 layout_mode = 0
-offset_left = 207.0
-offset_top = 161.0
-offset_right = 391.0
-offset_bottom = 196.0
+offset_left = 211.5
+offset_top = 95.75
+offset_right = 395.5
+offset_bottom = 118.75
 theme_override_styles/normal = SubResource("StyleBoxFlat_yu1oo")
 text = "Last Name"
 horizontal_alignment = 1
@@ -98,10 +87,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -82.5
-offset_top = 23.5
-offset_right = 82.5
-offset_bottom = 66.5
+offset_left = -96.5
+offset_top = 10.875
+offset_right = 68.5
+offset_bottom = 33.875
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_lqrox")
@@ -111,10 +100,10 @@ vertical_alignment = 1
 
 [node name="EmailLabel" type="Label" parent="MainPanel/InformationPanel" unique_id=1566638141]
 layout_mode = 0
-offset_left = 37.0
-offset_top = 330.0
-offset_right = 368.0
-offset_bottom = 360.0
+offset_left = 23.5
+offset_top = 170.75
+offset_right = 354.5
+offset_bottom = 200.75
 theme_override_styles/normal = SubResource("StyleBoxFlat_unv7x")
 text = "Email"
 horizontal_alignment = 1
@@ -128,9 +117,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -98.0
-offset_top = -220.0
+offset_top = -132.0
 offset_right = 98.0
-offset_bottom = -92.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 1
@@ -158,10 +147,13 @@ metadata/_aseprite_wizard_interface_config_ = {
 "slice_section": false
 }
 
-[node name="BackButton" type="Button" parent="." unique_id=444774344]
+[node name="BackButton" type="Button" parent="MainPanel" unique_id=444774344]
 layout_mode = 0
-offset_left = 535.0
-offset_top = 551.0
-offset_right = 624.0
-offset_bottom = 591.0
-text = "Back"
+offset_left = 408.0
+offset_top = 3.0
+offset_right = 451.0
+offset_bottom = 38.0
+icon = ExtResource("3_xrdo8")
+flat = true
+icon_alignment = 1
+expand_icon = true

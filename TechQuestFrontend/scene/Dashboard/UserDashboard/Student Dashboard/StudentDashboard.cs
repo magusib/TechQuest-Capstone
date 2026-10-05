@@ -24,7 +24,7 @@ public partial class StudentDashboard : DashboardBase
 		SetButtonEnabled(LeaderboardButton, true);
 		SetButtonEnabled(ShopButton, true);
 		SetButtonEnabled(CharacterButton, true);
-		SetButtonEnabled(StorylineButton, true);
+		SetButtonEnabled(TutorialButton, true);
 
 		SetButtonEnabled(EasyButton, true);
 		SetButtonEnabled(MediumButton, true);

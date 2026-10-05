@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c2h3vls1vdu2g"]
 
-[ext_resource type="Script" path="res://scene/UserLogin/Admin/AdminLogin.cs" id="1_2ebgm"]
+[ext_resource type="Script" uid="uid://djbevwslsikre" path="res://scene/UserLogin/Admin/AdminLogin.cs" id="1_2ebgm"]
 [ext_resource type="Texture2D" uid="uid://4kraosl2m556" path="res://asset/background/ptc.png" id="2_4xa1r"]
 [ext_resource type="StyleBox" uid="uid://bofr3y60ei71y" path="res://asset/style/panel_bordered.tres" id="3_5g4d2"]
 
@@ -99,13 +99,16 @@ offset_right = 87.0
 offset_bottom = 52.0
 text = "Back"
 
-[node name="ForgotPasswordPopup" type="Window" parent="." unique_id=1293973505]
-oversampling_override = 1.0
-position = Vector2i(300, 160)
-size = Vector2i(500, 350)
+[node name="ForgotPasswordPopup" type="Panel" parent="." unique_id=1718699978]
 visible = false
+layout_mode = 0
+offset_left = 300.0
+offset_top = 160.0
+offset_right = 800.0
+offset_bottom = 510.0
 
 [node name="Title" type="Label" parent="ForgotPasswordPopup" unique_id=431137170]
+layout_mode = 0
 offset_left = 103.0
 offset_top = 9.0
 offset_right = 334.0
@@ -113,6 +116,7 @@ offset_bottom = 71.0
 text = "Reset Password"
 
 [node name="EmailInput" type="LineEdit" parent="ForgotPasswordPopup" unique_id=1058866498]
+layout_mode = 0
 offset_left = 54.0
 offset_top = 86.0
 offset_right = 375.0
@@ -120,6 +124,7 @@ offset_bottom = 141.0
 placeholder_text = "email"
 
 [node name="NewPasswordInput" type="LineEdit" parent="ForgotPasswordPopup" unique_id=1985131065]
+layout_mode = 0
 offset_left = 54.0
 offset_top = 165.0
 offset_right = 375.0
@@ -127,6 +132,7 @@ offset_bottom = 220.0
 placeholder_text = "new password"
 
 [node name="ConfirmPasswordInput" type="LineEdit" parent="ForgotPasswordPopup" unique_id=1222955681]
+layout_mode = 0
 offset_left = 52.0
 offset_top = 242.0
 offset_right = 373.0
@@ -134,6 +140,7 @@ offset_bottom = 297.0
 placeholder_text = "confirm password"
 
 [node name="SaveButton" type="Button" parent="ForgotPasswordPopup" unique_id=708201054]
+layout_mode = 0
 offset_left = 36.0
 offset_top = 309.0
 offset_right = 146.0
@@ -141,19 +148,23 @@ offset_bottom = 345.0
 text = "Save"
 
 [node name="CancelButton" type="Button" parent="ForgotPasswordPopup" unique_id=1377511466]
+layout_mode = 0
 offset_left = 270.0
 offset_top = 305.0
 offset_right = 380.0
 offset_bottom = 341.0
 text = "Cancel"
 
-[node name="OTPPopup" type="Window" parent="." unique_id=1897950877]
-oversampling_override = 1.0
-position = Vector2i(300, 160)
-size = Vector2i(500, 350)
+[node name="OTPPopup" type="Panel" parent="." unique_id=1393896791]
 visible = false
+layout_mode = 0
+offset_left = 300.0
+offset_top = 160.0
+offset_right = 800.0
+offset_bottom = 510.0
 
 [node name="Label" type="Label" parent="OTPPopup" unique_id=2055066665]
+layout_mode = 0
 offset_left = 137.0
 offset_top = 24.0
 offset_right = 327.0
@@ -161,12 +172,14 @@ offset_bottom = 73.0
 text = "Enter 6-OTP Number"
 
 [node name="OTPInput" type="LineEdit" parent="OTPPopup" unique_id=1553328219]
+layout_mode = 0
 offset_left = 17.0
 offset_top = 120.0
 offset_right = 476.0
 offset_bottom = 211.0
 
 [node name="ConfirmButton" type="Button" parent="OTPPopup" unique_id=1303474396]
+layout_mode = 0
 offset_left = 26.0
 offset_top = 242.0
 offset_right = 201.0
@@ -174,6 +187,7 @@ offset_bottom = 289.0
 text = "confirm"
 
 [node name="ResendButton" type="Button" parent="OTPPopup" unique_id=1090139921]
+layout_mode = 0
 offset_left = 281.0
 offset_top = 244.0
 offset_right = 456.0
@@ -181,6 +195,7 @@ offset_bottom = 291.0
 text = "Resend"
 
 [node name="CancelButton" type="Button" parent="OTPPopup" unique_id=2000023189]
+layout_mode = 0
 offset_left = 148.0
 offset_top = 302.0
 offset_right = 323.0

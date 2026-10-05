@@ -24,7 +24,7 @@ public partial class AdminDashboard : DashboardBase
 		SetButtonEnabled(RoomButton, true);
 		SetButtonEnabled(LeaderboardButton, true);
 		SetButtonEnabled(ShopButton, true);
-		SetButtonEnabled(StorylineButton, true);
+		SetButtonEnabled(TutorialButton, true);
 
 		// Character Dashboard is Student-only.
 		// Admin character management is handled through Shop Management.

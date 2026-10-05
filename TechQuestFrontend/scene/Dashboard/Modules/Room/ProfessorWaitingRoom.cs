@@ -19,11 +19,12 @@ public partial class ProfessorWaitingRoom : Control
 	private Button cancelButton;
 	private Label fileLabel;
 	private LineEdit timerInput;
-	private Window uploadPopup;
+	private Panel uploadPopup;
 	private GridContainer avatarGrid;
 	private Control avatarTemplate;
 	private FileDialog importDialog;
 	private FileDialog exportDialog;
+	private AcceptDialog messageDialog;
 	private string selectedQuizPath = "";
 	private float refreshElapsed;
 	private bool refreshing;
@@ -37,7 +38,7 @@ public partial class ProfessorWaitingRoom : Control
 		uploadQuizButton = GetNode<Button>("UplaodQuizButton");
 		downloadFormatButton = GetNode<Button>("DownloadFormatButton");
 		resultsButton = GetNode<Button>("ResultsButton");
-		uploadPopup = GetNode<Window>("UploadQuizPopup");
+		uploadPopup = GetNode<Panel>("UploadQuizPopup");
 		fileLabel = GetNode<Label>("UploadQuizPopup/UploadQuizContainer/FileLabel");
 		timerInput = GetNode<LineEdit>("UploadQuizPopup/UploadQuizContainer/TimerInput");
 		uploadFileButton = GetNode<Button>("UploadQuizPopup/UploadQuizContainer/UploadFileButton");
@@ -64,13 +65,15 @@ public partial class ProfessorWaitingRoom : Control
 		};
 		AddChild(importDialog);
 		AddChild(exportDialog);
+		messageDialog = new AcceptDialog { Title = "Room quiz" };
+		AddChild(messageDialog);
 
 		subjectLabel.Text = $"Subject: {MultiplayerRoomState.RoomName}";
 		roomCode.Text = MultiplayerRoomState.RoomCode;
 		studentCountLabel.Text = "Students joined: 0";
 
 		backButton.Pressed += OnBackPressed;
-		uploadQuizButton.Pressed += () => uploadPopup.PopupCentered();
+		uploadQuizButton.Pressed += uploadPopup.Show;
 		downloadFormatButton.Pressed += () => exportDialog.PopupCentered();
 		resultsButton.Pressed += OnResultsPressed;
 		uploadFileButton.Pressed += () => importDialog.PopupCentered();
@@ -147,34 +150,35 @@ public partial class ProfessorWaitingRoom : Control
 	{
 		if (string.IsNullOrWhiteSpace(selectedQuizPath))
 		{
-			ShowUploadMessage("Select an Excel or CSV quiz file first.");
+			ShowMessage("Upload error", "Select an Excel or CSV quiz file first.");
 			return;
 		}
 		if (!TryParseTimerSeconds(timerInput.Text, out int timerSeconds))
 		{
-			ShowUploadMessage("Enter the timer as a number followed by seconds or minutes, such as 5 seconds or 5 minutes.");
+			ShowMessage("Upload error", "Enter the timer as a number followed by seconds or minutes, such as 5 seconds or 5 minutes.");
 			return;
 		}
 
 		try
 		{
+			string uploadedFileName = System.IO.Path.GetFileName(selectedQuizPath);
 			List<RoomQuizQuestionDto> questions = System.IO.Path.GetExtension(selectedQuizPath).Equals(".xlsx", StringComparison.OrdinalIgnoreCase)
 				? ParseQuizXlsx(selectedQuizPath)
 				: ParseQuizCsv(FileAccess.GetFileAsString(selectedQuizPath));
 			if (questions.Count == 0)
 			{
-				ShowUploadMessage("The file does not contain any complete questions.");
+				ShowMessage("Upload error", "The file does not contain any complete questions.");
 				return;
 			}
 
-			await RoomApiClient.SaveQuizAsync(MultiplayerRoomState.RoomId, System.IO.Path.GetFileName(selectedQuizPath), timerSeconds, questions);
-			uploadPopup.Hide();
+			await RoomApiClient.SaveQuizAsync(MultiplayerRoomState.RoomId, uploadedFileName, timerSeconds, questions);
 			selectedQuizPath = "";
-			fileLabel.Text = "Quiz uploaded";
+			fileLabel.Text = $"Uploaded: {uploadedFileName}";
+			ShowMessage("Upload successful", $"{uploadedFileName} was uploaded successfully.");
 		}
 		catch (Exception exception)
 		{
-			ShowUploadMessage(exception.Message);
+			ShowMessage("Upload error", exception.Message);
 		}
 	}
 
@@ -308,20 +312,30 @@ public partial class ProfessorWaitingRoom : Control
 		try
 		{
 			byte[] template = FileAccess.GetFileAsBytes("res://asset/QuizTemplate/TechQuest-Quiz-Template.xlsx");
+			if (template.Length == 0)
+				throw new Exception("The quiz template could not be loaded.");
+
 			using FileAccess output = FileAccess.Open(path, FileAccess.ModeFlags.Write);
+			if (output == null)
+				throw new Exception($"Could not save the template to {path}.");
+
 			output.StoreBuffer(template);
+			output.Flush();
+			if (output.GetError() != Error.Ok)
+				throw new Exception($"The template could not be saved to {path}.");
+
+			ShowMessage("Download successful", $"Template downloaded successfully to:\n{path}");
 		}
 		catch (Exception exception)
 		{
-			ShowUploadMessage(exception.Message);
+			ShowMessage("Download error", exception.Message);
 		}
 	}
 
-	private void ShowUploadMessage(string message)
+	private void ShowMessage(string title, string message)
 	{
-		AcceptDialog dialog = new() { Title = "Room quiz" };
-		AddChild(dialog);
-		dialog.DialogText = message;
-		dialog.PopupCentered();
+		messageDialog.Title = title;
+		messageDialog.DialogText = message;
+		messageDialog.PopupCentered();
 	}
 }

@@ -6,15 +6,34 @@
 [ext_resource type="Texture2D" uid="uid://82dh0q8gwtkb" path="res://asset/Icons/LeaderboardButton.png" id="4_t4p2h"]
 [ext_resource type="Texture2D" uid="uid://bhrdtv5cistgh" path="res://asset/Icons/ShopButton.png" id="5_6pe8h"]
 [ext_resource type="Texture2D" uid="uid://crr41an3wfhqs" path="res://asset/Icons/CharacterButton.png" id="6_tp0rc"]
-[ext_resource type="Texture2D" uid="uid://mmg524bip6qx" path="res://asset/Icons/StoryButton.png" id="7_k8ova"]
 [ext_resource type="Texture2D" uid="uid://b3ywy4l7escxr" path="res://asset/background/first.png" id="8_jgfm1"]
+[ext_resource type="Texture2D" uid="uid://b6v4wt8dc8kuy" path="res://asset/Icons/TutorialButton.png" id="8_nnqrs"]
 [ext_resource type="Texture2D" uid="uid://361evl3lcsf3" path="res://asset/background/medium.png" id="9_ueae1"]
 [ext_resource type="Texture2D" uid="uid://gj3ech0242sn" path="res://asset/background/hard.png" id="10_8a06c"]
-[ext_resource type="Texture2D" uid="uid://cvy6wg86qblrk" path="res://asset/Icons/image.png" id="11_jmqkr"]
 [ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="12_y20va"]
 [ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="13_ngh7r"]
 [ext_resource type="Texture2D" uid="uid://cdy3upgkc6uxf" path="res://asset/Icons/Menu.png" id="14_3ixja"]
+[ext_resource type="PackedScene" uid="uid://bw63big3fpuwh" path="res://scene/Dashboard/UserDashboard/Student Dashboard/StudentProfile.tscn" id="15_nnqrs"]
+[ext_resource type="PackedScene" uid="uid://84lavysqtevd" path="res://scene/Dashboard/Modules/Tutorial/StudentTutorial.tscn" id="16_tutorial"]
 [ext_resource type="Script" uid="uid://dglhwb03xftaf" path="res://scene/Dashboard/UserDashboard/Student Dashboard/StudentDashboard.cs" id="StudentDashboardScript"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8icjc"]
+bg_color = Color(0.98039216, 0, 0.7529412, 0.39215687)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.050980393, 0.34117648, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+shadow_color = Color(0.08627451, 0.08627451, 0.3529412, 0.6)
+shadow_size = 30
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8icjc"]
 
@@ -38,63 +57,183 @@ texture = ExtResource("1_jnscl")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="HomeButton" type="TextureButton" parent="." unique_id=972159739]
-layout_mode = 0
-offset_left = 19.0
-offset_top = 216.0
-offset_right = 132.0
-offset_bottom = 311.0
+[node name="HomePanel" type="Panel" parent="." unique_id=1433847039]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 43.0
+offset_top = -80.0
+offset_right = 140.0
+offset_bottom = 7.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8icjc")
+
+[node name="HomeButton" type="TextureButton" parent="HomePanel" unique_id=972159739]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -42.75
+offset_top = -37.25
+offset_right = 42.75
+offset_bottom = 37.25
+grow_horizontal = 2
+grow_vertical = 2
 texture_normal = ExtResource("2_02m5p")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="RoomButton" type="TextureButton" parent="." unique_id=1950348149]
-layout_mode = 0
-offset_left = 15.0
-offset_top = 336.0
-offset_right = 128.0
-offset_bottom = 431.0
+[node name="RoomPanel" type="Panel" parent="." unique_id=1329592914]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 43.0
+offset_top = 51.0
+offset_right = 140.0
+offset_bottom = 138.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8icjc")
+
+[node name="RoomButton" type="TextureButton" parent="RoomPanel" unique_id=1950348149]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.0
+offset_top = -38.5
+offset_right = 47.0
+offset_bottom = 38.5
+grow_horizontal = 2
+grow_vertical = 2
 texture_normal = ExtResource("3_hpqyd")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="LeaderboardButton" type="TextureButton" parent="." unique_id=4217349]
-layout_mode = 0
-offset_left = 17.0
-offset_top = 459.0
-offset_right = 130.0
-offset_bottom = 554.0
+[node name="LeaderboardPanel" type="Panel" parent="." unique_id=1566388687]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 43.0
+offset_top = -148.0
+offset_right = 140.0
+offset_bottom = -61.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8icjc")
+
+[node name="LeaderboardButton" type="TextureButton" parent="LeaderboardPanel" unique_id=4217349]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.5
+offset_top = -38.0
+offset_right = 47.5
+offset_bottom = 38.0
+grow_horizontal = 2
+grow_vertical = 2
 texture_normal = ExtResource("4_t4p2h")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="ShopButton" type="TextureButton" parent="." unique_id=949546385]
-layout_mode = 0
-offset_left = 1003.0
-offset_top = 216.0
-offset_right = 1116.0
-offset_bottom = 311.0
+[node name="ShopPanel" type="Panel" parent="." unique_id=950930724]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -137.0
+offset_top = 244.0
+offset_right = -40.0
+offset_bottom = 331.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8icjc")
+
+[node name="ShopButton" type="TextureButton" parent="ShopPanel" unique_id=949546385]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.5
+offset_top = -34.25
+offset_right = 37.5
+offset_bottom = 34.25
+grow_horizontal = 2
+grow_vertical = 2
 texture_normal = ExtResource("5_6pe8h")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="CharacterButton" type="TextureButton" parent="." unique_id=1621775346]
-layout_mode = 0
-offset_left = 999.0
-offset_top = 336.0
-offset_right = 1112.0
-offset_bottom = 431.0
+[node name="CharacterPanel" type="Panel" parent="." unique_id=889475546]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -137.0
+offset_top = 51.0
+offset_right = -40.0
+offset_bottom = 138.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8icjc")
+
+[node name="CharacterButton" type="TextureButton" parent="CharacterPanel" unique_id=1621775346]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -45.0
+offset_right = 50.0
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
 texture_normal = ExtResource("6_tp0rc")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="StorylineButton" type="TextureButton" parent="." unique_id=1774780620]
-layout_mode = 0
-offset_left = 1001.0
-offset_top = 459.0
-offset_right = 1114.0
-offset_bottom = 554.0
-texture_normal = ExtResource("7_k8ova")
+[node name="TutorialPanel" type="Panel" parent="." unique_id=134223102]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -137.0
+offset_top = -148.0
+offset_right = -40.0
+offset_bottom = -61.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8icjc")
+
+[node name="TutorialButton" type="TextureButton" parent="TutorialPanel" unique_id=1774780620]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -42.5
+offset_top = -39.5
+offset_right = 42.5
+offset_bottom = 39.5
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("8_nnqrs")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -105,33 +244,33 @@ offset_bottom = 40.0
 
 [node name="EasyButton" type="TextureButton" parent="DificultySelectionButton2" unique_id=208908162]
 layout_mode = 0
-offset_left = 210.0
-offset_top = 206.0
-offset_right = 572.0
-offset_bottom = 472.0
+offset_left = 227.0
+offset_top = 244.0
+offset_right = 587.0
+offset_bottom = 424.0
 texture_normal = ExtResource("8_jgfm1")
 ignore_texture_size = true
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="MediumButton" type="TextureButton" parent="DificultySelectionButton2" unique_id=1039497163]
 layout_mode = 0
-offset_left = 623.0
-offset_top = 282.0
-offset_right = 985.0
-offset_bottom = 548.0
+offset_left = 627.0
+offset_top = 326.0
+offset_right = 987.0
+offset_bottom = 506.0
 texture_normal = ExtResource("9_ueae1")
 ignore_texture_size = true
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="HardButton" type="TextureButton" parent="DificultySelectionButton2" unique_id=544102024]
 layout_mode = 0
-offset_left = 165.0
-offset_top = 402.0
-offset_right = 527.0
-offset_bottom = 668.0
+offset_left = 170.0
+offset_top = 445.0
+offset_right = 530.0
+offset_bottom = 625.0
 texture_normal = ExtResource("10_8a06c")
 ignore_texture_size = true
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="TopBar" type="Control" parent="." unique_id=2017695841]
 layout_mode = 1
@@ -152,7 +291,6 @@ offset_left = 29.0
 offset_top = 16.0
 offset_right = 148.0
 offset_bottom = 111.0
-texture = ExtResource("11_jmqkr")
 expand_mode = 1
 stretch_mode = 5
 
@@ -167,58 +305,88 @@ text = "Student Name"
 [node name="CoinsPanel" type="Panel" parent="TopBar/AvatarPanel" unique_id=246233926]
 layout_mode = 0
 offset_left = 50.0
-offset_top = 124.0
-offset_right = 303.0
-offset_bottom = 176.0
+offset_top = 126.0
+offset_right = 300.0
+offset_bottom = 161.0
 
 [node name="CoinsIcon" type="TextureRect" parent="TopBar/AvatarPanel/CoinsPanel" unique_id=1811261139]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 7.0
-offset_right = 56.0
-offset_bottom = 47.0
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = -14.0
+offset_right = 44.0
+offset_bottom = 14.0
+grow_vertical = 2
 texture = ExtResource("12_y20va")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="CointsLabel" type="Label" parent="TopBar/AvatarPanel/CoinsPanel" unique_id=84199591]
-layout_mode = 0
-offset_left = 122.0
-offset_top = 9.0
-offset_right = 170.0
-offset_bottom = 44.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -13.0
+offset_right = 24.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "Coins"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PointsPanel" type="Panel" parent="TopBar/AvatarPanel" unique_id=1492091037]
 layout_mode = 0
 offset_left = 51.0
-offset_top = 186.0
-offset_right = 304.0
-offset_bottom = 238.0
+offset_top = 166.0
+offset_right = 301.0
+offset_bottom = 201.0
 
 [node name="PointsIcon" type="TextureRect" parent="TopBar/AvatarPanel/PointsPanel" unique_id=363006539]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 7.0
-offset_right = 56.0
-offset_bottom = 47.0
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = -14.0
+offset_right = 44.0
+offset_bottom = 14.0
+grow_vertical = 2
 texture = ExtResource("13_ngh7r")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="PointsLabel" type="Label" parent="TopBar/AvatarPanel/PointsPanel" unique_id=1018701895]
-layout_mode = 0
-offset_left = 122.0
-offset_top = 9.0
-offset_right = 170.0
-offset_bottom = 44.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.5
+offset_top = -12.5
+offset_right = 24.5
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
 text = "Points"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="AvatarButton" type="TextureButton" parent="TopBar/AvatarPanel" unique_id=65518753]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = -203.0
+offset_bottom = -47.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -239,3 +407,21 @@ popup/item_0/text = "Profile"
 popup/item_0/id = 0
 popup/item_1/text = "Logout"
 popup/item_1/id = 1
+
+[node name="StudentProfilePopup" parent="." unique_id=473532987 instance=ExtResource("15_nnqrs")]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="StudentTutorialPopup" parent="." instance=ExtResource("16_tutorial")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
