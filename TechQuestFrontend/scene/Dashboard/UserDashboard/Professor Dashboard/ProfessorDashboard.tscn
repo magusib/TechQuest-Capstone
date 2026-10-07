@@ -13,8 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="12_8tglb"]
 [ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="13_1tjyp"]
 [ext_resource type="Texture2D" uid="uid://cdy3upgkc6uxf" path="res://asset/Icons/Menu.png" id="14_qs01i"]
-[ext_resource type="PackedScene" path="res://scene/Dashboard/UserDashboard/Professor Dashboard/ProfessorProfile.tscn" id="16_a6i8o"]
-[ext_resource type="PackedScene" path="res://scene/Dashboard/Modules/Tutorial/ProfessorTutorial.tscn" id="17_tutorial"]
+[ext_resource type="PackedScene" uid="uid://bw63big3fpuwh" path="res://scene/Dashboard/UserDashboard/Professor Dashboard/ProfessorProfile.tscn" id="16_a6i8o"]
+[ext_resource type="PackedScene" uid="uid://cmwvves4q23wy" path="res://scene/Dashboard/Modules/Tutorial/ProfessorTutorial.tscn" id="17_tutorial"]
 [ext_resource type="Script" uid="uid://ccjsvxw8gbe5s" path="res://scene/Dashboard/UserDashboard/Professor Dashboard/ProfessorDashboard.cs" id="ProfessorDashboardScript"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qmu3"]
@@ -296,11 +296,11 @@ stretch_mode = 5
 
 [node name="PlayerName" type="Label" parent="TopBar/AvatarPanel" unique_id=481293679]
 layout_mode = 0
-offset_left = 112.0
-offset_top = 63.0
-offset_right = 266.0
-offset_bottom = 105.0
-text = "           Professor Name"
+offset_left = 159.0
+offset_top = 60.0
+offset_right = 313.0
+offset_bottom = 102.0
+text = "Professor Name"
 
 [node name="CoinsPanel" type="Panel" parent="TopBar/AvatarPanel" unique_id=246233926]
 visible = false
@@ -386,11 +386,10 @@ popup/item_1/id = 1
 visible = false
 layout_mode = 1
 
-[node name="ProfessorTutorialPopup" parent="." instance=ExtResource("17_tutorial")]
+[node name="ProfessorTutorialPopup" parent="." unique_id=880115066 instance=ExtResource("17_tutorial")]
 visible = false
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+
+[node name="ProfessorTutorial" parent="." unique_id=771159583 instance=ExtResource("17_tutorial")]
+visible = false
+layout_mode = 1

@@ -211,7 +211,7 @@ public abstract partial class DashboardBase : Control
 		"res://scene/Dashboard/Modules/Tutorial/AdminTutorial.tscn";
 
 	protected const string EasyMapPath =
-		"res://scene//AdventureGame/Difficulty/EasyLevelMap/EasyMap.tscn";
+		"res://scene/AdventureGame/Difficulty/EasyLevelMap/EasyMap.tscn";
 
 	protected const string MediumMapPath =
 		"res://scene/AdventureGame/Difficulty/MediumLevelMap/MediumMap.tscn";

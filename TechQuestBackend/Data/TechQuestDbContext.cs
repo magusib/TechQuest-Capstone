@@ -245,12 +245,14 @@ namespace TechQuestBackend.Data
                 entity.ToTable("Quest");
                 entity.HasKey(q => q.QuestId);
                 entity.Property(q => q.QuestTitle).HasMaxLength(200).IsRequired();
+                entity.Property(q => q.Difficulty).HasMaxLength(20).HasDefaultValue("Easy");
                 entity.Property(q => q.RewardPoints).HasDefaultValue(0);
                 entity.Property(q => q.RewardCoins).HasDefaultValue(0);
                 entity.Property(q => q.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.HasCheckConstraint("CK_Quest_RewardPoints_NonNegative", "\"RewardPoints\" >= 0");
                 entity.HasCheckConstraint("CK_Quest_RewardCoins_NonNegative", "\"RewardCoins\" >= 0");
                 entity.HasCheckConstraint("CK_Quest_DateRange", "\"EndDate\" IS NULL OR \"EndDate\" >= \"StartDate\"");
+                entity.HasCheckConstraint("CK_Quest_Difficulty", "lower(btrim(\"Difficulty\")) IN ('easy', 'medium', 'hard')");
                 entity.HasOne(q => q.CreatedByUser)
                     .WithMany()
                     .HasForeignKey(q => q.CreatedBy)
@@ -263,6 +265,7 @@ namespace TechQuestBackend.Data
                 entity.HasKey(s => s.StudentQuestId);
                 entity.HasIndex(s => new { s.StudentId, s.QuestId }).IsUnique();
                 entity.Property(s => s.Status).HasMaxLength(30).HasDefaultValue("not_started");
+                entity.Property(s => s.RewardClaimed).HasDefaultValue(false);
                 entity.HasOne(s => s.Student)
                     .WithMany(p => p.StudentQuests)
                     .HasForeignKey(s => s.StudentId)

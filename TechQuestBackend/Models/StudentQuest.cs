@@ -12,6 +12,10 @@ namespace TechQuestBackend.Models
 
         public DateTime? CompletedAt { get; set; }
 
+        public bool RewardClaimed { get; set; }
+
+        public DateTime? ClaimedAt { get; set; }
+
         public StudentProfile? Student { get; set; }
 
         public Quest? Quest { get; set; }

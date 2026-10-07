@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dyqscyjj3nhq7" path="res://scene/AdventureGame/MapPlayerSpawner.cs" id="1_player"]
 [ext_resource type="Script" uid="uid://daw7ow7fn8bgu" path="res://scene/AdventureGame/AdminMapHUD.cs" id="5_yeg5t"]
 [ext_resource type="Texture2D" uid="uid://bn0ujdckc35lr" path="res://asset/sprites/hardmap.png" id="6_dsamx"]
+[ext_resource type="PackedScene" uid="uid://73p7nxuntgdm" path="res://scene/AdventureGame/Difficulty/HardLevelMap/HardMapQuest.tscn" id="7_4b1mq"]
 [ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="14_coins"]
 [ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="15_points"]
 [ext_resource type="Script" uid="uid://dwsvnvsudqktq" path="res://scene/AdventureGame/MapHUD.cs" id="16_hud"]
@@ -225,6 +226,9 @@ text = "Manage NPC"
 [node name="ManageQuestButton" type="Button" parent="MapHUDLayer/AdminMapHUD/TopRight" unique_id=551880630]
 layout_mode = 2
 text = "Manage Quest"
+
+[node name="HardMapQuest" parent="MapHUDLayer" unique_id=1921483137 instance=ExtResource("7_4b1mq")]
+visible = false
 
 [node name="TileMap" type="TileMap" parent="." unique_id=534624237]
 tile_set = SubResource("TileSet_8icjc")

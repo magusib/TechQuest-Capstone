@@ -7,6 +7,13 @@ public partial class MapHUD : Control
 
 	public override void _Ready()
 	{
+		Visible = UserSession.IsStudent;
+		if (!UserSession.IsStudent)
+		{
+			SetProcess(false);
+			return;
+		}
+
 		coinsLabel = GetNode<Label>("TopRight/CoinsPanel/CoinsLabel");
 		pointsLabel = GetNode<Label>("TopRight/PointsPanel/PointsLabel");
 
@@ -17,6 +24,9 @@ public partial class MapHUD : Control
 
 	public override void _Process(double delta)
 	{
+		if (!UserSession.IsStudent || coinsLabel == null || pointsLabel == null)
+			return;
+
 		if (coinsLabel.Text != UserSession.Coins.ToString())
 			coinsLabel.Text = UserSession.Coins.ToString();
 
@@ -37,6 +47,22 @@ public partial class MapHUD : Control
 
 	private void OnQuestPressed()
 	{
-		GetTree().ChangeSceneToFile("res://scene/Dashboard/Modules/Storyline/StudentStoryline.tscn");
+		if (!UserSession.IsStudent)
+			return;
+
+		Node mapHudLayer = GetTree().CurrentScene?.GetNodeOrNull<Node>("MapHUDLayer");
+		Control questPopup = mapHudLayer?.GetNodeOrNull<Control>("EasyMapQuest");
+		if (questPopup == null)
+			questPopup = mapHudLayer?.GetNodeOrNull<Control>("MediumMapQuest");
+		if (questPopup == null)
+			questPopup = mapHudLayer?.GetNodeOrNull<Control>("HardMapQuest");
+
+		if (questPopup == null)
+		{
+			GD.PrintErr("Quest popup was not found in the current map.");
+			return;
+		}
+
+		questPopup.Call("OpenForStudent");
 	}
 }

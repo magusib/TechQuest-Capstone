@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class ProfessorStoryline : Control
+public partial class ProfessorTutorial : Control
 {
 	private Button backButton;
 

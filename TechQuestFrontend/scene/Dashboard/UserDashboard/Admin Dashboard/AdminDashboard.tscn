@@ -13,8 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="12_y20va"]
 [ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="13_ngh7r"]
 [ext_resource type="Texture2D" uid="uid://cdy3upgkc6uxf" path="res://asset/Icons/Menu.png" id="14_3ixja"]
-[ext_resource type="PackedScene" uid="uid://bw63big3fpuwh" path="res://scene/Dashboard/UserDashboard/Admin Dashboard/AdminProfile.tscn" id="16_e1aig"]
-[ext_resource type="PackedScene" path="res://scene/Dashboard/Modules/Tutorial/AdminTutorial.tscn" id="17_tutorial"]
+[ext_resource type="PackedScene" uid="uid://bw63big3fpuwh" path="res://scene/Dashboard/UserDashboard/Student Dashboard/StudentProfile.tscn" id="16_e1aig"]
+[ext_resource type="PackedScene" uid="uid://du1wjyf2tggkf" path="res://scene/Dashboard/Modules/Tutorial/AdminTutorial.tscn" id="17_tutorial"]
 [ext_resource type="Script" uid="uid://ddchqti08tx3j" path="res://scene/Dashboard/UserDashboard/Admin Dashboard/AdminDashboard.cs" id="AdminDashboardScript"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1aig"]
@@ -388,11 +388,6 @@ popup/item_2/id = 2
 visible = false
 layout_mode = 1
 
-[node name="AdminTutorialPopup" parent="." instance=ExtResource("17_tutorial")]
+[node name="AdminTutorialPopup" parent="." unique_id=189311027 instance=ExtResource("17_tutorial")]
 visible = false
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2

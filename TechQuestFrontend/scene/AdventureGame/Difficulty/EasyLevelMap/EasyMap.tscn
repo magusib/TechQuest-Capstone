@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://daw7ow7fn8bgu" path="res://scene/AdventureGame/AdminMapHUD.cs" id="2_74eu4"]
 [ext_resource type="PackedScene" uid="uid://b6yg0abhx5012" path="res://scene/AdventureGame/Controll/killzone.tscn" id="7_1culf"]
 [ext_resource type="Texture2D" uid="uid://cfhbphoni8m5y" path="res://asset/sprites/easymap.png" id="7_paao8"]
+[ext_resource type="PackedScene" uid="uid://c68y6sthaiu85" path="res://scene/AdventureGame/Difficulty/EasyLevelMap/EasyMapQuest.tscn" id="9_yej1q"]
 [ext_resource type="Script" uid="uid://dyqscyjj3nhq7" path="res://scene/AdventureGame/MapPlayerSpawner.cs" id="13_player"]
 [ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="14_coins"]
 [ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="15_points"]
@@ -242,12 +243,20 @@ text = "Manage NPC"
 layout_mode = 2
 text = "Manage Quest"
 
+[node name="EasyMapQuest" parent="MapHUDLayer" unique_id=1921483137 instance=ExtResource("9_yej1q")]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
 [node name="Character1" parent="." unique_id=1836987956 instance=ExtResource("1_yyj5g")]
 visible = false
 
 [node name="Camera2D" type="Camera2D" parent="Character1" unique_id=2107854592]
 position = Vector2(4, 37)
-zoom = Vector2(4, 4)
+zoom = Vector2(3, 3)
 position_smoothing_enabled = true
 
 [node name="TileMap" type="TileMap" parent="." unique_id=620068671]

@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://1ld0m5m6yrh2" path="res://asset/Icons/quest.png" id="1_aauik"]
 [ext_resource type="Script" uid="uid://ddsrk5mqsbydy" path="res://scene/AdventureGame/Difficulty/EasyLevelMap/EasyMapQuest.cs" id="1_dciw5"]
 [ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="2_s8a15"]
+[ext_resource type="Texture2D" uid="uid://dk37jnjagjxht" path="res://asset/Icons/exis.png" id="3_46652"]
 [ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="3_ggter"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8icjc"]
@@ -18,15 +19,9 @@ script = ExtResource("1_dciw5")
 
 [node name="StudentQuestPopup" type="Control" parent="." unique_id=1175924954]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -73,12 +68,15 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -136.0
-offset_top = 18.0
-offset_right = -23.0
-offset_bottom = 58.0
+offset_left = -58.0
+offset_top = -30.0
+offset_right = 62.0
+offset_bottom = 30.0
 grow_horizontal = 0
-text = "Close"
+icon = ExtResource("3_46652")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
 [node name="ResetLabel" type="Label" parent="StudentQuestPopup/QuestPanel" unique_id=568004804]
 layout_mode = 1
@@ -168,6 +166,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="QuestInfoPanel" type="Panel" parent="StudentQuestPopup/QuestPanel" unique_id=1114786201]
+visible = false
 layout_mode = 0
 offset_left = 415.0
 offset_top = 91.0
@@ -272,125 +271,254 @@ offset_right = 292.0
 offset_bottom = 294.0
 text = "Claim Reward"
 
+[node name="CloseButton" type="Button" parent="StudentQuestPopup/QuestPanel/QuestInfoPanel" unique_id=1850779587]
+layout_mode = 0
+offset_left = 361.0
+offset_top = -15.0
+offset_right = 404.0
+offset_bottom = 19.0
+icon = ExtResource("3_46652")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
 [node name="AdminQuestAdd" type="Control" parent="." unique_id=1041353499]
 visible = false
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="QuestAddPanel" type="Panel" parent="AdminQuestAdd" unique_id=1633837115]
+[node name="QuestPanel" type="Panel" parent="AdminQuestAdd" unique_id=1964229970]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -250.5
-offset_top = -277.0
-offset_right = 250.5
-offset_bottom = 277.0
+offset_left = -409.0
+offset_top = -214.0
+offset_right = 409.0
+offset_bottom = 255.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="AddQuestLabel" type="Label" parent="AdminQuestAdd/QuestAddPanel" unique_id=782624908]
+[node name="StudentQuest" type="TextureRect" parent="AdminQuestAdd/QuestPanel" unique_id=803349570]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -280.0
+offset_top = -120.0
+offset_right = 280.0
+offset_bottom = 91.0
+grow_horizontal = 2
+texture = ExtResource("1_aauik")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="QuestLabel" type="Label" parent="AdminQuestAdd/QuestPanel" unique_id=1732210094]
 layout_mode = 0
-offset_left = 48.5
+offset_left = 128.0
+offset_top = 54.0
+offset_right = 291.0
+offset_bottom = 95.0
+text = "Weekly Quest"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="AdminQuestAdd/QuestPanel" unique_id=1531190704]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.99600005
+anchor_right = 0.99600005
+offset_left = -52.728027
+offset_top = -20.0
+offset_right = 53.271973
+offset_bottom = 19.0
+grow_horizontal = 0
+icon = ExtResource("3_46652")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="AddButton" type="Button" parent="AdminQuestAdd/QuestPanel" unique_id=812606631]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8880001
+anchor_top = 0.120000005
+anchor_right = 0.8880001
+anchor_bottom = 0.120000005
+offset_left = -66.38403
+offset_top = -19.280003
+offset_right = 65.61597
+offset_bottom = 19.719997
+grow_horizontal = 0
+text = "Add Quest"
+
+[node name="QuestListPanel" type="Panel" parent="AdminQuestAdd/QuestPanel" unique_id=650107447]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 92.0
+offset_right = 397.0
+offset_bottom = 452.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="AdminQuestAdd/QuestPanel/QuestListPanel" unique_id=629604322]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="QuestItem" type="Panel" parent="AdminQuestAdd/QuestPanel/QuestListPanel" unique_id=1683986017]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 19.0
+offset_right = 373.0
+offset_bottom = 78.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8icjc")
+
+[node name="Panel" type="Panel" parent="AdminQuestAdd/QuestPanel/QuestListPanel/QuestItem" unique_id=1367930502]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 2.0
+offset_right = 359.0
+offset_bottom = 51.0
+
+[node name="QuestTitleLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestListPanel/QuestItem/Panel" unique_id=124281107]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -51.5
+offset_top = -21.5
+offset_right = 51.5
+offset_bottom = 1.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="QuestDescriptionLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestListPanel/QuestItem/Panel" unique_id=440896835]
+layout_mode = 0
+offset_left = 4.0
 offset_top = 16.0
-offset_right = 473.0
-offset_bottom = 70.0
+offset_right = 350.0
+offset_bottom = 46.0
+
+[node name="QuestAddPanel" type="Panel" parent="AdminQuestAdd/QuestPanel" unique_id=1633837115]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.0
+offset_top = -143.5
+offset_right = 382.0
+offset_bottom = 216.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AddQuestLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel" unique_id=782624908]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
 text = "Add New Quest"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="QuestTitleLabel" type="Label" parent="AdminQuestAdd/QuestAddPanel" unique_id=36258271]
-layout_mode = 0
-offset_left = 23.5
-offset_top = 65.0
-offset_right = 400.0
-offset_bottom = 98.0
+[node name="QuestTitleLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel" unique_id=36258271]
+layout_mode = 1
+offset_left = 14.0
+offset_top = 32.0
+offset_right = 94.0
+offset_bottom = 55.0
 text = "QuestTitle"
 vertical_alignment = 1
 
-[node name="QuestTitle" type="LineEdit" parent="AdminQuestAdd/QuestAddPanel/QuestTitleLabel" unique_id=1015758352]
-layout_mode = 0
-offset_left = 4.0
-offset_top = 33.0
-offset_right = 454.0
-offset_bottom = 83.0
+[node name="QuestTitle" type="LineEdit" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestTitleLabel" unique_id=1015758352]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 2.0
+offset_top = 11.5
+offset_right = 274.0
+offset_bottom = 42.5
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="DescriptionLabel" type="Label" parent="AdminQuestAdd/QuestAddPanel" unique_id=2032516764]
+[node name="DescriptionLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel" unique_id=2032516764]
 layout_mode = 0
-offset_left = 18.5
-offset_top = 155.0
-offset_right = 185.5
-offset_bottom = 196.0
+offset_left = 14.0
+offset_top = 76.0
+offset_right = 181.0
+offset_bottom = 117.0
 text = "Quest Description"
 vertical_alignment = 1
 
-[node name="Description" type="LineEdit" parent="AdminQuestAdd/QuestAddPanel/DescriptionLabel" unique_id=1347799656]
+[node name="Description" type="LineEdit" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/DescriptionLabel" unique_id=1347799656]
 layout_mode = 0
-offset_left = 5.0
-offset_top = 39.0
-offset_right = 455.0
-offset_bottom = 134.0
+offset_left = 3.0
+offset_top = 36.0
+offset_right = 348.0
+offset_bottom = 116.0
 
-[node name="CoinsRewardLabel" type="Label" parent="AdminQuestAdd/QuestAddPanel" unique_id=1857359259]
+[node name="CoinsRewardLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel" unique_id=1857359259]
 layout_mode = 0
-offset_left = 20.5
-offset_top = 297.0
-offset_right = 132.5
-offset_bottom = 336.0
+offset_left = 16.0
+offset_top = 186.0
+offset_right = 128.0
+offset_bottom = 225.0
 text = "Coins Reward"
 vertical_alignment = 1
 
-[node name="CoinsReward" type="LineEdit" parent="AdminQuestAdd/QuestAddPanel/CoinsRewardLabel" unique_id=2096936788]
+[node name="CoinsReward" type="LineEdit" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/CoinsRewardLabel" unique_id=2096936788]
 layout_mode = 0
-offset_left = 1.0
-offset_top = 38.0
-offset_right = 451.5
-offset_bottom = 88.0
+offset_top = 33.0
+offset_right = 336.5
+offset_bottom = 70.0
 alignment = 1
 
-[node name="PointsRewardLabel" type="Label" parent="AdminQuestAdd/QuestAddPanel" unique_id=427262218]
+[node name="PointsRewardLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel" unique_id=427262218]
 layout_mode = 0
-offset_left = 22.5
-offset_top = 389.0
-offset_right = 134.5
-offset_bottom = 428.0
-text = "Coins Reward"
+offset_left = 16.0
+offset_top = 249.0
+offset_right = 128.0
+offset_bottom = 288.0
+text = "Points Reward"
 vertical_alignment = 1
 
-[node name="PointsReward" type="LineEdit" parent="AdminQuestAdd/QuestAddPanel/PointsRewardLabel" unique_id=1306673935]
+[node name="PointsReward" type="LineEdit" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/PointsRewardLabel" unique_id=1306673935]
 layout_mode = 0
 offset_left = 1.0
 offset_top = 38.0
-offset_right = 451.5
-offset_bottom = 88.0
+offset_right = 346.0
+offset_bottom = 69.0
 alignment = 1
 
-[node name="SaveButton" type="Button" parent="AdminQuestAdd/QuestAddPanel" unique_id=424820769]
+[node name="SaveButton" type="Button" parent="AdminQuestAdd/QuestPanel/QuestAddPanel" unique_id=424820769]
 layout_mode = 0
-offset_left = 59.5
-offset_top = 490.0
-offset_right = 213.0
-offset_bottom = 544.0
+offset_left = 51.0
+offset_top = 324.0
+offset_right = 144.0
+offset_bottom = 355.0
 text = "Save"
 
-[node name="CloseButton" type="Button" parent="AdminQuestAdd/QuestAddPanel" unique_id=1531190704]
+[node name="CloseButton" type="Button" parent="AdminQuestAdd/QuestPanel/QuestAddPanel" unique_id=1735106248]
 layout_mode = 0
-offset_left = 331.5
-offset_top = 491.0
-offset_right = 468.5
-offset_bottom = 541.0
+offset_left = 198.0
+offset_top = 324.0
+offset_right = 296.0
+offset_bottom = 355.0
 text = "Close"
 
 [node name="RewardPopup" type="Panel" parent="." unique_id=870851661]

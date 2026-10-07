@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://c1t7113f5t748" path="res://scene/LandingPage/LandingPage.cs" id="1_5dwvf"]
 [ext_resource type="Texture2D" uid="uid://fw6dc6tf5doi" path="res://asset/background/landing_page.png" id="2_ctk1i"]
 [ext_resource type="StyleBox" path="res://asset/style/button_dark_hover.tres" id="3_2p0pq"]
-[ext_resource type="Texture2D" uid="uid://cbvkn3bd61r26" path="res://asset/icon/login.png" id="3_ctk1i"]
 [ext_resource type="StyleBox" path="res://asset/style/button_secondary_hover.tres" id="4_2p0pq"]
 [ext_resource type="StyleBox" path="res://asset/style/button_primary_pressed.tres" id="4_j5tnn"]
 
@@ -56,8 +55,6 @@ theme_override_styles/normal = ExtResource("3_2p0pq")
 theme_override_styles/pressed = ExtResource("4_j5tnn")
 theme_override_styles/hover = ExtResource("4_2p0pq")
 text = " Login"
-icon = ExtResource("3_ctk1i")
-alignment = 0
 autowrap_mode = 1
 clip_text = true
 expand_icon = true

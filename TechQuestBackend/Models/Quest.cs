@@ -8,6 +8,8 @@ namespace TechQuestBackend.Models
 
         public string? Description { get; set; }
 
+        public string Difficulty { get; set; } = "Easy";
+
         public int RewardPoints { get; set; }
 
         public int RewardCoins { get; set; }
