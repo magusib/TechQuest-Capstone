@@ -1,0 +1,248 @@
+[gd_scene format=3 uid="uid://o6qcgdarl6p1"]
+
+[ext_resource type="Script" uid="uid://ck3m27y5u5q0s" path="res://scene/AdventureGame/NPC/AdminNPC/AdminEasyNpc.cs" id="1_8qiw6"]
+[ext_resource type="Texture2D" uid="uid://dk37jnjagjxht" path="res://asset/Icons/exis.png" id="1_t4pwg"]
+
+[node name="AdminEasyNpc" type="Control" unique_id=1225481529]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8qiw6")
+
+[node name="EasyNPCPanel" type="Panel" parent="." unique_id=2067953190]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -533.5
+offset_top = -255.5
+offset_right = 533.5
+offset_bottom = 255.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EasyNPCLabel" type="Label" parent="EasyNPCPanel" unique_id=1923615755]
+layout_mode = 0
+offset_left = 17.5
+offset_top = 19.5
+offset_right = 250.5
+offset_bottom = 42.5
+text = "Admin Easy NPC Management"
+
+[node name="AddButton" type="Button" parent="EasyNPCPanel" unique_id=2001876266]
+layout_mode = 0
+offset_left = 875.5
+offset_top = 51.5
+offset_right = 998.0
+offset_bottom = 82.5
+text = "Add NPC"
+
+[node name="CloseButton" type="Button" parent="EasyNPCPanel" unique_id=2144900671]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -31.5
+offset_top = -19.5
+offset_right = 18.5
+offset_bottom = 23.5
+grow_horizontal = 0
+icon = ExtResource("1_t4pwg")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="NPCListPanel" type="Panel" parent="EasyNPCPanel" unique_id=39480060]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -476.5
+offset_top = -162.5
+offset_right = 476.5
+offset_bottom = 224.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="EasyNPCPanel/NPCListPanel" unique_id=772128786]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemContainer" type="GridContainer" parent="EasyNPCPanel/NPCListPanel/ScrollContainer" unique_id=109616871]
+layout_mode = 2
+columns = 3
+
+[node name="NPCItemPanel" type="Panel" parent="EasyNPCPanel/NPCListPanel" unique_id=1053067234]
+layout_mode = 0
+offset_left = 62.5
+offset_top = 45.5
+offset_right = 245.5
+offset_bottom = 345.5
+
+[node name="NPCHolder" type="TextureRect" parent="EasyNPCPanel/NPCListPanel/NPCItemPanel" unique_id=1466695632]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.5
+offset_top = -138.0
+offset_right = 74.5
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NPCNameLabel" type="Label" parent="EasyNPCPanel/NPCListPanel/NPCItemPanel/NPCHolder" unique_id=1769719315]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -45.5
+offset_top = -36.0
+offset_right = 45.5
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="DeployButton" type="Button" parent="EasyNPCPanel/NPCListPanel/NPCItemPanel/NPCHolder" unique_id=1198622079]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -39.0
+offset_top = 4.0
+offset_right = 39.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Deploy"
+
+[node name="ButtonContainer" type="HBoxContainer" parent="EasyNPCPanel/NPCListPanel/NPCItemPanel" unique_id=1940646151]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -72.5
+offset_top = -35.0
+offset_right = 74.5
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 50
+
+[node name="EditButton" type="Button" parent="EasyNPCPanel/NPCListPanel/NPCItemPanel/ButtonContainer" unique_id=1797240793]
+layout_mode = 2
+text = "Edit"
+
+[node name="DeleteButton" type="Button" parent="EasyNPCPanel/NPCListPanel/NPCItemPanel/ButtonContainer" unique_id=694218802]
+layout_mode = 2
+text = "Delete"
+
+[node name="AddNPCPopup" type="Control" parent="EasyNPCPanel" unique_id=788882793]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AddItemPopup" type="Panel" parent="EasyNPCPanel/AddNPCPopup" unique_id=229900861]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = -133.0
+offset_right = 210.0
+offset_bottom = 133.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="EasyNPCPanel/AddNPCPopup/AddItemPopup" unique_id=1591610994]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EasyNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer" unique_id=630689685]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="EasyNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer" unique_id=946659165]
+layout_mode = 2
+text = "ADD EASY NPC ITEM"
+horizontal_alignment = 1
+
+[node name="ImageButton" type="Button" parent="EasyNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer" unique_id=2094992069]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+text = "SELECT IMAGE (.png / .jpg / .jpeg)"
+
+[node name="ItemName" type="LineEdit" parent="EasyNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer" unique_id=1501993983]
+layout_mode = 2
+placeholder_text = "Item name"
+
+[node name="Buttons" type="HBoxContainer" parent="EasyNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer" unique_id=160375335]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="CancelButton" type="Button" parent="EasyNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer/Buttons" unique_id=722660652]
+custom_minimum_size = Vector2(120, 45)
+layout_mode = 2
+text = "CANCEL"
+
+[node name="AddButton" type="Button" parent="EasyNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer/Buttons" unique_id=1520558028]
+custom_minimum_size = Vector2(120, 45)
+layout_mode = 2
+text = "ADD ITEM"
+
+[node name="DeleteConfirmationDialog" type="ConfirmationDialog" parent="EasyNPCPanel" unique_id=389102092]
+oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(273, 100)
+ok_button_text = "Delete"
+dialog_text = "Do  you want to delete this NPC?"
+
+[node name="AcceptDialog" type="AcceptDialog" parent="EasyNPCPanel" unique_id=2033486112]
+oversampling_override = 1.0
+
+[node name="DeployConfirmationDialog" type="ConfirmationDialog" parent="EasyNPCPanel" unique_id=946217287]
+oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(272, 100)
+ok_button_text = "Yes"
+dialog_text = "Do you want to deploy this NPC?"

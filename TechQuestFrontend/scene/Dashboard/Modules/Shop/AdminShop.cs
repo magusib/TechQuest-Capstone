@@ -85,7 +85,7 @@ public partial class AdminShop : Control
 		SetImage(card.GetNode<TextureRect>("ItemPlaceholder"), category == "avatar" ? item.AvatarItems : item.CharacterItems);
 		card.GetNode<Button>("ActionContainer/EditButton").Pressed += () => OpenEditItem(item);
 		card.GetNode<Button>("ActionContainer/DeleteButton").Pressed += () => AskDelete(item);
-		Button storylineButton = card.GetNode<Button>("ActionContainer/StorylineButton");
+		Button storylineButton = card.GetNode<Button>("StorylineButton");
 		storylineButton.Visible = category == "character";
 		if (category == "character")
 		{

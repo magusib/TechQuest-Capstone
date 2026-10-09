@@ -129,6 +129,14 @@ offset_right = 164.0
 offset_bottom = 348.0
 text = "Name"
 
+[node name="StorylineButton" type="Button" parent="ShopPanel/ItemPanel" unique_id=1543896058]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 355.0
+offset_right = 204.0
+offset_bottom = 386.0
+text = "ADD STORYLINE"
+
 [node name="ActionContainer" type="HBoxContainer" parent="ShopPanel/ItemPanel" unique_id=1195575614]
 layout_mode = 0
 offset_left = 76.0
@@ -145,10 +153,6 @@ text = "Edit"
 layout_mode = 2
 text = "Delete
 "
-
-[node name="StorylineButton" type="Button" parent="ShopPanel/ItemPanel/ActionContainer" unique_id=1543896058]
-layout_mode = 2
-text = "ADD STORYLINE"
 
 [node name="BackButton" type="Button" parent="." unique_id=1460081858]
 layout_mode = 0
@@ -174,6 +178,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="AddItemPopup" unique_id=2074521845]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

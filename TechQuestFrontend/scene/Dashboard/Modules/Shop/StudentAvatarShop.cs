@@ -13,18 +13,24 @@ public partial class StudentAvatarShop : Control
 
 	public override void _Ready()
 	{
-		itemGrid = GetNode<GridContainer>("ShopPanel/ScrollContainer/ItemGrid");
-		coinLabel = GetNode<Label>("ShopPanel/CoinLabel");
+		itemGrid = GetNode<GridContainer>("ShopPanel/ShopContentMargin/ScrollContainer/ItemGrid");
+		coinLabel = GetNode<Label>("ShopPanel/CoinPanel/CoinLabel");
 		shopTitle = GetNode<Label>("ShopPanel/ShopTitle");
 		itemTemplate = GetNode<Panel>("ItemPanel");
-		ScrollContainer scroll = GetNode<ScrollContainer>("ShopPanel/ScrollContainer");
+		ScrollContainer scroll = GetNode<ScrollContainer>("ShopPanel/ShopContentMargin/ScrollContainer");
 		scroll.HorizontalScrollMode = ScrollContainer.ScrollMode.Auto;
 		scroll.VerticalScrollMode = ScrollContainer.ScrollMode.Disabled;
 
 		GetNode<Button>("ShopPanel/CategoryButtons/CharacterButton").Pressed += () => LoadItems("character");
 		GetNode<Button>("ShopPanel/CategoryButtons/AvatarButton").Pressed += () => LoadItems("avatar");
+		GetNode<Button>("ShopPanel/BackButton").Pressed += OnBackPressed;
 		itemTemplate.Visible = false;
 		LoadItems(category);
+	}
+
+	private void OnBackPressed()
+	{
+		GetTree().ChangeSceneToFile("res://scene/Dashboard/UserDashboard/Student Dashboard/StudentDashboard.tscn");
 	}
 
 	private async void LoadItems(string selectedCategory)
@@ -37,7 +43,7 @@ public partial class StudentAvatarShop : Control
 		{
 			CoinsDto coins = await ShopApiClient.GetCoinsAsync();
 			UserSession.UpdateStudentProfile(coins.TotalCoins, UserSession.Points);
-			coinLabel.Text = "Coins: " + coins.TotalCoins;
+			coinLabel.Text = "  Coins: " + coins.TotalCoins + "  ";
 
 			List<ShopItemDto> items = await ShopApiClient.GetItemsAsync(category);
 			itemGrid.Columns = 3;
@@ -64,23 +70,22 @@ public partial class StudentAvatarShop : Control
 		Button purchase = card.GetNode<Button>("PurchaseButton");
 
 		name.Text = item.ItemName;
-		price.Text = item.Owned ? "OWNED" : item.PriceCoins + " Coins";
+		price.Text = item.PriceCoins + " Coins";
 		purchase.Text = item.Owned ? "OWNED" : "PURCHASE";
 		purchase.Disabled = item.Owned;
 		SetImage(image, item.AvatarItems ?? item.CharacterItems);
-		purchase.Pressed += async () => await Purchase(item, purchase, price);
+		purchase.Pressed += async () => await Purchase(item, purchase);
 	}
 
-	private async Task Purchase(ShopItemDto item, Button purchase, Label price)
+	private async Task Purchase(ShopItemDto item, Button purchase)
 	{
 		try
 		{
 			PurchaseResultDto result = await ShopApiClient.PurchaseAsync(item.ItemId);
 			UserSession.UpdateStudentProfile(result.TotalCoins, UserSession.Points);
-			coinLabel.Text = "Coins: " + result.TotalCoins;
+			coinLabel.Text = "  Coins: " + result.TotalCoins + "  ";
 			purchase.Text = "OWNED";
 			purchase.Disabled = true;
-			price.Text = "OWNED";
 		}
 		catch (Exception error)
 		{

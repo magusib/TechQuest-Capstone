@@ -70,14 +70,14 @@ public partial class StudentShop : Control
 		Button purchase = card.GetNode<Button>("PurchaseButton");
 
 		name.Text = item.ItemName;
-		price.Text = item.Owned ? "OWNED" : item.PriceCoins + " Coins";
+		price.Text = item.PriceCoins + " Coins";
 		purchase.Text = item.Owned ? "OWNED" : "PURCHASE";
 		purchase.Disabled = item.Owned;
 		SetImage(image, item.CharacterItems ?? item.AvatarItems);
-		purchase.Pressed += async () => await Purchase(item, purchase, price);
+		purchase.Pressed += async () => await Purchase(item, purchase);
 	}
 
-	private async Task Purchase(ShopItemDto item, Button purchase, Label price)
+	private async Task Purchase(ShopItemDto item, Button purchase)
 	{
 		try
 		{
@@ -86,7 +86,6 @@ public partial class StudentShop : Control
 			coinLabel.Text = "  Coins: " + result.TotalCoins + "  ";
 			purchase.Text = "OWNED";
 			purchase.Disabled = true;
-			price.Text = "OWNED";
 		}
 		catch (Exception error)
 		{

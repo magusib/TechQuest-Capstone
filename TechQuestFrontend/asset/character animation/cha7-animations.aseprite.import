@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cvspdfrvng7t4"
+path="res://.godot/imported/cha7-animations.aseprite-13f9d092b9abf97785eb69765232f2ea.res"
+
+[deps]
+
+source_file="res://asset/character animation/cha7-animations.aseprite"
+dest_files=["res://.godot/imported/cha7-animations.aseprite-13f9d092b9abf97785eb69765232f2ea.res"]
+
+[params]
+

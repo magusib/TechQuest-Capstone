@@ -1,0 +1,256 @@
+[gd_scene format=3 uid="uid://bewsrcvqcr4v3"]
+
+[ext_resource type="Script" uid="uid://w2l1c2d0p1lr" path="res://scene/AdventureGame/NPC/AdminNPC/AdminHardNpc.cs" id="1_kwlqn"]
+[ext_resource type="Texture2D" uid="uid://dk37jnjagjxht" path="res://asset/Icons/exis.png" id="1_o1gk0"]
+
+[node name="AdminHardNpc" type="Control" unique_id=1083729785]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kwlqn")
+
+[node name="HardNPCPanel" type="Panel" parent="." unique_id=1756197193]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -533.5
+offset_top = -255.5
+offset_right = 533.5
+offset_bottom = 255.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HardNPCLabel" type="Label" parent="HardNPCPanel" unique_id=1671551649]
+layout_mode = 0
+offset_left = 17.5
+offset_top = 19.5
+offset_right = 250.5
+offset_bottom = 42.5
+text = "Admin Hard NPC Management"
+
+[node name="AddButton" type="Button" parent="HardNPCPanel" unique_id=370546153]
+layout_mode = 0
+offset_left = 883.5
+offset_top = 50.5
+offset_right = 1006.0
+offset_bottom = 81.5
+text = "Add NPC"
+
+[node name="AddButton2" type="Button" parent="HardNPCPanel" unique_id=762688535]
+layout_mode = 0
+offset_left = 883.5
+offset_top = 50.5
+offset_right = 1006.0
+offset_bottom = 81.5
+text = "Add NPC"
+
+[node name="CloseButton" type="Button" parent="HardNPCPanel" unique_id=1445348749]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -31.5
+offset_top = -19.5
+offset_right = 18.5
+offset_bottom = 23.5
+grow_horizontal = 0
+icon = ExtResource("1_o1gk0")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="NPCListPanel" type="Panel" parent="HardNPCPanel" unique_id=215025740]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -476.5
+offset_top = -162.5
+offset_right = 476.5
+offset_bottom = 224.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HardNPCPanel/NPCListPanel" unique_id=1289090693]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemContainer" type="GridContainer" parent="HardNPCPanel/NPCListPanel/ScrollContainer" unique_id=1009140256]
+layout_mode = 2
+columns = 3
+
+[node name="NPCItemPanel" type="Panel" parent="HardNPCPanel/NPCListPanel" unique_id=2068533627]
+layout_mode = 0
+offset_left = 62.5
+offset_top = 45.5
+offset_right = 245.5
+offset_bottom = 345.5
+
+[node name="NPCHolder" type="TextureRect" parent="HardNPCPanel/NPCListPanel/NPCItemPanel" unique_id=2009785133]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.5
+offset_top = -138.0
+offset_right = 74.5
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NPCNameLabel" type="Label" parent="HardNPCPanel/NPCListPanel/NPCItemPanel/NPCHolder" unique_id=982546842]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -45.5
+offset_top = -36.0
+offset_right = 45.5
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="DeployButton" type="Button" parent="HardNPCPanel/NPCListPanel/NPCItemPanel/NPCHolder" unique_id=1236359232]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -39.0
+offset_top = 4.0
+offset_right = 39.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Deploy"
+
+[node name="ButtonContainer" type="HBoxContainer" parent="HardNPCPanel/NPCListPanel/NPCItemPanel" unique_id=2084046872]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -72.5
+offset_top = -35.0
+offset_right = 74.5
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 50
+
+[node name="EditButton" type="Button" parent="HardNPCPanel/NPCListPanel/NPCItemPanel/ButtonContainer" unique_id=162065220]
+layout_mode = 2
+text = "Edit"
+
+[node name="DeleteButton" type="Button" parent="HardNPCPanel/NPCListPanel/NPCItemPanel/ButtonContainer" unique_id=1827719601]
+layout_mode = 2
+text = "Delete"
+
+[node name="AddNPCPopup" type="Control" parent="HardNPCPanel" unique_id=450977002]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AddItemPopup" type="Panel" parent="HardNPCPanel/AddNPCPopup" unique_id=1653359798]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = -133.0
+offset_right = 210.0
+offset_bottom = 133.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HardNPCPanel/AddNPCPopup/AddItemPopup" unique_id=1768327348]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HardNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer" unique_id=945316711]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="HardNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer" unique_id=428876758]
+layout_mode = 2
+text = "ADD Hard NPC ITEM"
+horizontal_alignment = 1
+
+[node name="ImageButton" type="Button" parent="HardNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer" unique_id=1495160106]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+text = "SELECT IMAGE (.png / .jpg / .jpeg)"
+
+[node name="ItemName" type="LineEdit" parent="HardNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer" unique_id=1849636042]
+layout_mode = 2
+placeholder_text = "Item name"
+
+[node name="Buttons" type="HBoxContainer" parent="HardNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer" unique_id=1232585780]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="CancelButton" type="Button" parent="HardNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer/Buttons" unique_id=1057738269]
+custom_minimum_size = Vector2(120, 45)
+layout_mode = 2
+text = "CANCEL"
+
+[node name="AddButton" type="Button" parent="HardNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer/Buttons" unique_id=532001432]
+custom_minimum_size = Vector2(120, 45)
+layout_mode = 2
+text = "ADD ITEM"
+
+[node name="DeleteConfirmationDialog" type="ConfirmationDialog" parent="HardNPCPanel" unique_id=1108337797]
+oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(273, 100)
+ok_button_text = "Delete"
+dialog_text = "Do  you want to delete this NPC?"
+
+[node name="AcceptDialog" type="AcceptDialog" parent="HardNPCPanel" unique_id=236173862]
+oversampling_override = 1.0
+
+[node name="DeployConfirmationDialog" type="ConfirmationDialog" parent="HardNPCPanel" unique_id=1216303461]
+oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(272, 100)
+ok_button_text = "Yes"
+dialog_text = "Do you want to deploy this NPC?"

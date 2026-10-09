@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dq8eyixija4x3"
+path="res://.godot/imported/cha5-animations.aseprite-a209a3ef77539b35a18c4fba28601967.res"
+
+[deps]
+
+source_file="res://asset/character animation/cha5-animations.aseprite"
+dest_files=["res://.godot/imported/cha5-animations.aseprite-a209a3ef77539b35a18c4fba28601967.res"]
+
+[params]
+
