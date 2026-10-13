@@ -3,9 +3,7 @@
 [ext_resource type="Script" uid="uid://dqpupq3kmnutt" path="res://scene/Dashboard/Modules/Shop/StudentShop.cs" id="1_cys1c"]
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_7j4ni"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y2ubs"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cwogk"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7j4ni"]
 
 [node name="StudentShop" type="Control" unique_id=1842537281]
 layout_mode = 3
@@ -27,21 +25,21 @@ texture = ExtResource("2_7j4ni")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ShopPanel" type="Panel" parent="." unique_id=918691870]
+[node name="ShopPanel" type="Panel" parent="." unique_id=847273760]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -561.0
-offset_top = -293.0
-offset_right = 562.0
-offset_bottom = 302.0
+offset_left = -536.0
+offset_top = -295.5
+offset_right = 536.0
+offset_bottom = 295.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ShopTitle" type="Label" parent="ShopPanel" unique_id=2140036721]
+[node name="ShopTitle" type="Label" parent="ShopPanel" unique_id=970268480]
 layout_mode = 0
 offset_left = 30.0
 offset_top = 20.0
@@ -50,20 +48,17 @@ offset_bottom = 65.0
 theme_override_font_sizes/font_size = 28
 text = "STUDENT CHARACTER SHOP"
 
-[node name="CoinPanel" type="PanelContainer" parent="ShopPanel" unique_id=197656322]
+[node name="CoinLabel" type="Label" parent="ShopPanel" unique_id=2068034591]
 layout_mode = 0
-offset_left = 920.0
-offset_top = 20.0
-offset_right = 1080.0
-offset_bottom = 65.0
+offset_left = 820.0
+offset_top = 25.0
+offset_right = 1035.0
+offset_bottom = 58.0
+theme_override_font_sizes/font_size = 20
+text = "Coins: 0"
+horizontal_alignment = 2
 
-[node name="CoinLabel" type="Label" parent="ShopPanel/CoinPanel" unique_id=1538604620]
-layout_mode = 2
-text = "  Coins: 0  "
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="CategoryButtons" type="HBoxContainer" parent="ShopPanel" unique_id=1987350312]
+[node name="CategoryButtons" type="HBoxContainer" parent="ShopPanel" unique_id=1118980487]
 layout_mode = 0
 offset_left = 30.0
 offset_top = 80.0
@@ -71,62 +66,39 @@ offset_right = 430.0
 offset_bottom = 130.0
 theme_override_constants/separation = 12
 
-[node name="CharacterButton" type="Button" parent="ShopPanel/CategoryButtons" unique_id=1024565770]
+[node name="CharacterButton" type="Button" parent="ShopPanel/CategoryButtons" unique_id=288349219]
 custom_minimum_size = Vector2(180, 45)
 layout_mode = 2
 text = "CHARACTER"
 
-[node name="AvatarButton" type="Button" parent="ShopPanel/CategoryButtons" unique_id=1243626706]
+[node name="AvatarButton" type="Button" parent="ShopPanel/CategoryButtons" unique_id=1853508393]
 custom_minimum_size = Vector2(180, 45)
 layout_mode = 2
 text = "AVATAR"
 
-[node name="BackButton" type="Button" parent="ShopPanel" unique_id=2063437221]
+[node name="ScrollContainer" type="ScrollContainer" parent="ShopPanel" unique_id=363665352]
 layout_mode = 0
-offset_left = 930.0
-offset_top = 80.0
-offset_right = 1080.0
-offset_bottom = 130.0
-text = "BACK"
-
-[node name="ShopContentMargin" type="MarginContainer" parent="ShopPanel" unique_id=1132285598]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -550.0
-offset_top = -141.5
-offset_right = 550.0
-offset_bottom = 288.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="ScrollContainer" type="ScrollContainer" parent="ShopPanel/ShopContentMargin" unique_id=859082076]
-layout_mode = 2
+offset_left = 18.0
+offset_top = 145.0
+offset_right = 1058.0
+offset_bottom = 577.0
 horizontal_scroll_mode = 0
-vertical_scroll_mode = 2
 
-[node name="ItemGrid" type="GridContainer" parent="ShopPanel/ShopContentMargin/ScrollContainer" unique_id=1369371085]
+[node name="ItemGrid" type="GridContainer" parent="ShopPanel/ScrollContainer" unique_id=1434994322]
 custom_minimum_size = Vector2(1040, 0)
 layout_mode = 2
 theme_override_constants/h_separation = 18
 theme_override_constants/v_separation = 18
 columns = 3
 
-[node name="ItemPanel" type="Panel" parent="." unique_id=1590209042]
+[node name="ItemPanel" type="Panel" parent="ShopPanel" unique_id=1309697706]
 layout_mode = 0
-offset_left = 80.0
-offset_top = 187.0
-offset_right = 358.0
-offset_bottom = 607.0
+offset_left = 69.0
+offset_top = 148.5
+offset_right = 347.0
+offset_bottom = 579.5
 
-[node name="ItemPlaceholder" type="TextureRect" parent="ItemPanel" unique_id=722845563]
+[node name="ItemPlaceholder" type="TextureRect" parent="ShopPanel/ItemPanel" unique_id=475066769]
 layout_mode = 0
 offset_left = 21.0
 offset_top = 13.0
@@ -135,28 +107,54 @@ offset_bottom = 365.0
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="ItemPanel" unique_id=1700177659]
+[node name="Label" type="Label" parent="ShopPanel/ItemPanel" unique_id=758578872]
 layout_mode = 0
-offset_left = 208.0
-offset_top = 16.0
-offset_right = 256.0
-offset_bottom = 39.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_y2ubs")
-text = "Price"
+offset_left = 212.0
+offset_top = 17.0
+offset_right = 260.0
+offset_bottom = 40.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_7j4ni")
+text = "0 Coins"
 
-[node name="Label2" type="Label" parent="ItemPanel" unique_id=1613786725]
+[node name="Label2" type="Label" parent="ShopPanel/ItemPanel" unique_id=1756911342]
 layout_mode = 0
 offset_left = 117.0
 offset_top = 325.0
-offset_right = 164.0
+offset_right = 230.0
 offset_bottom = 348.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_cwogk")
 text = "Name"
 
-[node name="PurchaseButton" type="Button" parent="ItemPanel" unique_id=79924185]
+[node name="StorylineButton" type="Button" parent="ShopPanel/ItemPanel" unique_id=333895909]
 layout_mode = 0
-offset_left = 102.0
-offset_top = 375.0
-offset_right = 182.0
-offset_bottom = 406.0
+offset_left = 72.0
+offset_top = 355.0
+offset_right = 204.0
+offset_bottom = 386.0
+text = "STORYLINE"
+
+[node name="PurchaseButton" type="Button" parent="ShopPanel/ItemPanel" unique_id=1715789344]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -53.5
+offset_top = -40.0
+offset_right = 53.5
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
 text = "Purchase"
+
+[node name="BackButton" type="Button" parent="." unique_id=1601621619]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -122.0
+offset_top = 24.0
+offset_right = -16.0
+offset_bottom = 63.0
+grow_horizontal = 0
+text = "Back"

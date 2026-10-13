@@ -7,16 +7,20 @@ public partial class MapPlayerSpawner : Node2D
 	{
 		if (UserSession.IsAdmin)
 		{
+			DisableAdminCameraForStudents();
 			RemoveExistingPlayer();
 			return;
 		}
 
 		if (!UserSession.IsStudent)
 		{
+			DisableAdminCameraForStudents();
 			RemoveExistingPlayer();
 			GD.PrintErr("Only students can enter the Adventure Game as a player.");
 			return;
 		}
+
+		DisableAdminCameraForStudents();
 
 		try
 		{
@@ -81,5 +85,20 @@ public partial class MapPlayerSpawner : Node2D
 	{
 		CharacterBody2D oldPlayer = FindExistingPlayer();
 		oldPlayer?.QueueFree();
+	}
+
+	private void DisableAdminCameraForStudents()
+	{
+		if (UserSession.IsAdmin)
+			return;
+
+		Camera2D adminCamera = GetNodeOrNull<Camera2D>("MapHUDLayer/AdminMapHUD/AdminCamera2D");
+		if (adminCamera == null)
+			return;
+
+		adminCamera.Enabled = false;
+		adminCamera.Visible = false;
+		adminCamera.SetProcess(false);
+		adminCamera.SetPhysicsProcess(false);
 	}
 }

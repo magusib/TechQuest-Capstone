@@ -3285,23 +3285,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\22222222222222222222\\.nuget\\packages\\": {},
+    "C:\\Users\\Admin\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\22222222222222222222\\TechQuest-Capstone\\TechQuestBackend\\TechQuestBackend.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\TechQuest-Capstone\\TechQuestBackend\\TechQuestBackend.csproj",
       "projectName": "TechQuestBackend",
-      "projectPath": "C:\\Users\\22222222222222222222\\TechQuest-Capstone\\TechQuestBackend\\TechQuestBackend.csproj",
-      "packagesPath": "C:\\Users\\22222222222222222222\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\22222222222222222222\\TechQuest-Capstone\\TechQuestBackend\\obj\\",
+      "projectPath": "C:\\Users\\Admin\\TechQuest-Capstone\\TechQuestBackend\\TechQuestBackend.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Admin\\TechQuest-Capstone\\TechQuestBackend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\22222222222222222222\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

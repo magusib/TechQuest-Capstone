@@ -9,21 +9,23 @@ public partial class StudentShop : Control
 	private Label coinLabel;
 	private Label shopTitle;
 	private Panel itemTemplate;
+	private Button backButton;
 	private string category = "character";
 
 	public override void _Ready()
 	{
-		itemGrid = GetNode<GridContainer>("ShopPanel/ShopContentMargin/ScrollContainer/ItemGrid");
-		coinLabel = GetNode<Label>("ShopPanel/CoinPanel/CoinLabel");
+		itemGrid = GetNode<GridContainer>("ShopPanel/ScrollContainer/ItemGrid");
+		coinLabel = GetNode<Label>("ShopPanel/CoinLabel");
 		shopTitle = GetNode<Label>("ShopPanel/ShopTitle");
-		itemTemplate = GetNode<Panel>("ItemPanel");
-		ScrollContainer scroll = GetNode<ScrollContainer>("ShopPanel/ShopContentMargin/ScrollContainer");
-		scroll.HorizontalScrollMode = ScrollContainer.ScrollMode.Auto;
-		scroll.VerticalScrollMode = ScrollContainer.ScrollMode.Disabled;
+		itemTemplate = GetNode<Panel>("ShopPanel/ItemPanel");
+		backButton = GetNode<Button>("BackButton");
+		ScrollContainer scroll = GetNode<ScrollContainer>("ShopPanel/ScrollContainer");
+		scroll.HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled;
+		scroll.VerticalScrollMode = ScrollContainer.ScrollMode.Auto;
 
 		GetNode<Button>("ShopPanel/CategoryButtons/CharacterButton").Pressed += () => LoadItems("character");
 		GetNode<Button>("ShopPanel/CategoryButtons/AvatarButton").Pressed += () => LoadItems("avatar");
-		GetNode<Button>("ShopPanel/BackButton").Pressed += OnBackPressed;
+		backButton.Pressed += OnBackPressed;
 		itemTemplate.Visible = false;
 		LoadItems(category);
 	}
@@ -43,7 +45,8 @@ public partial class StudentShop : Control
 		{
 			CoinsDto coins = await ShopApiClient.GetCoinsAsync();
 			UserSession.UpdateStudentProfile(coins.TotalCoins, UserSession.Points);
-			coinLabel.Text = "  Coins: " + coins.TotalCoins + "  ";
+			if (coinLabel != null)
+				coinLabel.Text = "  Coins: " + coins.TotalCoins + "  ";
 
 			List<ShopItemDto> items = await ShopApiClient.GetItemsAsync(category);
 			itemGrid.Columns = 3;
@@ -83,7 +86,8 @@ public partial class StudentShop : Control
 		{
 			PurchaseResultDto result = await ShopApiClient.PurchaseAsync(item.ItemId);
 			UserSession.UpdateStudentProfile(result.TotalCoins, UserSession.Points);
-			coinLabel.Text = "  Coins: " + result.TotalCoins + "  ";
+			if (coinLabel != null)
+				coinLabel.Text = "  Coins: " + result.TotalCoins + "  ";
 			purchase.Text = "OWNED";
 			purchase.Disabled = true;
 		}

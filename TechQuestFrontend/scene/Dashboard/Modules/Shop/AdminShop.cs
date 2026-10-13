@@ -27,11 +27,11 @@ public partial class AdminShop : Control
 
 	public override void _Ready()
 	{
-		backButton = GetNode<Button>("BackButton");
+		backButton = GetNodeOrNull<Button>("BackButton") ?? GetNodeOrNull<Button>("ShopPanel/BackButton") ?? throw new InvalidOperationException("Admin shop back button was not found.");
 		backButton.Pressed += OnBackPressed;
-		itemGrid = GetNode<GridContainer>("ShopPanel/ScrollContainer/ItemGrid");
-		itemTemplate = GetNode<Panel>("ShopPanel/ItemPanel");
-		addItemPopup = GetNode<Panel>("AddItemPopup");
+		itemGrid = GetNodeOrNull<GridContainer>("ShopPanel/ScrollContainer/ItemGrid") ?? GetNodeOrNull<GridContainer>("ScrollContainer/ItemGrid") ?? throw new InvalidOperationException("Admin shop item grid was not found.");
+		itemTemplate = GetNodeOrNull<Panel>("ShopPanel/ItemPanel") ?? GetNodeOrNull<Panel>("ItemPanel") ?? throw new InvalidOperationException("Admin shop item template was not found.");
+		addItemPopup = GetNodeOrNull<Panel>("AddItemPopup") ?? GetNodeOrNull<Panel>("ShopPanel/AddItemPopup") ?? throw new InvalidOperationException("Admin shop add item popup was not found.");
 		itemName = GetNode<LineEdit>("AddItemPopup/MarginContainer/VBoxContainer/ItemName");
 		price = GetNode<LineEdit>("AddItemPopup/MarginContainer/VBoxContainer/Price");
 		imageButton = GetNode<Button>("AddItemPopup/MarginContainer/VBoxContainer/ImageButton");

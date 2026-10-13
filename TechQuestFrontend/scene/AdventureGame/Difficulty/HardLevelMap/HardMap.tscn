@@ -5,6 +5,13 @@
 [ext_resource type="PackedScene" uid="uid://bewsrcvqcr4v3" path="res://scene/AdventureGame/NPC/AdminNPC/AdminHardNPC.tscn" id="6_053qc"]
 [ext_resource type="Texture2D" uid="uid://bn0ujdckc35lr" path="res://asset/sprites/hardmap.png" id="6_dsamx"]
 [ext_resource type="PackedScene" uid="uid://73p7nxuntgdm" path="res://scene/AdventureGame/Difficulty/HardLevelMap/HardMapQuest.tscn" id="7_4b1mq"]
+[ext_resource type="Script" uid="uid://e8wcrhmu5i1q" path="res://scene/AdventureGame/Controll/AdminCamera2d.cs" id="7_4rsni"]
+[ext_resource type="Texture2D" uid="uid://xatf6wdjvp41" path="res://asset/parallax/hard/sky_background.png" id="9_gtyhq"]
+[ext_resource type="Texture2D" uid="uid://dgsj4rq146dw5" path="res://asset/parallax/hard/stars.png" id="10_entc3"]
+[ext_resource type="PackedScene" uid="uid://c65cdoovlusqa" path="res://scene/AdventureGame/Character/Character1.tscn" id="10_pk1vr"]
+[ext_resource type="Texture2D" uid="uid://bb8oc06o0m7hg" path="res://asset/parallax/hard/moon.png" id="11_l7br6"]
+[ext_resource type="Texture2D" uid="uid://d4cp6pjmag8lp" path="res://asset/parallax/hard/trees_back.png" id="12_mga2r"]
+[ext_resource type="Texture2D" uid="uid://d12ixtt2jwku0" path="res://asset/parallax/hard/trees_front.png" id="13_v5ivk"]
 [ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="14_coins"]
 [ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="15_points"]
 [ext_resource type="Script" uid="uid://dwsvnvsudqktq" path="res://scene/AdventureGame/MapHUD.cs" id="16_hud"]
@@ -232,21 +239,87 @@ text = "Manage Quest"
 visible = false
 layout_mode = 1
 
+[node name="AdminCamera2D" type="Camera2D" parent="MapHUDLayer/AdminMapHUD" unique_id=186763425]
+position = Vector2(600, 248)
+zoom = Vector2(1.5, 1.5)
+script = ExtResource("7_4rsni")
+
 [node name="HardMapQuest" parent="MapHUDLayer" unique_id=1921483137 instance=ExtResource("7_4b1mq")]
 visible = false
 
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=878125192]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1004145742]
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=772610751]
+position = Vector2(0, -873.00006)
+scale = Vector2(5.0000005, 7.0277777)
+texture = ExtResource("9_gtyhq")
+centered = false
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1559710680]
+motion_scale = Vector2(0.2, 0.2)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2" unique_id=74680739]
+position = Vector2(0, -873.00006)
+scale = Vector2(5.0000005, 7.0277777)
+texture = ExtResource("10_entc3")
+centered = false
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground" unique_id=364584751]
+motion_scale = Vector2(0.3, 0.3)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3" unique_id=561278338]
+position = Vector2(0, -873.00006)
+scale = Vector2(5.0000005, 7.0277777)
+texture = ExtResource("11_l7br6")
+centered = false
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1702631885]
+motion_scale = Vector2(0.4, 0.4)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer4" unique_id=765726972]
+position = Vector2(0, -873.00006)
+scale = Vector2(5.0000005, 7.0277777)
+texture = ExtResource("12_mga2r")
+centered = false
+
+[node name="ParallaxLayer5" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1068736639]
+motion_mirroring = Vector2(1920, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer5" unique_id=434194062]
+position = Vector2(0, -873.00006)
+scale = Vector2(5.0000005, 7.0277777)
+texture = ExtResource("13_v5ivk")
+centered = false
+
+[node name="Character1" parent="." unique_id=1836987956 instance=ExtResource("10_pk1vr")]
+visible = false
+position = Vector2(599, 294)
+
+[node name="Camera2D" type="Camera2D" parent="Character1" unique_id=1498243987]
+position = Vector2(-1, -28)
+zoom = Vector2(4, 3)
+position_smoothing_enabled = true
+
 [node name="TileMap" type="TileMap" parent="." unique_id=534624237]
+position = Vector2(600, 400)
 tile_set = SubResource("TileSet_8icjc")
 format = 2
-layer_0/tile_data = PackedInt32Array(196601, 393216, 25, 196602, 458752, 25, 196603, 524288, 25, 196604, 589824, 25, 196605, 655360, 25, 196606, 720896, 25, 196607, 786432, 25, 131072, 393216, 25, 131073, 458752, 25, 131074, 524288, 25, 131075, 589824, 25, 131076, 655360, 25, 131077, 720896, 25, 131078, 786432, 25, 131079, 393216, 25, 131080, 458752, 25, 131081, 524288, 25, 131082, 589824, 25, 131083, 655360, 25, 131084, 720896, 25, 131085, 786432, 25, 131086, 393216, 25, 131087, 458752, 25, 131088, 524288, 25, 131089, 589824, 25, 131090, 655360, 25, 131091, 720896, 25, 131092, 786432, 25, 131093, 393216, 25, 131094, 458752, 25, 131095, 524288, 25, 131096, 589824, 25, 131097, 655360, 25, 131098, 720896, 25, 131099, 786432, 25, 131100, 393216, 25, 131101, 458752, 25, 131102, 524288, 25, 131103, 589824, 25, 131104, 655360, 25, 131105, 720896, 25, 131106, 786432, 25, 131107, 393216, 25, 131108, 458752, 25, 131109, 524288, 25, 131110, 589824, 25, 131111, 655360, 25, 131112, 720896, 25, 131113, 786432, 25, 262137, 393216, 29, 262138, 458752, 29, 262139, 524288, 29, 262140, 589824, 29, 262141, 655360, 29, 262142, 720896, 29, 262143, 786432, 29, 196608, 393216, 29, 196609, 458752, 29, 196610, 524288, 29, 196611, 589824, 29, 196612, 655360, 29, 196613, 720896, 29, 196614, 786432, 29, 196615, 393216, 29, 196616, 458752, 29, 196617, 524288, 29, 196618, 589824, 29, 196619, 655360, 29, 196620, 720896, 29, 196621, 786432, 29, 196622, 393216, 29, 196623, 458752, 29, 196624, 524288, 29, 196625, 589824, 29, 196626, 655360, 29, 196627, 720896, 29, 196628, 786432, 29, 196629, 393216, 29, 196630, 458752, 29, 196631, 524288, 29, 196632, 589824, 29, 196633, 655360, 29, 196634, 720896, 29, 196635, 786432, 29, 196636, 393216, 29, 196637, 458752, 29, 196638, 524288, 29, 196639, 589824, 29, 196640, 655360, 29, 196641, 720896, 29, 196642, 786432, 29, 196643, 393216, 29, 196644, 458752, 29, 196645, 524288, 29, 196646, 589824, 29, 196647, 655360, 29, 196648, 720896, 29, 196649, 786432, 29, 327673, 458752, 26, 393209, 458752, 27, 458745, 458752, 28, 327674, 524288, 26, 393210, 524288, 27, 458746, 524288, 28, 327675, 589824, 26, 393211, 589824, 27, 458747, 589824, 28, 327676, 655360, 26, 393212, 655360, 27, 458748, 655360, 28, 327677, 720896, 26, 393213, 720896, 27, 458749, 720896, 28, 327678, 458752, 26, 393214, 458752, 27, 458750, 458752, 28, 327679, 524288, 26, 393215, 524288, 27, 458751, 524288, 28, 262144, 589824, 26, 327680, 589824, 27, 393216, 589824, 28, 262145, 655360, 26, 327681, 655360, 27, 393217, 655360, 28, 262146, 720896, 26, 327682, 720896, 27, 393218, 720896, 28, 262147, 458752, 26, 327683, 458752, 27, 393219, 458752, 28, 262148, 524288, 26, 327684, 524288, 27, 393220, 524288, 28, 262149, 589824, 26, 327685, 589824, 27, 393221, 589824, 28, 262150, 655360, 26, 327686, 655360, 27, 393222, 655360, 28, 262151, 720896, 26, 327687, 720896, 27, 393223, 720896, 28, 262152, 458752, 26, 327688, 458752, 27, 393224, 458752, 28, 262153, 524288, 26, 327689, 524288, 27, 393225, 524288, 28, 262154, 589824, 26, 327690, 589824, 27, 393226, 589824, 28, 262155, 655360, 26, 327691, 655360, 27, 393227, 655360, 28, 262156, 720896, 26, 327692, 720896, 27, 393228, 720896, 28, 262157, 458752, 26, 327693, 458752, 27, 393229, 458752, 28, 262158, 524288, 26, 327694, 524288, 27, 393230, 524288, 28, 262159, 589824, 26, 327695, 589824, 27, 393231, 589824, 28, 262160, 655360, 26, 327696, 655360, 27, 393232, 655360, 28, 262161, 720896, 26, 327697, 720896, 27, 393233, 720896, 28, 262162, 458752, 26, 327698, 458752, 27, 393234, 458752, 28, 262163, 524288, 26, 327699, 524288, 27, 393235, 524288, 28, 262164, 589824, 26, 327700, 589824, 27, 393236, 589824, 28, 262165, 655360, 26, 327701, 655360, 27, 393237, 655360, 28, 262166, 720896, 26, 327702, 720896, 27, 393238, 720896, 28, 262167, 458752, 26, 327703, 458752, 27, 393239, 458752, 28, 262168, 524288, 26, 327704, 524288, 27, 393240, 524288, 28, 262169, 589824, 26, 327705, 589824, 27, 393241, 589824, 28, 262170, 655360, 26, 327706, 655360, 27, 393242, 655360, 28, 262171, 720896, 26, 327707, 720896, 27, 393243, 720896, 28, 262172, 458752, 26, 327708, 458752, 27, 393244, 458752, 28, 262173, 524288, 26, 327709, 524288, 27, 393245, 524288, 28, 262174, 589824, 26, 327710, 589824, 27, 393246, 589824, 28, 262175, 655360, 26, 327711, 655360, 27, 393247, 655360, 28, 262176, 720896, 26, 327712, 720896, 27, 393248, 720896, 28, 262177, 458752, 26, 327713, 458752, 27, 393249, 458752, 28, 262178, 524288, 26, 327714, 524288, 27, 393250, 524288, 28, 262179, 589824, 26, 327715, 589824, 27, 393251, 589824, 28, 262180, 655360, 26, 327716, 655360, 27, 393252, 655360, 28, 262181, 458752, 26, 327717, 458752, 27, 393253, 458752, 28, 262182, 524288, 26, 327718, 524288, 27, 393254, 524288, 28, 262183, 589824, 26, 327719, 589824, 27, 393255, 589824, 28, 262184, 655360, 26, 327720, 655360, 27, 393256, 655360, 28, 262185, 720896, 26, 327721, 720896, 27, 393257, 720896, 28)
+layer_0/tile_data = PackedInt32Array(65528, 458752, 25, 65529, 458752, 25, 65530, 458752, 25, 65531, 458752, 25, 65532, 458752, 25, 65533, 458752, 25, 65534, 458752, 25, 65535, 458752, 25, 0, 458752, 25, 1, 458752, 25, 2, 458752, 25, 3, 458752, 25, 4, 458752, 25, 5, 458752, 25, 6, 458752, 25, 7, 458752, 25, -65528, 458752, 25, -65527, 458752, 25, 8, 458752, 25, 9, 458752, 25, -65526, 458752, 25, 10, 458752, 25, 11, 458752, 25, 12, 458752, 25, 13, 458752, 25, 14, 458752, 25, -65521, 458752, 25, -65520, 458752, 25, -65519, 458752, 25, -65518, 458752, 25, -65517, 458752, 25, -65516, 458752, 25, 20, 458752, 25, 21, 458752, 25, 19, 458752, 25, 18, 458752, 25, 17, 458752, 25, 16, 458752, 25, 15, 458752, 25, -65514, 458752, 25, -65513, 458752, 25, -65512, 458752, 25, -65511, 458752, 25, -65510, 458752, 25, -65509, 458752, 25, 23, 458752, 25, 22, 458752, 25, 24, 458752, 25, 25, 458752, 25, -65508, 458752, 25, -65507, 458752, 25, -65506, 458752, 25, -65505, 458752, 25, -65504, 458752, 25, -65503, 458752, 25, 30, 458752, 25, -65502, 458752, 25, -65501, 458752, 25, -131037, 458752, 25, -131036, 458752, 25, -131035, 458752, 25, -65499, 458752, 25, -65500, 458752, 25, -131038, 458752, 25, -131039, 458752, 25, 38, 458752, 25, 39, 458752, 25, 40, 458752, 25, -65495, 458752, 25, -65494, 458752, 25, -65493, 458752, 25, -65492, 458752, 25, -65491, 458752, 25, -65490, 458752, 25, -65489, 458752, 25, -131025, 458752, 25, -131026, 458752, 25, -131027, 458752, 25, -131028, 458752, 25, -131029, 458752, 25, -131030, 458752, 25, -131031, 458752, 25, -131032, 458752, 25, -131033, 458752, 25, -65498, 458752, 25, -65497, 458752, 25, -65496, 458752, 25, -131034, 458752, 25, -65515, 458752, 25)
 
 [node name="NPCSpawnPoints" type="Node" parent="." unique_id=217965612]
 
 [node name="HardNPCSpawn01" type="Marker2D" parent="NPCSpawnPoints" unique_id=856110765]
-position = Vector2(406, 55)
+position = Vector2(1019, 386)
 
 [node name="HardNPCSpawn02" type="Marker2D" parent="NPCSpawnPoints" unique_id=928998275]
-position = Vector2(763, 50)
+position = Vector2(1625, 354)
 
 [node name="HardNPCSpawn03" type="Marker2D" parent="NPCSpawnPoints" unique_id=1365741988]
-position = Vector2(1134, 50)
+position = Vector2(2077, 320)

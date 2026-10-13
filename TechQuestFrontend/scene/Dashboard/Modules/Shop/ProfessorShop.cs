@@ -14,7 +14,7 @@ public partial class ProfessorShop : Control
 		backButton = GetNode<Button>("BackButton");
 		backButton.Pressed += OnBackPressed;
 		itemGrid = GetNode<GridContainer>("ShopPanel/ScrollContainer/ItemGrid");
-		itemTemplate = GetNode<Panel>("ItemPanel");
+		itemTemplate = GetNode<Panel>("ShopPanel/ItemPanel");
 		GetNode<Button>("ShopPanel/CategoryButtons/CharacterButton").Pressed += () => LoadItems("character");
 		GetNode<Button>("ShopPanel/CategoryButtons/AvatarButton").Pressed += () => LoadItems("avatar");
 		itemTemplate.Visible = false;

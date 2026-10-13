@@ -4,14 +4,17 @@ using System.Collections.Generic;
 
 public partial class ProfessorAvatarShop : Control
 {
+	private Button backButton;
 	private GridContainer itemGrid;
 	private Panel itemTemplate;
 	private string category = "avatar";
 
 	public override void _Ready()
 	{
+		backButton = GetNode<Button>("BackButton");
+		backButton.Pressed += OnBackPressed;
 		itemGrid = GetNode<GridContainer>("ShopPanel/ScrollContainer/ItemGrid");
-		itemTemplate = GetNode<Panel>("ItemPanel");
+		itemTemplate = GetNode<Panel>("ShopPanel/ItemPanel");
 		GetNode<Button>("ShopPanel/CategoryButtons/CharacterButton").Pressed += () => LoadItems("character");
 		GetNode<Button>("ShopPanel/CategoryButtons/AvatarButton").Pressed += () => LoadItems("avatar");
 		itemTemplate.Visible = false;
@@ -57,5 +60,10 @@ public partial class ProfessorAvatarShop : Control
 		AcceptDialog dialog = new AcceptDialog { DialogText = message };
 		AddChild(dialog);
 		dialog.PopupCentered();
+	}
+
+	private void OnBackPressed()
+	{
+		GetTree().ChangeSceneToFile("res://scene/Dashboard/UserDashboard/Professor Dashboard/ProfessorDashboard.tscn");
 	}
 }

@@ -20,8 +20,8 @@ public partial class AdminAvatarShop : Control
 
 	public override void _Ready()
 	{
-		itemGrid = GetNode<GridContainer>("ShopPanel/ScrollContainer/ItemGrid");
-		itemTemplate = GetNode<Panel>("ItemPanel");
+		itemGrid = GetNodeOrNull<GridContainer>("ShopPanel/ScrollContainer/ItemGrid") ?? GetNodeOrNull<GridContainer>("ScrollContainer/ItemGrid") ?? throw new InvalidOperationException("Admin avatar shop item grid was not found.");
+		itemTemplate = GetNodeOrNull<Panel>("ShopPanel/ItemPanel") ?? GetNodeOrNull<Panel>("ItemPanel") ?? throw new InvalidOperationException("Admin avatar template panel was not found.");
 		itemName = GetNode<LineEdit>("AddItemPopup/MarginContainer/VBoxContainer/ItemName");
 		price = GetNode<LineEdit>("AddItemPopup/MarginContainer/VBoxContainer/Price");
 		imageButton = GetNode<Button>("AddItemPopup/MarginContainer/VBoxContainer/ImageButton");
