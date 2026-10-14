@@ -213,7 +213,7 @@ text = "SELECT IMAGE (.png / .jpg / .jpeg)"
 
 [node name="ItemName" type="LineEdit" parent="MediumNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer" unique_id=618086939]
 layout_mode = 2
-placeholder_text = "Item name"
+placeholder_text = "NPC Name"
 
 [node name="Buttons" type="HBoxContainer" parent="MediumNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer" unique_id=648824454]
 layout_mode = 2
@@ -223,7 +223,7 @@ alignment = 2
 [node name="CancelButton" type="Button" parent="MediumNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer/Buttons" unique_id=1777050989]
 custom_minimum_size = Vector2(120, 45)
 layout_mode = 2
-text = "CANCEL"
+text = "CLOSE"
 
 [node name="AddButton" type="Button" parent="MediumNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer/Buttons" unique_id=1261462744]
 custom_minimum_size = Vector2(120, 45)

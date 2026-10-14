@@ -112,12 +112,34 @@ CREATE TABLE npc (
     npc_id          BIGSERIAL PRIMARY KEY,
     npc_name        VARCHAR(150) NOT NULL,
     npc_image       TEXT,
+    difficulty      VARCHAR(20) NOT NULL DEFAULT 'Easy'
+                    CHECK (LOWER(BTRIM(difficulty)) IN ('easy', 'medium', 'hard')),
     status          VARCHAR(30) NOT NULL DEFAULT 'active',
     created_at      TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_by      BIGINT,
 
     CONSTRAINT fk_npc_created_by
         FOREIGN KEY (created_by) REFERENCES users(user_id)
+        ON DELETE SET NULL
+);
+
+CREATE TABLE npc_deployment (
+    deployment_id   BIGSERIAL PRIMARY KEY,
+    npc_id          BIGINT NOT NULL,
+    map_difficulty  VARCHAR(20) NOT NULL
+                    CHECK (LOWER(BTRIM(map_difficulty)) IN ('easy', 'medium', 'hard')),
+    position_x      REAL NOT NULL,
+    position_y      REAL NOT NULL,
+    position_marker VARCHAR(100) NOT NULL,
+    status          VARCHAR(30) NOT NULL DEFAULT 'deployed',
+    deployed_at     TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deployed_by     BIGINT,
+
+    CONSTRAINT fk_npc_deployment_npc
+        FOREIGN KEY (npc_id) REFERENCES npc(npc_id)
+        ON DELETE RESTRICT,
+    CONSTRAINT fk_npc_deployment_user
+        FOREIGN KEY (deployed_by) REFERENCES users(user_id)
         ON DELETE SET NULL
 );
 

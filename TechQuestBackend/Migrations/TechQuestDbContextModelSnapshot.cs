@@ -333,6 +333,13 @@ namespace TechQuestBackend.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Difficulty")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasDefaultValue("Easy");
+
                     b.Property<string>("NpcImage")
                         .HasColumnType("text");
 
@@ -352,7 +359,64 @@ namespace TechQuestBackend.Migrations
 
                     b.HasIndex("CreatedBy");
 
-                    b.ToTable("NPC", (string)null);
+                    b.ToTable("NPC", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_NPC_Difficulty", "lower(btrim(\"Difficulty\")) IN ('easy', 'medium', 'hard')");
+                        });
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.NpcDeployment", b =>
+                {
+                    b.Property<int>("DeploymentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("DeploymentId"));
+
+                    b.Property<DateTime>("DeployedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int?>("DeployedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("MapDifficulty")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<int>("NpcId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PositionMarker")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<float>("PositionX")
+                        .HasColumnType("real");
+
+                    b.Property<float>("PositionY")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)")
+                        .HasDefaultValue("deployed");
+
+                    b.HasKey("DeploymentId");
+
+                    b.HasIndex("DeployedBy");
+
+                    b.HasIndex("NpcId");
+
+                    b.ToTable("NPC_deployment", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_NPC_deployment_Difficulty", "lower(btrim(\"MapDifficulty\")) IN ('easy', 'medium', 'hard')");
+                        });
                 });
 
             modelBuilder.Entity("TechQuestBackend.Models.PasswordReset", b =>
@@ -922,6 +986,24 @@ namespace TechQuestBackend.Migrations
                     b.Navigation("CreatedByUser");
                 });
 
+            modelBuilder.Entity("TechQuestBackend.Models.NpcDeployment", b =>
+                {
+                    b.HasOne("TechQuestBackend.Models.User", "DeployedByUser")
+                        .WithMany()
+                        .HasForeignKey("DeployedBy")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("TechQuestBackend.Models.Npc", "Npc")
+                        .WithMany("Deployments")
+                        .HasForeignKey("NpcId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DeployedByUser");
+
+                    b.Navigation("Npc");
+                });
+
             modelBuilder.Entity("TechQuestBackend.Models.ProfessorUpload", b =>
                 {
                     b.HasOne("TechQuestBackend.Models.User", "CreatedByUser")
@@ -1087,6 +1169,8 @@ namespace TechQuestBackend.Migrations
 
             modelBuilder.Entity("TechQuestBackend.Models.Npc", b =>
                 {
+                    b.Navigation("Deployments");
+
                     b.Navigation("Questions");
                 });
 

@@ -27,6 +27,8 @@ namespace TechQuestBackend.Data
 
         public DbSet<Npc> Npcs { get; set; }
 
+        public DbSet<NpcDeployment> NpcDeployments { get; set; }
+
         public DbSet<MiniGame> MiniGames { get; set; }
 
         public DbSet<Question> Questions { get; set; }
@@ -140,14 +142,35 @@ namespace TechQuestBackend.Data
 
             modelBuilder.Entity<Npc>(entity =>
             {
-                entity.ToTable("NPC");
+                entity.ToTable("NPC", table =>
+                    table.HasCheckConstraint("CK_NPC_Difficulty", "lower(btrim(\"Difficulty\")) IN ('easy', 'medium', 'hard')"));
                 entity.HasKey(n => n.NpcId);
                 entity.Property(n => n.NpcName).HasMaxLength(150).IsRequired();
+                entity.Property(n => n.Difficulty).HasMaxLength(20).HasDefaultValue("Easy");
                 entity.Property(n => n.Status).HasMaxLength(30).HasDefaultValue("active");
                 entity.Property(n => n.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.HasOne(n => n.CreatedByUser)
                     .WithMany()
                     .HasForeignKey(n => n.CreatedBy)
+                    .OnDelete(DeleteBehavior.SetNull);
+            });
+
+            modelBuilder.Entity<NpcDeployment>(entity =>
+            {
+                entity.ToTable("NPC_deployment", table =>
+                    table.HasCheckConstraint("CK_NPC_deployment_Difficulty", "lower(btrim(\"MapDifficulty\")) IN ('easy', 'medium', 'hard')"));
+                entity.HasKey(d => d.DeploymentId);
+                entity.Property(d => d.MapDifficulty).HasMaxLength(20).IsRequired();
+                entity.Property(d => d.PositionMarker).HasMaxLength(100).IsRequired();
+                entity.Property(d => d.Status).HasMaxLength(30).HasDefaultValue("deployed");
+                entity.Property(d => d.DeployedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.HasOne(d => d.Npc)
+                    .WithMany(n => n.Deployments)
+                    .HasForeignKey(d => d.NpcId)
+                    .OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(d => d.DeployedByUser)
+                    .WithMany()
+                    .HasForeignKey(d => d.DeployedBy)
                     .OnDelete(DeleteBehavior.SetNull);
             });
 

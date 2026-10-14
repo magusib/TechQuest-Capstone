@@ -1,3 +1,4 @@
+
 using Godot;
 using ClosedXML.Excel;
 using System;
@@ -25,6 +26,7 @@ public partial class ProfessorWaitingRoom : Control
 	private FileDialog importDialog;
 	private FileDialog exportDialog;
 	private AcceptDialog messageDialog;
+
 	private string selectedQuizPath = "";
 	private float refreshElapsed;
 	private bool refreshing;
@@ -38,34 +40,69 @@ public partial class ProfessorWaitingRoom : Control
 		uploadQuizButton = GetNode<Button>("UplaodQuizButton");
 		downloadFormatButton = GetNode<Button>("DownloadFormatButton");
 		resultsButton = GetNode<Button>("ResultsButton");
+
 		uploadPopup = GetNode<Panel>("UploadQuizPopup");
-		fileLabel = GetNode<Label>("UploadQuizPopup/UploadQuizContainer/FileLabel");
-		timerInput = GetNode<LineEdit>("UploadQuizPopup/UploadQuizContainer/TimerInput");
-		uploadFileButton = GetNode<Button>("UploadQuizPopup/UploadQuizContainer/UploadFileButton");
-		uploadButton = GetNode<Button>("UploadQuizPopup/UploadQuizContainer/ButtonContainer/UploadButton");
-		cancelButton = GetNode<Button>("UploadQuizPopup/UploadQuizContainer/ButtonContainer/CancelButton");
-		avatarGrid = GetNode<GridContainer>("AvatarPanel/StudentScrool/AvatarGridContianer");
+		fileLabel = GetNode<Label>(
+            "UploadQuizPopup/UploadQuizContainer/FileLabel"
+		);
+		timerInput = GetNode<LineEdit>(
+            "UploadQuizPopup/UploadQuizContainer/TimerInput"
+		);
+		uploadFileButton = GetNode<Button>(
+            "UploadQuizPopup/UploadQuizContainer/UploadFileButton"
+		);
+		uploadButton = GetNode<Button>(
+            "UploadQuizPopup/UploadQuizContainer/ButtonContainer/UploadButton"
+		);
+		cancelButton = GetNode<Button>(
+            "UploadQuizPopup/UploadQuizContainer/ButtonContainer/CancelButton"
+		);
+
+		avatarGrid = GetNode<GridContainer>(
+            "AvatarPanel/StudentScrool/AvatarGridContianer"
+		);
+
 		avatarTemplate = avatarGrid.GetChild<Control>(0);
 		avatarTemplate.Visible = false;
 
+		// IMPORT: Choose an Excel or CSV quiz file.
 		importDialog = new FileDialog
 		{
+			Title = "Choose Quiz File",
 			FileMode = FileDialog.FileModeEnum.OpenFile,
 			Access = FileDialog.AccessEnum.Filesystem,
-			Filters = new string[] { "*.xlsx ; Excel quiz", "*.csv ; CSV quiz" },
-			Title = "Select quiz file"
+			UseNativeDialog = true,
+			Filters = new string[]
+			{
+				"*.xlsx ; Excel Quiz",
+                "*.csv ; CSV Quiz"
+			}
 		};
+
+		AddChild(importDialog);
+		importDialog.FileSelected += OnQuizFileSelected;
+
+		// EXPORT: Save the Excel quiz template.
 		exportDialog = new FileDialog
 		{
+			Title = "Save Quiz Template",
 			FileMode = FileDialog.FileModeEnum.SaveFile,
 			Access = FileDialog.AccessEnum.Filesystem,
-			Filters = new string[] { "*.xlsx ; Excel template" },
-			CurrentFile = "TechQuest-Quiz-Template.xlsx",
-			Title = "Save quiz template"
+			UseNativeDialog = true,
+			Filters = new string[]
+			{
+                "*.xlsx ; Excel Template"
+			},
+			CurrentFile = "TechQuest-Quiz-Template.xlsx"
 		};
-		AddChild(importDialog);
+
 		AddChild(exportDialog);
-		messageDialog = new AcceptDialog { Title = "Room quiz" };
+		exportDialog.FileSelected += OnTemplateSavePathSelected;
+
+		messageDialog = new AcceptDialog
+		{
+			Title = "Room quiz"
+		};
 		AddChild(messageDialog);
 
 		subjectLabel.Text = $"Subject: {MultiplayerRoomState.RoomName}";
@@ -79,14 +116,14 @@ public partial class ProfessorWaitingRoom : Control
 		uploadFileButton.Pressed += () => importDialog.PopupCentered();
 		uploadButton.Pressed += OnUploadPressed;
 		cancelButton.Pressed += () => uploadPopup.Hide();
-		importDialog.FileSelected += OnQuizFileSelected;
-		exportDialog.FileSelected += OnTemplateSavePathSelected;
+
 		_ = RefreshParticipantsAsync();
 	}
 
 	public override void _Process(double delta)
 	{
 		refreshElapsed += (float)delta;
+
 		if (refreshElapsed >= 3)
 		{
 			refreshElapsed = 0;
@@ -96,23 +133,35 @@ public partial class ProfessorWaitingRoom : Control
 
 	private void OnBackPressed()
 	{
-		GetTree().ChangeSceneToFile("res://scene/Dashboard/Modules/Room/ProfessorRoom.tscn");
+		GetTree().ChangeSceneToFile(
+            "res://scene/Dashboard/Modules/Room/ProfessorRoom.tscn"
+		);
 	}
 
 	private void OnResultsPressed()
 	{
-		GetTree().ChangeSceneToFile("res://scene/Dashboard/Modules/Room/ProfessorRoomResult.tscn");
+		GetTree().ChangeSceneToFile(
+            "res://scene/Dashboard/Modules/Room/ProfessorRoomResult.tscn"
+		);
 	}
 
 	private async Task RefreshParticipantsAsync()
 	{
 		if (refreshing)
 			return;
+
 		refreshing = true;
+
 		try
 		{
-			List<RoomParticipantDto> participants = await RoomApiClient.GetParticipantsAsync(MultiplayerRoomState.RoomId);
-			studentCountLabel.Text = $"Students joined: {participants.Count}";
+			List<RoomParticipantDto> participants =
+				await RoomApiClient.GetParticipantsAsync(
+					MultiplayerRoomState.RoomId
+				);
+
+			studentCountLabel.Text =
+				$"Students joined: {participants.Count}";
+
 			foreach (Node child in avatarGrid.GetChildren())
 			{
 				if (child != avatarTemplate)
@@ -124,15 +173,30 @@ public partial class ProfessorWaitingRoom : Control
 				Control card = (Control)avatarTemplate.Duplicate();
 				card.Visible = true;
 				avatarGrid.AddChild(card);
-				TextureRect avatar = card.GetNode<TextureRect>("AvatarContainer/AvatarTexture");
-				card.GetNode<Label>("AvatarContainer/StudentNameLabel").Text = participant.Name;
+
+				TextureRect avatar =
+					card.GetNode<TextureRect>(
+                        "AvatarContainer/AvatarTexture"
+					);
+
+				card.GetNode<Label>(
+                    "AvatarContainer/StudentNameLabel"
+				).Text = participant.Name;
+
 				if (!string.IsNullOrWhiteSpace(participant.Avatar))
-					avatar.Texture = await AccountApiClient.LoadAvatarAsync(participant.Avatar);
+				{
+					avatar.Texture =
+						await AccountApiClient.LoadAvatarAsync(
+							participant.Avatar
+						);
+				}
 			}
 		}
 		catch (Exception exception)
 		{
-			GD.PrintErr($"Load professor room participants failed: {exception.Message}");
+			GD.PrintErr(
+				$"Load professor room participants failed: {exception.Message}"
+			);
 		}
 		finally
 		{
@@ -150,31 +214,74 @@ public partial class ProfessorWaitingRoom : Control
 	{
 		if (string.IsNullOrWhiteSpace(selectedQuizPath))
 		{
-			ShowMessage("Upload error", "Select an Excel or CSV quiz file first.");
+			ShowMessage(
+				"Upload error",
+                "Select an Excel or CSV quiz file first."
+			);
 			return;
 		}
+
 		if (!TryParseTimerSeconds(timerInput.Text, out int timerSeconds))
 		{
-			ShowMessage("Upload error", "Enter the timer as a number followed by seconds or minutes, such as 5 seconds or 5 minutes.");
+			ShowMessage(
+				"Upload error",
+				"Enter the timer as a number followed by seconds or minutes, " +
+                "such as 5 seconds or 5 minutes."
+			);
 			return;
 		}
 
 		try
 		{
-			string uploadedFileName = System.IO.Path.GetFileName(selectedQuizPath);
-			List<RoomQuizQuestionDto> questions = System.IO.Path.GetExtension(selectedQuizPath).Equals(".xlsx", StringComparison.OrdinalIgnoreCase)
-				? ParseQuizXlsx(selectedQuizPath)
-				: ParseQuizCsv(FileAccess.GetFileAsString(selectedQuizPath));
-			if (questions.Count == 0)
+			string uploadedFileName =
+				System.IO.Path.GetFileName(selectedQuizPath);
+
+			List<RoomQuizQuestionDto> questions;
+
+			if (System.IO.Path.GetExtension(selectedQuizPath)
+				.Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
 			{
-				ShowMessage("Upload error", "The file does not contain any complete questions.");
+				questions = ParseQuizXlsx(selectedQuizPath);
+			}
+			else if (System.IO.Path.GetExtension(selectedQuizPath)
+				.Equals(".csv", StringComparison.OrdinalIgnoreCase))
+			{
+				questions = ParseQuizCsv(
+					System.IO.File.ReadAllText(selectedQuizPath)
+				);
+			}
+			else
+			{
+				ShowMessage(
+					"Upload error",
+                    "Unsupported file type. Choose an XLSX or CSV file."
+				);
 				return;
 			}
 
-			await RoomApiClient.SaveQuizAsync(MultiplayerRoomState.RoomId, uploadedFileName, timerSeconds, questions);
+			if (questions.Count == 0)
+			{
+				ShowMessage(
+					"Upload error",
+                    "The file does not contain any complete questions."
+				);
+				return;
+			}
+
+			await RoomApiClient.SaveQuizAsync(
+				MultiplayerRoomState.RoomId,
+				uploadedFileName,
+				timerSeconds,
+				questions
+			);
+
 			selectedQuizPath = "";
 			fileLabel.Text = $"Uploaded: {uploadedFileName}";
-			ShowMessage("Upload successful", $"{uploadedFileName} was uploaded successfully.");
+
+			ShowMessage(
+				"Upload successful",
+				$"{uploadedFileName} was uploaded successfully."
+			);
 		}
 		catch (Exception exception)
 		{
@@ -182,23 +289,50 @@ public partial class ProfessorWaitingRoom : Control
 		}
 	}
 
-	private bool TryParseTimerSeconds(string value, out int timerSeconds)
+	private bool TryParseTimerSeconds(
+		string value,
+		out int timerSeconds
+	)
 	{
 		timerSeconds = 0;
-		string[] parts = value.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
-		if (parts.Length != 2 || !int.TryParse(parts[0], out int amount) || amount < 1)
-			return false;
 
-		if (parts[1].Equals("second", StringComparison.OrdinalIgnoreCase) || parts[1].Equals("seconds", StringComparison.OrdinalIgnoreCase))
+		string[] parts = value.Trim().Split(
+			' ',
+			StringSplitOptions.RemoveEmptyEntries
+		);
+
+		if (parts.Length != 2 ||
+			!int.TryParse(parts[0], out int amount) ||
+			amount < 1)
+		{
+			return false;
+		}
+
+		if (parts[1].Equals(
+			"second",
+			StringComparison.OrdinalIgnoreCase
+		) ||
+			parts[1].Equals(
+				"seconds",
+				StringComparison.OrdinalIgnoreCase
+			))
 		{
 			timerSeconds = amount;
 			return true;
 		}
 
-		if (parts[1].Equals("minute", StringComparison.OrdinalIgnoreCase) || parts[1].Equals("minutes", StringComparison.OrdinalIgnoreCase))
+		if (parts[1].Equals(
+			"minute",
+			StringComparison.OrdinalIgnoreCase
+		) ||
+			parts[1].Equals(
+				"minutes",
+				StringComparison.OrdinalIgnoreCase
+			))
 		{
 			if (amount > int.MaxValue / 60)
 				return false;
+
 			timerSeconds = amount * 60;
 			return true;
 		}
@@ -209,16 +343,29 @@ public partial class ProfessorWaitingRoom : Control
 	private List<RoomQuizQuestionDto> ParseQuizCsv(string csvText)
 	{
 		List<RoomQuizQuestionDto> questions = new();
-		string[] lines = csvText.Replace("\r", "").Split('\n', StringSplitOptions.RemoveEmptyEntries);
+
+		string[] lines = csvText
+			.Replace("\r", "")
+			.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+
 		for (int lineIndex = 1; lineIndex < lines.Length; lineIndex++)
 		{
 			List<string> columns = ParseCsvLine(lines[lineIndex]);
-			if (columns.Count < 8 || string.IsNullOrWhiteSpace(columns[2]))
+
+			if (columns.Count < 8 ||
+				string.IsNullOrWhiteSpace(columns[2]))
+			{
 				continue;
+			}
 
 			string questionType = NormalizeQuestionType(columns[1]);
-			if (string.IsNullOrWhiteSpace(questionType) || string.IsNullOrWhiteSpace(columns[7]))
+
+			if (string.IsNullOrWhiteSpace(questionType) ||
+				string.IsNullOrWhiteSpace(columns[7]))
+			{
 				continue;
+			}
+
 			questions.Add(new RoomQuizQuestionDto
 			{
 				Type = questionType,
@@ -231,24 +378,33 @@ public partial class ProfessorWaitingRoom : Control
 				CorrectAnswer = columns[7]
 			});
 		}
+
 		return questions;
 	}
 
 	private List<RoomQuizQuestionDto> ParseQuizXlsx(string path)
 	{
 		List<RoomQuizQuestionDto> questions = new();
+
 		using XLWorkbook workbook = new(path);
 		IXLWorksheet worksheet = workbook.Worksheet(1);
+
 		foreach (IXLRow row in worksheet.RowsUsed())
 		{
 			if (row.RowNumber() == 1)
 				continue;
 
 			string question = row.Cell(3).GetString().Trim();
-			string questionType = NormalizeQuestionType(row.Cell(2).GetString());
+			string questionType =
+				NormalizeQuestionType(row.Cell(2).GetString());
 			string correctAnswer = row.Cell(8).GetString().Trim();
-			if (string.IsNullOrWhiteSpace(question) || string.IsNullOrWhiteSpace(questionType) || string.IsNullOrWhiteSpace(correctAnswer))
+
+			if (string.IsNullOrWhiteSpace(question) ||
+				string.IsNullOrWhiteSpace(questionType) ||
+				string.IsNullOrWhiteSpace(correctAnswer))
+			{
 				continue;
+			}
 
 			questions.Add(new RoomQuizQuestionDto
 			{
@@ -262,6 +418,7 @@ public partial class ProfessorWaitingRoom : Control
 				CorrectAnswer = correctAnswer
 			});
 		}
+
 		return questions;
 	}
 
@@ -270,18 +427,26 @@ public partial class ProfessorWaitingRoom : Control
 		List<string> columns = new();
 		StringBuilder value = new();
 		bool insideQuotes = false;
-		for (int characterIndex = 0; characterIndex < line.Length; characterIndex++)
+
+		for (int characterIndex = 0;
+			 characterIndex < line.Length;
+			 characterIndex++)
 		{
 			char character = line[characterIndex];
+
 			if (character == '"')
 			{
-				if (insideQuotes && characterIndex + 1 < line.Length && line[characterIndex + 1] == '"')
+				if (insideQuotes &&
+					characterIndex + 1 < line.Length &&
+					line[characterIndex + 1] == '"')
 				{
 					value.Append('"');
 					characterIndex++;
 				}
 				else
+				{
 					insideQuotes = !insideQuotes;
+				}
 			}
 			else if (character == ',' && !insideQuotes)
 			{
@@ -289,21 +454,29 @@ public partial class ProfessorWaitingRoom : Control
 				value.Clear();
 			}
 			else
+			{
 				value.Append(character);
+			}
 		}
+
 		columns.Add(value.ToString().Trim());
+
 		return columns;
 	}
 
 	private string NormalizeQuestionType(string value)
 	{
 		string normalized = value.Trim().ToLowerInvariant();
+
 		if (normalized.Contains("multiple") || normalized == "mcq")
 			return "Multiple Choice";
+
 		if (normalized.Contains("true") || normalized == "t/f")
 			return "True or False";
+
 		if (normalized.Contains("identification") || normalized == "id")
 			return "Identification";
+
 		return "";
 	}
 
@@ -311,20 +484,43 @@ public partial class ProfessorWaitingRoom : Control
 	{
 		try
 		{
-			byte[] template = FileAccess.GetFileAsBytes("res://asset/QuizTemplate/TechQuest-Quiz-Template.xlsx");
-			if (template.Length == 0)
-				throw new Exception("The quiz template could not be loaded.");
+			byte[] template = FileAccess.GetFileAsBytes(
+                "res://asset/QuizTemplate/TechQuest-Quiz-Template.xlsx"
+			);
 
-			using FileAccess output = FileAccess.Open(path, FileAccess.ModeFlags.Write);
+			if (template.Length == 0)
+			{
+				throw new Exception(
+                    "The quiz template could not be loaded."
+				);
+			}
+
+			using FileAccess output = FileAccess.Open(
+				path,
+				FileAccess.ModeFlags.Write
+			);
+
 			if (output == null)
-				throw new Exception($"Could not save the template to {path}.");
+			{
+				throw new Exception(
+					$"Could not save the template to {path}."
+				);
+			}
 
 			output.StoreBuffer(template);
 			output.Flush();
-			if (output.GetError() != Error.Ok)
-				throw new Exception($"The template could not be saved to {path}.");
 
-			ShowMessage("Download successful", $"Template downloaded successfully to:\n{path}");
+			if (output.GetError() != Error.Ok)
+			{
+				throw new Exception(
+					$"The template could not be saved to {path}."
+				);
+			}
+
+			ShowMessage(
+				"Download successful",
+				$"Template downloaded successfully to:\n{path}"
+			);
 		}
 		catch (Exception exception)
 		{

@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dyqscyjj3nhq7" path="res://scene/AdventureGame/MapPlayerSpawner.cs" id="1_player"]
 [ext_resource type="Script" uid="uid://daw7ow7fn8bgu" path="res://scene/AdventureGame/AdminMapHUD.cs" id="5_yeg5t"]
-[ext_resource type="PackedScene" uid="uid://bewsrcvqcr4v3" path="res://scene/AdventureGame/NPC/AdminNPC/AdminHardNPC.tscn" id="6_053qc"]
+[ext_resource type="Script" path="res://scene/AdventureGame/NPC/AdminNPC/NpcDeploymentRenderer.cs" id="npc_deployment_renderer"]
+[ext_resource type="PackedScene" uid="uid://bewsrcvqcr4v3" path="res://scene/AdventureGame/NPC/AdminNPC/AdminHardMapNPC.tscn" id="6_053qc"]
 [ext_resource type="Texture2D" uid="uid://bn0ujdckc35lr" path="res://asset/sprites/hardmap.png" id="6_dsamx"]
 [ext_resource type="PackedScene" uid="uid://73p7nxuntgdm" path="res://scene/AdventureGame/Difficulty/HardLevelMap/HardMapQuest.tscn" id="7_4b1mq"]
 [ext_resource type="Script" uid="uid://e8wcrhmu5i1q" path="res://scene/AdventureGame/Controll/AdminCamera2d.cs" id="7_4rsni"]
@@ -229,7 +230,7 @@ text = "Deploy NPC"
 
 [node name="ManageNPCButton" type="Button" parent="MapHUDLayer/AdminMapHUD/TopRight" unique_id=654614471]
 layout_mode = 2
-text = "Manage NPC"
+text = "Add NPC"
 
 [node name="ManageQuestButton" type="Button" parent="MapHUDLayer/AdminMapHUD/TopRight" unique_id=551880630]
 layout_mode = 2
@@ -314,6 +315,8 @@ format = 2
 layer_0/tile_data = PackedInt32Array(65528, 458752, 25, 65529, 458752, 25, 65530, 458752, 25, 65531, 458752, 25, 65532, 458752, 25, 65533, 458752, 25, 65534, 458752, 25, 65535, 458752, 25, 0, 458752, 25, 1, 458752, 25, 2, 458752, 25, 3, 458752, 25, 4, 458752, 25, 5, 458752, 25, 6, 458752, 25, 7, 458752, 25, -65528, 458752, 25, -65527, 458752, 25, 8, 458752, 25, 9, 458752, 25, -65526, 458752, 25, 10, 458752, 25, 11, 458752, 25, 12, 458752, 25, 13, 458752, 25, 14, 458752, 25, -65521, 458752, 25, -65520, 458752, 25, -65519, 458752, 25, -65518, 458752, 25, -65517, 458752, 25, -65516, 458752, 25, 20, 458752, 25, 21, 458752, 25, 19, 458752, 25, 18, 458752, 25, 17, 458752, 25, 16, 458752, 25, 15, 458752, 25, -65514, 458752, 25, -65513, 458752, 25, -65512, 458752, 25, -65511, 458752, 25, -65510, 458752, 25, -65509, 458752, 25, 23, 458752, 25, 22, 458752, 25, 24, 458752, 25, 25, 458752, 25, -65508, 458752, 25, -65507, 458752, 25, -65506, 458752, 25, -65505, 458752, 25, -65504, 458752, 25, -65503, 458752, 25, 30, 458752, 25, -65502, 458752, 25, -65501, 458752, 25, -131037, 458752, 25, -131036, 458752, 25, -131035, 458752, 25, -65499, 458752, 25, -65500, 458752, 25, -131038, 458752, 25, -131039, 458752, 25, 38, 458752, 25, 39, 458752, 25, 40, 458752, 25, -65495, 458752, 25, -65494, 458752, 25, -65493, 458752, 25, -65492, 458752, 25, -65491, 458752, 25, -65490, 458752, 25, -65489, 458752, 25, -131025, 458752, 25, -131026, 458752, 25, -131027, 458752, 25, -131028, 458752, 25, -131029, 458752, 25, -131030, 458752, 25, -131031, 458752, 25, -131032, 458752, 25, -131033, 458752, 25, -65498, 458752, 25, -65497, 458752, 25, -65496, 458752, 25, -131034, 458752, 25, -65515, 458752, 25)
 
 [node name="NPCSpawnPoints" type="Node" parent="." unique_id=217965612]
+script = ExtResource("npc_deployment_renderer")
+Difficulty = "Hard"
 
 [node name="HardNPCSpawn01" type="Marker2D" parent="NPCSpawnPoints" unique_id=856110765]
 position = Vector2(1019, 386)

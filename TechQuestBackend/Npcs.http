@@ -1,0 +1,67 @@
+@baseUrl = http://localhost:5000/api
+@token = replace-with-admin-token
+@difficulty = Easy
+@npcId = 1
+
+### List active NPCs for a difficulty
+GET {{baseUrl}}/Npcs?difficulty={{difficulty}}
+Authorization: Bearer {{token}}
+
+### Upload an NPC image
+POST {{baseUrl}}/Npcs/image
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=npcBoundary
+
+--npcBoundary
+Content-Disposition: form-data; name="image"; filename="npc.png"
+Content-Type: image/png
+
+< ./npc.png
+--npcBoundary--
+
+### Create an NPC using the path returned by the upload endpoint
+POST {{baseUrl}}/Npcs
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "npcName": "Example Easy NPC",
+  "npcImage": "/uploads/npcs/replace-with-uploaded-image.png",
+  "difficulty": "{{difficulty}}"
+}
+
+### Get an NPC
+GET {{baseUrl}}/Npcs/{{npcId}}
+Authorization: Bearer {{token}}
+
+### Update an NPC
+PUT {{baseUrl}}/Npcs/{{npcId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "npcName": "Example Easy NPC Updated",
+  "npcImage": "/uploads/npcs/replace-with-uploaded-image.png",
+  "difficulty": "{{difficulty}}",
+  "status": "active"
+}
+
+### Deploy an NPC at a map spawn marker
+POST {{baseUrl}}/Npcs/{{npcId}}/deployments
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "mapDifficulty": "{{difficulty}}",
+  "positionX": 1071,
+  "positionY": 390,
+  "positionMarker": "EasyNPCSpawn01"
+}
+
+### List deployed NPCs for a difficulty
+GET {{baseUrl}}/Npcs/deployments?difficulty={{difficulty}}
+Authorization: Bearer {{token}}
+
+### Deactivate an NPC and remove its active deployments
+DELETE {{baseUrl}}/Npcs/{{npcId}}
+Authorization: Bearer {{token}}
