@@ -1,10 +1,26 @@
 [gd_scene format=3 uid="uid://comapy78n513"]
 
-[ext_resource type="Script" uid="uid://c5ra2jbuqup1g" path="res://scene/AdventureGame/CharacterAnimation/Character.cs" id="1_x16p4"]
+[ext_resource type="Script" uid="uid://c5ra2jbuqup1g" path="res://scene/AdventureGame/Character/Character.cs" id="1_x16p4"]
 
 [node name="Character3" type="CharacterBody2D" unique_id=1648924303]
 script = ExtResource("1_x16p4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=497304483]
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"embed_tex": true,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"scale": "1.0",
+"should_round_fps": true,
+"slice": "",
+"source": "res://asset/character animation/cha3 - animations.aseprite",
+"source_uid": 4100645853983663412
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1583382845]

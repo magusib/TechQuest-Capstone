@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://dyqscyjj3nhq7" path="res://scene/AdventureGame/MapPlayerSpawner.cs" id="1_player"]
 [ext_resource type="Script" uid="uid://daw7ow7fn8bgu" path="res://scene/AdventureGame/AdminMapHUD.cs" id="5_yeg5t"]
-[ext_resource type="Script" path="res://scene/AdventureGame/NPC/AdminNPC/NpcDeploymentRenderer.cs" id="npc_deployment_renderer"]
 [ext_resource type="PackedScene" uid="uid://bewsrcvqcr4v3" path="res://scene/AdventureGame/NPC/AdminNPC/AdminHardMapNPC.tscn" id="6_053qc"]
 [ext_resource type="Texture2D" uid="uid://bn0ujdckc35lr" path="res://asset/sprites/hardmap.png" id="6_dsamx"]
 [ext_resource type="PackedScene" uid="uid://73p7nxuntgdm" path="res://scene/AdventureGame/Difficulty/HardLevelMap/HardMapQuest.tscn" id="7_4b1mq"]
@@ -16,6 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="14_coins"]
 [ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="15_points"]
 [ext_resource type="Script" uid="uid://dwsvnvsudqktq" path="res://scene/AdventureGame/MapHUD.cs" id="16_hud"]
+[ext_resource type="PackedScene" uid="uid://b6yg0abhx5012" path="res://scene/AdventureGame/Controll/killzone.tscn" id="17_l7br6"]
+[ext_resource type="Script" uid="uid://c4m48lqvo52v2" path="res://scene/AdventureGame/NPC/AdminNPC/NpcDeploymentRenderer.cs" id="npc_deployment_renderer"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4b1mq"]
 texture = ExtResource("6_dsamx")
@@ -106,6 +107,9 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_4b1mq")
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mga2r"]
+distance = -499.0
 
 [node name="HardMap" type="Node2D" unique_id=1913086753]
 script = ExtResource("1_player")
@@ -326,3 +330,9 @@ position = Vector2(1625, 354)
 
 [node name="HardNPCSpawn03" type="Marker2D" parent="NPCSpawnPoints" unique_id=1365741988]
 position = Vector2(2077, 320)
+
+[node name="Killzone" parent="." unique_id=2081880991 instance=ExtResource("17_l7br6")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone" unique_id=146472746]
+position = Vector2(5, 0)
+shape = SubResource("WorldBoundaryShape2D_mga2r")

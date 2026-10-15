@@ -73,7 +73,11 @@ public partial class StudentAvatar : Control
 		image.Texture = ShopApiClient.LoadShopImage(item.AvatarItems);
 		if (!isCenter)
 			image.Material = new ShaderMaterial { Shader = blurShader };
-		card.GetNode<Button>("ItemContainer/UseButton").Pressed += async () => await Equip(item.ItemId);
+		Button useButton = card.GetNode<Button>("ItemContainer/UseButton");
+		bool isInUse = string.Equals(item.AvatarItems, UserSession.AvatarPath, StringComparison.Ordinal);
+		useButton.Text = isInUse ? "IN USE" : "USE";
+		useButton.Disabled = isInUse;
+		useButton.Pressed += async () => await Equip(item.ItemId);
 	}
 
 	private ShopItemDto GetItem(int offset)
@@ -116,13 +120,12 @@ public partial class StudentAvatar : Control
 		{
 			EquipResultDto result = await ShopApiClient.EquipAvatarAsync(itemId);
 			UserSession.UpdateAvatar(result.Avatar);
+			RenderCarousel();
 			if (MultiplayerRoomState.ReturnToWaitingRoom)
 			{
 				MultiplayerRoomState.ReturnToWaitingRoom = false;
 				GetTree().ChangeSceneToFile("res://scene/Dashboard/Modules/Room/StudentWaitingRoom.tscn");
 			}
-			else
-				GetTree().ChangeSceneToFile("res://scene/Dashboard/UserDashboard/Student Dashboard/StudentProfile.tscn");
 		}
 		catch (Exception error)
 		{
