@@ -8,6 +8,8 @@ namespace TechQuestBackend.Models
 
         public string? NpcImage { get; set; }
 
+        public string? AnimationScenePath { get; set; }
+
         public string Difficulty { get; set; } = "Easy";
 
         public string Status { get; set; } = "active";

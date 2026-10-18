@@ -32,7 +32,10 @@ public partial class StudentAvatar : Control
 		try
 		{
 			avatars = await ShopApiClient.GetOwnedAsync("avatar");
-			selectedIndex = 0;
+			selectedIndex = avatars.FindIndex(item =>
+				string.Equals(item.AvatarItems, UserSession.AvatarPath, StringComparison.Ordinal));
+			if (selectedIndex < 0)
+				selectedIndex = 0;
 			RenderCarousel();
 		}
 		catch (Exception error)
@@ -76,7 +79,7 @@ public partial class StudentAvatar : Control
 		Button useButton = card.GetNode<Button>("ItemContainer/UseButton");
 		bool isInUse = string.Equals(item.AvatarItems, UserSession.AvatarPath, StringComparison.Ordinal);
 		useButton.Text = isInUse ? "IN USE" : "USE";
-		useButton.Disabled = isInUse;
+		useButton.Disabled = !isCenter || isInUse;
 		useButton.Pressed += async () => await Equip(item.ItemId);
 	}
 
@@ -116,6 +119,11 @@ public partial class StudentAvatar : Control
 
 	private async Task Equip(int itemId)
 	{
+		int previousSelectedIndex = selectedIndex;
+		int equippedIndex = avatars.FindIndex(item => item.ItemId == itemId);
+		if (equippedIndex >= 0)
+			selectedIndex = equippedIndex;
+
 		try
 		{
 			EquipResultDto result = await ShopApiClient.EquipAvatarAsync(itemId);
@@ -129,6 +137,8 @@ public partial class StudentAvatar : Control
 		}
 		catch (Exception error)
 		{
+			selectedIndex = previousSelectedIndex;
+			RenderCarousel();
 			GD.PrintErr("Avatar equip failed: " + error.Message);
 		}
 	}

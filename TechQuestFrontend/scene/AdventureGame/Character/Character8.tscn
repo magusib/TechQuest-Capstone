@@ -412,14 +412,14 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_eljk7"]
-radius = 15.297058
+radius = 7.0
 
 [node name="Character8" type="CharacterBody2D" unique_id=1648924303]
 script = ExtResource("1_tqfmn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=497304483]
 texture_filter = 1
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_w6cci")
 animation = &"Idle"
 metadata/_aseprite_wizard_interface_config_ = {

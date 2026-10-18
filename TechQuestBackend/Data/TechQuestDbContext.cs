@@ -194,6 +194,7 @@ namespace TechQuestBackend.Data
                 entity.Property(q => q.SubjectName).HasMaxLength(150).IsRequired();
                 entity.Property(q => q.QuestionText).HasColumnName("Question").IsRequired();
                 entity.Property(q => q.CorrectAnswer).IsRequired();
+                entity.Property(q => q.AnswerTip).IsRequired();
                 entity.Property(q => q.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.HasOne(q => q.Npc)
                     .WithMany(n => n.Questions)

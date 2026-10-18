@@ -11,8 +11,8 @@ public partial class AdminMapHUD : Control
 		GetNode<Button>("TopLeft/HomeButton").Pressed += OnHomePressed;
 		GetNode<Button>("TopLeft/QuestButton").Pressed += OnAddQuestPressed;
 		GetNode<Button>("TopRight/ManageQuestButton").Pressed += OnAddQuestPressed;
-		GetNode<Button>("TopRight/ManageNPCButton").Pressed += OnNpcSetupPressed;
-		GetNode<Button>("TopRight/DeployNPCButton").Pressed += OnNpcSetupPressed;
+		GetNode<Button>("TopRight/ManageNPCButton").Pressed += OnManageNpcPressed;
+		GetNode<Button>("TopRight/UndeployedNPCButton").Pressed += OnUndeployedNpcPressed;
 	}
 
 	private void OnHomePressed()
@@ -38,7 +38,17 @@ public partial class AdminMapHUD : Control
 		questPopup.Call("OpenAdminQuestAdd");
 	}
 
-	private void OnNpcSetupPressed()
+	private void OnManageNpcPressed()
+	{
+		OpenNpcManager("OpenDeployedNpcList");
+	}
+
+	private void OnUndeployedNpcPressed()
+	{
+		OpenNpcManager("OpenUndeployedNpcList");
+	}
+
+	private void OpenNpcManager(string methodName)
 	{
 		Node adminHud = GetTree().CurrentScene?.GetNodeOrNull<Node>("MapHUDLayer/AdminMapHUD");
 		Control npcPopup = adminHud?.GetNodeOrNull<Control>("AdminEasyNpc");
@@ -53,6 +63,6 @@ public partial class AdminMapHUD : Control
 			return;
 		}
 
-		npcPopup.Call("OpenNpcSetup");
+		npcPopup.Call(methodName);
 	}
 }

@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 public abstract partial class AdminNpcManager : Control
 {
@@ -12,17 +13,41 @@ public abstract partial class AdminNpcManager : Control
 	private Control addPopup;
 	private LineEdit npcNameInput;
 	private Button imageButton;
+	private Button animationSceneButton;
+	private Button clearAnimationSceneButton;
+	private Label animationSceneLabel;
 	private Button saveButton;
 	private Label formMessage;
 	private AcceptDialog messageDialog;
 	private ConfirmationDialog deleteDialog;
 	private ConfirmationDialog deployDialog;
+	private ConfirmationDialog undeployDialog;
 	private FileDialog fileDialog;
+	private FileDialog animationSceneDialog;
 	private string selectedImagePath = "";
+	private string selectedAnimationScenePath = "";
 	private NpcDto editingNpc;
 	private NpcDto selectedNpc;
+	private NpcDeploymentDto selectedDeployment;
 	private readonly List<NpcDto> currentNpcs = new();
+	private readonly List<NpcDeploymentDto> currentDeployments = new();
 	private string npcPanelPath;
+	private bool showingDeployedNpcs;
+	private bool isLoadingNpcs;
+	private bool isSavingNpc;
+	private bool isDeletingNpc;
+	private bool isDeployingNpc;
+	private bool isUndeployingNpc;
+	private bool isSavingConfiguration;
+	private Control configurationPopup;
+	private LineEdit subjectInput;
+	private Label configurationTitle;
+	private OptionButton miniGameInput;
+	private TextEdit questionInput;
+	private LineEdit correctAnswerInput;
+	private TextEdit answerTipInput;
+	private Button saveConfigurationButton;
+	private NpcConfigurationDto editingConfiguration;
 
 	public override void _Ready()
 	{
@@ -37,17 +62,29 @@ public abstract partial class AdminNpcManager : Control
 		imageButton = GetNode<Button>(npcPanelPath + "/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer/ImageButton");
 		saveButton = GetNode<Button>(npcPanelPath + "/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer/Buttons/AddButton");
 		formMessage = GetNode<Label>(npcPanelPath + "/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer/Title");
+		AddAnimationScenePicker();
 		messageDialog = GetNode<AcceptDialog>(npcPanelPath + "/AcceptDialog");
 		deleteDialog = GetNode<ConfirmationDialog>(npcPanelPath + "/DeleteConfirmationDialog");
 		deployDialog = GetNode<ConfirmationDialog>(npcPanelPath + "/DeployConfirmationDialog");
+		undeployDialog = new ConfirmationDialog
+		{
+			Title = "Undeploy NPC",
+			OkButtonText = "Undeploy",
+			DialogText = "Undeploy this NPC from the map?"
+		};
+		AddChild(undeployDialog);
+		CreateConfigurationPopup();
 
 		GetNode<Button>(npcPanelPath + "/AddButton").Pressed += OpenAddForm;
 		GetNode<Button>(npcPanelPath + "/CloseButton").Pressed += CloseSetup;
 		GetNode<Button>(npcPanelPath + "/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer/Buttons/CancelButton").Pressed += CloseForm;
 		imageButton.Pressed += OpenImagePicker;
+		animationSceneButton.Pressed += OpenAnimationScenePicker;
+		clearAnimationSceneButton.Pressed += ClearAnimationScene;
 		saveButton.Pressed += SaveNpc;
 		deleteDialog.Confirmed += DeleteSelectedNpc;
 		deployDialog.Confirmed += DeploySelectedNpc;
+		undeployDialog.Confirmed += UndeploySelectedNpc;
 
 		fileDialog = new FileDialog
 		{
@@ -59,38 +96,118 @@ public abstract partial class AdminNpcManager : Control
 		};
 		AddChild(fileDialog);
 		fileDialog.FileSelected += OnImageSelected;
+
+		animationSceneDialog = new FileDialog
+		{
+			Title = "Choose NPC Animation Scene",
+			FileMode = FileDialog.FileModeEnum.OpenFile,
+			Access = FileDialog.AccessEnum.Resources,
+			Filters = new string[] { "*.tscn ; Godot Scenes" }
+		};
+		AddChild(animationSceneDialog);
+		animationSceneDialog.FileSelected += OnAnimationSceneSelected;
+	}
+
+	private void AddAnimationScenePicker()
+	{
+		var fields = (VBoxContainer)imageButton.GetParent();
+		int insertIndex = imageButton.GetIndex() + 1;
+
+		animationSceneLabel = new Label
+		{
+			Text = "Animation: Uploaded image (static)",
+			AutowrapMode = TextServer.AutowrapMode.WordSmart
+		};
+		fields.AddChild(animationSceneLabel);
+		fields.MoveChild(animationSceneLabel, insertIndex);
+
+		var buttons = new HBoxContainer();
+		animationSceneButton = new Button
+		{
+			Text = "Select Animation Scene",
+			SizeFlagsHorizontal = Control.SizeFlags.ExpandFill
+		};
+		clearAnimationSceneButton = new Button { Text = "Clear" };
+		buttons.AddChild(animationSceneButton);
+		buttons.AddChild(clearAnimationSceneButton);
+		fields.AddChild(buttons);
+		fields.MoveChild(buttons, insertIndex + 1);
 	}
 
 	public void OpenNpcSetup()
 	{
+		OpenUndeployedNpcList();
+	}
+
+	public void OpenDeployedNpcList()
+	{
+		OpenNpcList(true);
+	}
+
+	public void OpenUndeployedNpcList()
+	{
+		OpenNpcList(false);
+	}
+
+	private async void OpenNpcList(bool showDeployed)
+	{
 		if (!UserSession.IsAdmin)
 			return;
 
+		showingDeployedNpcs = showDeployed;
 		Show();
 		GetNode<Control>(npcPanelPath).Show();
 		addPopup.Hide();
-		LoadNpcs();
+		configurationPopup.Hide();
+		GetNode<Label>(npcPanelPath + "/" + Difficulty + "NPCLabel").Text = showDeployed
+			? "Manage Deployed NPCs"
+			: "NPC Inventory";
+		GetNode<Button>(npcPanelPath + "/AddButton").Visible = !showDeployed;
+		await LoadNpcsAsync();
 	}
 
-	private void LoadNpcs()
+	private async Task LoadNpcsAsync()
 	{
+		if (isLoadingNpcs)
+			return;
+
+		isLoadingNpcs = true;
 		try
 		{
 			currentNpcs.Clear();
-			currentNpcs.AddRange(NpcApiClient.GetNpcs(Difficulty));
+			currentNpcs.AddRange(await NpcApiClient.GetNpcsAsync(Difficulty));
+			currentDeployments.Clear();
+			currentDeployments.AddRange(await NpcApiClient.GetDeploymentsAsync(Difficulty));
 			foreach (Node child in itemContainer.GetChildren())
 				child.QueueFree();
 
-			foreach (NpcDto npc in currentNpcs)
-				AddNpcCard(npc);
+			if (!showingDeployedNpcs)
+			{
+				foreach (NpcDto npc in currentNpcs)
+					await AddNpcCardAsync(npc, null);
+			}
+
+			if (showingDeployedNpcs)
+			{
+				foreach (NpcDeploymentDto deployment in currentDeployments)
+				{
+					NpcDto npc = FindNpc(deployment.NpcId);
+					if (npc != null)
+						await AddNpcCardAsync(npc, deployment);
+				}
+			}
 		}
 		catch (Exception exception)
 		{
 			ShowMessage("NPC list could not be loaded: " + exception.Message);
 		}
+		finally
+		{
+			isLoadingNpcs = false;
+		}
 	}
 
-	private void AddNpcCard(NpcDto npc)
+	private async Task AddNpcCardAsync(NpcDto npc, NpcDeploymentDto deployment)
 	{
 		var card = new PanelContainer
 		{
@@ -116,25 +233,46 @@ public abstract partial class AdminNpcManager : Control
 		};
 		layout.AddChild(label);
 
-		var deployButton = new Button { Text = "Deploy" };
-		layout.AddChild(deployButton);
-		var editDeleteRow = new HBoxContainer();
-		layout.AddChild(editDeleteRow);
-		var editButton = new Button { Text = "Edit", SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
-		var deleteButton = new Button { Text = "Delete", SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
-		editDeleteRow.AddChild(editButton);
-		editDeleteRow.AddChild(deleteButton);
-
-		deployButton.Pressed += () => ConfirmDeploy(npc);
-		editButton.Pressed += () => OpenEditForm(npc);
-		deleteButton.Pressed += () => ConfirmDelete(npc);
+		if (deployment != null)
+		{
+			var actionRow = new HBoxContainer();
+			layout.AddChild(actionRow);
+			var manageButton = new Button
+			{
+				Text = "Manage",
+				SizeFlagsHorizontal = Control.SizeFlags.ExpandFill
+			};
+			var undeployButton = new Button
+			{
+				Text = "Undeploy",
+				SizeFlagsHorizontal = Control.SizeFlags.ExpandFill
+			};
+			actionRow.AddChild(manageButton);
+			actionRow.AddChild(undeployButton);
+			manageButton.Pressed += () => OpenConfigurationAsync(npc);
+			undeployButton.Pressed += () => ConfirmUndeploy(npc, deployment);
+		}
+		else
+		{
+			var deployButton = new Button { Text = "Deploy" };
+			layout.AddChild(deployButton);
+			var editDeleteRow = new HBoxContainer();
+			layout.AddChild(editDeleteRow);
+			var editButton = new Button { Text = "Edit", SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
+			var deleteButton = new Button { Text = "Delete", SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
+			editDeleteRow.AddChild(editButton);
+			editDeleteRow.AddChild(deleteButton);
+			deployButton.Pressed += () => ConfirmDeploy(npc);
+			editButton.Pressed += () => OpenEditForm(npc);
+			deleteButton.Pressed += () => ConfirmDelete(npc);
+		}
 		itemContainer.AddChild(card);
 
 		if (!string.IsNullOrWhiteSpace(npc.NpcImage))
 		{
 			try
 			{
-				image.Texture = AccountApiClient.LoadAvatarAsync(npc.NpcImage).GetAwaiter().GetResult();
+				image.Texture = await AccountApiClient.LoadAvatarAsync(npc.NpcImage);
 			}
 			catch (Exception exception)
 			{
@@ -143,12 +281,230 @@ public abstract partial class AdminNpcManager : Control
 		}
 	}
 
+	private NpcDto FindNpc(int npcId)
+	{
+		foreach (NpcDto npc in currentNpcs)
+		{
+			if (npc.NpcId == npcId)
+				return npc;
+		}
+
+		return null;
+	}
+
+	private void CreateConfigurationPopup()
+	{
+		configurationPopup = new Control
+		{
+			Name = "NpcConfigurationPopup",
+			Visible = false,
+			MouseFilter = Control.MouseFilterEnum.Stop,
+			ZIndex = 50
+		};
+		configurationPopup.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+		AddChild(configurationPopup);
+
+		var background = new ColorRect
+		{
+			Color = new Color(0, 0, 0, 0.65f),
+			MouseFilter = Control.MouseFilterEnum.Stop
+		};
+		background.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+		configurationPopup.AddChild(background);
+
+		var panel = new PanelContainer
+		{
+			CustomMinimumSize = new Vector2(560, 620)
+		};
+		panel.SetAnchorsPreset(Control.LayoutPreset.Center);
+		panel.OffsetLeft = -280;
+		panel.OffsetTop = -310;
+		panel.OffsetRight = 280;
+		panel.OffsetBottom = 310;
+		configurationPopup.AddChild(panel);
+
+		var margin = new MarginContainer();
+		margin.AddThemeConstantOverride("margin_left", 20);
+		margin.AddThemeConstantOverride("margin_top", 18);
+		margin.AddThemeConstantOverride("margin_right", 20);
+		margin.AddThemeConstantOverride("margin_bottom", 18);
+		panel.AddChild(margin);
+
+		var fields = new VBoxContainer();
+		fields.AddThemeConstantOverride("separation", 8);
+		margin.AddChild(fields);
+		configurationTitle = new Label
+		{
+			Text = "Manage NPC",
+			HorizontalAlignment = HorizontalAlignment.Center
+		};
+		fields.AddChild(configurationTitle);
+
+		subjectInput = AddLineEditField(fields, "Subject Name");
+		miniGameInput = new OptionButton();
+		AddField(fields, "Mini Game", miniGameInput);
+		questionInput = AddTextField(fields, "Question", 90);
+		correctAnswerInput = AddLineEditField(fields, "Correct Answer");
+		answerTipInput = AddTextField(fields, "Answer Tip", 70);
+
+		var buttons = new HBoxContainer
+		{
+			Alignment = BoxContainer.AlignmentMode.End
+		};
+		fields.AddChild(buttons);
+		var cancelButton = new Button { Text = "Cancel" };
+		saveConfigurationButton = new Button { Text = "Save Changes" };
+		buttons.AddChild(cancelButton);
+		buttons.AddChild(saveConfigurationButton);
+		cancelButton.Pressed += () => configurationPopup.Hide();
+		saveConfigurationButton.Pressed += SaveConfigurationAsync;
+	}
+
+	private static LineEdit AddLineEditField(VBoxContainer fields, string label)
+	{
+		var input = new LineEdit();
+		AddField(fields, label, input);
+		return input;
+	}
+
+	private static TextEdit AddTextField(VBoxContainer fields, string label, float height)
+	{
+		var input = new TextEdit
+		{
+			CustomMinimumSize = new Vector2(0, height)
+		};
+		AddField(fields, label, input);
+		return input;
+	}
+
+	private static void AddField(VBoxContainer fields, string label, Control input)
+	{
+		fields.AddChild(new Label { Text = label });
+		fields.AddChild(input);
+	}
+
+	private async void OpenConfigurationAsync(NpcDto npc)
+	{
+		try
+		{
+			NpcConfigurationDto configuration = await NpcApiClient.GetNpcConfigurationAsync(npc.NpcId);
+			List<MiniGameDto> miniGames = await NpcApiClient.GetMiniGamesAsync();
+			if (!IsInsideTree())
+				return;
+
+			editingConfiguration = configuration;
+			configurationTitle.Text = "Manage " + npc.NpcName;
+			subjectInput.Text = configuration.SubjectName;
+			questionInput.Text = configuration.Question;
+			correctAnswerInput.Text = configuration.CorrectAnswer;
+			answerTipInput.Text = configuration.AnswerTip;
+			miniGameInput.Clear();
+			miniGameInput.AddItem("No mini-game", 0);
+			foreach (MiniGameDto miniGame in miniGames)
+				miniGameInput.AddItem(miniGame.GameName, miniGame.MiniGameId);
+
+			miniGameInput.Select(0);
+			if (configuration.MiniGameId.HasValue)
+			{
+				for (int index = 1; index < miniGameInput.ItemCount; index++)
+				{
+					if (miniGameInput.GetItemId(index) == configuration.MiniGameId.Value)
+					{
+						miniGameInput.Select(index);
+						break;
+					}
+				}
+			}
+
+			configurationPopup.Show();
+		}
+		catch (Exception exception)
+		{
+			ShowMessage("NPC information could not be loaded: " + exception.Message);
+		}
+	}
+
+	private async void SaveConfigurationAsync()
+	{
+		if (editingConfiguration == null || isSavingConfiguration)
+			return;
+
+		if (string.IsNullOrWhiteSpace(subjectInput.Text) ||
+			string.IsNullOrWhiteSpace(questionInput.Text) ||
+			string.IsNullOrWhiteSpace(correctAnswerInput.Text))
+		{
+			ShowMessage("Subject name, question, and correct answer are required.");
+			return;
+		}
+
+		isSavingConfiguration = true;
+		saveConfigurationButton.Disabled = true;
+		editingConfiguration.SubjectName = subjectInput.Text.Trim();
+		int miniGameId = miniGameInput.GetItemId(miniGameInput.Selected);
+		editingConfiguration.MiniGameId = miniGameId > 0 ? miniGameId : null;
+		editingConfiguration.Question = questionInput.Text.Trim();
+		editingConfiguration.CorrectAnswer = correctAnswerInput.Text.Trim();
+		editingConfiguration.AnswerTip = answerTipInput.Text.Trim();
+		try
+		{
+			await NpcApiClient.SaveNpcConfigurationAsync(editingConfiguration);
+			configurationPopup.Hide();
+			ShowMessage("NPC information saved successfully.");
+		}
+		catch (Exception exception)
+		{
+			ShowMessage("NPC information could not be saved: " + exception.Message);
+		}
+		finally
+		{
+			isSavingConfiguration = false;
+			saveConfigurationButton.Disabled = false;
+		}
+	}
+
+	private void ConfirmUndeploy(NpcDto npc, NpcDeploymentDto deployment)
+	{
+		selectedNpc = npc;
+		selectedDeployment = deployment;
+		undeployDialog.DialogText = $"Undeploy {npc.NpcName} from the {Difficulty} map?";
+		undeployDialog.PopupCentered();
+	}
+
+	private async void UndeploySelectedNpc()
+	{
+		if (selectedNpc == null || selectedDeployment == null || isUndeployingNpc)
+			return;
+
+		isUndeployingNpc = true;
+		NpcDto npcToUndeploy = selectedNpc;
+		NpcDeploymentDto deploymentToRemove = selectedDeployment;
+		try
+		{
+			await NpcApiClient.UndeployNpcAsync(deploymentToRemove.DeploymentId);
+			RemoveDeploymentSprite(deploymentToRemove.DeploymentId);
+			await LoadNpcsAsync();
+			ShowMessage($"{npcToUndeploy.NpcName} was undeployed.");
+		}
+		catch (Exception exception)
+		{
+			ShowMessage("NPC could not be undeployed: " + exception.Message);
+		}
+		finally
+		{
+			selectedNpc = null;
+			selectedDeployment = null;
+			isUndeployingNpc = false;
+		}
+	}
+
 	private void OpenAddForm()
 	{
 		editingNpc = null;
 		selectedImagePath = "";
+		selectedAnimationScenePath = "";
 		npcNameInput.Text = "";
 		imageButton.Text = "SELECT IMAGE (.png / .jpg / .jpeg)";
+		UpdateAnimationSceneLabel();
 		saveButton.Text = "SAVE";
 		formMessage.Text = "Add NPC";
 		addPopup.Show();
@@ -158,8 +514,10 @@ public abstract partial class AdminNpcManager : Control
 	{
 		editingNpc = npc;
 		selectedImagePath = "";
+		selectedAnimationScenePath = npc.AnimationScenePath ?? "";
 		npcNameInput.Text = npc.NpcName;
 		imageButton.Text = "SELECT NEW IMAGE (OPTIONAL)";
+		UpdateAnimationSceneLabel();
 		saveButton.Text = "SAVE";
 		formMessage.Text = "Edit NPC";
 		addPopup.Show();
@@ -168,6 +526,51 @@ public abstract partial class AdminNpcManager : Control
 	private void OpenImagePicker()
 	{
 		fileDialog.PopupCentered(new Vector2I(720, 520));
+	}
+
+	private void OpenAnimationScenePicker()
+	{
+		animationSceneDialog.PopupCentered(new Vector2I(900, 600));
+	}
+
+	private void OnAnimationSceneSelected(string path)
+	{
+		string expectedPrefix = $"res://scene/AdventureGame/NPC/{Difficulty}MapNPC/";
+		if (!path.StartsWith(expectedPrefix, StringComparison.Ordinal) ||
+			!path.EndsWith(".tscn", StringComparison.OrdinalIgnoreCase))
+		{
+			ShowMessage($"Choose an animated scene from the {Difficulty} NPC folder.");
+			return;
+		}
+
+		AnimatedSprite2D previewSprite = null;
+		try
+		{
+			previewSprite = NpcMapSprite.CreateNpcSprite(null, path);
+			selectedAnimationScenePath = path;
+			UpdateAnimationSceneLabel();
+		}
+		catch (Exception exception)
+		{
+			ShowMessage("NPC animation scene could not be used: " + exception.Message);
+		}
+		finally
+		{
+			previewSprite?.Free();
+		}
+	}
+
+	private void ClearAnimationScene()
+	{
+		selectedAnimationScenePath = "";
+		UpdateAnimationSceneLabel();
+	}
+
+	private void UpdateAnimationSceneLabel()
+	{
+		animationSceneLabel.Text = string.IsNullOrWhiteSpace(selectedAnimationScenePath)
+			? "Animation: Uploaded image (static)"
+			: "Animation: " + Path.GetFileName(selectedAnimationScenePath);
 	}
 
 	private void OnImageSelected(string path)
@@ -183,8 +586,11 @@ public abstract partial class AdminNpcManager : Control
 		imageButton.Text = Path.GetFileName(path);
 	}
 
-	private void SaveNpc()
+	private async void SaveNpc()
 	{
+		if (isSavingNpc)
+			return;
+
 		string name = npcNameInput.Text.Trim();
 		if (string.IsNullOrWhiteSpace(name))
 		{
@@ -197,28 +603,36 @@ public abstract partial class AdminNpcManager : Control
 			return;
 		}
 
+		isSavingNpc = true;
+		saveButton.Disabled = true;
 		try
 		{
 			string imagePath = editingNpc?.NpcImage ?? "";
 			if (!string.IsNullOrWhiteSpace(selectedImagePath))
-				imagePath = NpcApiClient.UploadImage(selectedImagePath);
+				imagePath = await NpcApiClient.UploadImageAsync(selectedImagePath);
 
 			var npc = new NpcDto
 			{
 				NpcId = editingNpc?.NpcId ?? 0,
 				NpcName = name,
 				NpcImage = imagePath,
+				AnimationScenePath = selectedAnimationScenePath,
 				Difficulty = Difficulty,
 				Status = "active"
 			};
-			NpcApiClient.SaveNpc(npc);
+			await NpcApiClient.SaveNpcAsync(npc);
 			addPopup.Hide();
-			LoadNpcs();
+			await LoadNpcsAsync();
 			ShowMessage("NPC saved successfully.");
 		}
 		catch (Exception exception)
 		{
 			ShowMessage("NPC could not be saved: " + exception.Message);
+		}
+		finally
+		{
+			isSavingNpc = false;
+			saveButton.Disabled = false;
 		}
 	}
 
@@ -229,22 +643,28 @@ public abstract partial class AdminNpcManager : Control
 		deleteDialog.PopupCentered();
 	}
 
-	private void DeleteSelectedNpc()
+	private async void DeleteSelectedNpc()
 	{
-		if (selectedNpc == null)
+		if (selectedNpc == null || isDeletingNpc)
 			return;
 
+		isDeletingNpc = true;
+		NpcDto npcToDelete = selectedNpc;
 		try
 		{
-			NpcApiClient.DeleteNpc(selectedNpc.NpcId);
-			RemoveNpcSprites(selectedNpc.NpcId);
+			await NpcApiClient.DeleteNpcAsync(npcToDelete.NpcId);
+			RemoveNpcSprites(npcToDelete.NpcId);
 			selectedNpc = null;
-			LoadNpcs();
+			await LoadNpcsAsync();
 			ShowMessage("NPC deleted successfully.");
 		}
 		catch (Exception exception)
 		{
 			ShowMessage("NPC could not be deleted: " + exception.Message);
+		}
+		finally
+		{
+			isDeletingNpc = false;
 		}
 	}
 
@@ -255,11 +675,13 @@ public abstract partial class AdminNpcManager : Control
 		deployDialog.PopupCentered();
 	}
 
-	private void DeploySelectedNpc()
+	private async void DeploySelectedNpc()
 	{
-		if (selectedNpc == null)
+		if (selectedNpc == null || isDeployingNpc)
 			return;
 
+		isDeployingNpc = true;
+		NpcDto npcToDeploy = selectedNpc;
 		try
 		{
 			Node currentScene = GetTree().CurrentScene;
@@ -278,26 +700,62 @@ public abstract partial class AdminNpcManager : Control
 
 			Marker2D markerChoice = markers[GD.RandRange(0, markers.Count - 1)];
 			Vector2 position = markerChoice.GlobalPosition;
-			Texture2D texture = AccountApiClient.LoadAvatarAsync(selectedNpc.NpcImage).GetAwaiter().GetResult();
-			if (texture == null)
-				throw new InvalidOperationException("NPC image could not be loaded.");
+			Texture2D texture = null;
+			if (string.IsNullOrWhiteSpace(npcToDeploy.AnimationScenePath))
+			{
+				texture = await AccountApiClient.LoadAvatarAsync(npcToDeploy.NpcImage);
+				if (texture == null)
+					throw new InvalidOperationException("NPC image could not be loaded.");
+			}
+			AnimatedSprite2D sprite = NpcMapSprite.CreateNpcSprite(texture, npcToDeploy.AnimationScenePath);
 
-			NpcApiClient.DeployNpc(selectedNpc, Difficulty, markerChoice.Name, position);
-			SpawnNpcSprite(currentScene, selectedNpc, position, texture);
+			NpcDeploymentDto deployment = await NpcApiClient.DeployNpcAsync(
+				npcToDeploy,
+				Difficulty,
+				markerChoice.Name,
+				position);
+			var deployedPosition = new Vector2(deployment.PositionX, deployment.PositionY);
+			SpawnNpcSprite(currentScene, npcToDeploy, deployment, deployedPosition, sprite);
+			await LoadNpcsAsync();
 			ShowMessage("NPC deployed successfully.");
 		}
 		catch (Exception exception)
 		{
 			ShowMessage("NPC deployment failed: " + exception.Message);
 		}
+		finally
+		{
+			isDeployingNpc = false;
+		}
 	}
 
-	private void SpawnNpcSprite(Node currentScene, NpcDto npc, Vector2 position, Texture2D texture)
+	private void SpawnNpcSprite(Node currentScene, NpcDto npc, NpcDeploymentDto deployment, Vector2 position, AnimatedSprite2D sprite)
 	{
-		AnimatedSprite2D sprite = NpcMapSprite.CreateIdleSprite(texture);
+		if (NpcMapSprite.HasDeploymentSprite(currentScene, deployment.DeploymentId))
+		{
+			sprite.Free();
+			return;
+		}
+
 		currentScene.AddChild(sprite);
-		sprite.GlobalPosition = position;
+		NpcMapSprite.PlaceAtGround(sprite, position);
 		sprite.SetMeta("NpcId", npc.NpcId);
+		sprite.SetMeta("DeploymentId", deployment.DeploymentId);
+	}
+
+	private void RemoveDeploymentSprite(int deploymentId)
+	{
+		Node currentScene = GetTree().CurrentScene;
+		if (currentScene == null)
+			return;
+
+		foreach (Node child in currentScene.GetChildren())
+		{
+			if (child is AnimatedSprite2D sprite &&
+				sprite.HasMeta("DeploymentId") &&
+				sprite.GetMeta("DeploymentId").AsInt32() == deploymentId)
+				sprite.QueueFree();
+		}
 	}
 
 	private void RemoveNpcSprites(int npcId)
@@ -325,6 +783,7 @@ public abstract partial class AdminNpcManager : Control
 	private void CloseSetup()
 	{
 		addPopup.Hide();
+		configurationPopup.Hide();
 		Hide();
 	}
 

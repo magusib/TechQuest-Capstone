@@ -2,6 +2,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using TechQuestBackend.Data;
 using TechQuestBackend.Models;
@@ -107,6 +108,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(NpcImageStorage.GetFolder(app.Environment)),
+    RequestPath = "/uploads/npcs"
+});
 
 app.UseCors("AllowGodotLocalhost");
 

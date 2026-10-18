@@ -14,6 +14,8 @@ namespace TechQuestBackend.Models
 
         public string CorrectAnswer { get; set; } = "";
 
+        public string AnswerTip { get; set; } = "";
+
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public int? CreatedBy { get; set; }

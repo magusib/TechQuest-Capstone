@@ -228,11 +228,11 @@ offset_bottom = 183.0
 grow_horizontal = 0
 theme_override_constants/separation = 20
 
-[node name="DeployNPCButton" type="Button" parent="MapHUDLayer/AdminMapHUD/TopRight" unique_id=2111175700]
+[node name="ManageNPCButton" type="Button" parent="MapHUDLayer/AdminMapHUD/TopRight" unique_id=2111175700]
 layout_mode = 2
-text = "Deploy NPC"
+text = "Manage NPC"
 
-[node name="ManageNPCButton" type="Button" parent="MapHUDLayer/AdminMapHUD/TopRight" unique_id=654614471]
+[node name="UndeployedNPCButton" type="Button" parent="MapHUDLayer/AdminMapHUD/TopRight" unique_id=654614471]
 layout_mode = 2
 text = "Add NPC"
 

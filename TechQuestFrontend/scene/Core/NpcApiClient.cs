@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 public static class NpcApiClient
 {
@@ -16,17 +17,46 @@ public static class NpcApiClient
 		PropertyNameCaseInsensitive = true
 	};
 
-	public static List<NpcDto> GetNpcs(string difficulty)
+	public static async Task<List<NpcDto>> GetNpcsAsync(string difficulty)
 	{
 		using var request = CreateRequest(HttpMethod.Get, $"/Npcs?difficulty={Uri.EscapeDataString(difficulty)}");
-		using HttpResponseMessage response = Client.Send(request);
-		string responseText = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+		using HttpResponseMessage response = await Client.SendAsync(request);
+		string responseText = await response.Content.ReadAsStringAsync();
 		EnsureSuccess(response, responseText);
 
 		return JsonSerializer.Deserialize<List<NpcDto>>(responseText, JsonOptions) ?? new List<NpcDto>();
 	}
 
-	public static string UploadImage(string filePath)
+	public static async Task<List<MiniGameDto>> GetMiniGamesAsync()
+	{
+		using var request = CreateRequest(HttpMethod.Get, "/MiniGames");
+		using HttpResponseMessage response = await Client.SendAsync(request);
+		string responseText = await response.Content.ReadAsStringAsync();
+		EnsureSuccess(response, responseText);
+		return JsonSerializer.Deserialize<List<MiniGameDto>>(responseText, JsonOptions) ?? new List<MiniGameDto>();
+	}
+
+	public static async Task<NpcConfigurationDto> GetNpcConfigurationAsync(int npcId)
+	{
+		using var request = CreateRequest(HttpMethod.Get, $"/Npcs/{npcId}/configuration");
+		using HttpResponseMessage response = await Client.SendAsync(request);
+		string responseText = await response.Content.ReadAsStringAsync();
+		EnsureSuccess(response, responseText);
+		return JsonSerializer.Deserialize<NpcConfigurationDto>(responseText, JsonOptions)
+			?? throw new InvalidOperationException("NPC configuration response was empty.");
+	}
+
+	public static async Task SaveNpcConfigurationAsync(NpcConfigurationDto configuration)
+	{
+		string json = JsonSerializer.Serialize(configuration, JsonOptions);
+		using var request = CreateRequest(HttpMethod.Put, $"/Npcs/{configuration.NpcId}/configuration");
+		request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+		using HttpResponseMessage response = await Client.SendAsync(request);
+		string responseText = await response.Content.ReadAsStringAsync();
+		EnsureSuccess(response, responseText);
+	}
+
+	public static async Task<string> UploadImageAsync(string filePath)
 	{
 		if (!File.Exists(filePath))
 			throw new InvalidOperationException("The selected image could not be found.");
@@ -42,14 +72,14 @@ public static class NpcApiClient
 		form.Add(image, "image", Path.GetFileName(filePath));
 		request.Content = form;
 
-		using HttpResponseMessage response = Client.Send(request);
-		string responseText = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+		using HttpResponseMessage response = await Client.SendAsync(request);
+		string responseText = await response.Content.ReadAsStringAsync();
 		EnsureSuccess(response, responseText);
 		return JsonSerializer.Deserialize<NpcImageDto>(responseText, JsonOptions)?.NpcImage
 			?? throw new InvalidOperationException("NPC image upload response was empty.");
 	}
 
-	public static NpcDto SaveNpc(NpcDto npc)
+	public static async Task<NpcDto> SaveNpcAsync(NpcDto npc)
 	{
 		string json = JsonSerializer.Serialize(npc, JsonOptions);
 		bool isNewNpc = npc.NpcId == 0;
@@ -58,22 +88,26 @@ public static class NpcApiClient
 			isNewNpc ? "/Npcs" : $"/Npcs/{npc.NpcId}");
 		request.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
-		using HttpResponseMessage response = Client.Send(request);
-		string responseText = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+		using HttpResponseMessage response = await Client.SendAsync(request);
+		string responseText = await response.Content.ReadAsStringAsync();
 		EnsureSuccess(response, responseText);
 		return JsonSerializer.Deserialize<NpcDto>(responseText, JsonOptions)
 			?? throw new InvalidOperationException("NPC save response was empty.");
 	}
 
-	public static void DeleteNpc(int npcId)
+	public static async Task DeleteNpcAsync(int npcId)
 	{
 		using var request = CreateRequest(HttpMethod.Delete, $"/Npcs/{npcId}");
-		using HttpResponseMessage response = Client.Send(request);
-		string responseText = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+		using HttpResponseMessage response = await Client.SendAsync(request);
+		string responseText = await response.Content.ReadAsStringAsync();
 		EnsureSuccess(response, responseText);
 	}
 
-	public static void DeployNpc(NpcDto npc, string difficulty, string markerName, Vector2 position)
+	public static async Task<NpcDeploymentDto> DeployNpcAsync(
+		NpcDto npc,
+		string difficulty,
+		string markerName,
+		Vector2 position)
 	{
 		var deployment = new NpcDeploymentRequest
 		{
@@ -86,16 +120,26 @@ public static class NpcApiClient
 		using var request = CreateRequest(HttpMethod.Post, $"/Npcs/{npc.NpcId}/deployments");
 		request.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
-		using HttpResponseMessage response = Client.Send(request);
-		string responseText = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+		using HttpResponseMessage response = await Client.SendAsync(request);
+		string responseText = await response.Content.ReadAsStringAsync();
+		EnsureSuccess(response, responseText);
+		return JsonSerializer.Deserialize<NpcDeploymentDto>(responseText, JsonOptions)
+			?? throw new InvalidOperationException("NPC deployment response was empty.");
+	}
+
+	public static async Task UndeployNpcAsync(int deploymentId)
+	{
+		using var request = CreateRequest(HttpMethod.Delete, $"/Npcs/deployments/{deploymentId}");
+		using HttpResponseMessage response = await Client.SendAsync(request);
+		string responseText = await response.Content.ReadAsStringAsync();
 		EnsureSuccess(response, responseText);
 	}
 
-	public static List<NpcDeploymentDto> GetDeployments(string difficulty)
+	public static async Task<List<NpcDeploymentDto>> GetDeploymentsAsync(string difficulty)
 	{
 		using var request = CreateRequest(HttpMethod.Get, $"/Npcs/deployments?difficulty={Uri.EscapeDataString(difficulty)}");
-		using HttpResponseMessage response = Client.Send(request);
-		string responseText = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+		using HttpResponseMessage response = await Client.SendAsync(request);
+		string responseText = await response.Content.ReadAsStringAsync();
 		EnsureSuccess(response, responseText);
 		return JsonSerializer.Deserialize<List<NpcDeploymentDto>>(responseText, JsonOptions)
 			?? new List<NpcDeploymentDto>();
@@ -125,6 +169,7 @@ public class NpcDto
 	public int NpcId { get; set; }
 	public string NpcName { get; set; } = "";
 	public string NpcImage { get; set; } = "";
+	public string AnimationScenePath { get; set; } = "";
 	public string Difficulty { get; set; } = "Easy";
 	public string Status { get; set; } = "active";
 }
@@ -144,9 +189,29 @@ public class NpcDeploymentRequest
 
 public class NpcDeploymentDto
 {
+	public int DeploymentId { get; set; }
 	public int NpcId { get; set; }
 	public string NpcName { get; set; } = "";
 	public string NpcImage { get; set; } = "";
+	public string AnimationScenePath { get; set; } = "";
 	public float PositionX { get; set; }
 	public float PositionY { get; set; }
+}
+
+public class MiniGameDto
+{
+	public int MiniGameId { get; set; }
+	public string GameName { get; set; } = "";
+	public string GameType { get; set; } = "";
+}
+
+public class NpcConfigurationDto
+{
+	public int NpcId { get; set; }
+	public string SubjectName { get; set; } = "";
+	public int? MiniGameId { get; set; }
+	public string MiniGameName { get; set; } = "";
+	public string Question { get; set; } = "";
+	public string CorrectAnswer { get; set; } = "";
+	public string AnswerTip { get; set; } = "";
 }

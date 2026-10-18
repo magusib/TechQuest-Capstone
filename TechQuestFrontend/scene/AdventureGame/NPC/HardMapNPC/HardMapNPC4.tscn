@@ -5,7 +5,7 @@
 [node name="HardMapNPC4" type="StaticBody2D" unique_id=258689471]
 script = ExtResource("1_lw3mv")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1870677327]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=192185619]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=533666770]
 

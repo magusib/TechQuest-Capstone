@@ -187,9 +187,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -210.0
-offset_top = -133.0
+offset_top = -180.0
 offset_right = 210.0
-offset_bottom = 133.0
+offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -254,3 +254,47 @@ initial_position = 2
 size = Vector2i(272, 100)
 ok_button_text = "Yes"
 dialog_text = "Do you want to deploy this NPC?"
+
+[node name="HardNPCMagement" type="Panel" parent="." unique_id=1547970541]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -218.5
+offset_top = -255.5
+offset_right = 218.5
+offset_bottom = 255.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HardNPCManagementLabel" type="Label" parent="HardNPCMagement" unique_id=217289993]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -117.25
+offset_top = 12.0
+offset_right = 117.25
+offset_bottom = 35.0
+grow_horizontal = 2
+text = "Hard NPC Management"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="HardNPCMagement" unique_id=1237807212]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -23.5
+offset_top = -19.5
+offset_right = 24.0
+offset_bottom = 18.0
+grow_horizontal = 0
+icon = ExtResource("1_o1gk0")
+flat = true
+icon_alignment = 1
+expand_icon = true

@@ -325,6 +325,9 @@ namespace TechQuestBackend.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("NpcId"));
 
+                    b.Property<string>("AnimationScenePath")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
@@ -580,6 +583,10 @@ namespace TechQuestBackend.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("QuestionId"));
+
+                    b.Property<string>("AnswerTip")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("CorrectAnswer")
                         .IsRequired()

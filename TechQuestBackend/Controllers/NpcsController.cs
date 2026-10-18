@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TechQuestBackend.Data;
 using TechQuestBackend.Models;
+using TechQuestBackend.Services;
 
 namespace TechQuestBackend.Controllers
 {
@@ -41,6 +42,92 @@ namespace TechQuestBackend.Controllers
             return npc == null ? NotFound() : Ok(npc);
         }
 
+        [HttpGet("{npcId:int}/configuration")]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> GetConfiguration(int npcId, CancellationToken cancellationToken)
+        {
+            var npc = await _db.Npcs.AsNoTracking()
+                .FirstOrDefaultAsync(n => n.NpcId == npcId && n.Status == "active", cancellationToken);
+            if (npc == null)
+                return NotFound("NPC was not found or is inactive.");
+
+            var question = await _db.Questions.AsNoTracking()
+                .Where(q => q.NpcId == npcId)
+                .OrderBy(q => q.QuestionId)
+                .Select(q => new NpcConfigurationResponse
+                {
+                    NpcId = npcId,
+                    SubjectName = q.SubjectName,
+                    MiniGameId = q.MiniGameId,
+                    MiniGameName = q.MiniGame == null ? "" : q.MiniGame.GameName,
+                    Question = q.QuestionText,
+                    CorrectAnswer = q.CorrectAnswer,
+                    AnswerTip = q.AnswerTip
+                })
+                .FirstOrDefaultAsync(cancellationToken);
+
+            return Ok(question ?? new NpcConfigurationResponse { NpcId = npcId });
+        }
+
+        [HttpPut("{npcId:int}/configuration")]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> UpdateConfiguration(
+            int npcId,
+            NpcConfigurationRequest request,
+            CancellationToken cancellationToken)
+        {
+            var npc = await _db.Npcs
+                .FirstOrDefaultAsync(n => n.NpcId == npcId && n.Status == "active", cancellationToken);
+            if (npc == null)
+                return NotFound("NPC was not found or is inactive.");
+
+            if (string.IsNullOrWhiteSpace(request.SubjectName) ||
+                string.IsNullOrWhiteSpace(request.Question) ||
+                string.IsNullOrWhiteSpace(request.CorrectAnswer))
+                return BadRequest("Subject, question, and correct answer are required.");
+
+            if (request.MiniGameId.HasValue &&
+                !await _db.MiniGames.AnyAsync(m => m.MiniGameId == request.MiniGameId.Value, cancellationToken))
+                return BadRequest("Mini-game was not found.");
+
+            var question = await _db.Questions
+                .Where(q => q.NpcId == npcId)
+                .OrderBy(q => q.QuestionId)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (question == null)
+            {
+                question = new Question
+                {
+                    NpcId = npcId,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = GetUserId()
+                };
+                _db.Questions.Add(question);
+            }
+
+            question.SubjectName = request.SubjectName.Trim();
+            question.MiniGameId = request.MiniGameId;
+            question.QuestionText = request.Question.Trim();
+            question.CorrectAnswer = request.CorrectAnswer.Trim();
+            question.AnswerTip = request.AnswerTip?.Trim() ?? "";
+
+            await _db.SaveChangesAsync(cancellationToken);
+            return Ok(new NpcConfigurationResponse
+            {
+                NpcId = npcId,
+                SubjectName = question.SubjectName,
+                MiniGameId = question.MiniGameId,
+                MiniGameName = question.MiniGameId.HasValue
+                    ? await _db.MiniGames.Where(m => m.MiniGameId == question.MiniGameId.Value)
+                        .Select(m => m.GameName).FirstOrDefaultAsync(cancellationToken) ?? ""
+                    : "",
+                Question = question.QuestionText,
+                CorrectAnswer = question.CorrectAnswer,
+                AnswerTip = question.AnswerTip
+            });
+        }
+
         [HttpPost]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Create(NpcRequest request, CancellationToken cancellationToken)
@@ -53,6 +140,8 @@ namespace TechQuestBackend.Controllers
                 return BadRequest("NPC image is required.");
             if (!HasValidImagePath(request.NpcImage))
                 return BadRequest("NPC image must be an uploaded PNG, JPG, or JPEG image.");
+            if (!IsValidAnimationScenePath(request.AnimationScenePath, request.Difficulty))
+                return BadRequest("NPC animation scene must be a scene in the matching difficulty NPC folder.");
             string npcName = request.NpcName.Trim();
             bool nameExists = await _db.Npcs.AnyAsync(
                 n => n.NpcName.ToLower() == npcName.ToLower(), cancellationToken);
@@ -63,6 +152,7 @@ namespace TechQuestBackend.Controllers
             {
                 NpcName = npcName,
                 NpcImage = request.NpcImage,
+                AnimationScenePath = NormalizeAnimationScenePath(request.AnimationScenePath),
                 Difficulty = NormalizeDifficulty(request.Difficulty),
                 Status = string.IsNullOrWhiteSpace(request.Status) ? "active" : request.Status.Trim(),
                 CreatedAt = DateTime.UtcNow,
@@ -86,6 +176,8 @@ namespace TechQuestBackend.Controllers
                 return BadRequest("NPC name is required.");
             if (!IsDifficulty(request.Difficulty))
                 return BadRequest("Difficulty must be Easy, Medium, or Hard.");
+            if (!IsValidAnimationScenePath(request.AnimationScenePath, request.Difficulty))
+                return BadRequest("NPC animation scene must be a scene in the matching difficulty NPC folder.");
             string npcName = request.NpcName.Trim();
             bool nameExists = await _db.Npcs.AnyAsync(
                 n => n.NpcId != npcId && n.NpcName.ToLower() == npcName.ToLower(),
@@ -100,6 +192,8 @@ namespace TechQuestBackend.Controllers
             }
 
             npc.NpcName = npcName;
+            if (request.AnimationScenePath != null)
+                npc.AnimationScenePath = NormalizeAnimationScenePath(request.AnimationScenePath);
             npc.Difficulty = NormalizeDifficulty(request.Difficulty);
             npc.Status = string.IsNullOrWhiteSpace(request.Status) ? npc.Status : request.Status.Trim();
             await _db.SaveChangesAsync(cancellationToken);
@@ -152,10 +246,7 @@ namespace TechQuestBackend.Controllers
                 return BadRequest("The selected file is not a valid PNG or JPEG image.");
 
             int userId = GetUserId();
-            string webRootPath = _environment.WebRootPath ??
-                Path.Combine(_environment.ContentRootPath, "wwwroot");
-            string uploadFolder = Path.Combine(webRootPath, "uploads", "npcs");
-            Directory.CreateDirectory(uploadFolder);
+            string uploadFolder = NpcImageStorage.GetFolder(_environment);
 
             string fileName = $"{userId}_{Guid.NewGuid():N}{extension}";
             string filePath = Path.Combine(uploadFolder, fileName);
@@ -182,12 +273,6 @@ namespace TechQuestBackend.Controllers
             if (!string.Equals(npc.Difficulty, difficulty, StringComparison.OrdinalIgnoreCase))
                 return BadRequest("NPC difficulty must match the map difficulty.");
 
-            bool alreadyDeployed = await _db.NpcDeployments.AnyAsync(
-                d => d.NpcId == npcId && d.MapDifficulty == difficulty && d.Status == "deployed",
-                cancellationToken);
-            if (alreadyDeployed)
-                return Conflict("This NPC is already deployed on this map.");
-
             var deployment = new NpcDeployment
             {
                 NpcId = npcId,
@@ -199,6 +284,7 @@ namespace TechQuestBackend.Controllers
                 DeployedAt = DateTime.UtcNow
             };
             _db.NpcDeployments.Add(deployment);
+
             await _db.SaveChangesAsync(cancellationToken);
             return Ok(deployment);
         }
@@ -220,6 +306,7 @@ namespace TechQuestBackend.Controllers
                     d.NpcId,
                     NpcName = d.Npc!.NpcName,
                     NpcImage = d.Npc!.NpcImage,
+                    AnimationScenePath = d.Npc!.AnimationScenePath,
                     d.MapDifficulty,
                     d.PositionX,
                     d.PositionY,
@@ -228,6 +315,20 @@ namespace TechQuestBackend.Controllers
                 .ToListAsync(cancellationToken);
 
             return Ok(deployments);
+        }
+
+        [HttpDelete("deployments/{deploymentId:int}")]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> Undeploy(int deploymentId, CancellationToken cancellationToken)
+        {
+            var deployment = await _db.NpcDeployments
+                .FirstOrDefaultAsync(d => d.DeploymentId == deploymentId && d.Status == "deployed", cancellationToken);
+            if (deployment == null)
+                return NotFound("Active NPC deployment was not found.");
+
+            deployment.Status = "removed";
+            await _db.SaveChangesAsync(cancellationToken);
+            return NoContent();
         }
 
         private int GetUserId()
@@ -254,12 +355,30 @@ namespace TechQuestBackend.Controllers
             return imagePath.StartsWith("/uploads/npcs/", StringComparison.Ordinal) &&
                 (extension == ".png" || extension == ".jpg" || extension == ".jpeg");
         }
+
+        private static bool IsValidAnimationScenePath(string? scenePath, string difficulty)
+        {
+            if (string.IsNullOrWhiteSpace(scenePath))
+                return true;
+
+            string folderName = NormalizeDifficulty(difficulty) + "MapNPC";
+            string expectedPrefix = $"res://scene/AdventureGame/NPC/{folderName}/";
+            return scenePath.StartsWith(expectedPrefix, StringComparison.Ordinal) &&
+                scenePath.EndsWith(".tscn", StringComparison.OrdinalIgnoreCase) &&
+                !scenePath.Contains("..", StringComparison.Ordinal);
+        }
+
+        private static string? NormalizeAnimationScenePath(string? scenePath)
+        {
+            return string.IsNullOrWhiteSpace(scenePath) ? null : scenePath.Trim();
+        }
     }
 
     public class NpcRequest
     {
         public string NpcName { get; set; } = "";
         public string? NpcImage { get; set; }
+        public string? AnimationScenePath { get; set; }
         public string Difficulty { get; set; } = "Easy";
         public string? Status { get; set; }
     }
@@ -270,5 +389,25 @@ namespace TechQuestBackend.Controllers
         public float PositionX { get; set; }
         public float PositionY { get; set; }
         public string PositionMarker { get; set; } = "";
+    }
+
+    public class NpcConfigurationRequest
+    {
+        public string SubjectName { get; set; } = "";
+        public int? MiniGameId { get; set; }
+        public string Question { get; set; } = "";
+        public string CorrectAnswer { get; set; } = "";
+        public string? AnswerTip { get; set; }
+    }
+
+    public class NpcConfigurationResponse
+    {
+        public int NpcId { get; set; }
+        public string SubjectName { get; set; } = "";
+        public int? MiniGameId { get; set; }
+        public string MiniGameName { get; set; } = "";
+        public string Question { get; set; } = "";
+        public string CorrectAnswer { get; set; } = "";
+        public string AnswerTip { get; set; } = "";
     }
 }

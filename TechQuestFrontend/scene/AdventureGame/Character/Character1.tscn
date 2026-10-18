@@ -483,5 +483,5 @@ metadata/_aseprite_wizard_config_ = {
 metadata/_aseprite_wizard_source_file_hash_ = "f40c68354fefef72bc6317634275d5ef"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1363358577]
-position = Vector2(-2, 29)
+position = Vector2(0, 30)
 shape = SubResource("CircleShape2D_8icjc")

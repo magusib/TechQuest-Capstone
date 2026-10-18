@@ -522,14 +522,13 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lpgpl"]
-radius = 16.763054
 
 [node name="Character10" type="CharacterBody2D" unique_id=1648924303]
 script = ExtResource("1_vr5jm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=497304483]
 texture_filter = 1
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_if5hk")
 animation = &"Walk"
 metadata/_aseprite_wizard_interface_config_ = {
@@ -551,5 +550,5 @@ metadata/_aseprite_wizard_config_ = {
 metadata/_aseprite_wizard_source_file_hash_ = "a2e1ed0f3693450124677774024eb002"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1583382845]
-position = Vector2(1, 27)
+position = Vector2(1, 24)
 shape = SubResource("CircleShape2D_lpgpl")
