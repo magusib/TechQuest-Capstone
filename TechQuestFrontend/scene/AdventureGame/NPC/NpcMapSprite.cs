@@ -20,6 +20,7 @@ public static class NpcMapSprite
 		};
 
 		sprite.SetMeta("GroundAnchorOffset", Vector2.Zero);
+		AddNpcInteractionArea(sprite);
 		sprite.Play("Idle");
 
 		return sprite;
@@ -123,6 +124,7 @@ public static class NpcMapSprite
 				"GroundAnchorOffset",
 				new Vector2(0, collisionBottom));
 
+			AddNpcInteractionArea(animatedSprite);
 			animatedSprite.Play(animation);
 
 			return animatedSprite;
@@ -131,6 +133,21 @@ public static class NpcMapSprite
 		{
 			sceneInstance.Free();
 		}
+	}
+
+	private static void AddNpcInteractionArea(AnimatedSprite2D sprite)
+	{
+		NpcInteractionArea interactionArea = new()
+		{
+			Name = "NpcInteractionArea",
+			Position = new Vector2(0, -40)
+		};
+		CollisionShape2D collision = new()
+		{
+			Shape = new CircleShape2D { Radius = 48 }
+		};
+		interactionArea.AddChild(collision);
+		sprite.AddChild(interactionArea);
 	}
 
 	private static AnimatedSprite2D FindAnimatedSprite(Node node)

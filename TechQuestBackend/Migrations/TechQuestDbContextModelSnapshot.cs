@@ -109,6 +109,14 @@ namespace TechQuestBackend.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ResultId"));
 
+                    b.Property<Guid?>("AttemptId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("CoinsDeducted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
                     b.Property<int>("EarnedCoins")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
@@ -135,12 +143,17 @@ namespace TechQuestBackend.Migrations
 
                     b.HasKey("ResultId");
 
+                    b.HasIndex("AttemptId")
+                        .IsUnique();
+
                     b.HasIndex("QuestionId");
 
                     b.HasIndex("StudentId");
 
                     b.ToTable("Game_result", null, t =>
                         {
+                            t.HasCheckConstraint("CK_Game_result_CoinsDeducted_NonNegative", "\"CoinsDeducted\" >= 0");
+
                             t.HasCheckConstraint("CK_Game_result_EarnedCoins_NonNegative", "\"EarnedCoins\" >= 0");
 
                             t.HasCheckConstraint("CK_Game_result_EarnedPoints_NonNegative", "\"EarnedPoints\" >= 0");
@@ -393,14 +406,13 @@ namespace TechQuestBackend.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("PositionMarker")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<float>("PositionX")
+                    b.Property<float?>("PositionX")
                         .HasColumnType("real");
 
-                    b.Property<float>("PositionY")
+                    b.Property<float?>("PositionY")
                         .HasColumnType("real");
 
                     b.Property<string>("Status")
@@ -408,7 +420,7 @@ namespace TechQuestBackend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)")
-                        .HasDefaultValue("deployed");
+                        .HasDefaultValue("Pending");
 
                     b.HasKey("DeploymentId");
 
@@ -416,9 +428,15 @@ namespace TechQuestBackend.Migrations
 
                     b.HasIndex("NpcId");
 
+                    b.HasIndex("MapDifficulty", "PositionMarker")
+                        .IsUnique()
+                        .HasFilter("\"Status\" = 'Deployed'");
+
                     b.ToTable("NPC_deployment", null, t =>
                         {
                             t.HasCheckConstraint("CK_NPC_deployment_Difficulty", "lower(btrim(\"MapDifficulty\")) IN ('easy', 'medium', 'hard')");
+
+                            t.HasCheckConstraint("CK_NPC_deployment_Status", "\"Status\" IN ('Pending', 'Deployed', 'Cancelled')");
                         });
                 });
 
@@ -600,6 +618,9 @@ namespace TechQuestBackend.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("DeploymentId")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("MiniGameId")
                         .HasColumnType("integer");
 
@@ -619,6 +640,9 @@ namespace TechQuestBackend.Migrations
                     b.HasKey("QuestionId");
 
                     b.HasIndex("CreatedBy");
+
+                    b.HasIndex("DeploymentId")
+                        .IsUnique();
 
                     b.HasIndex("MiniGameId");
 
@@ -1053,6 +1077,11 @@ namespace TechQuestBackend.Migrations
                         .HasForeignKey("CreatedBy")
                         .OnDelete(DeleteBehavior.SetNull);
 
+                    b.HasOne("TechQuestBackend.Models.NpcDeployment", "Deployment")
+                        .WithMany("Questions")
+                        .HasForeignKey("DeploymentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("TechQuestBackend.Models.MiniGame", "MiniGame")
                         .WithMany("Questions")
                         .HasForeignKey("MiniGameId")
@@ -1064,6 +1093,8 @@ namespace TechQuestBackend.Migrations
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("CreatedByUser");
+
+                    b.Navigation("Deployment");
 
                     b.Navigation("MiniGame");
 
@@ -1178,6 +1209,11 @@ namespace TechQuestBackend.Migrations
                 {
                     b.Navigation("Deployments");
 
+                    b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.NpcDeployment", b =>
+                {
                     b.Navigation("Questions");
                 });
 

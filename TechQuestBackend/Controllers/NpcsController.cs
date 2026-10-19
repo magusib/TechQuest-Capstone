@@ -53,6 +53,7 @@ namespace TechQuestBackend.Controllers
 
             var question = await _db.Questions.AsNoTracking()
                 .Where(q => q.NpcId == npcId)
+                .Where(q => q.DeploymentId == null)
                 .OrderBy(q => q.QuestionId)
                 .Select(q => new NpcConfigurationResponse
                 {
@@ -67,6 +68,157 @@ namespace TechQuestBackend.Controllers
                 .FirstOrDefaultAsync(cancellationToken);
 
             return Ok(question ?? new NpcConfigurationResponse { NpcId = npcId });
+        }
+
+        [HttpGet("deployments/{deploymentId:int}/configuration")]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> GetDeploymentConfiguration(
+            int deploymentId,
+            CancellationToken cancellationToken)
+        {
+            var deployment = await _db.NpcDeployments.AsNoTracking()
+                .Include(item => item.Npc)
+                .FirstOrDefaultAsync(
+                    item => item.DeploymentId == deploymentId &&
+                        (item.Status == "Deployed" || item.Status == "Pending") &&
+                        item.Npc != null &&
+                        item.Npc.Status == "active",
+                    cancellationToken);
+            if (deployment == null)
+                return NotFound("Active NPC deployment was not found.");
+
+            var configuration = await _db.Questions.AsNoTracking()
+                .Where(question => question.DeploymentId == deploymentId)
+                .Select(question => new NpcConfigurationResponse
+                {
+                    NpcId = question.NpcId ?? 0,
+                    DeploymentId = question.DeploymentId,
+                    SubjectName = question.SubjectName,
+                    MiniGameId = question.MiniGameId,
+                    MiniGameName = question.MiniGame == null ? "" : question.MiniGame.GameName,
+                    Question = question.QuestionText,
+                    CorrectAnswer = question.CorrectAnswer,
+                    AnswerTip = question.AnswerTip
+                })
+                .FirstOrDefaultAsync(cancellationToken);
+
+            return Ok(configuration ?? new NpcConfigurationResponse
+            {
+                NpcId = deployment.NpcId,
+                DeploymentId = deploymentId
+            });
+        }
+
+        [HttpPut("deployments/{deploymentId:int}/configuration")]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> UpdateDeploymentConfiguration(
+            int deploymentId,
+            NpcConfigurationRequest request,
+            CancellationToken cancellationToken)
+        {
+            var deployment = await _db.NpcDeployments
+                .Include(item => item.Npc)
+                .FirstOrDefaultAsync(
+                    item => item.DeploymentId == deploymentId &&
+                        (item.Status == "Deployed" || item.Status == "Pending") &&
+                        item.Npc != null &&
+                        item.Npc.Status == "active",
+                    cancellationToken);
+            if (deployment == null)
+                return NotFound("Active NPC deployment was not found.");
+
+            if (string.IsNullOrWhiteSpace(request.SubjectName) ||
+                string.IsNullOrWhiteSpace(request.Question) ||
+                string.IsNullOrWhiteSpace(request.CorrectAnswer))
+                return BadRequest("Subject, question, and correct answer are required.");
+
+            if (request.MiniGameId.HasValue &&
+                !await _db.MiniGames.AnyAsync(
+                    game => game.MiniGameId == request.MiniGameId.Value,
+                    cancellationToken))
+                return BadRequest("Mini-game was not found.");
+
+            var question = await _db.Questions
+                .FirstOrDefaultAsync(item => item.DeploymentId == deploymentId, cancellationToken);
+            if (question == null)
+            {
+                question = new Question
+                {
+                    NpcId = deployment.NpcId,
+                    DeploymentId = deploymentId,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = GetUserId()
+                };
+                _db.Questions.Add(question);
+            }
+
+            question.SubjectName = request.SubjectName.Trim();
+            question.MiniGameId = request.MiniGameId;
+            question.QuestionText = request.Question.Trim();
+            question.CorrectAnswer = request.CorrectAnswer.Trim();
+            question.AnswerTip = request.AnswerTip?.Trim() ?? "";
+            await _db.SaveChangesAsync(cancellationToken);
+
+            return Ok(new NpcConfigurationResponse
+            {
+                NpcId = deployment.NpcId,
+                DeploymentId = deploymentId,
+                SubjectName = question.SubjectName,
+                MiniGameId = question.MiniGameId,
+                MiniGameName = question.MiniGameId.HasValue
+                    ? await _db.MiniGames
+                        .Where(game => game.MiniGameId == question.MiniGameId.Value)
+                        .Select(game => game.GameName)
+                        .FirstOrDefaultAsync(cancellationToken) ?? ""
+                    : "",
+                Question = question.QuestionText,
+                CorrectAnswer = question.CorrectAnswer,
+                AnswerTip = question.AnswerTip
+            });
+        }
+
+        private async Task<NpcDeployment?> FindActiveDeployment(int deploymentId, CancellationToken cancellationToken)
+        {
+            return await _db.NpcDeployments.AsNoTracking()
+                .Include(deployment => deployment.Npc)
+                .FirstOrDefaultAsync(
+                    deployment => deployment.DeploymentId == deploymentId &&
+                        deployment.Status == "Deployed" &&
+                        deployment.Npc != null &&
+                        deployment.Npc.Status == "active",
+                    cancellationToken);
+        }
+
+        [HttpGet("deployments/{deploymentId:int}/student-game")]
+        [Authorize(Roles = "student")]
+        public async Task<IActionResult> GetStudentGame(int deploymentId, CancellationToken cancellationToken)
+        {
+            var deployment = await FindActiveDeployment(deploymentId, cancellationToken);
+            if (deployment == null)
+                return NotFound("NPC deployment was not found or is no longer active.");
+
+            var assignment = await _db.Questions.AsNoTracking()
+                .Where(question => question.DeploymentId == deploymentId && question.MiniGameId.HasValue)
+                .OrderBy(question => question.QuestionId)
+                .Select(question => new
+                {
+                    question.QuestionId,
+                    question.NpcId,
+                    question.DeploymentId,
+                    question.MiniGame!.GameType,
+                    question.MiniGame.GameName
+                })
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (assignment == null)
+                return NotFound("This NPC does not have a mini-game assignment.");
+
+            if (assignment.GameType != "MatchThePairs" &&
+                assignment.GameType != "FallingDuck" &&
+                assignment.GameType != "QuickTapChallenge")
+                return BadRequest("This NPC has an unsupported mini-game assignment.");
+
+            return Ok(assignment);
         }
 
         [HttpPut("{npcId:int}/configuration")]
@@ -91,7 +243,7 @@ namespace TechQuestBackend.Controllers
                 return BadRequest("Mini-game was not found.");
 
             var question = await _db.Questions
-                .Where(q => q.NpcId == npcId)
+                .Where(q => q.NpcId == npcId && q.DeploymentId == null)
                 .OrderBy(q => q.QuestionId)
                 .FirstOrDefaultAsync(cancellationToken);
 
@@ -210,10 +362,16 @@ namespace TechQuestBackend.Controllers
 
             npc.Status = "inactive";
             var deployments = await _db.NpcDeployments
-                .Where(d => d.NpcId == npcId && d.Status == "deployed")
+                .Where(d => d.NpcId == npcId &&
+                    (d.Status == "Deployed" || d.Status == "Pending"))
                 .ToListAsync(cancellationToken);
             foreach (var deployment in deployments)
-                deployment.Status = "removed";
+            {
+                deployment.Status = "Cancelled";
+                deployment.PositionX = null;
+                deployment.PositionY = null;
+                deployment.PositionMarker = null;
+            }
 
             await _db.SaveChangesAsync(cancellationToken);
             return NoContent();
@@ -262,8 +420,12 @@ namespace TechQuestBackend.Controllers
         {
             if (!IsDifficulty(request.MapDifficulty))
                 return BadRequest("Map difficulty must be Easy, Medium, or Hard.");
-            if (string.IsNullOrWhiteSpace(request.PositionMarker))
-                return BadRequest("A map spawn marker is required.");
+            bool hasMarker = !string.IsNullOrWhiteSpace(request.PositionMarker);
+            if (hasMarker != (request.PositionX.HasValue && request.PositionY.HasValue) ||
+                request.PositionX.HasValue != request.PositionY.HasValue ||
+                (request.PositionX.HasValue &&
+                    (!float.IsFinite(request.PositionX.Value) || !float.IsFinite(request.PositionY!.Value))))
+                return BadRequest("A spawn marker and both coordinates must be provided together.");
 
             string difficulty = NormalizeDifficulty(request.MapDifficulty);
             var npc = await _db.Npcs.FirstOrDefaultAsync(
@@ -273,20 +435,47 @@ namespace TechQuestBackend.Controllers
             if (!string.Equals(npc.Difficulty, difficulty, StringComparison.OrdinalIgnoreCase))
                 return BadRequest("NPC difficulty must match the map difficulty.");
 
+            await using var transaction = await _db.Database.BeginTransactionAsync(cancellationToken);
+            await LockDeploymentQueueAsync(difficulty, cancellationToken);
+
+            string? positionMarker = hasMarker ? request.PositionMarker!.Trim() : null;
+            bool spawnPointOccupied = positionMarker != null &&
+                await _db.NpcDeployments.AnyAsync(
+                    deployment => deployment.MapDifficulty == difficulty &&
+                        deployment.PositionMarker == positionMarker &&
+                        deployment.Status == "Deployed",
+                    cancellationToken);
+
             var deployment = new NpcDeployment
             {
                 NpcId = npcId,
                 MapDifficulty = difficulty,
-                PositionX = request.PositionX,
-                PositionY = request.PositionY,
-                PositionMarker = request.PositionMarker.Trim(),
+                PositionX = spawnPointOccupied || positionMarker == null ? null : request.PositionX,
+                PositionY = spawnPointOccupied || positionMarker == null ? null : request.PositionY,
+                PositionMarker = spawnPointOccupied ? null : positionMarker,
+                Status = positionMarker != null && !spawnPointOccupied ? "Deployed" : "Pending",
                 DeployedBy = GetUserId(),
                 DeployedAt = DateTime.UtcNow
             };
             _db.NpcDeployments.Add(deployment);
+            await _db.SaveChangesAsync(cancellationToken);
+
+            _db.Questions.Add(new Question
+            {
+                NpcId = npcId,
+                DeploymentId = deployment.DeploymentId,
+                MiniGameId = null,
+                SubjectName = "",
+                QuestionText = "",
+                CorrectAnswer = "",
+                AnswerTip = "",
+                CreatedAt = DateTime.UtcNow,
+                CreatedBy = GetUserId()
+            });
 
             await _db.SaveChangesAsync(cancellationToken);
-            return Ok(deployment);
+            await transaction.CommitAsync(cancellationToken);
+            return Ok(ToDeploymentResponse(deployment, npc));
         }
 
         [HttpGet("deployments")]
@@ -299,22 +488,98 @@ namespace TechQuestBackend.Controllers
             string mapDifficulty = NormalizeDifficulty(difficulty);
             var deployments = await _db.NpcDeployments
                 .AsNoTracking()
-                .Where(d => d.MapDifficulty == mapDifficulty && d.Status == "deployed" && d.Npc != null && d.Npc.Status == "active")
-                .Select(d => new
+                .Where(d => d.MapDifficulty == mapDifficulty &&
+                    (d.Status == "Deployed" || d.Status == "Pending") &&
+                    d.Npc != null && d.Npc.Status == "active")
+                .OrderBy(d => d.Status == "Deployed" ? 0 : 1)
+                .ThenBy(d => d.DeployedAt)
+                .ThenBy(d => d.DeploymentId)
+                .Select(d => new NpcDeploymentResponse
                 {
-                    d.DeploymentId,
-                    d.NpcId,
+                    DeploymentId = d.DeploymentId,
+                    NpcId = d.NpcId,
                     NpcName = d.Npc!.NpcName,
-                    NpcImage = d.Npc!.NpcImage,
+                    NpcImage = d.Npc!.NpcImage ?? "",
                     AnimationScenePath = d.Npc!.AnimationScenePath,
-                    d.MapDifficulty,
-                    d.PositionX,
-                    d.PositionY,
-                    d.PositionMarker
+                    MapDifficulty = d.MapDifficulty,
+                    PositionX = d.PositionX,
+                    PositionY = d.PositionY,
+                    PositionMarker = d.PositionMarker,
+                    Status = d.Status,
+                    DeployedAt = d.DeployedAt
                 })
                 .ToListAsync(cancellationToken);
 
             return Ok(deployments);
+        }
+
+        [HttpPost("deployments/process-queue")]
+        [Authorize(Roles = "student,admin")]
+        public async Task<IActionResult> ProcessDeploymentQueue(
+            NpcDeploymentQueueRequest request,
+            CancellationToken cancellationToken)
+        {
+            if (!IsDifficulty(request.MapDifficulty))
+                return BadRequest("Map difficulty must be Easy, Medium, or Hard.");
+            if (request.AvailableSpawnPoints == null)
+                return BadRequest("Available spawn points are required.");
+            if (request.AvailableSpawnPoints.Any(point =>
+                string.IsNullOrWhiteSpace(point.PositionMarker) ||
+                !float.IsFinite(point.PositionX) ||
+                !float.IsFinite(point.PositionY)))
+                return BadRequest("Every available spawn point must have a marker and finite coordinates.");
+
+            string difficulty = NormalizeDifficulty(request.MapDifficulty);
+            var distinctMarkers = new HashSet<string>(StringComparer.Ordinal);
+            foreach (NpcSpawnPointRequest point in request.AvailableSpawnPoints)
+            {
+                if (!distinctMarkers.Add(point.PositionMarker.Trim()))
+                    return BadRequest("Available spawn point markers must be unique.");
+            }
+
+            if (request.AvailableSpawnPoints.Count == 0)
+                return Ok(Array.Empty<NpcDeploymentResponse>());
+
+            await using var transaction = await _db.Database.BeginTransactionAsync(cancellationToken);
+            await LockDeploymentQueueAsync(difficulty, cancellationToken);
+
+            var occupiedMarkers = await _db.NpcDeployments
+                .Where(deployment => deployment.MapDifficulty == difficulty &&
+                    deployment.Status == "Deployed" &&
+                    deployment.PositionMarker != null)
+                .Select(deployment => deployment.PositionMarker!)
+                .ToListAsync(cancellationToken);
+            var availableSpawnPoints = new Queue<NpcSpawnPointRequest>(
+                request.AvailableSpawnPoints
+                    .Where(point => !occupiedMarkers.Contains(point.PositionMarker.Trim()))
+                    .OrderBy(point => point.PositionMarker));
+            var pendingDeployments = await _db.NpcDeployments
+                .Include(deployment => deployment.Npc)
+                .Where(deployment => deployment.MapDifficulty == difficulty &&
+                    deployment.Status == "Pending" &&
+                    deployment.Npc != null &&
+                    deployment.Npc.Status == "active")
+                .OrderBy(deployment => deployment.DeployedAt)
+                .ThenBy(deployment => deployment.DeploymentId)
+                .ToListAsync(cancellationToken);
+
+            var newlyDeployed = new List<NpcDeploymentResponse>();
+            foreach (NpcDeployment deployment in pendingDeployments)
+            {
+                if (availableSpawnPoints.Count == 0)
+                    break;
+
+                NpcSpawnPointRequest spawnPoint = availableSpawnPoints.Dequeue();
+                deployment.PositionMarker = spawnPoint.PositionMarker.Trim();
+                deployment.PositionX = spawnPoint.PositionX;
+                deployment.PositionY = spawnPoint.PositionY;
+                deployment.Status = "Deployed";
+                newlyDeployed.Add(ToDeploymentResponse(deployment, deployment.Npc!));
+            }
+
+            await _db.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+            return Ok(newlyDeployed);
         }
 
         [HttpDelete("deployments/{deploymentId:int}")]
@@ -322,13 +587,45 @@ namespace TechQuestBackend.Controllers
         public async Task<IActionResult> Undeploy(int deploymentId, CancellationToken cancellationToken)
         {
             var deployment = await _db.NpcDeployments
-                .FirstOrDefaultAsync(d => d.DeploymentId == deploymentId && d.Status == "deployed", cancellationToken);
+                .FirstOrDefaultAsync(d => d.DeploymentId == deploymentId &&
+                    (d.Status == "Deployed" || d.Status == "Pending"), cancellationToken);
             if (deployment == null)
-                return NotFound("Active NPC deployment was not found.");
+                return NotFound("Active or pending NPC deployment was not found.");
 
-            deployment.Status = "removed";
+            deployment.Status = "Cancelled";
+            deployment.PositionX = null;
+            deployment.PositionY = null;
+            deployment.PositionMarker = null;
             await _db.SaveChangesAsync(cancellationToken);
             return NoContent();
+        }
+
+        private async Task LockDeploymentQueueAsync(string difficulty, CancellationToken cancellationToken)
+        {
+            string lockKey = "npc-deployment-" + difficulty.ToLowerInvariant();
+            await _db.Database.ExecuteSqlInterpolatedAsync(
+                $"SELECT pg_advisory_xact_lock(hashtext({lockKey}))",
+                cancellationToken);
+        }
+
+        private static NpcDeploymentResponse ToDeploymentResponse(
+            NpcDeployment deployment,
+            Npc npc)
+        {
+            return new NpcDeploymentResponse
+            {
+                DeploymentId = deployment.DeploymentId,
+                NpcId = deployment.NpcId,
+                NpcName = npc.NpcName,
+                NpcImage = npc.NpcImage ?? "",
+                AnimationScenePath = npc.AnimationScenePath,
+                MapDifficulty = deployment.MapDifficulty,
+                PositionX = deployment.PositionX,
+                PositionY = deployment.PositionY,
+                PositionMarker = deployment.PositionMarker,
+                Status = deployment.Status,
+                DeployedAt = deployment.DeployedAt
+            };
         }
 
         private int GetUserId()
@@ -386,9 +683,37 @@ namespace TechQuestBackend.Controllers
     public class NpcDeploymentRequest
     {
         public string MapDifficulty { get; set; } = "Easy";
+        public float? PositionX { get; set; }
+        public float? PositionY { get; set; }
+        public string? PositionMarker { get; set; }
+    }
+
+    public class NpcDeploymentQueueRequest
+    {
+        public string MapDifficulty { get; set; } = "";
+        public List<NpcSpawnPointRequest> AvailableSpawnPoints { get; set; } = new();
+    }
+
+    public class NpcSpawnPointRequest
+    {
+        public string PositionMarker { get; set; } = "";
         public float PositionX { get; set; }
         public float PositionY { get; set; }
-        public string PositionMarker { get; set; } = "";
+    }
+
+    public class NpcDeploymentResponse
+    {
+        public int DeploymentId { get; set; }
+        public int NpcId { get; set; }
+        public string NpcName { get; set; } = "";
+        public string NpcImage { get; set; } = "";
+        public string? AnimationScenePath { get; set; }
+        public string MapDifficulty { get; set; } = "";
+        public string Status { get; set; } = "";
+        public string? PositionMarker { get; set; }
+        public float? PositionX { get; set; }
+        public float? PositionY { get; set; }
+        public DateTime DeployedAt { get; set; }
     }
 
     public class NpcConfigurationRequest
@@ -403,6 +728,7 @@ namespace TechQuestBackend.Controllers
     public class NpcConfigurationResponse
     {
         public int NpcId { get; set; }
+        public int? DeploymentId { get; set; }
         public string SubjectName { get; set; } = "";
         public int? MiniGameId { get; set; }
         public string MiniGameName { get; set; } = "";

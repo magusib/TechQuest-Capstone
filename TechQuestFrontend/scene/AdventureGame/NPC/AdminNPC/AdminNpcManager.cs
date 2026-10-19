@@ -235,6 +235,15 @@ public abstract partial class AdminNpcManager : Control
 
 		if (deployment != null)
 		{
+			var statusLabel = new Label
+			{
+				Text = deployment.Status == "Pending"
+					? "Pending - Waiting for an available spawn point."
+					: "Deployed",
+				HorizontalAlignment = HorizontalAlignment.Center,
+				AutowrapMode = TextServer.AutowrapMode.WordSmart
+			};
+			layout.AddChild(statusLabel);
 			var actionRow = new HBoxContainer();
 			layout.AddChild(actionRow);
 			var manageButton = new Button
@@ -244,13 +253,15 @@ public abstract partial class AdminNpcManager : Control
 			};
 			var undeployButton = new Button
 			{
-				Text = "Undeploy",
+				Text = deployment.Status == "Pending" ? "Cancel Pending" : "Undeploy",
 				SizeFlagsHorizontal = Control.SizeFlags.ExpandFill
 			};
 			actionRow.AddChild(manageButton);
 			actionRow.AddChild(undeployButton);
-			manageButton.Pressed += () => OpenConfigurationAsync(npc);
+			manageButton.Pressed += () => OpenConfigurationAsync(npc, deployment);
 			undeployButton.Pressed += () => ConfirmUndeploy(npc, deployment);
+			if (deployment.Status == "Pending")
+				manageButton.Text = "Set Data";
 		}
 		else
 		{
@@ -383,17 +394,19 @@ public abstract partial class AdminNpcManager : Control
 		fields.AddChild(input);
 	}
 
-	private async void OpenConfigurationAsync(NpcDto npc)
+	private async void OpenConfigurationAsync(NpcDto npc, NpcDeploymentDto deployment)
 	{
 		try
 		{
-			NpcConfigurationDto configuration = await NpcApiClient.GetNpcConfigurationAsync(npc.NpcId);
+			NpcConfigurationDto configuration = await NpcApiClient.GetDeploymentConfigurationAsync(
+				deployment.DeploymentId);
 			List<MiniGameDto> miniGames = await NpcApiClient.GetMiniGamesAsync();
 			if (!IsInsideTree())
 				return;
 
 			editingConfiguration = configuration;
-			configurationTitle.Text = "Manage " + npc.NpcName;
+			configurationTitle.Text = "Manage " + npc.NpcName + " (Deployment " +
+				deployment.DeploymentId + ")";
 			subjectInput.Text = configuration.SubjectName;
 			questionInput.Text = configuration.Question;
 			correctAnswerInput.Text = configuration.CorrectAnswer;
@@ -401,7 +414,10 @@ public abstract partial class AdminNpcManager : Control
 			miniGameInput.Clear();
 			miniGameInput.AddItem("No mini-game", 0);
 			foreach (MiniGameDto miniGame in miniGames)
-				miniGameInput.AddItem(miniGame.GameName, miniGame.MiniGameId);
+			{
+				if (IsSupportedMiniGameType(miniGame.GameType))
+					miniGameInput.AddItem(miniGame.GameName, miniGame.MiniGameId);
+			}
 
 			miniGameInput.Select(0);
 			if (configuration.MiniGameId.HasValue)
@@ -422,6 +438,13 @@ public abstract partial class AdminNpcManager : Control
 		{
 			ShowMessage("NPC information could not be loaded: " + exception.Message);
 		}
+	}
+
+	private static bool IsSupportedMiniGameType(string gameType)
+	{
+		return gameType == "MatchThePairs" ||
+			gameType == "FallingDuck" ||
+			gameType == "QuickTapChallenge";
 	}
 
 	private async void SaveConfigurationAsync()
@@ -447,7 +470,9 @@ public abstract partial class AdminNpcManager : Control
 		editingConfiguration.AnswerTip = answerTipInput.Text.Trim();
 		try
 		{
-			await NpcApiClient.SaveNpcConfigurationAsync(editingConfiguration);
+			await NpcApiClient.SaveDeploymentConfigurationAsync(
+				editingConfiguration.DeploymentId ?? 0,
+				editingConfiguration);
 			configurationPopup.Hide();
 			ShowMessage("NPC information saved successfully.");
 		}
@@ -466,7 +491,9 @@ public abstract partial class AdminNpcManager : Control
 	{
 		selectedNpc = npc;
 		selectedDeployment = deployment;
-		undeployDialog.DialogText = $"Undeploy {npc.NpcName} from the {Difficulty} map?";
+		undeployDialog.DialogText = deployment.Status == "Pending"
+			? $"Cancel the pending deployment of {npc.NpcName}?"
+			: $"Undeploy {npc.NpcName} from the {Difficulty} map?";
 		undeployDialog.PopupCentered();
 	}
 
@@ -482,8 +509,12 @@ public abstract partial class AdminNpcManager : Control
 		{
 			await NpcApiClient.UndeployNpcAsync(deploymentToRemove.DeploymentId);
 			RemoveDeploymentSprite(deploymentToRemove.DeploymentId);
+			await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+			await RefreshMapDeploymentsAsync();
 			await LoadNpcsAsync();
-			ShowMessage($"{npcToUndeploy.NpcName} was undeployed.");
+			ShowMessage(deploymentToRemove.Status == "Pending"
+				? $"Pending deployment for {npcToUndeploy.NpcName} was cancelled."
+				: $"{npcToUndeploy.NpcName} was undeployed.");
 		}
 		catch (Exception exception)
 		{
@@ -654,6 +685,8 @@ public abstract partial class AdminNpcManager : Control
 		{
 			await NpcApiClient.DeleteNpcAsync(npcToDelete.NpcId);
 			RemoveNpcSprites(npcToDelete.NpcId);
+			await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+			await RefreshMapDeploymentsAsync();
 			selectedNpc = null;
 			await LoadNpcsAsync();
 			ShowMessage("NPC deleted successfully.");
@@ -695,29 +728,48 @@ public abstract partial class AdminNpcManager : Control
 				if (child is Marker2D marker)
 					markers.Add(marker);
 			}
-			if (markers.Count == 0)
-				throw new InvalidOperationException("This map has no NPC spawn markers.");
 
-			Marker2D markerChoice = markers[GD.RandRange(0, markers.Count - 1)];
-			Vector2 position = markerChoice.GlobalPosition;
-			Texture2D texture = null;
-			if (string.IsNullOrWhiteSpace(npcToDeploy.AnimationScenePath))
+			List<NpcDeploymentDto> activeDeployments = await NpcApiClient.GetDeploymentsAsync(Difficulty);
+			var occupiedMarkers = new HashSet<string>(StringComparer.Ordinal);
+			foreach (NpcDeploymentDto activeDeployment in activeDeployments)
 			{
-				texture = await AccountApiClient.LoadAvatarAsync(npcToDeploy.NpcImage);
-				if (texture == null)
-					throw new InvalidOperationException("NPC image could not be loaded.");
+				if (activeDeployment.Status == "Deployed" &&
+					!string.IsNullOrWhiteSpace(activeDeployment.PositionMarker))
+					occupiedMarkers.Add(activeDeployment.PositionMarker);
 			}
-			AnimatedSprite2D sprite = NpcMapSprite.CreateNpcSprite(texture, npcToDeploy.AnimationScenePath);
+			foreach (Node child in currentScene.GetChildren())
+			{
+				if (child is AnimatedSprite2D sprite &&
+					!sprite.IsQueuedForDeletion() &&
+					sprite.HasMeta("PositionMarker"))
+					occupiedMarkers.Add(sprite.GetMeta("PositionMarker").AsString());
+			}
+
+			var availableMarkers = new List<Marker2D>();
+			foreach (Marker2D marker in markers)
+			{
+				if (!occupiedMarkers.Contains(marker.Name.ToString()))
+					availableMarkers.Add(marker);
+			}
+
+			Marker2D markerChoice = availableMarkers.Count > 0
+				? availableMarkers[GD.RandRange(0, availableMarkers.Count - 1)]
+				: null;
+			Vector2? position = markerChoice == null ? null : markerChoice.GlobalPosition;
 
 			NpcDeploymentDto deployment = await NpcApiClient.DeployNpcAsync(
 				npcToDeploy,
 				Difficulty,
-				markerChoice.Name,
+				markerChoice?.Name,
 				position);
-			var deployedPosition = new Vector2(deployment.PositionX, deployment.PositionY);
-			SpawnNpcSprite(currentScene, npcToDeploy, deployment, deployedPosition, sprite);
+			await RefreshMapDeploymentsAsync();
+			List<NpcDeploymentDto> updatedDeployments = await NpcApiClient.GetDeploymentsAsync(Difficulty);
+			NpcDeploymentDto updatedDeployment = updatedDeployments.Find(
+				item => item.DeploymentId == deployment.DeploymentId) ?? deployment;
 			await LoadNpcsAsync();
-			ShowMessage("NPC deployed successfully.");
+			ShowMessage(updatedDeployment.Status == "Pending"
+				? "No available spawn point. The NPC deployment has been saved and will be deployed automatically when a spawn point becomes available."
+				: "NPC deployed successfully.");
 		}
 		catch (Exception exception)
 		{
@@ -729,18 +781,13 @@ public abstract partial class AdminNpcManager : Control
 		}
 	}
 
-	private void SpawnNpcSprite(Node currentScene, NpcDto npc, NpcDeploymentDto deployment, Vector2 position, AnimatedSprite2D sprite)
+	private async Task RefreshMapDeploymentsAsync()
 	{
-		if (NpcMapSprite.HasDeploymentSprite(currentScene, deployment.DeploymentId))
-		{
-			sprite.Free();
-			return;
-		}
-
-		currentScene.AddChild(sprite);
-		NpcMapSprite.PlaceAtGround(sprite, position);
-		sprite.SetMeta("NpcId", npc.NpcId);
-		sprite.SetMeta("DeploymentId", deployment.DeploymentId);
+		Node currentScene = GetTree().CurrentScene;
+		NpcDeploymentRenderer renderer =
+			currentScene?.GetNodeOrNull<NpcDeploymentRenderer>("NPCSpawnPoints");
+		if (renderer != null)
+			await renderer.RefreshDeploymentsAsync();
 	}
 
 	private void RemoveDeploymentSprite(int deploymentId)

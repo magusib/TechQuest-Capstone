@@ -31,6 +31,20 @@ namespace TechQuestBackend.Controllers
             if (miniGameId.HasValue)
                 query = query.Where(q => q.MiniGameId == miniGameId);
 
+            if (User.IsInRole("student"))
+            {
+                return Ok(await query.OrderBy(q => q.QuestionId)
+                    .Select(q => new StudentQuestionResponse
+                    {
+                        QuestionId = q.QuestionId,
+                        NpcId = q.NpcId,
+                        MiniGameId = q.MiniGameId,
+                        SubjectName = q.SubjectName,
+                        QuestionText = q.QuestionText
+                    })
+                    .ToListAsync());
+            }
+
             return Ok(await query.OrderBy(q => q.QuestionId).ToListAsync());
         }
 
@@ -83,5 +97,14 @@ namespace TechQuestBackend.Controllers
         public string SubjectName { get; set; } = "";
         public string Question { get; set; } = "";
         public string CorrectAnswer { get; set; } = "";
+    }
+
+    public class StudentQuestionResponse
+    {
+        public int QuestionId { get; set; }
+        public int? NpcId { get; set; }
+        public int? MiniGameId { get; set; }
+        public string SubjectName { get; set; } = "";
+        public string QuestionText { get; set; } = "";
     }
 }

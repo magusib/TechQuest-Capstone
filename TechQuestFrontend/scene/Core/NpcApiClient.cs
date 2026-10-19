@@ -56,6 +56,32 @@ public static class NpcApiClient
 		EnsureSuccess(response, responseText);
 	}
 
+	public static async Task<NpcConfigurationDto> GetDeploymentConfigurationAsync(int deploymentId)
+	{
+		using var request = CreateRequest(
+			HttpMethod.Get,
+			$"/Npcs/deployments/{deploymentId}/configuration");
+		using HttpResponseMessage response = await Client.SendAsync(request);
+		string responseText = await response.Content.ReadAsStringAsync();
+		EnsureSuccess(response, responseText);
+		return JsonSerializer.Deserialize<NpcConfigurationDto>(responseText, JsonOptions)
+			?? throw new InvalidOperationException("NPC deployment configuration response was empty.");
+	}
+
+	public static async Task SaveDeploymentConfigurationAsync(
+		int deploymentId,
+		NpcConfigurationDto configuration)
+	{
+		string json = JsonSerializer.Serialize(configuration, JsonOptions);
+		using var request = CreateRequest(
+			HttpMethod.Put,
+			$"/Npcs/deployments/{deploymentId}/configuration");
+		request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+		using HttpResponseMessage response = await Client.SendAsync(request);
+		string responseText = await response.Content.ReadAsStringAsync();
+		EnsureSuccess(response, responseText);
+	}
+
 	public static async Task<string> UploadImageAsync(string filePath)
 	{
 		if (!File.Exists(filePath))
@@ -107,13 +133,13 @@ public static class NpcApiClient
 		NpcDto npc,
 		string difficulty,
 		string markerName,
-		Vector2 position)
+		Vector2? position)
 	{
 		var deployment = new NpcDeploymentRequest
 		{
 			MapDifficulty = difficulty,
-			PositionX = position.X,
-			PositionY = position.Y,
+			PositionX = position?.X,
+			PositionY = position?.Y,
 			PositionMarker = markerName
 		};
 		string json = JsonSerializer.Serialize(deployment, JsonOptions);
@@ -125,6 +151,26 @@ public static class NpcApiClient
 		EnsureSuccess(response, responseText);
 		return JsonSerializer.Deserialize<NpcDeploymentDto>(responseText, JsonOptions)
 			?? throw new InvalidOperationException("NPC deployment response was empty.");
+	}
+
+	public static async Task<List<NpcDeploymentDto>> ProcessDeploymentQueueAsync(
+		string difficulty,
+		List<NpcSpawnPointDto> availableSpawnPoints)
+	{
+		var queueRequest = new NpcDeploymentQueueRequest
+		{
+			MapDifficulty = difficulty,
+			AvailableSpawnPoints = availableSpawnPoints
+		};
+		string json = JsonSerializer.Serialize(queueRequest, JsonOptions);
+		using var request = CreateRequest(HttpMethod.Post, "/Npcs/deployments/process-queue");
+		request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+
+		using HttpResponseMessage response = await Client.SendAsync(request);
+		string responseText = await response.Content.ReadAsStringAsync();
+		EnsureSuccess(response, responseText);
+		return JsonSerializer.Deserialize<List<NpcDeploymentDto>>(responseText, JsonOptions)
+			?? throw new InvalidOperationException("Deployment queue response was empty.");
 	}
 
 	public static async Task UndeployNpcAsync(int deploymentId)
@@ -182,9 +228,22 @@ public class NpcImageDto
 public class NpcDeploymentRequest
 {
 	public string MapDifficulty { get; set; } = "Easy";
+	public float? PositionX { get; set; }
+	public float? PositionY { get; set; }
+	public string PositionMarker { get; set; } = "";
+}
+
+public class NpcDeploymentQueueRequest
+{
+	public string MapDifficulty { get; set; } = "";
+	public List<NpcSpawnPointDto> AvailableSpawnPoints { get; set; } = new();
+}
+
+public class NpcSpawnPointDto
+{
+	public string PositionMarker { get; set; } = "";
 	public float PositionX { get; set; }
 	public float PositionY { get; set; }
-	public string PositionMarker { get; set; } = "";
 }
 
 public class NpcDeploymentDto
@@ -194,8 +253,12 @@ public class NpcDeploymentDto
 	public string NpcName { get; set; } = "";
 	public string NpcImage { get; set; } = "";
 	public string AnimationScenePath { get; set; } = "";
-	public float PositionX { get; set; }
-	public float PositionY { get; set; }
+	public string MapDifficulty { get; set; } = "";
+	public string Status { get; set; } = "";
+	public string PositionMarker { get; set; } = "";
+	public float? PositionX { get; set; }
+	public float? PositionY { get; set; }
+	public DateTime DeployedAt { get; set; }
 }
 
 public class MiniGameDto
@@ -208,6 +271,7 @@ public class MiniGameDto
 public class NpcConfigurationDto
 {
 	public int NpcId { get; set; }
+	public int? DeploymentId { get; set; }
 	public string SubjectName { get; set; } = "";
 	public int? MiniGameId { get; set; }
 	public string MiniGameName { get; set; } = "";

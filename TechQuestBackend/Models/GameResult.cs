@@ -12,7 +12,11 @@ namespace TechQuestBackend.Models
 
         public int EarnedCoins { get; set; }
 
+        public int CoinsDeducted { get; set; }
+
         public bool IsCorrect { get; set; }
+
+        public Guid? AttemptId { get; set; }
 
         public DateTime PlayedAt { get; set; } = DateTime.UtcNow;
 

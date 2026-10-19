@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scene/Minigame/TapTarget.cs" id="1"]
+
+[node name="TapTarget" type="Button"]
+custom_minimum_size = Vector2(140, 140)
+layout_mode = 0
+script = ExtResource("1")

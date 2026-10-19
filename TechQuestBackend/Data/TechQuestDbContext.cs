@@ -158,12 +158,18 @@ namespace TechQuestBackend.Data
             modelBuilder.Entity<NpcDeployment>(entity =>
             {
                 entity.ToTable("NPC_deployment", table =>
-                    table.HasCheckConstraint("CK_NPC_deployment_Difficulty", "lower(btrim(\"MapDifficulty\")) IN ('easy', 'medium', 'hard')"));
+                {
+                    table.HasCheckConstraint("CK_NPC_deployment_Difficulty", "lower(btrim(\"MapDifficulty\")) IN ('easy', 'medium', 'hard')");
+                    table.HasCheckConstraint("CK_NPC_deployment_Status", "\"Status\" IN ('Pending', 'Deployed', 'Cancelled')");
+                });
                 entity.HasKey(d => d.DeploymentId);
                 entity.Property(d => d.MapDifficulty).HasMaxLength(20).IsRequired();
-                entity.Property(d => d.PositionMarker).HasMaxLength(100).IsRequired();
-                entity.Property(d => d.Status).HasMaxLength(30).HasDefaultValue("deployed");
+                entity.Property(d => d.PositionMarker).HasMaxLength(100);
+                entity.Property(d => d.Status).HasMaxLength(30).HasDefaultValue("Pending");
                 entity.Property(d => d.DeployedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.HasIndex(d => new { d.MapDifficulty, d.PositionMarker })
+                    .IsUnique()
+                    .HasFilter("\"Status\" = 'Deployed'");
                 entity.HasOne(d => d.Npc)
                     .WithMany(n => n.Deployments)
                     .HasForeignKey(d => d.NpcId)
@@ -200,6 +206,11 @@ namespace TechQuestBackend.Data
                     .WithMany(n => n.Questions)
                     .HasForeignKey(q => q.NpcId)
                     .OnDelete(DeleteBehavior.SetNull);
+                entity.HasIndex(q => q.DeploymentId).IsUnique();
+                entity.HasOne(q => q.Deployment)
+                    .WithMany(d => d.Questions)
+                    .HasForeignKey(q => q.DeploymentId)
+                    .OnDelete(DeleteBehavior.Cascade);
                 entity.HasOne(q => q.MiniGame)
                     .WithMany(m => m.Questions)
                     .HasForeignKey(q => q.MiniGameId)
@@ -216,9 +227,12 @@ namespace TechQuestBackend.Data
                 entity.HasKey(g => g.ResultId);
                 entity.Property(g => g.EarnedPoints).HasDefaultValue(0);
                 entity.Property(g => g.EarnedCoins).HasDefaultValue(0);
+                entity.Property(g => g.CoinsDeducted).HasDefaultValue(0);
                 entity.Property(g => g.PlayedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.HasCheckConstraint("CK_Game_result_EarnedPoints_NonNegative", "\"EarnedPoints\" >= 0");
                 entity.HasCheckConstraint("CK_Game_result_EarnedCoins_NonNegative", "\"EarnedCoins\" >= 0");
+                entity.HasCheckConstraint("CK_Game_result_CoinsDeducted_NonNegative", "\"CoinsDeducted\" >= 0");
+                entity.HasIndex(g => g.AttemptId).IsUnique();
                 entity.HasOne(g => g.Student)
                     .WithMany(s => s.GameResults)
                     .HasForeignKey(g => g.StudentId)

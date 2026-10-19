@@ -71,6 +71,26 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<TechQuestDbContext>();
     db.Database.Migrate();
 
+    string[][] miniGames =
+    {
+        new[] { "Match the Pairs", "MatchThePairs" },
+        new[] { "Falling Duck", "FallingDuck" },
+        new[] { "Quick Tap Challenge", "QuickTapChallenge" }
+    };
+    foreach (string[] miniGame in miniGames)
+    {
+        if (!db.MiniGames.Any(item => item.GameType == miniGame[1]))
+        {
+            db.MiniGames.Add(new MiniGame
+            {
+                GameName = miniGame[0],
+                GameType = miniGame[1],
+                CreatedAt = DateTime.UtcNow
+            });
+        }
+    }
+    db.SaveChanges();
+
     if (!db.Users.Any())
     {
         db.Users.AddRange(

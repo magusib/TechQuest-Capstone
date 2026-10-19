@@ -6,6 +6,8 @@ namespace TechQuestBackend.Models
 
         public int? NpcId { get; set; }
 
+        public int? DeploymentId { get; set; }
+
         public int? MiniGameId { get; set; }
 
         public string SubjectName { get; set; } = "";
@@ -21,6 +23,8 @@ namespace TechQuestBackend.Models
         public int? CreatedBy { get; set; }
 
         public Npc? Npc { get; set; }
+
+        public NpcDeployment? Deployment { get; set; }
 
         public MiniGame? MiniGame { get; set; }
 
