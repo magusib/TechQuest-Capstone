@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://baurpnt02vul0"]
+
+[node name="EasyMapQuestion" type="Control" unique_id=1453264261]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EasyMapQuestionPanel" type="Panel" parent="." unique_id=985029562]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -304.75
+offset_top = -195.5
+offset_right = 304.75
+offset_bottom = 195.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubjectLabel" type="Label" parent="EasyMapQuestionPanel" unique_id=755472535]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -78.875
+offset_top = 14.0
+offset_right = 78.875
+offset_bottom = 53.0
+grow_horizontal = 2
+text = "Subject Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimerLabel" type="Label" parent="EasyMapQuestionPanel" unique_id=180050475]
+layout_mode = 0
+offset_left = 421.75
+offset_top = 15.5
+offset_right = 584.5
+offset_bottom = 58.0
+text = "Time"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QuestionPanel" type="Panel" parent="EasyMapQuestionPanel" unique_id=60980900]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -258.875
+offset_top = -116.25
+offset_right = 258.875
+offset_bottom = 0.25
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="QuestionLabel" type="Label" parent="EasyMapQuestionPanel/QuestionPanel" unique_id=740237720]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -238.0
+offset_top = -37.0
+offset_right = 236.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Question"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="EasyMapQuestionPanel" unique_id=1507874008]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -258.5
+offset_top = 43.0
+offset_right = 258.5
+offset_bottom = 111.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Button" type="Button" parent="EasyMapQuestionPanel" unique_id=1335001460]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -59.75
+offset_top = -51.5
+offset_right = 59.75
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Submit"

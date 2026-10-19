@@ -255,7 +255,7 @@ size = Vector2i(272, 100)
 ok_button_text = "Yes"
 dialog_text = "Do you want to deploy this NPC?"
 
-[node name="HardNPCMagement" type="Panel" parent="." unique_id=1547970541]
+[node name="HardMapNPCManagement" type="Panel" parent="." unique_id=948553976]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -263,38 +263,127 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -218.5
-offset_top = -255.5
-offset_right = 218.5
-offset_bottom = 255.5
+offset_left = -260.0
+offset_top = -289.5
+offset_right = 260.0
+offset_bottom = 294.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HardNPCManagementLabel" type="Label" parent="HardNPCMagement" unique_id=217289993]
+[node name="NPCManagementLabel" type="Label" parent="HardMapNPCManagement" unique_id=28334940]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -117.25
-offset_top = 12.0
-offset_right = 117.25
-offset_bottom = 35.0
+offset_left = -119.5
+offset_top = 18.0
+offset_right = 119.5
+offset_bottom = 57.0
 grow_horizontal = 2
-text = "Hard NPC Management"
+text = "Hard Map NPC Management"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CloseButton" type="Button" parent="HardNPCMagement" unique_id=1237807212]
+[node name="SubjectLabel" type="Label" parent="HardMapNPCManagement" unique_id=1615980709]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 71.5
+offset_right = 241.0
+offset_bottom = 148.0
+text = "Subject Name"
+
+[node name="Subject" type="LineEdit" parent="HardMapNPCManagement/SubjectLabel" unique_id=1263405458]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 31.0
+offset_right = 465.0
+offset_bottom = 67.0
+alignment = 1
+
+[node name="MinigameLabel" type="Label" parent="HardMapNPCManagement" unique_id=1969394463]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 158.5
+offset_right = 175.0
+offset_bottom = 181.5
+text = "Choose Mini Game"
+
+[node name="MinigameOptions" type="OptionButton" parent="HardMapNPCManagement/MinigameLabel" unique_id=261050007]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 28.0
+offset_right = 455.0
+offset_bottom = 60.0
+alignment = 1
+
+[node name="QuestionLabel" type="Label" parent="HardMapNPCManagement" unique_id=1842270766]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 226.5
+offset_right = 107.0
+offset_bottom = 249.5
+text = "Question"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Question" type="LineEdit" parent="HardMapNPCManagement/QuestionLabel" unique_id=1401184322]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 450.0
+offset_bottom = 87.0
+
+[node name="AnswerTipLabel" type="Label" parent="HardMapNPCManagement" unique_id=157899165]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 329.5
+offset_right = 133.0
+offset_bottom = 358.5
+text = "Answer Tip"
+
+[node name="AnswerTip" type="LineEdit" parent="HardMapNPCManagement/AnswerTipLabel" unique_id=2064178832]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 33.0
+offset_right = 448.0
+offset_bottom = 72.0
+
+[node name="TimerLabel" type="Label" parent="HardMapNPCManagement" unique_id=1462909225]
+layout_mode = 0
+offset_left = 49.0
+offset_top = 412.5
+offset_right = 89.0
+offset_bottom = 435.5
+text = "Time"
+
+[node name="Time" type="LineEdit" parent="HardMapNPCManagement/TimerLabel" unique_id=947640273]
+layout_mode = 0
+offset_top = 27.0
+offset_right = 448.0
+offset_bottom = 65.0
+
+[node name="SaveButton" type="Button" parent="HardMapNPCManagement" unique_id=774897803]
 layout_mode = 1
-anchors_preset = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 59.0
+offset_top = -62.0
+offset_right = 209.0
+offset_bottom = -22.0
+grow_vertical = 0
+text = "Save"
+
+[node name="CancelButton" type="Button" parent="HardMapNPCManagement" unique_id=900785457]
+layout_mode = 1
+anchors_preset = 3
 anchor_left = 1.0
+anchor_top = 1.0
 anchor_right = 1.0
-offset_left = -23.5
-offset_top = -19.5
-offset_right = 24.0
-offset_bottom = 18.0
+anchor_bottom = 1.0
+offset_left = -204.0
+offset_top = -61.0
+offset_right = -54.0
+offset_bottom = -21.0
 grow_horizontal = 0
-icon = ExtResource("1_o1gk0")
-flat = true
-icon_alignment = 1
-expand_icon = true
+grow_vertical = 0
+text = "Cancel"
