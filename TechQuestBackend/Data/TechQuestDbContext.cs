@@ -47,6 +47,8 @@ namespace TechQuestBackend.Data
 
         public DbSet<StudentQuest> StudentQuests { get; set; }
 
+        public DbSet<QuestProgressEvent> QuestProgressEvents { get; set; }
+
         public DbSet<MultiplayerRoom> MultiplayerRooms { get; set; }
 
         public DbSet<RoomParticipant> RoomParticipants { get; set; }
@@ -322,17 +324,25 @@ namespace TechQuestBackend.Data
                 entity.HasKey(q => q.QuestId);
                 entity.Property(q => q.QuestTitle).HasMaxLength(200).IsRequired();
                 entity.Property(q => q.Difficulty).HasMaxLength(20).HasDefaultValue("Easy");
+                entity.Property(q => q.ObjectiveType).HasMaxLength(30).HasDefaultValue("manual");
+                entity.Property(q => q.TargetQuantity).HasDefaultValue(1);
+                entity.Property(q => q.RequiredMiniGameType).HasMaxLength(50);
                 entity.Property(q => q.RewardPoints).HasDefaultValue(0);
                 entity.Property(q => q.RewardCoins).HasDefaultValue(0);
                 entity.Property(q => q.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.HasCheckConstraint("CK_Quest_RewardPoints_NonNegative", "\"RewardPoints\" >= 0");
                 entity.HasCheckConstraint("CK_Quest_RewardCoins_NonNegative", "\"RewardCoins\" >= 0");
+                entity.HasCheckConstraint("CK_Quest_TargetQuantity_Positive", "\"TargetQuantity\" > 0");
                 entity.HasCheckConstraint("CK_Quest_DateRange", "\"EndDate\" IS NULL OR \"EndDate\" >= \"StartDate\"");
                 entity.HasCheckConstraint("CK_Quest_Difficulty", "lower(btrim(\"Difficulty\")) IN ('easy', 'medium', 'hard')");
                 entity.HasOne(q => q.CreatedByUser)
                     .WithMany()
                     .HasForeignKey(q => q.CreatedBy)
                     .OnDelete(DeleteBehavior.SetNull);
+                entity.HasOne(q => q.RequiredMiniGame)
+                    .WithMany()
+                    .HasForeignKey(q => q.RequiredMiniGameId)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<StudentQuest>(entity =>
@@ -341,7 +351,9 @@ namespace TechQuestBackend.Data
                 entity.HasKey(s => s.StudentQuestId);
                 entity.HasIndex(s => new { s.StudentId, s.QuestId }).IsUnique();
                 entity.Property(s => s.Status).HasMaxLength(30).HasDefaultValue("not_started");
+                entity.Property(s => s.Progress).HasDefaultValue(0);
                 entity.Property(s => s.RewardClaimed).HasDefaultValue(false);
+                entity.HasCheckConstraint("CK_Student_Quest_Progress_NonNegative", "\"Progress\" >= 0");
                 entity.HasOne(s => s.Student)
                     .WithMany(p => p.StudentQuests)
                     .HasForeignKey(s => s.StudentId)
@@ -349,6 +361,21 @@ namespace TechQuestBackend.Data
                 entity.HasOne(s => s.Quest)
                     .WithMany(q => q.StudentQuests)
                     .HasForeignKey(s => s.QuestId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<QuestProgressEvent>(entity =>
+            {
+                entity.ToTable("Quest_progress_events");
+                entity.HasKey(item => item.QuestProgressEventId);
+                entity.Property(item => item.EventId).HasMaxLength(150).IsRequired();
+                entity.Property(item => item.EventType).HasMaxLength(30).IsRequired();
+                entity.Property(item => item.Amount).IsRequired();
+                entity.Property(item => item.ProcessedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.HasIndex(item => new { item.StudentQuestId, item.EventId }).IsUnique();
+                entity.HasOne(item => item.StudentQuest)
+                    .WithMany(studentQuest => studentQuest.ProgressEvents)
+                    .HasForeignKey(item => item.StudentQuestId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
 

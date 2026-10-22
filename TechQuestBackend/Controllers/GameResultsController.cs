@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TechQuestBackend.Data;
 using TechQuestBackend.Models;
+using TechQuestBackend.Services;
 
 namespace TechQuestBackend.Controllers
 {
@@ -15,10 +16,12 @@ namespace TechQuestBackend.Controllers
     public class GameResultsController : ControllerBase
     {
         private readonly TechQuestDbContext _db;
+        private readonly IQuestProgressService _questProgressService;
 
-        public GameResultsController(TechQuestDbContext db)
+        public GameResultsController(TechQuestDbContext db, IQuestProgressService questProgressService)
         {
             _db = db;
+            _questProgressService = questProgressService;
         }
 
         [HttpPost]
@@ -130,6 +133,15 @@ namespace TechQuestBackend.Controllers
             challenge.MiniGameWon = request.GameWon;
             challenge.AnswerTipAwarded = true;
             challenge.State = "QuestionReady";
+            await _questProgressService.ApplyEventAsync(
+                profile.StudentId,
+                $"mini-game:{request.AttemptId:D}",
+                "mini_game",
+                1,
+                miniGameType: challenge.MiniGameType,
+                miniGameId: question.MiniGameId,
+                successful: request.GameWon);
+
             var result = new GameResult
             {
                 StudentId = profile.StudentId,
@@ -254,6 +266,24 @@ namespace TechQuestBackend.Controllers
                 IsCorrect = isCorrect,
                 PlayedAt = DateTime.UtcNow
             });
+
+            await _questProgressService.ApplyEventAsync(
+                profile.StudentId,
+                $"npc-completion:{challenge.ChallengeId}",
+                "npc_challenge",
+                1,
+                npcId: challenge.NpcId);
+
+            await _questProgressService.ApplyEventAsync(
+                profile.StudentId,
+                $"npc-reward:{challenge.ChallengeId}",
+                "coins",
+                coinReward);
+            await _questProgressService.ApplyEventAsync(
+                profile.StudentId,
+                $"npc-reward:{challenge.ChallengeId}",
+                "points",
+                pointReward);
 
             await _db.SaveChangesAsync();
             await transaction.CommitAsync();

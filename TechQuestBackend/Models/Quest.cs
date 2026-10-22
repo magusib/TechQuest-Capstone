@@ -10,6 +10,16 @@ namespace TechQuestBackend.Models
 
         public string Difficulty { get; set; } = "Easy";
 
+        public string ObjectiveType { get; set; } = "manual";
+
+        public int TargetQuantity { get; set; } = 1;
+
+        public string? RequiredMiniGameType { get; set; }
+
+        public int? RequiredMiniGameId { get; set; }
+
+        public bool RequireMiniGameSuccess { get; set; }
+
         public int RewardPoints { get; set; }
 
         public int RewardCoins { get; set; }
@@ -23,6 +33,8 @@ namespace TechQuestBackend.Models
         public int? CreatedBy { get; set; }
 
         public User? CreatedByUser { get; set; }
+
+        public MiniGame? RequiredMiniGame { get; set; }
 
         public ICollection<StudentQuest> StudentQuests { get; set; } = new List<StudentQuest>();
     }

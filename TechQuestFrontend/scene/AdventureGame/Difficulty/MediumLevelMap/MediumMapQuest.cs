@@ -29,10 +29,12 @@ public partial class MediumMapQuest : Control
 	private LineEdit adminQuestDescriptionInput;
 	private LineEdit adminQuestCoinsInput;
 	private LineEdit adminQuestPointsInput;
+	private QuestObjectiveEditor objectiveEditor;
 	private Label adminFormMessageLabel;
 	private Label questTitleLabel;
 	private Label questDescriptionLabel;
 	private Label questStatusLabel;
+	private Label questProgressLabel;
 	private Label rewardCoinsLabel;
 	private Label rewardPointsLabel;
 	private Label rewardPopupCoinsLabel;
@@ -54,6 +56,40 @@ public partial class MediumMapQuest : Control
 		questItemTemplate = GetNode<Control>("StudentQuestPopup/QuestPanel/QuestListPanel/QuestItem");
 		questItemTemplate.Hide();
 		adminQuestAddPanel = adminQuestAdd.FindChild("QuestAddPanel", true, false) as Control;
+		adminQuestAddPanel.OffsetTop = -290;
+		adminQuestAddPanel.OffsetBottom = 290;
+		adminSaveButton = adminQuestAdd.FindChild("SaveButton", true, false) as Button;
+		adminFormCloseButton = adminQuestAddPanel.FindChild("CloseButton", true, false) as Button;
+
+		var questFormScroll = new ScrollContainer
+		{
+			Name = "QuestFormScroll",
+			HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled,
+			VerticalScrollMode = ScrollContainer.ScrollMode.Auto
+		};
+		questFormScroll.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+		questFormScroll.OffsetLeft = 8;
+		questFormScroll.OffsetTop = 28;
+		questFormScroll.OffsetRight = -8;
+		questFormScroll.OffsetBottom = -75;
+		adminQuestAddPanel.AddChild(questFormScroll);
+
+		var questFormContent = new VBoxContainer
+		{
+			Name = "QuestFormContent",
+			SizeFlagsHorizontal = Control.SizeFlags.ExpandFill
+		};
+		questFormContent.AddThemeConstantOverride("separation", 8);
+		questFormScroll.AddChild(questFormContent);
+		AddQuestFieldToForm(questFormContent, "QuestTitleLabel", 70);
+		AddQuestFieldToForm(questFormContent, "DescriptionLabel", 125);
+		objectiveEditor = new QuestObjectiveEditor();
+		questFormContent.AddChild(objectiveEditor);
+		AddQuestFieldToForm(questFormContent, "CoinsRewardLabel", 80);
+		AddQuestFieldToForm(questFormContent, "PointsRewardLabel", 80);
+
+		adminSaveButton.Position = new Vector2(51, 535);
+		adminFormCloseButton.Position = new Vector2(198, 535);
 		adminQuestItemTemplate = adminQuestAdd.FindChild("QuestItem", true, false) as Control;
 		adminQuestItemTemplate.Hide();
 
@@ -69,8 +105,6 @@ public partial class MediumMapQuest : Control
 		if (adminAddButton == null)
 			adminAddButton = adminQuestAdd.FindChild("AddQuest", true, false) as Button;
 		adminAddLabelButton = adminQuestAdd.FindChild("ResetLabel", true, false) as Button;
-		adminSaveButton = adminQuestAdd.FindChild("SaveButton", true, false) as Button;
-		adminFormCloseButton = adminQuestAddPanel.FindChild("CloseButton", true, false) as Button;
 		adminPopupCloseButton = adminQuestAdd.GetNodeOrNull<Button>("QuestPanel/CloseButton");
 		adminQuestTitleInput = adminQuestAdd.FindChild("QuestTitle", true, false) as LineEdit;
 		adminQuestDescriptionInput = adminQuestAdd.FindChild("Description", true, false) as LineEdit;
@@ -98,6 +132,7 @@ public partial class MediumMapQuest : Control
 		questTitleLabel = GetNode<Label>("StudentQuestPopup/QuestPanel/QuestInfoPanel/Panel/QuestTitleLabel");
 		questDescriptionLabel = GetNode<Label>("StudentQuestPopup/QuestPanel/QuestInfoPanel/Panel/QuestDescriptionLabel");
 		questStatusLabel = GetNode<Label>("StudentQuestPopup/QuestPanel/QuestInfoPanel/HBoxContainer/CompleteLabel");
+		questProgressLabel = GetNode<Label>("StudentQuestPopup/QuestPanel/QuestInfoPanel/HBoxContainer/QuestProgressLabel");
 		rewardCoinsLabel = GetNode<Label>("StudentQuestPopup/QuestPanel/QuestInfoPanel/RewardContainer/CoinsPanel/CoinsLabel");
 		rewardPointsLabel = GetNode<Label>("StudentQuestPopup/QuestPanel/QuestInfoPanel/RewardContainer/PointsPanel/PointsLabel");
 		infoCloseButton = GetNode<Button>("StudentQuestPopup/QuestPanel/QuestInfoPanel/CloseButton");
@@ -199,11 +234,22 @@ public partial class MediumMapQuest : Control
 
 		try
 		{
-			QuestApiClient.CreateQuest(title, description, rewardCoins, rewardPoints, DifficultyName);
+			QuestApiClient.CreateQuest(
+				title,
+				description,
+				rewardCoins,
+				rewardPoints,
+				DifficultyName,
+				objectiveEditor.ObjectiveType,
+				objectiveEditor.TargetQuantity,
+				objectiveEditor.ObjectiveType == "mini_game" ? objectiveEditor.RequiredMiniGameType : null,
+				objectiveEditor.ObjectiveType == "mini_game" ? objectiveEditor.RequiredMiniGameId : null,
+				objectiveEditor.RequireMiniGameSuccess);
 			adminQuestTitleInput.Clear();
 			adminQuestDescriptionInput.Clear();
 			adminQuestCoinsInput.Clear();
 			adminQuestPointsInput.Clear();
+			objectiveEditor.ResetValues();
 			OnAdminClosePressed();
 			LoadAdminQuests();
 		}
@@ -214,13 +260,39 @@ public partial class MediumMapQuest : Control
 		}
 	}
 
-	private void LoadAdminQuests()
+	private void AddQuestFieldToForm(VBoxContainer form, string fieldName, float minimumHeight)
+	{
+		Control field = adminQuestAddPanel.FindChild(fieldName, true, false) as Control
+			?? throw new InvalidOperationException($"Quest form field '{fieldName}' was not found.");
+		field.Reparent(form, false);
+		field.CustomMinimumSize = new Vector2(0, minimumHeight);
+		field.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+
+		if (field is Label label)
+			label.VerticalAlignment = VerticalAlignment.Top;
+
+		if (fieldName == "QuestTitleLabel")
+		{
+			Control titleInput = field.FindChild("QuestTitle", true, false) as Control
+				?? throw new InvalidOperationException("Quest title input was not found.");
+			titleInput.AnchorTop = 0;
+			titleInput.AnchorBottom = 0;
+			titleInput.AnchorRight = 1;
+			titleInput.OffsetLeft = 2;
+			titleInput.OffsetTop = 28;
+			titleInput.OffsetRight = -8;
+			titleInput.OffsetBottom = 59;
+		}
+	}
+
+	private async void LoadAdminQuests()
 	{
 		foreach (Node child in adminQuestListContainer.GetChildren())
 			child.QueueFree();
 
 		try
 		{
+			objectiveEditor.SetMiniGames(await NpcApiClient.GetMiniGamesAsync());
 			var quests = QuestApiClient.GetAvailableQuestsForDifficulty(DifficultyName);
 			if (quests.Count == 0)
 			{
@@ -283,7 +355,7 @@ public partial class MediumMapQuest : Control
 				item.CustomMinimumSize = new Vector2(0, questItemTemplate.Size.Y);
 				item.GetNode<Label>("Panel/QuestTitleLabel").Text = quest.QuestTitle;
 				item.GetNode<Label>("Panel/QuestDescriptionLabel").Text = "";
-				item.GetNode<Label>("HBoxContainer/QuestProgressLabel").Text = "";
+				item.GetNode<Label>("HBoxContainer/QuestProgressLabel").Text = GetQuestProgressText(quest);
 				item.GetNode<Label>("HBoxContainer/CompleteLabel").Text = GetQuestStatusText(quest);
 
 				var itemButton = new Button();
@@ -352,6 +424,7 @@ public partial class MediumMapQuest : Control
 		questInfoPanel.Show();
 		questTitleLabel.Text = quest.QuestTitle;
 		questDescriptionLabel.Text = quest.Description;
+		questProgressLabel.Text = GetQuestProgressText(quest);
 		rewardCoinsLabel.Text = quest.RewardCoins.ToString();
 		rewardPointsLabel.Text = quest.RewardPoints.ToString();
 
@@ -435,5 +508,13 @@ public partial class MediumMapQuest : Control
 			return "✓ Completed";
 
 		return "In Progress";
+	}
+
+	private static string GetQuestProgressText(QuestListDto quest)
+	{
+		int target = Math.Max(1, quest.TargetQuantity);
+		int progress = Math.Clamp(quest.Progress, 0, target);
+		string text = $"{progress}/{target}";
+		return quest.IsCompleted ? text + " — Completed" : text;
 	}
 }

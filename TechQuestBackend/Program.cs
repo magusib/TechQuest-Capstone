@@ -18,6 +18,7 @@ builder.Services.AddControllers()
 
 builder.Services.AddScoped<OTPService>();
 builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<IQuestProgressService, QuestProgressService>();
 
 builder.Services.AddDbContext<TechQuestDbContext>(options =>
     options.UseNpgsql(

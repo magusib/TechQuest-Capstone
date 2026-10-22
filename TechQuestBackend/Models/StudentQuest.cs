@@ -10,6 +10,8 @@ namespace TechQuestBackend.Models
 
         public string Status { get; set; } = "not_started";
 
+        public int Progress { get; set; }
+
         public DateTime? CompletedAt { get; set; }
 
         public bool RewardClaimed { get; set; }
@@ -19,5 +21,7 @@ namespace TechQuestBackend.Models
         public StudentProfile? Student { get; set; }
 
         public Quest? Quest { get; set; }
+
+        public ICollection<QuestProgressEvent> ProgressEvents { get; set; } = new List<QuestProgressEvent>();
     }
 }

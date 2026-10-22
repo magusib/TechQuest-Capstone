@@ -561,4 +561,11 @@ C:\Users\Admin\AppData\Local\Temp\TechQuestBackendBuild\TechQuestBackend.runtime
 C:\Users\Admin\AppData\Local\Temp\TechQuestBackendBuild\TechQuestBackend.dll
 C:\Users\Admin\AppData\Local\Temp\TechQuestBackendBuild\TechQuestBackend.pdb
 C:\Users\Admin\TechQuest-Capstone\TechQuestBackend\bin\Debug\net10.0\TechQuestBackend.exe
+C:\Users\Admin\AppData\Local\Temp\TechQuestBackendValidation\appsettings.Development.json
+C:\Users\Admin\AppData\Local\Temp\TechQuestBackendValidation\appsettings.json
+C:\Users\Admin\AppData\Local\Temp\TechQuestBackendValidation\TechQuestBackend.staticwebassets.endpoints.json
+C:\Users\Admin\AppData\Local\Temp\TechQuestBackendValidation\TechQuestBackend.deps.json
+C:\Users\Admin\AppData\Local\Temp\TechQuestBackendValidation\TechQuestBackend.runtimeconfig.json
+C:\Users\Admin\AppData\Local\Temp\TechQuestBackendValidation\TechQuestBackend.dll
+C:\Users\Admin\AppData\Local\Temp\TechQuestBackendValidation\TechQuestBackend.pdb
 C:\Users\Admin\TechQuest-Capstone\TechQuestBackend\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

@@ -686,10 +686,27 @@ namespace TechQuestBackend.Migrations
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("ObjectiveType")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)")
+                        .HasDefaultValue("manual");
+
                     b.Property<string>("QuestTitle")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
+
+                    b.Property<bool>("RequireMiniGameSuccess")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("RequiredMiniGameId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("RequiredMiniGameType")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<int>("RewardCoins")
                         .ValueGeneratedOnAdd()
@@ -704,9 +721,16 @@ namespace TechQuestBackend.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("TargetQuantity")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(1);
+
                     b.HasKey("QuestId");
 
                     b.HasIndex("CreatedBy");
+
+                    b.HasIndex("RequiredMiniGameId");
 
                     b.ToTable("Quest", null, t =>
                         {
@@ -717,7 +741,49 @@ namespace TechQuestBackend.Migrations
                             t.HasCheckConstraint("CK_Quest_RewardCoins_NonNegative", "\"RewardCoins\" >= 0");
 
                             t.HasCheckConstraint("CK_Quest_RewardPoints_NonNegative", "\"RewardPoints\" >= 0");
+
+                            t.HasCheckConstraint("CK_Quest_TargetQuantity_Positive", "\"TargetQuantity\" > 0");
                         });
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.QuestProgressEvent", b =>
+                {
+                    b.Property<int>("QuestProgressEventId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("QuestProgressEventId"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("EventId")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("EventType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<int?>("NpcId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("ProcessedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<int>("StudentQuestId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("QuestProgressEventId");
+
+                    b.HasIndex("StudentQuestId", "EventId")
+                        .IsUnique();
+
+                    b.ToTable("Quest_progress_events", (string)null);
                 });
 
             modelBuilder.Entity("TechQuestBackend.Models.Question", b =>
@@ -955,6 +1021,11 @@ namespace TechQuestBackend.Migrations
                     b.Property<DateTime?>("CompletedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("Progress")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
                     b.Property<int>("QuestId")
                         .HasColumnType("integer");
 
@@ -980,7 +1051,10 @@ namespace TechQuestBackend.Migrations
                     b.HasIndex("StudentId", "QuestId")
                         .IsUnique();
 
-                    b.ToTable("Student_Quest", (string)null);
+                    b.ToTable("Student_Quest", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_Student_Quest_Progress_NonNegative", "\"Progress\" >= 0");
+                        });
                 });
 
             modelBuilder.Entity("TechQuestBackend.Models.User", b =>
@@ -1231,7 +1305,25 @@ namespace TechQuestBackend.Migrations
                         .HasForeignKey("CreatedBy")
                         .OnDelete(DeleteBehavior.SetNull);
 
+                    b.HasOne("TechQuestBackend.Models.MiniGame", "RequiredMiniGame")
+                        .WithMany()
+                        .HasForeignKey("RequiredMiniGameId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("CreatedByUser");
+
+                    b.Navigation("RequiredMiniGame");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.QuestProgressEvent", b =>
+                {
+                    b.HasOne("TechQuestBackend.Models.StudentQuest", "StudentQuest")
+                        .WithMany("ProgressEvents")
+                        .HasForeignKey("StudentQuestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StudentQuest");
                 });
 
             modelBuilder.Entity("TechQuestBackend.Models.Question", b =>
@@ -1415,6 +1507,11 @@ namespace TechQuestBackend.Migrations
                     b.Navigation("RoomResults");
 
                     b.Navigation("StudentQuests");
+                });
+
+            modelBuilder.Entity("TechQuestBackend.Models.StudentQuest", b =>
+                {
+                    b.Navigation("ProgressEvents");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,3 +1,4 @@
+#nullable enable
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -52,7 +53,17 @@ public static class QuestApiClient
             ?? throw new InvalidOperationException("Reward claim response was empty.");
     }
 
-    public static QuestListDto CreateQuest(string title, string description, int rewardCoins, int rewardPoints, string difficulty)
+    public static QuestListDto CreateQuest(
+        string title,
+        string description,
+        int rewardCoins,
+        int rewardPoints,
+        string difficulty,
+        string objectiveType,
+        int targetQuantity,
+        string? requiredMiniGameType,
+        int? requiredMiniGameId,
+        bool requireMiniGameSuccess)
     {
         DateTime startDate = DateTime.UtcNow;
         var questRequest = new QuestCreateRequest
@@ -62,6 +73,11 @@ public static class QuestApiClient
             RewardCoins = rewardCoins,
             RewardPoints = rewardPoints,
             Difficulty = difficulty,
+            ObjectiveType = objectiveType,
+            TargetQuantity = targetQuantity,
+            RequiredMiniGameType = requiredMiniGameType,
+            RequiredMiniGameId = requiredMiniGameId,
+            RequireMiniGameSuccess = requireMiniGameSuccess,
             StartDate = startDate,
             EndDate = startDate.AddDays(7)
         };
@@ -95,6 +111,11 @@ public class QuestCreateRequest
     public string QuestTitle { get; set; } = "";
     public string Description { get; set; } = "";
     public int RewardCoins { get; set; }
+    public string ObjectiveType { get; set; } = "manual";
+    public int TargetQuantity { get; set; } = 1;
+    public string? RequiredMiniGameType { get; set; }
+    public int? RequiredMiniGameId { get; set; }
+    public bool RequireMiniGameSuccess { get; set; }
     public int RewardPoints { get; set; }
     public string Difficulty { get; set; } = "Easy";
     public DateTime StartDate { get; set; }
@@ -109,6 +130,12 @@ public class QuestListDto
     public string Difficulty { get; set; } = "Easy";
     public int RewardPoints { get; set; }
     public int RewardCoins { get; set; }
+    public string ObjectiveType { get; set; } = "manual";
+    public int TargetQuantity { get; set; } = 1;
+    public string? RequiredMiniGameType { get; set; }
+    public int? RequiredMiniGameId { get; set; }
+    public bool RequireMiniGameSuccess { get; set; }
+    public int Progress { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime? EndDate { get; set; }
     public string Status { get; set; } = "In Progress";

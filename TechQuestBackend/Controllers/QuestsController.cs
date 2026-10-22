@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TechQuestBackend.Data;
 using TechQuestBackend.Models;
+using TechQuestBackend.Services;
+using System.Data;
 
 namespace TechQuestBackend.Controllers
 {
@@ -12,11 +14,20 @@ namespace TechQuestBackend.Controllers
     [Authorize]
     public class QuestsController : ControllerBase
     {
-        private readonly TechQuestDbContext _db;
+        private static readonly HashSet<string> SupportedMiniGameTypes = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "FallingDuck",
+            "MatchThePairs",
+            "QuickTapChallenge"
+        };
 
-        public QuestsController(TechQuestDbContext db)
+        private readonly TechQuestDbContext _db;
+        private readonly IQuestProgressService _questProgressService;
+
+        public QuestsController(TechQuestDbContext db, IQuestProgressService questProgressService)
         {
             _db = db;
+            _questProgressService = questProgressService;
         }
 
         [HttpGet]
@@ -68,6 +79,12 @@ namespace TechQuestBackend.Controllers
                     Difficulty = quest.Difficulty,
                     RewardPoints = quest.RewardPoints,
                     RewardCoins = quest.RewardCoins,
+                    ObjectiveType = quest.ObjectiveType,
+                    TargetQuantity = quest.TargetQuantity,
+                    RequiredMiniGameType = quest.RequiredMiniGameType,
+                    RequiredMiniGameId = quest.RequiredMiniGameId,
+                    RequireMiniGameSuccess = quest.RequireMiniGameSuccess,
+                    Progress = studentQuest?.Progress ?? 0,
                     StartDate = quest.StartDate,
                     EndDate = quest.EndDate,
                     Status = statusText,
@@ -91,8 +108,45 @@ namespace TechQuestBackend.Controllers
             if (request.RewardCoins < 0 || request.RewardPoints < 0)
                 return BadRequest("Rewards cannot be negative.");
 
+            string objectiveType = string.IsNullOrWhiteSpace(request.ObjectiveType)
+                ? "manual"
+                : request.ObjectiveType.Trim().ToLowerInvariant();
+            if (objectiveType is not ("manual" or "npc_challenge" or "mini_game" or "coins" or "points"))
+                return BadRequest("Quest objective type is invalid.");
+
+            if (request.TargetQuantity <= 0)
+                return BadRequest("Quest target quantity must be greater than zero.");
+
             if (request.EndDate.HasValue && request.EndDate.Value < request.StartDate)
                 return BadRequest("End date cannot be before start date.");
+
+            if (objectiveType == "mini_game")
+            {
+                request.RequiredMiniGameType = request.RequiredMiniGameType?.Trim();
+                var requiredGame = request.RequiredMiniGameId.HasValue
+                    ? await _db.MiniGames.SingleOrDefaultAsync(game => game.MiniGameId == request.RequiredMiniGameId.Value)
+                    : null;
+                if (request.RequiredMiniGameId.HasValue && requiredGame == null)
+                    return BadRequest("The required mini-game was not found.");
+                if (string.IsNullOrWhiteSpace(request.RequiredMiniGameType) && requiredGame != null)
+                    request.RequiredMiniGameType = requiredGame.GameType;
+                string? supportedGameType = SupportedMiniGameTypes.FirstOrDefault(gameType =>
+                    string.Equals(gameType, request.RequiredMiniGameType, StringComparison.OrdinalIgnoreCase));
+                if (supportedGameType == null ||
+                    (requiredGame != null && !string.Equals(
+                        requiredGame.GameType,
+                        supportedGameType,
+                        StringComparison.OrdinalIgnoreCase)) ||
+                    !await _db.MiniGames.AnyAsync(game => game.GameType == supportedGameType))
+                    return BadRequest("Select a valid mini-game type.");
+                request.RequiredMiniGameType = supportedGameType;
+            }
+            else if (!string.IsNullOrWhiteSpace(request.RequiredMiniGameType) ||
+                request.RequiredMiniGameId.HasValue ||
+                request.RequireMiniGameSuccess)
+            {
+                return BadRequest("Mini-game requirements can only be configured for mini-game objectives.");
+            }
 
             var difficulty = string.IsNullOrWhiteSpace(request.Difficulty) ? "Easy" : request.Difficulty.Trim();
             if (!string.Equals(difficulty, "Easy", StringComparison.OrdinalIgnoreCase)
@@ -114,6 +168,11 @@ namespace TechQuestBackend.Controllers
                 QuestTitle = request.QuestTitle.Trim(),
                 Description = request.Description,
                 Difficulty = difficulty,
+                ObjectiveType = objectiveType,
+                TargetQuantity = request.TargetQuantity,
+                RequiredMiniGameType = request.RequiredMiniGameType,
+                RequiredMiniGameId = request.RequiredMiniGameId,
+                RequireMiniGameSuccess = request.RequireMiniGameSuccess,
                 RewardCoins = request.RewardCoins,
                 RewardPoints = request.RewardPoints,
                 StartDate = request.StartDate,
@@ -140,6 +199,9 @@ namespace TechQuestBackend.Controllers
             if (quest == null)
                 return NotFound("Quest was not found.");
 
+            if (!string.Equals(quest.ObjectiveType, "manual", StringComparison.OrdinalIgnoreCase))
+                return BadRequest("Automatic quest progress is recorded from completed game events.");
+
             var studentQuest = await _db.StudentQuests
                 .SingleOrDefaultAsync(q => q.StudentId == profile.StudentId && q.QuestId == questId);
 
@@ -150,6 +212,7 @@ namespace TechQuestBackend.Controllers
                     StudentId = profile.StudentId,
                     QuestId = questId,
                     Status = "completed",
+                    Progress = quest.TargetQuantity,
                     CompletedAt = DateTime.UtcNow,
                     RewardClaimed = false,
                     ClaimedAt = null
@@ -165,6 +228,7 @@ namespace TechQuestBackend.Controllers
             }
 
             studentQuest.Status = "completed";
+            studentQuest.Progress = quest.TargetQuantity;
             studentQuest.CompletedAt = DateTime.UtcNow;
             studentQuest.RewardClaimed = false;
             studentQuest.ClaimedAt = null;
@@ -178,7 +242,10 @@ namespace TechQuestBackend.Controllers
         public async Task<IActionResult> ClaimReward(int questId)
         {
             int userId = GetUserId();
-            var profile = await _db.StudentProfiles.SingleOrDefaultAsync(p => p.UserId == userId);
+            await using var transaction = await _db.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted);
+            var profile = await _db.StudentProfiles
+                .FromSqlInterpolated($"SELECT * FROM \"Student_profile\" WHERE \"UserId\" = {userId} FOR UPDATE")
+                .SingleOrDefaultAsync();
             if (profile == null)
                 return BadRequest("Student profile was not found.");
 
@@ -204,7 +271,19 @@ namespace TechQuestBackend.Controllers
             studentQuest.RewardClaimed = true;
             studentQuest.ClaimedAt = DateTime.UtcNow;
 
+            string rewardEventId = $"quest-reward:{studentQuest.StudentQuestId}";
+            await _questProgressService.ApplyEventAsync(
+                profile.StudentId,
+                rewardEventId,
+                "coins",
+                quest.RewardCoins);
+            await _questProgressService.ApplyEventAsync(
+                profile.StudentId,
+                rewardEventId,
+                "points",
+                quest.RewardPoints);
             await _db.SaveChangesAsync();
+            await transaction.CommitAsync();
             return Ok(new
             {
                 studentQuest.StudentQuestId,
@@ -240,6 +319,11 @@ namespace TechQuestBackend.Controllers
         public string Difficulty { get; set; } = "Easy";
         public int RewardPoints { get; set; }
         public int RewardCoins { get; set; }
+        public string ObjectiveType { get; set; } = "manual";
+        public int TargetQuantity { get; set; } = 1;
+        public string? RequiredMiniGameType { get; set; }
+        public int? RequiredMiniGameId { get; set; }
+        public bool RequireMiniGameSuccess { get; set; }
         public DateTime StartDate { get; set; } = DateTime.UtcNow;
         public DateTime? EndDate { get; set; }
     }
@@ -252,6 +336,12 @@ namespace TechQuestBackend.Controllers
         public string Difficulty { get; set; } = "Easy";
         public int RewardPoints { get; set; }
         public int RewardCoins { get; set; }
+        public string ObjectiveType { get; set; } = "manual";
+        public int TargetQuantity { get; set; } = 1;
+        public string? RequiredMiniGameType { get; set; }
+        public int? RequiredMiniGameId { get; set; }
+        public bool RequireMiniGameSuccess { get; set; }
+        public int Progress { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string Status { get; set; } = "In Progress";
