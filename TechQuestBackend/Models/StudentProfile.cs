@@ -27,6 +27,8 @@ namespace TechQuestBackend.Models
 
         public ICollection<GameResult> GameResults { get; set; } = new List<GameResult>();
 
+        public ICollection<NpcChallenge> NpcChallenges { get; set; } = new List<NpcChallenge>();
+
         public ICollection<Leaderboard> LeaderboardEntries { get; set; } = new List<Leaderboard>();
 
         public ICollection<StudentQuest> StudentQuests { get; set; } = new List<StudentQuest>();

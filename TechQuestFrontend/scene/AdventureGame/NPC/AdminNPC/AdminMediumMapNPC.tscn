@@ -230,24 +230,35 @@ custom_minimum_size = Vector2(120, 45)
 layout_mode = 2
 text = "ADD ITEM"
 
-[node name="DeleteConfirmationDialog" type="ConfirmationDialog" parent="MediumNPCPanel" unique_id=129549411]
+[node name="NPCMessageDialog" type="Node" parent="MediumNPCPanel" unique_id=48579915]
+
+[node name="DeleteConfirmationDialog" type="ConfirmationDialog" parent="MediumNPCPanel/NPCMessageDialog" unique_id=1525082494]
 oversampling_override = 1.0
 initial_position = 2
 size = Vector2i(273, 100)
 ok_button_text = "Delete"
 dialog_text = "Do  you want to delete this NPC?"
 
-[node name="AcceptDialog" type="AcceptDialog" parent="MediumNPCPanel" unique_id=173201715]
+[node name="AcceptDialog" type="AcceptDialog" parent="MediumNPCPanel/NPCMessageDialog" unique_id=1805169863]
 oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(192, 100)
 
-[node name="DeployConfirmationDialog" type="ConfirmationDialog" parent="MediumNPCPanel" unique_id=207200015]
+[node name="DeployConfirmationDialog" type="ConfirmationDialog" parent="MediumNPCPanel/NPCMessageDialog" unique_id=1553622585]
 oversampling_override = 1.0
 initial_position = 2
 size = Vector2i(272, 100)
 ok_button_text = "Yes"
 dialog_text = "Do you want to deploy this NPC?"
 
-[node name="EasyMapNPCManagement" type="Panel" parent="." unique_id=1023539817]
+[node name="UndeployConfirmationDialog" type="ConfirmationDialog" parent="MediumNPCPanel/NPCMessageDialog" unique_id=1101383331]
+oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(293, 100)
+ok_button_text = "Yes"
+dialog_text = "Do  you want to Undeploy this NPC?"
+
+[node name="MediumMapNPCManagement" type="Panel" parent="." unique_id=1023539817]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -256,13 +267,13 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -260.0
-offset_top = -289.5
+offset_top = -370.0
 offset_right = 260.0
-offset_bottom = 294.0
+offset_bottom = 370.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NPCManagementLabel" type="Label" parent="EasyMapNPCManagement" unique_id=76690914]
+[node name="NPCManagementLabel" type="Label" parent="MediumMapNPCManagement" unique_id=76690914]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -276,15 +287,15 @@ text = "Medium Map NPC Management"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SubjectLabel" type="Label" parent="EasyMapNPCManagement" unique_id=1831529773]
+[node name="SubjectLabel" type="Label" parent="MediumMapNPCManagement" unique_id=1831529773]
 layout_mode = 0
 offset_left = 26.0
-offset_top = 71.5
+offset_top = 64.0
 offset_right = 241.0
 offset_bottom = 148.0
 text = "Subject Name"
 
-[node name="Subject" type="LineEdit" parent="EasyMapNPCManagement/SubjectLabel" unique_id=955022070]
+[node name="Subject" type="LineEdit" parent="MediumMapNPCManagement/SubjectLabel" unique_id=955022070]
 layout_mode = 0
 offset_left = 2.0
 offset_top = 31.0
@@ -292,15 +303,15 @@ offset_right = 465.0
 offset_bottom = 67.0
 alignment = 1
 
-[node name="MinigameLabel" type="Label" parent="EasyMapNPCManagement" unique_id=1491968986]
+[node name="MinigameLabel" type="Label" parent="MediumMapNPCManagement" unique_id=1491968986]
 layout_mode = 0
 offset_left = 30.0
-offset_top = 158.5
+offset_top = 139.0
 offset_right = 175.0
 offset_bottom = 181.5
 text = "Choose Mini Game"
 
-[node name="MinigameOptions" type="OptionButton" parent="EasyMapNPCManagement/MinigameLabel" unique_id=1286511687]
+[node name="MinigameOptions" type="OptionButton" parent="MediumMapNPCManagement/MinigameLabel" unique_id=1286511687]
 layout_mode = 0
 offset_left = 3.0
 offset_top = 28.0
@@ -308,52 +319,82 @@ offset_right = 455.0
 offset_bottom = 60.0
 alignment = 1
 
-[node name="QuestionLabel" type="Label" parent="EasyMapNPCManagement" unique_id=279454062]
+[node name="QuestionLabel" type="Label" parent="MediumMapNPCManagement" unique_id=279454062]
 layout_mode = 0
 offset_left = 36.0
-offset_top = 226.5
+offset_top = 205.0
 offset_right = 107.0
 offset_bottom = 249.5
 text = "Question"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Question" type="LineEdit" parent="EasyMapNPCManagement/QuestionLabel" unique_id=1389838500]
+[node name="Question" type="LineEdit" parent="MediumMapNPCManagement/QuestionLabel" unique_id=1389838500]
 layout_mode = 0
 offset_top = 32.0
 offset_right = 450.0
 offset_bottom = 87.0
 
-[node name="AnswerTipLabel" type="Label" parent="EasyMapNPCManagement" unique_id=1247909147]
+[node name="AnswerChoicesLabel" type="Label" parent="MediumMapNPCManagement" unique_id=2014102003]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 293.0
+offset_right = 260.0
+offset_bottom = 321.0
+text = "Answer choices (separate with |)"
+
+[node name="AnswerChoices" type="LineEdit" parent="MediumMapNPCManagement/AnswerChoicesLabel" unique_id=2014102004]
+layout_mode = 0
+offset_top = 27.0
+offset_right = 448.0
+offset_bottom = 63.0
+
+[node name="CorrectAnswerLabel" type="Label" parent="MediumMapNPCManagement" unique_id=1247909146]
 layout_mode = 0
 offset_left = 37.0
-offset_top = 329.5
+offset_top = 360.0
+offset_right = 150.0
+offset_bottom = 304.0
+text = "Correct Answer"
+
+[node name="CorrectAnswer" type="LineEdit" parent="MediumMapNPCManagement/CorrectAnswerLabel" unique_id=1247909145]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 27.0
+offset_right = 448.0
+offset_bottom = 63.0
+
+[node name="AnswerTipLabel" type="Label" parent="MediumMapNPCManagement" unique_id=1247909147]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 435.0
 offset_right = 133.0
 offset_bottom = 358.5
 text = "Answer Tip"
 
-[node name="AnswerTip" type="LineEdit" parent="EasyMapNPCManagement/AnswerTipLabel" unique_id=1064030620]
+[node name="AnswerTip" type="LineEdit" parent="MediumMapNPCManagement/AnswerTipLabel" unique_id=1064030620]
 layout_mode = 0
 offset_left = 4.0
-offset_top = 33.0
+offset_top = 27.0
 offset_right = 448.0
 offset_bottom = 72.0
 
-[node name="TimerLabel" type="Label" parent="EasyMapNPCManagement" unique_id=1306031071]
+[node name="TimerLabel" type="Label" parent="MediumMapNPCManagement" unique_id=1306031071]
 layout_mode = 0
 offset_left = 49.0
-offset_top = 412.5
+offset_top = 515.0
 offset_right = 89.0
 offset_bottom = 435.5
-text = "Time"
+text = "Timer (seconds)"
 
-[node name="Time" type="LineEdit" parent="EasyMapNPCManagement/TimerLabel" unique_id=711175913]
+[node name="Time" type="LineEdit" parent="MediumMapNPCManagement/TimerLabel" unique_id=711175913]
 layout_mode = 0
 offset_top = 27.0
 offset_right = 448.0
 offset_bottom = 65.0
+placeholder_text = "30"
 
-[node name="SaveButton" type="Button" parent="EasyMapNPCManagement" unique_id=1196297886]
+[node name="SaveButton" type="Button" parent="MediumMapNPCManagement" unique_id=1196297886]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -365,7 +406,7 @@ offset_bottom = -22.0
 grow_vertical = 0
 text = "Save"
 
-[node name="CancelButton" type="Button" parent="EasyMapNPCManagement" unique_id=1658166792]
+[node name="CancelButton" type="Button" parent="MediumMapNPCManagement" unique_id=1658166792]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0

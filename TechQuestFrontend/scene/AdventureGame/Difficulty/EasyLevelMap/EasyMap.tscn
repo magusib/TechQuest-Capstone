@@ -7,7 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://cfhbphoni8m5y" path="res://asset/sprites/easymap.png" id="7_paao8"]
 [ext_resource type="Texture2D" uid="uid://c52aepsm6170k" path="res://asset/parallax/easy/10_Sky.png" id="8_an630"]
 [ext_resource type="Texture2D" uid="uid://1pwhmn0n5ksi" path="res://asset/parallax/easy/09_Forest.png" id="9_db5mq"]
+[ext_resource type="PackedScene" uid="uid://j1jc80g5m0nl" path="res://scene/AdventureGame/NPC/NPCInteraction/NPCInteraction.tscn" id="9_hyxu4"]
 [ext_resource type="PackedScene" uid="uid://c68y6sthaiu85" path="res://scene/AdventureGame/Difficulty/EasyLevelMap/EasyMapQuest.tscn" id="9_yej1q"]
+[ext_resource type="PackedScene" uid="uid://baurpnt02vul0" path="res://scene/AdventureGame/Question/EasyMapQuestion.tscn" id="10_nm8f0"]
 [ext_resource type="Texture2D" uid="uid://bvj4skcsclk2b" path="res://asset/parallax/easy/08_Forest.png" id="10_scy6r"]
 [ext_resource type="Texture2D" uid="uid://du0qyclhlxsx4" path="res://asset/parallax/easy/07_Forest.png" id="11_lj2mp"]
 [ext_resource type="Texture2D" uid="uid://ef667twxb3k3" path="res://asset/parallax/easy/06_Forest.png" id="12_hyxu4"]
@@ -275,6 +277,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+
+[node name="NpcInteraction" parent="MapHUDLayer" unique_id=1361396695 instance=ExtResource("9_hyxu4")]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="EasyMapQuestion" parent="MapHUDLayer" unique_id=1453264261 instance=ExtResource("10_nm8f0")]
+visible = false
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1896933515]
 

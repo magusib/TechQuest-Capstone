@@ -1,7 +1,60 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scene/Minigame/QuickTapChallenge.cs" id="1_script"]
 [ext_resource type="PackedScene" path="res://scene/Minigame/TapTarget.tscn" id="2_target"]
+
+[sub_resource type="Gradient" id="Gradient_background"]
+colors = PackedColorArray(0.92, 0.54, 0.28, 1, 0.98, 0.77, 0.42, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_background"]
+gradient = SubResource("Gradient_background")
+width = 1280
+height = 720
+fill_from = Vector2(0, 0)
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_main"]
+bg_color = Color(0.98, 0.96, 0.88, 0.96)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_instructions"]
+bg_color = Color(1, 0.88, 0.58, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.7, 0.38, 0.14, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
+bg_color = Color(0.98, 0.78, 0.3, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.42, 0.3, 0.12, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+content_margin_left = 12.0
+content_margin_top = 7.0
+content_margin_right = 12.0
+content_margin_bottom = 7.0
 
 [node name="QuickTapChallenge" type="Control"]
 layout_mode = 3
@@ -12,7 +65,294 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
 TargetTexture = null
-BackgroundTexture = null
 TargetScore = 10
 PointsPerTap = 1
+TargetSize = 140.0
+SpawnInterval = 0.45
+TargetDisplayDuration = 1.8
+GameDurationSeconds = 30
 TapTargetScene = ExtResource("2_target")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_background")
+expand_mode = 1
+stretch_mode = 1
+mouse_filter = 2
+
+[node name="MainPanel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.025
+anchor_top = 0.025
+anchor_right = 0.975
+anchor_bottom = 0.975
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_main")
+
+[node name="MainMargin" type="MarginContainer" parent="MainPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 14
+
+[node name="MainLayout" type="VBoxContainer" parent="MainPanel/MainMargin"]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="Header" type="HBoxContainer" parent="MainPanel/MainMargin/MainLayout"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="GameTitle" type="Label" parent="MainPanel/MainMargin/MainLayout/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.32, 0.18, 0.08, 1)
+theme_override_font_sizes/font_size = 27
+text = "QUICK TAP CHALLENGE"
+vertical_alignment = 1
+
+[node name="ScoreContainer" type="HBoxContainer" parent="MainPanel/MainMargin/MainLayout/Header"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="ScoreTitle" type="Label" parent="MainPanel/MainMargin/MainLayout/Header/ScoreContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.18, 0.08, 1)
+theme_override_font_sizes/font_size = 17
+text = "Score:"
+vertical_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="MainPanel/MainMargin/MainLayout/Header/ScoreContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.18, 0.08, 1)
+theme_override_font_sizes/font_size = 17
+text = "0 / 10"
+vertical_alignment = 1
+
+[node name="TimerContainer" type="HBoxContainer" parent="MainPanel/MainMargin/MainLayout/Header"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="TimerTitle" type="Label" parent="MainPanel/MainMargin/MainLayout/Header/TimerContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.18, 0.08, 1)
+theme_override_font_sizes/font_size = 17
+text = "Time:"
+vertical_alignment = 1
+
+[node name="TimerLabel" type="Label" parent="MainPanel/MainMargin/MainLayout/Header/TimerContainer"]
+custom_minimum_size = Vector2(44, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.18, 0.08, 1)
+theme_override_font_sizes/font_size = 17
+text = "30"
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="MainPanel/MainMargin/MainLayout/Header"]
+custom_minimum_size = Vector2(92, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+text = "Close"
+
+[node name="InstructionsPanel" type="PanelContainer" parent="MainPanel/MainMargin/MainLayout"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_instructions")
+
+[node name="InstructionsLabel" type="Label" parent="MainPanel/MainMargin/MainLayout/InstructionsPanel"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.18, 0.08, 1)
+theme_override_font_sizes/font_size = 16
+text = "Tap the funny character before it moves away!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressContainer" type="HBoxContainer" parent="MainPanel/MainMargin/MainLayout"]
+layout_mode = 2
+theme_override_constants/separation = 28
+alignment = 1
+
+[node name="TargetScoreLabel" type="Label" parent="MainPanel/MainMargin/MainLayout/ProgressContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.18, 0.08, 1)
+theme_override_font_sizes/font_size = 16
+text = "Target score: 10"
+
+[node name="CurrentScoreLabel" type="Label" parent="MainPanel/MainMargin/MainLayout/ProgressContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.18, 0.08, 1)
+theme_override_font_sizes/font_size = 16
+text = "Current score: 0"
+
+[node name="PlayArea" type="Control" parent="MainPanel/MainMargin/MainLayout"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+clip_contents = true
+
+[node name="PlayAreaBackdrop" type="ColorRect" parent="MainPanel/MainMargin/MainLayout/PlayArea"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.91, 0.71, 1)
+mouse_filter = 2
+
+[node name="TargetContainer" type="Control" parent="MainPanel/MainMargin/MainLayout/PlayArea"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BottomPanel" type="PanelContainer" parent="MainPanel/MainMargin/MainLayout"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_instructions")
+
+[node name="BottomLayout" type="HBoxContainer" parent="MainPanel/MainMargin/MainLayout/BottomPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="StatusLabel" type="Label" parent="MainPanel/MainMargin/MainLayout/BottomPanel/BottomLayout"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.32, 0.18, 0.08, 1)
+theme_override_font_sizes/font_size = 15
+text = "Reach the target score before time runs out."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RestartButton" type="Button" parent="MainPanel/MainMargin/MainLayout/BottomPanel/BottomLayout"]
+custom_minimum_size = Vector2(100, 38)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+text = "Restart"
+
+[node name="ResultOverlay" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+z_index = 10
+
+[node name="Dimmer" type="ColorRect" parent="ResultOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.03, 0.1, 0.14, 0.65)
+mouse_filter = 2
+
+[node name="ResultPanel" type="PanelContainer" parent="ResultOverlay"]
+custom_minimum_size = Vector2(460, 320)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -160.0
+offset_right = 230.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_main")
+
+[node name="ResultLayout" type="VBoxContainer" parent="ResultOverlay/ResultPanel"]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="ResultTitle" type="Label" parent="ResultOverlay/ResultPanel/ResultLayout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.18, 0.08, 1)
+theme_override_font_sizes/font_size = 26
+text = "ROUND COMPLETE"
+horizontal_alignment = 1
+
+[node name="ResultMessage" type="Label" parent="ResultOverlay/ResultPanel/ResultLayout"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.18, 0.08, 1)
+theme_override_font_sizes/font_size = 17
+text = "Your result will appear here."
+autowrap_mode = 3
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnswerTipLabel" type="Label" parent="ResultOverlay/ResultPanel/ResultLayout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.12, 0.42, 0.27, 1)
+theme_override_font_sizes/font_size = 16
+autowrap_mode = 3
+horizontal_alignment = 1
+
+[node name="CoinPenaltyLabel" type="Label" parent="ResultOverlay/ResultPanel/ResultLayout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.68, 0.22, 0.15, 1)
+theme_override_font_sizes/font_size = 16
+autowrap_mode = 3
+horizontal_alignment = 1
+
+[node name="PlayAgainButton" type="Button" parent="ResultOverlay/ResultPanel/ResultLayout"]
+custom_minimum_size = Vector2(180, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+text = "Play Again"
+
+[node name="RetryResultButton" type="Button" parent="ResultOverlay/ResultPanel/ResultLayout"]
+visible = false
+custom_minimum_size = Vector2(180, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+text = "Retry Result"
+
+[node name="ResultCloseButton" type="Button" parent="ResultOverlay/ResultPanel/ResultLayout"]
+custom_minimum_size = Vector2(180, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+text = "Close"
+
+[node name="CountdownTimer" type="Timer" parent="."]
+process_mode = 3
+wait_time = 1.0
+
+[node name="SpawnTimer" type="Timer" parent="."]
+process_mode = 3
+one_shot = true
+wait_time = 0.45
+
+[node name="TargetLifetimeTimer" type="Timer" parent="."]
+process_mode = 3
+one_shot = true
+wait_time = 1.8

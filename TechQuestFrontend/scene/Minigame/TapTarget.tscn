@@ -1,8 +1,62 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://ch6lcstiyoml6"]
 
-[ext_resource type="Script" path="res://scene/Minigame/TapTarget.cs" id="1"]
+[ext_resource type="Script" uid="uid://blntbj3ew5ybt" path="res://scene/Minigame/TapTarget.cs" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://dlhfhg3y3th1w" path="res://asset/Icons/ducs.png" id="2_byp1e"]
 
-[node name="TapTarget" type="Button"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_target"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 0.89, 0.58, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.47, 0.25, 0.1, 1)
+corner_radius_top_left = 70
+corner_radius_top_right = 70
+corner_radius_bottom_right = 70
+corner_radius_bottom_left = 70
+
+[node name="TapTarget" type="Button" unique_id=1237941137]
 custom_minimum_size = Vector2(140, 140)
-layout_mode = 0
-script = ExtResource("1")
+theme_override_styles/normal = SubResource("StyleBoxFlat_target")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_target")
+theme_override_styles/hover = SubResource("StyleBoxFlat_target")
+script = ExtResource("1_script")
+
+[node name="CharacterImage" type="TextureRect" parent="." unique_id=1486447355]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 23.0
+offset_top = 20.0
+offset_right = -19.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_byp1e")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TapEffect" type="Label" parent="." unique_id=1249173042]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_top = -36.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.1, 0.55, 0.16, 1)
+theme_override_font_sizes/font_size = 24
+text = "+1"
+horizontal_alignment = 1

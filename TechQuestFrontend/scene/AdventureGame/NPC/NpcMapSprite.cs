@@ -236,4 +236,20 @@ public static class NpcMapSprite
 
 		return false;
 	}
+
+	public static void RemoveDeploymentSprite(Node currentScene, int deploymentId)
+	{
+		if (currentScene == null)
+			return;
+
+		foreach (Node child in currentScene.GetChildren())
+		{
+			if (child is AnimatedSprite2D sprite &&
+				sprite.HasMeta("DeploymentId") &&
+				sprite.GetMeta("DeploymentId").AsInt32() == deploymentId)
+			{
+				sprite.QueueFree();
+			}
+		}
+	}
 }

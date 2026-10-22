@@ -35,6 +35,8 @@ namespace TechQuestBackend.Data
 
         public DbSet<GameResult> GameResults { get; set; }
 
+        public DbSet<NpcChallenge> NpcChallenges { get; set; }
+
         public DbSet<Leaderboard> Leaderboards { get; set; }
 
         public DbSet<LeaderboardHistory> LeaderboardHistories { get; set; }
@@ -199,8 +201,10 @@ namespace TechQuestBackend.Data
                 entity.HasKey(q => q.QuestionId);
                 entity.Property(q => q.SubjectName).HasMaxLength(150).IsRequired();
                 entity.Property(q => q.QuestionText).HasColumnName("Question").IsRequired();
+                entity.Property(q => q.AnswerChoices).HasColumnType("jsonb").HasDefaultValue("[]").IsRequired();
                 entity.Property(q => q.CorrectAnswer).IsRequired();
                 entity.Property(q => q.AnswerTip).IsRequired();
+                entity.Property(q => q.TimerSeconds).HasDefaultValue(30);
                 entity.Property(q => q.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.HasOne(q => q.Npc)
                     .WithMany(n => n.Questions)
@@ -228,10 +232,12 @@ namespace TechQuestBackend.Data
                 entity.Property(g => g.EarnedPoints).HasDefaultValue(0);
                 entity.Property(g => g.EarnedCoins).HasDefaultValue(0);
                 entity.Property(g => g.CoinsDeducted).HasDefaultValue(0);
+                entity.Property(g => g.PointsDeducted).HasDefaultValue(0);
                 entity.Property(g => g.PlayedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.HasCheckConstraint("CK_Game_result_EarnedPoints_NonNegative", "\"EarnedPoints\" >= 0");
                 entity.HasCheckConstraint("CK_Game_result_EarnedCoins_NonNegative", "\"EarnedCoins\" >= 0");
                 entity.HasCheckConstraint("CK_Game_result_CoinsDeducted_NonNegative", "\"CoinsDeducted\" >= 0");
+                entity.HasCheckConstraint("CK_Game_result_PointsDeducted_NonNegative", "\"PointsDeducted\" >= 0");
                 entity.HasIndex(g => g.AttemptId).IsUnique();
                 entity.HasOne(g => g.Student)
                     .WithMany(s => s.GameResults)
@@ -240,6 +246,38 @@ namespace TechQuestBackend.Data
                 entity.HasOne(g => g.Question)
                     .WithMany(q => q.GameResults)
                     .HasForeignKey(g => g.QuestionId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<NpcChallenge>(entity =>
+            {
+                entity.ToTable("Npc_challenges", table =>
+                {
+                    table.HasCheckConstraint(
+                        "CK_Npc_challenges_State",
+                        "\"State\" IN ('MiniGamePending', 'QuestionReady', 'Completed')");
+                });
+                entity.HasKey(challenge => challenge.ChallengeId);
+                entity.Property(challenge => challenge.State).HasMaxLength(30).HasDefaultValue("MiniGamePending");
+                entity.Property(challenge => challenge.NpcName).HasMaxLength(150).IsRequired();
+                entity.Property(challenge => challenge.Difficulty).HasMaxLength(20).IsRequired();
+                entity.Property(challenge => challenge.SubjectName).HasMaxLength(150).IsRequired();
+                entity.Property(challenge => challenge.MiniGameType).HasMaxLength(50).IsRequired();
+                entity.Property(challenge => challenge.AnswerChoices).HasColumnType("jsonb").IsRequired();
+                entity.Property(challenge => challenge.StartedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.HasIndex(challenge => new { challenge.StudentId, challenge.DeploymentId }).IsUnique();
+                entity.HasIndex(challenge => challenge.AttemptId).IsUnique();
+                entity.HasOne(challenge => challenge.Student)
+                    .WithMany(student => student.NpcChallenges)
+                    .HasForeignKey(challenge => challenge.StudentId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(challenge => challenge.Deployment)
+                    .WithMany()
+                    .HasForeignKey(challenge => challenge.DeploymentId)
+                    .OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(challenge => challenge.Question)
+                    .WithMany(question => question.NpcChallenges)
+                    .HasForeignKey(challenge => challenge.QuestionId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 

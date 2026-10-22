@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://baurpnt02vul0"]
 
+[ext_resource type="Script" uid="uid://ccdpd8gokag3y" path="res://scene/AdventureGame/Question/EasyMapQuestion.cs" id="1_fvcs6"]
+
 [node name="EasyMapQuestion" type="Control" unique_id=1453264261]
 layout_mode = 3
 anchors_preset = 15
@@ -7,8 +9,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_fvcs6")
 
 [node name="EasyMapQuestionPanel" type="Panel" parent="." unique_id=985029562]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -106,3 +110,278 @@ offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "Submit"
+
+[node name="AnswerTipPanel" type="Panel" parent="." unique_id=521519512]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -189.5
+offset_top = -119.0
+offset_right = 189.5
+offset_bottom = 119.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AnswerTipLabel" type="Label" parent="AnswerTipPanel" unique_id=1939003375]
+layout_mode = 0
+offset_left = 96.5
+offset_top = 9.0
+offset_right = 277.0
+offset_bottom = 54.0
+text = "Your Answer Tip"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnswerTipReceiveLabel" type="Label" parent="AnswerTipPanel" unique_id=758246163]
+layout_mode = 0
+offset_left = 13.5
+offset_top = 75.0
+offset_right = 363.0
+offset_bottom = 159.0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProceedButton" type="Button" parent="AnswerTipPanel" unique_id=2014092102]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -117.25
+offset_top = -64.0
+offset_right = 117.25
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Proceed to Question"
+
+[node name="QuestionResult" type="Control" parent="." unique_id=1661142965]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TimeReachPanel" type="Panel" parent="QuestionResult" unique_id=1517154237]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -181.0
+offset_top = -160.5
+offset_right = 181.0
+offset_bottom = 160.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TimeReachLabel" type="Label" parent="QuestionResult/TimeReachPanel" unique_id=35528153]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -118.0
+offset_top = 15.0
+offset_right = 118.0
+offset_bottom = 70.0
+grow_horizontal = 2
+text = "Opsss your time out"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CorrectAnswerLabel" type="Label" parent="QuestionResult/TimeReachPanel" unique_id=569644264]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 67.0
+offset_right = 341.0
+offset_bottom = 130.0
+text = "Correct Answer: "
+vertical_alignment = 1
+
+[node name="CoinsDeductedLabel" type="Label" parent="QuestionResult/TimeReachPanel" unique_id=1192011396]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 162.0
+offset_right = 336.0
+offset_bottom = 209.0
+text = "Coins"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PointsDeductedLabel" type="Label" parent="QuestionResult/TimeReachPanel" unique_id=1251203140]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 215.0
+offset_right = 342.0
+offset_bottom = 261.0
+text = "Coins"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OKButton" type="Button" parent="QuestionResult/TimeReachPanel" unique_id=1808542589]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -54.5
+offset_top = -42.0
+offset_right = 54.5
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "OK"
+
+[node name="WrongAnswerPanel" type="Panel" parent="QuestionResult" unique_id=1901489918]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -181.0
+offset_top = -160.5
+offset_right = 181.0
+offset_bottom = 160.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WrongAnswerLabel" type="Label" parent="QuestionResult/WrongAnswerPanel" unique_id=991727085]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -118.0
+offset_top = 15.0
+offset_right = 118.0
+offset_bottom = 70.0
+grow_horizontal = 2
+text = "OPSSS Mali Ka"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CorrectAnswerLabel" type="Label" parent="QuestionResult/WrongAnswerPanel" unique_id=1978884004]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 67.0
+offset_right = 341.0
+offset_bottom = 130.0
+text = "Correct Answer: "
+vertical_alignment = 1
+
+[node name="CoinsDeductedLabel" type="Label" parent="QuestionResult/WrongAnswerPanel" unique_id=701130463]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 162.0
+offset_right = 336.0
+offset_bottom = 209.0
+text = "Coins"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PointsDeductedLabel" type="Label" parent="QuestionResult/WrongAnswerPanel" unique_id=2143929708]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 215.0
+offset_right = 342.0
+offset_bottom = 261.0
+text = "Coins"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OKButton" type="Button" parent="QuestionResult/WrongAnswerPanel" unique_id=910798747]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -54.5
+offset_top = -42.0
+offset_right = 54.5
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "OK"
+
+[node name="CorrectAnswerPanel" type="Panel" parent="QuestionResult" unique_id=641804413]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -181.0
+offset_top = -160.5
+offset_right = 181.0
+offset_bottom = 160.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CorrectAnswerLabel2" type="Label" parent="QuestionResult/CorrectAnswerPanel" unique_id=853257668]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -118.0
+offset_top = 15.0
+offset_right = 118.0
+offset_bottom = 70.0
+grow_horizontal = 2
+text = "Nakss tama yan sya"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CorrectAnswerLabel" type="Label" parent="QuestionResult/CorrectAnswerPanel" unique_id=502634158]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 67.0
+offset_right = 341.0
+offset_bottom = 130.0
+text = "Correct Answer: "
+vertical_alignment = 1
+
+[node name="CoinsReceivedLabel" type="Label" parent="QuestionResult/CorrectAnswerPanel" unique_id=2100496392]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 162.0
+offset_right = 336.0
+offset_bottom = 209.0
+text = "Coins"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PointsReceiveLabel" type="Label" parent="QuestionResult/CorrectAnswerPanel" unique_id=638780432]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 215.0
+offset_right = 342.0
+offset_bottom = 261.0
+text = "Coins"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OKButton" type="Button" parent="QuestionResult/CorrectAnswerPanel" unique_id=1626872766]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -54.5
+offset_top = -42.0
+offset_right = 54.5
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "OK"

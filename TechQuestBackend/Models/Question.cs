@@ -14,9 +14,13 @@ namespace TechQuestBackend.Models
 
         public string QuestionText { get; set; } = "";
 
+        public string AnswerChoices { get; set; } = "[]";
+
         public string CorrectAnswer { get; set; } = "";
 
         public string AnswerTip { get; set; } = "";
+
+        public int TimerSeconds { get; set; } = 30;
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
@@ -31,5 +35,7 @@ namespace TechQuestBackend.Models
         public User? CreatedByUser { get; set; }
 
         public ICollection<GameResult> GameResults { get; set; } = new List<GameResult>();
+
+        public ICollection<NpcChallenge> NpcChallenges { get; set; } = new List<NpcChallenge>();
     }
 }

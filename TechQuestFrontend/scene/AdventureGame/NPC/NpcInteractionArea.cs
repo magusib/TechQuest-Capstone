@@ -25,7 +25,15 @@ public partial class NpcInteractionArea : Area2D
 
 		if (selected)
 		{
-			MiniGameLauncher.OpenForDeployment(
+			NpcInteraction interaction = GetTree().CurrentScene
+				.FindChild("NpcInteraction", true, false) as NpcInteraction;
+			if (interaction == null)
+			{
+				GD.PrintErr("NPC challenge dialog could not be found in the current map.");
+				return;
+			}
+
+			interaction.ShowChallenge(
 				this,
 				GetParent().GetMeta("DeploymentId").AsInt32());
 			GetViewport().SetInputAsHandled();

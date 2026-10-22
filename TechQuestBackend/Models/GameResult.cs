@@ -14,6 +14,8 @@ namespace TechQuestBackend.Models
 
         public int CoinsDeducted { get; set; }
 
+        public int PointsDeducted { get; set; }
+
         public bool IsCorrect { get; set; }
 
         public Guid? AttemptId { get; set; }

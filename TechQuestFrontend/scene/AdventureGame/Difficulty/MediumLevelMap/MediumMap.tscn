@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://cs58il8p07ld5" path="res://asset/sprites/mediummap.png" id="7_nnjn6"]
 [ext_resource type="PackedScene" uid="uid://c65cdoovlusqa" path="res://scene/AdventureGame/Character/Character1.tscn" id="8_e12kd"]
 [ext_resource type="PackedScene" uid="uid://bd0fdds136c1e" path="res://scene/AdventureGame/Difficulty/MediumLevelMap/MediumMapQuest.tscn" id="8_kbxfq"]
+[ext_resource type="PackedScene" uid="uid://j1jc80g5m0nl" path="res://scene/AdventureGame/NPC/NPCInteraction/NPCInteraction.tscn" id="9_uhtw7"]
+[ext_resource type="PackedScene" uid="uid://ohbyt6qe6r2g" path="res://scene/AdventureGame/Question/MediumMapQuestion.tscn" id="10_7ji4b"]
 [ext_resource type="Texture2D" uid="uid://d3kchng7i15jf" path="res://asset/parallax/medium/Sky.png" id="10_pe08g"]
 [ext_resource type="Texture2D" uid="uid://5121d1gis5ti" path="res://asset/parallax/medium/Clouds.png" id="11_v8jkv"]
 [ext_resource type="Texture2D" uid="uid://bns7s1kkscp3q" path="res://asset/parallax/medium/Bushes.png" id="12_jdimq"]
@@ -230,6 +232,12 @@ zoom = Vector2(1.5, 1.5)
 script = ExtResource("6_g0d1f")
 
 [node name="MediumMapQuest" parent="MapHUDLayer" unique_id=1921483137 instance=ExtResource("8_kbxfq")]
+visible = false
+
+[node name="NpcInteraction" parent="MapHUDLayer" unique_id=1361396695 instance=ExtResource("9_uhtw7")]
+visible = false
+
+[node name="MediumMapQuestion" parent="MapHUDLayer" unique_id=533294355 instance=ExtResource("10_7ji4b")]
 visible = false
 
 [node name="Character1" parent="." unique_id=1836987956 instance=ExtResource("8_e12kd")]

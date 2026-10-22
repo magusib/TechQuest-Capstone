@@ -135,6 +135,11 @@ namespace TechQuestBackend.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
+                    b.Property<int>("PointsDeducted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
                     b.Property<int>("QuestionId")
                         .HasColumnType("integer");
 
@@ -157,6 +162,8 @@ namespace TechQuestBackend.Migrations
                             t.HasCheckConstraint("CK_Game_result_EarnedCoins_NonNegative", "\"EarnedCoins\" >= 0");
 
                             t.HasCheckConstraint("CK_Game_result_EarnedPoints_NonNegative", "\"EarnedPoints\" >= 0");
+
+                            t.HasCheckConstraint("CK_Game_result_PointsDeducted_NonNegative", "\"PointsDeducted\" >= 0");
                         });
                 });
 
@@ -381,6 +388,125 @@ namespace TechQuestBackend.Migrations
                         });
                 });
 
+            modelBuilder.Entity("TechQuestBackend.Models.NpcChallenge", b =>
+                {
+                    b.Property<int>("ChallengeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ChallengeId"));
+
+                    b.Property<string>("AnswerChoices")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.Property<string>("AnswerTip")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("AnswerTipAwarded")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("AttemptId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("CoinsChanged")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CompletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CorrectAnswer")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("DeploymentId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Difficulty")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("MiniGameType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<bool?>("MiniGameWon")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("NpcId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("NpcName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<int>("PointsChanged")
+                        .HasColumnType("integer");
+
+                    b.Property<bool?>("QuestionCorrect")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("QuestionStartedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("QuestionText")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("QuestionTimedOut")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("SelectedAnswer")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("StartedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)")
+                        .HasDefaultValue("MiniGamePending");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SubjectName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<int>("TimerSeconds")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ChallengeId");
+
+                    b.HasIndex("AttemptId")
+                        .IsUnique();
+
+                    b.HasIndex("DeploymentId");
+
+                    b.HasIndex("QuestionId");
+
+                    b.HasIndex("StudentId", "DeploymentId")
+                        .IsUnique();
+
+                    b.ToTable("Npc_challenges", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_Npc_challenges_State", "\"State\" IN ('MiniGamePending', 'QuestionReady', 'Completed')");
+                        });
+                });
+
             modelBuilder.Entity("TechQuestBackend.Models.NpcDeployment", b =>
                 {
                     b.Property<int>("DeploymentId")
@@ -602,6 +728,12 @@ namespace TechQuestBackend.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("QuestionId"));
 
+                    b.Property<string>("AnswerChoices")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasDefaultValue("[]");
+
                     b.Property<string>("AnswerTip")
                         .IsRequired()
                         .HasColumnType("text");
@@ -636,6 +768,11 @@ namespace TechQuestBackend.Migrations
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("character varying(150)");
+
+                    b.Property<int>("TimerSeconds")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(30);
 
                     b.HasKey("QuestionId");
 
@@ -1017,6 +1154,33 @@ namespace TechQuestBackend.Migrations
                     b.Navigation("CreatedByUser");
                 });
 
+            modelBuilder.Entity("TechQuestBackend.Models.NpcChallenge", b =>
+                {
+                    b.HasOne("TechQuestBackend.Models.NpcDeployment", "Deployment")
+                        .WithMany()
+                        .HasForeignKey("DeploymentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TechQuestBackend.Models.Question", "Question")
+                        .WithMany("NpcChallenges")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TechQuestBackend.Models.StudentProfile", "Student")
+                        .WithMany("NpcChallenges")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Deployment");
+
+                    b.Navigation("Question");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("TechQuestBackend.Models.NpcDeployment", b =>
                 {
                     b.HasOne("TechQuestBackend.Models.User", "DeployedByUser")
@@ -1225,6 +1389,8 @@ namespace TechQuestBackend.Migrations
             modelBuilder.Entity("TechQuestBackend.Models.Question", b =>
                 {
                     b.Navigation("GameResults");
+
+                    b.Navigation("NpcChallenges");
                 });
 
             modelBuilder.Entity("TechQuestBackend.Models.ShopItem", b =>
@@ -1241,6 +1407,8 @@ namespace TechQuestBackend.Migrations
                     b.Navigation("InventoryItems");
 
                     b.Navigation("LeaderboardEntries");
+
+                    b.Navigation("NpcChallenges");
 
                     b.Navigation("RoomParticipants");
 

@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 public static class MiniGameApiClient
 {
@@ -27,6 +28,41 @@ public static class MiniGameApiClient
 			throw new InvalidOperationException("The NPC mini-game assignment was empty.");
 
 		return assignment;
+	}
+
+	public static Task<StudentNpcConfigurationDto> GetStudentConfigurationAsync(int deploymentId)
+	{
+		return SendAsync<StudentNpcConfigurationDto>(
+			HttpMethod.Get,
+			"/Npcs/deployments/" + deploymentId + "/student-configuration");
+	}
+
+	public static Task<StudentChallengeStartDto> StartChallengeAsync(int deploymentId)
+	{
+		return SendAsync<StudentChallengeStartDto>(
+			HttpMethod.Post,
+			"/Npcs/deployments/" + deploymentId + "/challenge-start");
+	}
+
+	public static Task<StudentChallengeQuestionDto> GetStudentQuestionAsync(int deploymentId)
+	{
+		return SendAsync<StudentChallengeQuestionDto>(
+			HttpMethod.Get,
+			"/Npcs/deployments/" + deploymentId + "/student-question");
+	}
+
+	public static Task<QuestionAttemptResultDto> SubmitQuestionAttemptAsync(
+		int deploymentId,
+		string selectedAnswer)
+	{
+		return SendAsync<QuestionAttemptResultDto>(
+			HttpMethod.Post,
+			"/GameResults/question-attempt",
+			new QuestionAttemptRequestDto
+			{
+				DeploymentId = deploymentId,
+				SelectedAnswer = selectedAnswer
+			});
 	}
 
 	public static Task<MiniGameAttemptResultDto> SubmitAttemptAsync(
@@ -86,6 +122,7 @@ public class MiniGameAssignmentDto
 	public int DeploymentId { get; set; }
 	public string GameType { get; set; } = "";
 	public string GameName { get; set; } = "";
+	public int TimerSeconds { get; set; } = 30;
 }
 
 public class MiniGameAttemptRequestDto
@@ -103,6 +140,70 @@ public class MiniGameAttemptResultDto
 	public bool GameWon { get; set; }
 	public int CoinsDeducted { get; set; }
 	public int TotalCoins { get; set; }
+	public int TotalPoints { get; set; }
 	public string AnswerTip { get; set; } = "";
 	public bool AlreadyProcessed { get; set; }
+}
+
+public class StudentNpcConfigurationDto
+{
+	public int NpcId { get; set; }
+	public string NpcName { get; set; } = "";
+	public int DeploymentId { get; set; }
+	public string Difficulty { get; set; } = "";
+	public string PositionMarker { get; set; } = "";
+	public int QuestionId { get; set; }
+	public string SubjectName { get; set; } = "";
+	public int? MiniGameId { get; set; }
+	public string MiniGameName { get; set; } = "";
+	public int TimerSeconds { get; set; }
+	public bool AlreadyStarted { get; set; }
+	public string ChallengeState { get; set; } = "";
+	public string AnswerTip { get; set; } = "";
+}
+
+public class StudentChallengeStartDto
+{
+	public int ChallengeId { get; set; }
+	public Guid AttemptId { get; set; }
+	public int NpcId { get; set; }
+	public int DeploymentId { get; set; }
+	public int QuestionId { get; set; }
+	public string GameType { get; set; } = "";
+	public int TimerSeconds { get; set; }
+	public string Difficulty { get; set; } = "";
+}
+
+public class StudentChallengeQuestionDto
+{
+	public int QuestionId { get; set; }
+	public int? NpcId { get; set; }
+	public int DeploymentId { get; set; }
+	public string SubjectName { get; set; } = "";
+	public string Question { get; set; } = "";
+	public List<string> AnswerChoices { get; set; } = new();
+	public int TimerSeconds { get; set; }
+	public DateTime QuestionStartedAt { get; set; }
+	public int RemainingSeconds { get; set; }
+	public string Difficulty { get; set; } = "";
+}
+
+public class QuestionAttemptRequestDto
+{
+	public int DeploymentId { get; set; }
+	public string SelectedAnswer { get; set; } = "";
+}
+
+public class QuestionAttemptResultDto
+{
+	public int DeploymentId { get; set; }
+	public bool IsCorrect { get; set; }
+	public bool TimedOut { get; set; }
+	public string SelectedAnswer { get; set; } = "";
+	public string CorrectAnswer { get; set; } = "";
+	public int CoinsChanged { get; set; }
+	public int PointsChanged { get; set; }
+	public int TotalCoins { get; set; }
+	public int TotalPoints { get; set; }
+	public bool Completed { get; set; }
 }

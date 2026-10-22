@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 public abstract partial class AdminNpcManager : Control
@@ -41,11 +42,12 @@ public abstract partial class AdminNpcManager : Control
 	private bool isSavingConfiguration;
 	private Control configurationPopup;
 	private LineEdit subjectInput;
+	private LineEdit questionInput;
+	private LineEdit correctAnswerInput;
+	private LineEdit answerTipInput;
+	private LineEdit timerInput;
 	private Label configurationTitle;
 	private OptionButton miniGameInput;
-	private TextEdit questionInput;
-	private LineEdit correctAnswerInput;
-	private TextEdit answerTipInput;
 	private Button saveConfigurationButton;
 	private NpcConfigurationDto editingConfiguration;
 
@@ -63,16 +65,10 @@ public abstract partial class AdminNpcManager : Control
 		saveButton = GetNode<Button>(npcPanelPath + "/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer/Buttons/AddButton");
 		formMessage = GetNode<Label>(npcPanelPath + "/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer/Title");
 		AddAnimationScenePicker();
-		messageDialog = GetNode<AcceptDialog>(npcPanelPath + "/AcceptDialog");
-		deleteDialog = GetNode<ConfirmationDialog>(npcPanelPath + "/DeleteConfirmationDialog");
-		deployDialog = GetNode<ConfirmationDialog>(npcPanelPath + "/DeployConfirmationDialog");
-		undeployDialog = new ConfirmationDialog
-		{
-			Title = "Undeploy NPC",
-			OkButtonText = "Undeploy",
-			DialogText = "Undeploy this NPC from the map?"
-		};
-		AddChild(undeployDialog);
+		messageDialog = GetNode<AcceptDialog>(npcPanelPath + "/NPCMessageDialog/AcceptDialog");
+		deleteDialog = GetNode<ConfirmationDialog>(npcPanelPath + "/NPCMessageDialog/DeleteConfirmationDialog");
+		deployDialog = GetNode<ConfirmationDialog>(npcPanelPath + "/NPCMessageDialog/DeployConfirmationDialog");
+		undeployDialog = GetNode<ConfirmationDialog>(npcPanelPath + "/NPCMessageDialog/UndeployConfirmationDialog");
 		CreateConfigurationPopup();
 
 		GetNode<Button>(npcPanelPath + "/AddButton").Pressed += OpenAddForm;
@@ -305,93 +301,20 @@ public abstract partial class AdminNpcManager : Control
 
 	private void CreateConfigurationPopup()
 	{
-		configurationPopup = new Control
-		{
-			Name = "NpcConfigurationPopup",
-			Visible = false,
-			MouseFilter = Control.MouseFilterEnum.Stop,
-			ZIndex = 50
-		};
-		configurationPopup.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
-		AddChild(configurationPopup);
-
-		var background = new ColorRect
-		{
-			Color = new Color(0, 0, 0, 0.65f),
-			MouseFilter = Control.MouseFilterEnum.Stop
-		};
-		background.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
-		configurationPopup.AddChild(background);
-
-		var panel = new PanelContainer
-		{
-			CustomMinimumSize = new Vector2(560, 620)
-		};
-		panel.SetAnchorsPreset(Control.LayoutPreset.Center);
-		panel.OffsetLeft = -280;
-		panel.OffsetTop = -310;
-		panel.OffsetRight = 280;
-		panel.OffsetBottom = 310;
-		configurationPopup.AddChild(panel);
-
-		var margin = new MarginContainer();
-		margin.AddThemeConstantOverride("margin_left", 20);
-		margin.AddThemeConstantOverride("margin_top", 18);
-		margin.AddThemeConstantOverride("margin_right", 20);
-		margin.AddThemeConstantOverride("margin_bottom", 18);
-		panel.AddChild(margin);
-
-		var fields = new VBoxContainer();
-		fields.AddThemeConstantOverride("separation", 8);
-		margin.AddChild(fields);
-		configurationTitle = new Label
-		{
-			Text = "Manage NPC",
-			HorizontalAlignment = HorizontalAlignment.Center
-		};
-		fields.AddChild(configurationTitle);
-
-		subjectInput = AddLineEditField(fields, "Subject Name");
-		miniGameInput = new OptionButton();
-		AddField(fields, "Mini Game", miniGameInput);
-		questionInput = AddTextField(fields, "Question", 90);
-		correctAnswerInput = AddLineEditField(fields, "Correct Answer");
-		answerTipInput = AddTextField(fields, "Answer Tip", 70);
-
-		var buttons = new HBoxContainer
-		{
-			Alignment = BoxContainer.AlignmentMode.End
-		};
-		fields.AddChild(buttons);
-		var cancelButton = new Button { Text = "Cancel" };
-		saveConfigurationButton = new Button { Text = "Save Changes" };
-		buttons.AddChild(cancelButton);
-		buttons.AddChild(saveConfigurationButton);
+		configurationPopup = GetNode<Control>(Difficulty + "MapNPCManagement");
+		configurationPopup.Hide();
+		configurationTitle = configurationPopup.GetNode<Label>("NPCManagementLabel");
+		subjectInput = configurationPopup.GetNode<LineEdit>("SubjectLabel/Subject");
+		miniGameInput = configurationPopup.GetNode<OptionButton>("MinigameLabel/MinigameOptions");
+		questionInput = configurationPopup.GetNode<LineEdit>("QuestionLabel/Question");
+		configurationPopup.GetNode<Control>("AnswerChoicesLabel").Hide();
+		correctAnswerInput = configurationPopup.GetNode<LineEdit>("CorrectAnswerLabel/CorrectAnswer");
+		answerTipInput = configurationPopup.GetNode<LineEdit>("AnswerTipLabel/AnswerTip");
+		timerInput = configurationPopup.GetNode<LineEdit>("TimerLabel/Time");
+		saveConfigurationButton = configurationPopup.GetNode<Button>("SaveButton");
+		Button cancelButton = configurationPopup.GetNode<Button>("CancelButton");
 		cancelButton.Pressed += () => configurationPopup.Hide();
 		saveConfigurationButton.Pressed += SaveConfigurationAsync;
-	}
-
-	private static LineEdit AddLineEditField(VBoxContainer fields, string label)
-	{
-		var input = new LineEdit();
-		AddField(fields, label, input);
-		return input;
-	}
-
-	private static TextEdit AddTextField(VBoxContainer fields, string label, float height)
-	{
-		var input = new TextEdit
-		{
-			CustomMinimumSize = new Vector2(0, height)
-		};
-		AddField(fields, label, input);
-		return input;
-	}
-
-	private static void AddField(VBoxContainer fields, string label, Control input)
-	{
-		fields.AddChild(new Label { Text = label });
-		fields.AddChild(input);
 	}
 
 	private async void OpenConfigurationAsync(NpcDto npc, NpcDeploymentDto deployment)
@@ -411,6 +334,7 @@ public abstract partial class AdminNpcManager : Control
 			questionInput.Text = configuration.Question;
 			correctAnswerInput.Text = configuration.CorrectAnswer;
 			answerTipInput.Text = configuration.AnswerTip;
+			timerInput.Text = configuration.TimerSeconds.ToString();
 			miniGameInput.Clear();
 			miniGameInput.AddItem("No mini-game", 0);
 			foreach (MiniGameDto miniGame in miniGames)
@@ -456,7 +380,13 @@ public abstract partial class AdminNpcManager : Control
 			string.IsNullOrWhiteSpace(questionInput.Text) ||
 			string.IsNullOrWhiteSpace(correctAnswerInput.Text))
 		{
-			ShowMessage("Subject name, question, and correct answer are required.");
+			ShowMessage("Subject, question, and correct answer are required.");
+			return;
+		}
+
+		if (!int.TryParse(timerInput.Text, out int timerSeconds) || timerSeconds < 1)
+		{
+			ShowMessage("Timer must be a positive number of seconds.");
 			return;
 		}
 
@@ -466,8 +396,10 @@ public abstract partial class AdminNpcManager : Control
 		int miniGameId = miniGameInput.GetItemId(miniGameInput.Selected);
 		editingConfiguration.MiniGameId = miniGameId > 0 ? miniGameId : null;
 		editingConfiguration.Question = questionInput.Text.Trim();
+		editingConfiguration.AnswerChoices = new List<string>();
 		editingConfiguration.CorrectAnswer = correctAnswerInput.Text.Trim();
 		editingConfiguration.AnswerTip = answerTipInput.Text.Trim();
+		editingConfiguration.TimerSeconds = timerSeconds;
 		try
 		{
 			await NpcApiClient.SaveDeploymentConfigurationAsync(

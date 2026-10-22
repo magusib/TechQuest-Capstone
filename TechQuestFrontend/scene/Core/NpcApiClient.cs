@@ -276,6 +276,8 @@ public class NpcConfigurationDto
 	public int? MiniGameId { get; set; }
 	public string MiniGameName { get; set; } = "";
 	public string Question { get; set; } = "";
+	public List<string> AnswerChoices { get; set; } = new();
 	public string CorrectAnswer { get; set; } = "";
 	public string AnswerTip { get; set; } = "";
+	public int TimerSeconds { get; set; } = 30;
 }

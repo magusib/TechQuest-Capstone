@@ -1,8 +1,98 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://donpfaofc43iy"]
 
-[ext_resource type="Script" path="res://scene/Minigame/MemoryCard.cs" id="1"]
+[ext_resource type="Script" uid="uid://dqdglf3au7pki" path="res://scene/Minigame/MemoryCard.cs" id="1_script"]
 
-[node name="MemoryCard" type="Button"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.98, 0.96, 0.86, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.1, 0.29, 0.38, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="Gradient" id="Gradient_card_back"]
+colors = PackedColorArray(0.2, 0.45, 0.58, 1, 0.11, 0.25, 0.4, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_card_back"]
+gradient = SubResource("Gradient_card_back")
+width = 276
+height = 310
+fill_to = Vector2(1, 1)
+
+[node name="MemoryCard" type="Button" unique_id=1915350125]
 custom_minimum_size = Vector2(138, 155)
-layout_mode = 2
-script = ExtResource("1")
+theme_override_styles/normal = SubResource("StyleBoxFlat_card")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_card")
+theme_override_styles/hover = SubResource("StyleBoxFlat_card")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_card")
+script = ExtResource("1_script")
+CardBackTexture = SubResource("GradientTexture2D_card_back")
+
+[node name="CardContent" type="Control" parent="." unique_id=1218937790]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CardBack" type="TextureRect" parent="CardContent" unique_id=1654350272]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_card_back")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CharacterImage" type="TextureRect" parent="CardContent" unique_id=124330107]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MatchIndicator" type="Label" parent="CardContent" unique_id=2045194176]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -38.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = 30.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.08, 0.55, 0.22, 1)
+theme_override_font_sizes/font_size = 21
+text = "✓"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 public static class MiniGameLauncher
 {
 	private static bool isOpening;
+	private static bool isProceeding;
+	private static StudentChallengeStartDto currentChallenge;
 
 	public static async void OpenForDeployment(Node source, int deploymentId)
 	{
@@ -20,7 +22,14 @@ public static class MiniGameLauncher
 			if (source == null || !GodotObject.IsInstanceValid(source) || !source.IsInsideTree())
 				return;
 
-			string scenePath = GetScenePath(assignment.GameType);
+			GetScenePath(assignment.GameType);
+
+			StudentChallengeStartDto challenge = await MiniGameApiClient.StartChallengeAsync(deploymentId);
+			if (challenge.QuestionId != assignment.QuestionId ||
+				challenge.DeploymentId != deploymentId)
+				throw new InvalidOperationException("NPC challenge assignment changed while it was being started.");
+
+			string scenePath = GetScenePath(challenge.GameType);
 			PackedScene gameScene = GD.Load<PackedScene>(scenePath);
 			if (gameScene == null)
 				throw new InvalidOperationException("Mini-game scene could not be loaded: " + scenePath);
@@ -38,19 +47,29 @@ public static class MiniGameLauncher
 			};
 			currentScene.AddChild(overlayLayer);
 
-			Control game = gameScene.Instantiate<Control>();
+			Node game = gameScene.Instantiate();
 			game.ProcessMode = Node.ProcessModeEnum.Always;
-			overlayLayer.AddChild(game);
-			int assignedDeploymentId = assignment.DeploymentId;
-			int assignedNpcId = assignment.NpcId ?? 0;
+			SetNestedCanvasLayersAbove(game, overlayLayer.Layer + 1);
+			currentChallenge = challenge;
+			int assignedDeploymentId = challenge.DeploymentId;
+			int assignedNpcId = challenge.NpcId;
 			if (game is MatchThePairs matchGame)
-				matchGame.Configure(assignedDeploymentId, assignedNpcId, assignment.QuestionId, assignment.GameType);
+				matchGame.Configure(assignedDeploymentId, assignedNpcId, challenge.QuestionId, challenge.GameType, challenge.TimerSeconds, challenge.AttemptId);
 			else if (game is FallingDuck duckGame)
-				duckGame.Configure(assignedDeploymentId, assignedNpcId, assignment.QuestionId, assignment.GameType);
+				duckGame.Configure(assignedDeploymentId, assignedNpcId, challenge.QuestionId, challenge.GameType, challenge.TimerSeconds, challenge.AttemptId);
 			else if (game is QuickTapChallenge tapGame)
-				tapGame.Configure(assignedDeploymentId, assignedNpcId, assignment.QuestionId, assignment.GameType);
+				tapGame.Configure(assignedDeploymentId, assignedNpcId, challenge.QuestionId, challenge.GameType, challenge.TimerSeconds, challenge.AttemptId);
 			else
 				throw new InvalidOperationException("The selected mini-game scene has an unsupported script.");
+
+			overlayLayer.AddChild(game);
+			if (game is MatchThePairs configuredMatchGame)
+				configuredMatchGame.StartAssignedGame();
+			else if (game is FallingDuck configuredDuckGame)
+				configuredDuckGame.StartAssignedGame();
+			else if (game is QuickTapChallenge configuredTapGame)
+				configuredTapGame.StartAssignedGame();
+
 			tree.Paused = true;
 		}
 		catch (Exception exception)
@@ -66,6 +85,151 @@ public static class MiniGameLauncher
 		{
 			isOpening = false;
 		}
+	}
+
+	public static async void ProceedToQuestion(Node game, int deploymentId)
+	{
+		if (isProceeding || currentChallenge == null ||
+			game == null || !GodotObject.IsInstanceValid(game) || !game.IsInsideTree())
+			return;
+
+		isProceeding = true;
+		try
+		{
+			StudentChallengeQuestionDto question =
+				await MiniGameApiClient.GetStudentQuestionAsync(deploymentId);
+			Node currentScene = game.GetTree().CurrentScene;
+			string sceneName = question.Difficulty + "MapQuestion";
+			NpcQuestionFlow questionFlow = currentScene?.FindChild(sceneName, true, false) as NpcQuestionFlow;
+			if (questionFlow == null)
+				throw new InvalidOperationException("The question screen for this map could not be found.");
+
+			await questionFlow.ShowQuestionAsync(question);
+			CloseOverlay(game);
+		}
+		catch (Exception exception)
+		{
+			GD.PrintErr("Assigned question could not be opened: " + exception.Message);
+			ShowMessage(game, exception.Message);
+		}
+		finally
+		{
+			isProceeding = false;
+		}
+	}
+
+	public static void ResumeQuestionFromMap(Node source, int deploymentId, string answerTip)
+	{
+		if (isProceeding ||
+			source == null ||
+			!GodotObject.IsInstanceValid(source) ||
+			!source.IsInsideTree())
+			return;
+
+		Node currentScene = source.GetTree().CurrentScene;
+		NpcQuestionFlow questionFlow = currentScene?.FindChild("EasyMapQuestion", true, false) as NpcQuestionFlow
+			?? currentScene?.FindChild("MediumMapQuestion", true, false) as NpcQuestionFlow
+			?? currentScene?.FindChild("HardMapQuestion", true, false) as NpcQuestionFlow;
+		if (currentScene == null || questionFlow == null)
+		{
+			ShowMessage(source, "The question screen for this map could not be found.");
+			return;
+		}
+
+		var overlayLayer = new CanvasLayer
+		{
+			Name = "NpcAnswerTipOverlay",
+			Layer = 100,
+			ProcessMode = Node.ProcessModeEnum.Always
+		};
+		currentScene.AddChild(overlayLayer);
+
+		var root = new Control { ProcessMode = Node.ProcessModeEnum.Always };
+		root.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+		overlayLayer.AddChild(root);
+		var backdrop = new ColorRect
+		{
+			Color = new Color(0, 0, 0, 0.72f),
+			MouseFilter = Control.MouseFilterEnum.Stop
+		};
+		backdrop.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+		root.AddChild(backdrop);
+
+		var panel = new PanelContainer { CustomMinimumSize = new Vector2(620, 300) };
+		panel.SetAnchorsPreset(Control.LayoutPreset.Center);
+		panel.OffsetLeft = -310;
+		panel.OffsetTop = -150;
+		panel.OffsetRight = 310;
+		panel.OffsetBottom = 150;
+		root.AddChild(panel);
+
+		var layout = new VBoxContainer();
+		layout.AddThemeConstantOverride("separation", 20);
+		var margin = new MarginContainer();
+		margin.AddThemeConstantOverride("margin_left", 28);
+		margin.AddThemeConstantOverride("margin_top", 24);
+		margin.AddThemeConstantOverride("margin_right", 28);
+		margin.AddThemeConstantOverride("margin_bottom", 24);
+		margin.AddChild(layout);
+		panel.AddChild(margin);
+
+		var tipLabel = new Label
+		{
+			Text = string.IsNullOrWhiteSpace(answerTip)
+				? "No answer tip has been configured for this NPC."
+				: "Answer tip: " + answerTip,
+			HorizontalAlignment = HorizontalAlignment.Center,
+			VerticalAlignment = VerticalAlignment.Center,
+			AutowrapMode = TextServer.AutowrapMode.Word,
+			CustomMinimumSize = new Vector2(0, 120)
+		};
+		tipLabel.AddThemeFontSizeOverride("font_size", 22);
+		layout.AddChild(tipLabel);
+
+		var statusLabel = new Label
+		{
+			HorizontalAlignment = HorizontalAlignment.Center,
+			AutowrapMode = TextServer.AutowrapMode.Word
+		};
+		layout.AddChild(statusLabel);
+
+		var proceedButton = new Button
+		{
+			Text = "Proceed to Question",
+			CustomMinimumSize = new Vector2(0, 46)
+		};
+		layout.AddChild(proceedButton);
+		proceedButton.Pressed += async () =>
+		{
+			if (isProceeding)
+				return;
+
+			isProceeding = true;
+			proceedButton.Disabled = true;
+			statusLabel.Text = "Loading your question...";
+			try
+			{
+				StudentChallengeQuestionDto question =
+					await MiniGameApiClient.GetStudentQuestionAsync(deploymentId);
+				await questionFlow.ShowQuestionAsync(question);
+				overlayLayer.QueueFree();
+			}
+			catch (Exception exception)
+			{
+				GD.PrintErr("NPC question could not be resumed: " + exception.Message);
+				statusLabel.Text = "The question could not be opened. " + exception.Message;
+				proceedButton.Disabled = false;
+			}
+			finally
+			{
+				isProceeding = false;
+			}
+		};
+	}
+
+	public static void CompleteChallenge()
+	{
+		currentChallenge = null;
 	}
 
 	public static void CloseOverlay(Node game)
@@ -97,6 +261,17 @@ public static class MiniGameLauncher
 			return "res://scene/Minigame/QuickTapChallenge.tscn";
 
 		throw new InvalidOperationException("The NPC has an unsupported mini-game assignment.");
+	}
+
+	private static void SetNestedCanvasLayersAbove(Node node, int minimumLayer)
+	{
+		foreach (Node child in node.GetChildren())
+		{
+			if (child is CanvasLayer canvasLayer)
+				canvasLayer.Layer = Math.Max(canvasLayer.Layer, minimumLayer);
+
+			SetNestedCanvasLayersAbove(child, minimumLayer);
+		}
 	}
 
 	private static void ShowMessage(Node source, string message)

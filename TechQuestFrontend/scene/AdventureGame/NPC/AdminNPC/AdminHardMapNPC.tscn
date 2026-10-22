@@ -238,22 +238,33 @@ custom_minimum_size = Vector2(120, 45)
 layout_mode = 2
 text = "ADD ITEM"
 
-[node name="DeleteConfirmationDialog" type="ConfirmationDialog" parent="HardNPCPanel" unique_id=1108337797]
+[node name="NPCMessageDialog" type="Node" parent="HardNPCPanel" unique_id=463369010]
+
+[node name="DeleteConfirmationDialog" type="ConfirmationDialog" parent="HardNPCPanel/NPCMessageDialog" unique_id=1880349396]
 oversampling_override = 1.0
 initial_position = 2
 size = Vector2i(273, 100)
 ok_button_text = "Delete"
 dialog_text = "Do  you want to delete this NPC?"
 
-[node name="AcceptDialog" type="AcceptDialog" parent="HardNPCPanel" unique_id=236173862]
+[node name="AcceptDialog" type="AcceptDialog" parent="HardNPCPanel/NPCMessageDialog" unique_id=2096105010]
 oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(192, 100)
 
-[node name="DeployConfirmationDialog" type="ConfirmationDialog" parent="HardNPCPanel" unique_id=1216303461]
+[node name="DeployConfirmationDialog" type="ConfirmationDialog" parent="HardNPCPanel/NPCMessageDialog" unique_id=1434002418]
 oversampling_override = 1.0
 initial_position = 2
 size = Vector2i(272, 100)
 ok_button_text = "Yes"
 dialog_text = "Do you want to deploy this NPC?"
+
+[node name="UndeployConfirmationDialog" type="ConfirmationDialog" parent="HardNPCPanel/NPCMessageDialog" unique_id=1389564215]
+oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(293, 100)
+ok_button_text = "Yes"
+dialog_text = "Do  you want to Undeploy this NPC?"
 
 [node name="HardMapNPCManagement" type="Panel" parent="." unique_id=948553976]
 visible = false
@@ -264,9 +275,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -260.0
-offset_top = -289.5
+offset_top = -370.0
 offset_right = 260.0
-offset_bottom = 294.0
+offset_bottom = 370.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -287,7 +298,7 @@ vertical_alignment = 1
 [node name="SubjectLabel" type="Label" parent="HardMapNPCManagement" unique_id=1615980709]
 layout_mode = 0
 offset_left = 26.0
-offset_top = 71.5
+offset_top = 64.0
 offset_right = 241.0
 offset_bottom = 148.0
 text = "Subject Name"
@@ -303,7 +314,7 @@ alignment = 1
 [node name="MinigameLabel" type="Label" parent="HardMapNPCManagement" unique_id=1969394463]
 layout_mode = 0
 offset_left = 30.0
-offset_top = 158.5
+offset_top = 139.0
 offset_right = 175.0
 offset_bottom = 181.5
 text = "Choose Mini Game"
@@ -319,7 +330,7 @@ alignment = 1
 [node name="QuestionLabel" type="Label" parent="HardMapNPCManagement" unique_id=1842270766]
 layout_mode = 0
 offset_left = 36.0
-offset_top = 226.5
+offset_top = 205.0
 offset_right = 107.0
 offset_bottom = 249.5
 text = "Question"
@@ -332,10 +343,39 @@ offset_top = 32.0
 offset_right = 450.0
 offset_bottom = 87.0
 
+[node name="AnswerChoicesLabel" type="Label" parent="HardMapNPCManagement" unique_id=2014102005]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 293.0
+offset_right = 260.0
+offset_bottom = 321.0
+text = "Answer choices (separate with |)"
+
+[node name="AnswerChoices" type="LineEdit" parent="HardMapNPCManagement/AnswerChoicesLabel" unique_id=2014102006]
+layout_mode = 0
+offset_top = 27.0
+offset_right = 448.0
+offset_bottom = 63.0
+
+[node name="CorrectAnswerLabel" type="Label" parent="HardMapNPCManagement" unique_id=157899166]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 360.0
+offset_right = 150.0
+offset_bottom = 304.0
+text = "Correct Answer"
+
+[node name="CorrectAnswer" type="LineEdit" parent="HardMapNPCManagement/CorrectAnswerLabel" unique_id=157899167]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 27.0
+offset_right = 448.0
+offset_bottom = 63.0
+
 [node name="AnswerTipLabel" type="Label" parent="HardMapNPCManagement" unique_id=157899165]
 layout_mode = 0
 offset_left = 37.0
-offset_top = 329.5
+offset_top = 435.0
 offset_right = 133.0
 offset_bottom = 358.5
 text = "Answer Tip"
@@ -343,23 +383,24 @@ text = "Answer Tip"
 [node name="AnswerTip" type="LineEdit" parent="HardMapNPCManagement/AnswerTipLabel" unique_id=2064178832]
 layout_mode = 0
 offset_left = 4.0
-offset_top = 33.0
+offset_top = 27.0
 offset_right = 448.0
 offset_bottom = 72.0
 
 [node name="TimerLabel" type="Label" parent="HardMapNPCManagement" unique_id=1462909225]
 layout_mode = 0
 offset_left = 49.0
-offset_top = 412.5
+offset_top = 515.0
 offset_right = 89.0
 offset_bottom = 435.5
-text = "Time"
+text = "Timer (seconds)"
 
 [node name="Time" type="LineEdit" parent="HardMapNPCManagement/TimerLabel" unique_id=947640273]
 layout_mode = 0
 offset_top = 27.0
 offset_right = 448.0
 offset_bottom = 65.0
+placeholder_text = "30"
 
 [node name="SaveButton" type="Button" parent="HardMapNPCManagement" unique_id=774897803]
 layout_mode = 1

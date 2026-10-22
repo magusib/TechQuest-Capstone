@@ -1,4 +1,6 @@
 using System.Security.Claims;
+using System.Data;
+using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -63,7 +65,8 @@ namespace TechQuestBackend.Controllers
                     MiniGameName = q.MiniGame == null ? "" : q.MiniGame.GameName,
                     Question = q.QuestionText,
                     CorrectAnswer = q.CorrectAnswer,
-                    AnswerTip = q.AnswerTip
+                    AnswerTip = q.AnswerTip,
+                    TimerSeconds = q.TimerSeconds
                 })
                 .FirstOrDefaultAsync(cancellationToken);
 
@@ -97,8 +100,10 @@ namespace TechQuestBackend.Controllers
                     MiniGameId = question.MiniGameId,
                     MiniGameName = question.MiniGame == null ? "" : question.MiniGame.GameName,
                     Question = question.QuestionText,
+                    AnswerChoices = JsonSerializer.Deserialize<List<string>>(question.AnswerChoices) ?? new List<string>(),
                     CorrectAnswer = question.CorrectAnswer,
-                    AnswerTip = question.AnswerTip
+                    AnswerTip = question.AnswerTip,
+                    TimerSeconds = question.TimerSeconds
                 })
                 .FirstOrDefaultAsync(cancellationToken);
 
@@ -131,6 +136,12 @@ namespace TechQuestBackend.Controllers
                 string.IsNullOrWhiteSpace(request.Question) ||
                 string.IsNullOrWhiteSpace(request.CorrectAnswer))
                 return BadRequest("Subject, question, and correct answer are required.");
+            if (request.AnswerChoices != null &&
+                !HasValidAnswerChoices(JsonSerializer.Serialize(request.AnswerChoices), request.CorrectAnswer))
+                return BadRequest("If answer choices are provided, include at least two choices and the correct answer.");
+
+            if (request.TimerSeconds < 1)
+                return BadRequest("Timer must be at least one second.");
 
             if (request.MiniGameId.HasValue &&
                 !await _db.MiniGames.AnyAsync(
@@ -155,8 +166,11 @@ namespace TechQuestBackend.Controllers
             question.SubjectName = request.SubjectName.Trim();
             question.MiniGameId = request.MiniGameId;
             question.QuestionText = request.Question.Trim();
+            question.AnswerChoices = JsonSerializer.Serialize(
+                NormalizeAnswerChoices(request.AnswerChoices ?? new List<string>()));
             question.CorrectAnswer = request.CorrectAnswer.Trim();
             question.AnswerTip = request.AnswerTip?.Trim() ?? "";
+            question.TimerSeconds = request.TimerSeconds;
             await _db.SaveChangesAsync(cancellationToken);
 
             return Ok(new NpcConfigurationResponse
@@ -172,8 +186,10 @@ namespace TechQuestBackend.Controllers
                         .FirstOrDefaultAsync(cancellationToken) ?? ""
                     : "",
                 Question = question.QuestionText,
+                AnswerChoices = JsonSerializer.Deserialize<List<string>>(question.AnswerChoices) ?? new List<string>(),
                 CorrectAnswer = question.CorrectAnswer,
-                AnswerTip = question.AnswerTip
+                AnswerTip = question.AnswerTip,
+                TimerSeconds = question.TimerSeconds
             });
         }
 
@@ -206,7 +222,8 @@ namespace TechQuestBackend.Controllers
                     question.NpcId,
                     question.DeploymentId,
                     question.MiniGame!.GameType,
-                    question.MiniGame.GameName
+                    question.MiniGame.GameName,
+                    TimerSeconds = 30
                 })
                 .FirstOrDefaultAsync(cancellationToken);
 
@@ -219,6 +236,200 @@ namespace TechQuestBackend.Controllers
                 return BadRequest("This NPC has an unsupported mini-game assignment.");
 
             return Ok(assignment);
+        }
+
+        [HttpGet("deployments/{deploymentId:int}/student-configuration")]
+        [Authorize(Roles = "student")]
+        public async Task<IActionResult> GetStudentConfiguration(int deploymentId, CancellationToken cancellationToken)
+        {
+            var deployment = await FindActiveDeployment(deploymentId, cancellationToken);
+            if (deployment == null)
+                return NotFound("NPC deployment was not found or is no longer active.");
+
+            var question = await _db.Questions.AsNoTracking()
+                .Include(item => item.MiniGame)
+                .Where(item => item.DeploymentId == deploymentId)
+                .Select(item => new
+                {
+                    item.QuestionId,
+                    item.NpcId,
+                    item.SubjectName,
+                    item.MiniGameId,
+                    MiniGameName = item.MiniGame == null ? "" : item.MiniGame.GameName,
+                    TimerSeconds = item.TimerSeconds
+                })
+                .FirstOrDefaultAsync(cancellationToken);
+            if (question == null)
+                return NotFound("Question configuration was not found.");
+
+            int userId = GetUserId();
+            var existingChallenge = await _db.NpcChallenges.AsNoTracking()
+                .Where(challenge => challenge.Student!.UserId == userId &&
+                    challenge.DeploymentId == deploymentId)
+                .Select(challenge => new
+                {
+                    challenge.State,
+                    challenge.AnswerTip
+                })
+                .FirstOrDefaultAsync(cancellationToken);
+
+            return Ok(new StudentNpcConfigurationResponse
+            {
+                NpcId = deployment.NpcId,
+                NpcName = deployment.Npc?.NpcName ?? "",
+                DeploymentId = deployment.DeploymentId,
+                Difficulty = deployment.MapDifficulty,
+                PositionMarker = deployment.PositionMarker,
+                QuestionId = question.QuestionId,
+                SubjectName = question.SubjectName,
+                MiniGameId = question.MiniGameId,
+                MiniGameName = question.MiniGameName,
+                TimerSeconds = question.TimerSeconds,
+                AlreadyStarted = existingChallenge != null,
+                ChallengeState = existingChallenge?.State ?? "",
+                AnswerTip = existingChallenge?.State == "QuestionReady"
+                    ? existingChallenge.AnswerTip
+                    : ""
+            });
+        }
+
+        [HttpPost("deployments/{deploymentId:int}/challenge-start")]
+        [Authorize(Roles = "student")]
+        public async Task<IActionResult> StartStudentChallenge(int deploymentId, CancellationToken cancellationToken)
+        {
+            int userId = GetUserId();
+            if (userId <= 0)
+                return Unauthorized();
+
+            await using var transaction = await _db.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
+            var profile = await _db.StudentProfiles
+                .FromSqlInterpolated($"SELECT * FROM \"Student_profile\" WHERE \"UserId\" = {userId} FOR UPDATE")
+                .SingleOrDefaultAsync(cancellationToken);
+            if (profile == null)
+                return BadRequest("Student profile was not found.");
+
+            var deployment = await _db.NpcDeployments
+                .Include(item => item.Npc)
+                .FirstOrDefaultAsync(item => item.DeploymentId == deploymentId &&
+                    item.Status == "Deployed" &&
+                    item.Npc != null &&
+                    item.Npc.Status == "active", cancellationToken);
+            if (deployment == null)
+                return NotFound("NPC deployment was not found or is no longer active.");
+
+            var existingChallenge = await _db.NpcChallenges
+                .FirstOrDefaultAsync(challenge => challenge.StudentId == profile.StudentId &&
+                    challenge.DeploymentId == deploymentId, cancellationToken);
+            if (existingChallenge != null)
+            {
+                if (existingChallenge.State != "MiniGamePending")
+                    return Conflict("This student has already completed the mini-game for this NPC challenge.");
+
+                await transaction.CommitAsync(cancellationToken);
+                return Ok(new StudentChallengeStartResponse
+                {
+                    ChallengeId = existingChallenge.ChallengeId,
+                    AttemptId = existingChallenge.AttemptId,
+                    NpcId = existingChallenge.NpcId,
+                    DeploymentId = existingChallenge.DeploymentId,
+                    QuestionId = existingChallenge.QuestionId,
+                    GameType = existingChallenge.MiniGameType,
+                    TimerSeconds = 30,
+                    Difficulty = existingChallenge.Difficulty
+                });
+            }
+
+            var question = await _db.Questions
+                .Include(item => item.MiniGame)
+                .FirstOrDefaultAsync(item => item.DeploymentId == deploymentId, cancellationToken);
+            if (question == null ||
+                question.MiniGame == null ||
+                !IsSupportedMiniGameType(question.MiniGame.GameType) ||
+                string.IsNullOrWhiteSpace(question.SubjectName) ||
+                string.IsNullOrWhiteSpace(question.QuestionText) ||
+                string.IsNullOrWhiteSpace(question.CorrectAnswer) ||
+                question.TimerSeconds < 1 ||
+                !HasValidAnswerChoices(question.AnswerChoices, question.CorrectAnswer))
+                return BadRequest("The NPC challenge is not fully configured.");
+
+            var challenge = new NpcChallenge
+            {
+                StudentId = profile.StudentId,
+                DeploymentId = deploymentId,
+                QuestionId = question.QuestionId,
+                NpcId = deployment.NpcId,
+                NpcName = deployment.Npc!.NpcName,
+                Difficulty = deployment.MapDifficulty,
+                SubjectName = question.SubjectName,
+                MiniGameType = question.MiniGame.GameType,
+                QuestionText = question.QuestionText,
+                AnswerChoices = question.AnswerChoices,
+                CorrectAnswer = question.CorrectAnswer,
+                AnswerTip = question.AnswerTip,
+                TimerSeconds = question.TimerSeconds,
+                AttemptId = Guid.NewGuid(),
+                StartedAt = DateTime.UtcNow
+            };
+            _db.NpcChallenges.Add(challenge);
+            await _db.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+
+            return Ok(new StudentChallengeStartResponse
+            {
+                ChallengeId = challenge.ChallengeId,
+                AttemptId = challenge.AttemptId,
+                NpcId = deployment.NpcId,
+                DeploymentId = deployment.DeploymentId,
+                QuestionId = question.QuestionId,
+                GameType = challenge.MiniGameType,
+                TimerSeconds = 30,
+                Difficulty = deployment.MapDifficulty
+            });
+        }
+
+        [HttpGet("deployments/{deploymentId:int}/student-question")]
+        [Authorize(Roles = "student")]
+        public async Task<IActionResult> GetStudentQuestion(int deploymentId, CancellationToken cancellationToken)
+        {
+            int userId = GetUserId();
+            await using var transaction = await _db.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
+            var challenge = await _db.NpcChallenges
+                .FromSqlInterpolated($@"SELECT c.* FROM ""Npc_challenges"" c
+                    JOIN ""Student_profile"" s ON s.""StudentId"" = c.""StudentId""
+                    WHERE s.""UserId"" = {userId} AND c.""DeploymentId"" = {deploymentId}
+                    FOR UPDATE OF c")
+                .SingleOrDefaultAsync(cancellationToken);
+            if (challenge == null)
+                return NotFound("NPC challenge was not started.");
+            if (challenge.State == "Completed")
+                return Conflict("This NPC challenge is already complete.");
+            if (challenge.State != "QuestionReady")
+                return Conflict("Complete the assigned mini-game before opening the question.");
+
+            if (challenge.QuestionStartedAt == null)
+            {
+                challenge.QuestionStartedAt = DateTime.UtcNow;
+                await _db.SaveChangesAsync(cancellationToken);
+            }
+
+            DateTime questionDeadline = challenge.QuestionStartedAt.Value
+                .AddSeconds(challenge.TimerSeconds);
+            var question = new StudentChallengeQuestionResponse
+            {
+                QuestionId = challenge.QuestionId,
+                NpcId = challenge.NpcId,
+                DeploymentId = challenge.DeploymentId,
+                SubjectName = challenge.SubjectName,
+                Question = challenge.QuestionText,
+                AnswerChoices = JsonSerializer.Deserialize<List<string>>(challenge.AnswerChoices) ?? new List<string>(),
+                TimerSeconds = challenge.TimerSeconds,
+                QuestionStartedAt = challenge.QuestionStartedAt.Value,
+                RemainingSeconds = Math.Max(0, (int)Math.Ceiling((questionDeadline - DateTime.UtcNow).TotalSeconds)),
+                Difficulty = challenge.Difficulty
+            };
+
+            await transaction.CommitAsync(cancellationToken);
+            return Ok(question);
         }
 
         [HttpPut("{npcId:int}/configuration")]
@@ -237,6 +448,12 @@ namespace TechQuestBackend.Controllers
                 string.IsNullOrWhiteSpace(request.Question) ||
                 string.IsNullOrWhiteSpace(request.CorrectAnswer))
                 return BadRequest("Subject, question, and correct answer are required.");
+            if (request.AnswerChoices != null &&
+                !HasValidAnswerChoices(JsonSerializer.Serialize(request.AnswerChoices), request.CorrectAnswer))
+                return BadRequest("If answer choices are provided, include at least two choices and the correct answer.");
+
+            if (request.TimerSeconds < 1)
+                return BadRequest("Timer must be at least one second.");
 
             if (request.MiniGameId.HasValue &&
                 !await _db.MiniGames.AnyAsync(m => m.MiniGameId == request.MiniGameId.Value, cancellationToken))
@@ -261,8 +478,11 @@ namespace TechQuestBackend.Controllers
             question.SubjectName = request.SubjectName.Trim();
             question.MiniGameId = request.MiniGameId;
             question.QuestionText = request.Question.Trim();
+            question.AnswerChoices = JsonSerializer.Serialize(
+                NormalizeAnswerChoices(request.AnswerChoices ?? new List<string>()));
             question.CorrectAnswer = request.CorrectAnswer.Trim();
             question.AnswerTip = request.AnswerTip?.Trim() ?? "";
+            question.TimerSeconds = request.TimerSeconds;
 
             await _db.SaveChangesAsync(cancellationToken);
             return Ok(new NpcConfigurationResponse
@@ -275,8 +495,10 @@ namespace TechQuestBackend.Controllers
                         .Select(m => m.GameName).FirstOrDefaultAsync(cancellationToken) ?? ""
                     : "",
                 Question = question.QuestionText,
+                AnswerChoices = JsonSerializer.Deserialize<List<string>>(question.AnswerChoices) ?? new List<string>(),
                 CorrectAnswer = question.CorrectAnswer,
-                AnswerTip = question.AnswerTip
+                AnswerTip = question.AnswerTip,
+                TimerSeconds = question.TimerSeconds
             });
         }
 
@@ -434,7 +656,6 @@ namespace TechQuestBackend.Controllers
                 return NotFound("NPC was not found or is inactive.");
             if (!string.Equals(npc.Difficulty, difficulty, StringComparison.OrdinalIgnoreCase))
                 return BadRequest("NPC difficulty must match the map difficulty.");
-
             await using var transaction = await _db.Database.BeginTransactionAsync(cancellationToken);
             await LockDeploymentQueueAsync(difficulty, cancellationToken);
 
@@ -443,7 +664,10 @@ namespace TechQuestBackend.Controllers
                 await _db.NpcDeployments.AnyAsync(
                     deployment => deployment.MapDifficulty == difficulty &&
                         deployment.PositionMarker == positionMarker &&
-                        deployment.Status == "Deployed",
+                        deployment.Status == "Deployed" &&
+                        !_db.NpcChallenges.Any(challenge =>
+                            challenge.DeploymentId == deployment.DeploymentId &&
+                            challenge.State == "Completed"),
                     cancellationToken);
 
             var deployment = new NpcDeployment
@@ -486,12 +710,16 @@ namespace TechQuestBackend.Controllers
                 return BadRequest("Difficulty must be Easy, Medium, or Hard.");
 
             string mapDifficulty = NormalizeDifficulty(difficulty);
-            var deployments = await _db.NpcDeployments
+            var deploymentQuery = _db.NpcDeployments
                 .AsNoTracking()
                 .Where(d => d.MapDifficulty == mapDifficulty &&
                     (d.Status == "Deployed" || d.Status == "Pending") &&
-                    d.Npc != null && d.Npc.Status == "active")
-                .OrderBy(d => d.Status == "Deployed" ? 0 : 1)
+                    d.Npc != null && d.Npc.Status == "active" &&
+                    !_db.NpcChallenges.Any(challenge =>
+                        challenge.DeploymentId == d.DeploymentId &&
+                        challenge.State == "Completed"));
+
+            var deployments = await deploymentQuery.OrderBy(d => d.Status == "Deployed" ? 0 : 1)
                 .ThenBy(d => d.DeployedAt)
                 .ThenBy(d => d.DeploymentId)
                 .Select(d => new NpcDeploymentResponse
@@ -543,6 +771,21 @@ namespace TechQuestBackend.Controllers
             await using var transaction = await _db.Database.BeginTransactionAsync(cancellationToken);
             await LockDeploymentQueueAsync(difficulty, cancellationToken);
 
+            var completedDeployments = await _db.NpcDeployments
+                .Where(deployment => deployment.MapDifficulty == difficulty &&
+                    deployment.Status == "Deployed" &&
+                    _db.NpcChallenges.Any(challenge =>
+                        challenge.DeploymentId == deployment.DeploymentId &&
+                        challenge.State == "Completed"))
+                .ToListAsync(cancellationToken);
+            foreach (NpcDeployment deployment in completedDeployments)
+            {
+                deployment.Status = "Cancelled";
+                deployment.PositionX = null;
+                deployment.PositionY = null;
+                deployment.PositionMarker = null;
+            }
+
             var occupiedMarkers = await _db.NpcDeployments
                 .Where(deployment => deployment.MapDifficulty == difficulty &&
                     deployment.Status == "Deployed" &&
@@ -558,7 +801,10 @@ namespace TechQuestBackend.Controllers
                 .Where(deployment => deployment.MapDifficulty == difficulty &&
                     deployment.Status == "Pending" &&
                     deployment.Npc != null &&
-                    deployment.Npc.Status == "active")
+                    deployment.Npc.Status == "active" &&
+                    !_db.NpcChallenges.Any(challenge =>
+                        challenge.DeploymentId == deployment.DeploymentId &&
+                        challenge.State == "Completed"))
                 .OrderBy(deployment => deployment.DeployedAt)
                 .ThenBy(deployment => deployment.DeploymentId)
                 .ToListAsync(cancellationToken);
@@ -633,11 +879,48 @@ namespace TechQuestBackend.Controllers
             return int.TryParse(User.FindFirstValue("userId"), out int userId) ? userId : 0;
         }
 
+        private static bool HasValidAnswerChoices(string choicesJson, string correctAnswer)
+        {
+            List<string>? choices;
+            try
+            {
+                choices = JsonSerializer.Deserialize<List<string>>(choicesJson);
+            }
+            catch (JsonException)
+            {
+                return false;
+            }
+
+            if (choices == null)
+                return false;
+
+            List<string> normalized = NormalizeAnswerChoices(choices);
+            return normalized.Count == 0 ||
+                (normalized.Count >= 2 &&
+                    normalized.Contains(correctAnswer.Trim(), StringComparer.OrdinalIgnoreCase));
+        }
+
+        private static List<string> NormalizeAnswerChoices(List<string> choices)
+        {
+            return choices
+                .Where(choice => !string.IsNullOrWhiteSpace(choice))
+                .Select(choice => choice.Trim())
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+        }
+
         private static bool IsDifficulty(string? difficulty)
         {
             return string.Equals(difficulty?.Trim(), "Easy", StringComparison.OrdinalIgnoreCase) ||
                 string.Equals(difficulty?.Trim(), "Medium", StringComparison.OrdinalIgnoreCase) ||
                 string.Equals(difficulty?.Trim(), "Hard", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsSupportedMiniGameType(string gameType)
+        {
+            return gameType == "MatchThePairs" ||
+                gameType == "FallingDuck" ||
+                gameType == "QuickTapChallenge";
         }
 
         private static string NormalizeDifficulty(string difficulty)
@@ -721,8 +1004,10 @@ namespace TechQuestBackend.Controllers
         public string SubjectName { get; set; } = "";
         public int? MiniGameId { get; set; }
         public string Question { get; set; } = "";
+        public List<string>? AnswerChoices { get; set; }
         public string CorrectAnswer { get; set; } = "";
         public string? AnswerTip { get; set; }
+        public int TimerSeconds { get; set; } = 30;
     }
 
     public class NpcConfigurationResponse
@@ -733,7 +1018,52 @@ namespace TechQuestBackend.Controllers
         public int? MiniGameId { get; set; }
         public string MiniGameName { get; set; } = "";
         public string Question { get; set; } = "";
+        public List<string> AnswerChoices { get; set; } = new();
         public string CorrectAnswer { get; set; } = "";
         public string AnswerTip { get; set; } = "";
+        public int TimerSeconds { get; set; } = 30;
+    }
+
+    public class StudentNpcConfigurationResponse
+    {
+        public int NpcId { get; set; }
+        public string NpcName { get; set; } = "";
+        public int DeploymentId { get; set; }
+        public string Difficulty { get; set; } = "";
+        public string? PositionMarker { get; set; }
+        public int QuestionId { get; set; }
+        public string SubjectName { get; set; } = "";
+        public int? MiniGameId { get; set; }
+        public string MiniGameName { get; set; } = "";
+        public int TimerSeconds { get; set; }
+        public bool AlreadyStarted { get; set; }
+        public string ChallengeState { get; set; } = "";
+        public string AnswerTip { get; set; } = "";
+    }
+
+    public class StudentChallengeStartResponse
+    {
+        public int ChallengeId { get; set; }
+        public Guid AttemptId { get; set; }
+        public int NpcId { get; set; }
+        public int DeploymentId { get; set; }
+        public int QuestionId { get; set; }
+        public string GameType { get; set; } = "";
+        public int TimerSeconds { get; set; }
+        public string Difficulty { get; set; } = "";
+    }
+
+    public class StudentChallengeQuestionResponse
+    {
+        public int QuestionId { get; set; }
+        public int? NpcId { get; set; }
+        public int DeploymentId { get; set; }
+        public string SubjectName { get; set; } = "";
+        public string Question { get; set; } = "";
+        public List<string> AnswerChoices { get; set; } = new();
+        public int TimerSeconds { get; set; }
+        public DateTime QuestionStartedAt { get; set; }
+        public int RemainingSeconds { get; set; }
+        public string Difficulty { get; set; } = "";
     }
 }

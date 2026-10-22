@@ -10,10 +10,31 @@ public partial class NpcDeploymentRenderer : Node
 
 	private bool isRefreshing;
 	private bool refreshRequested;
+	private Timer deploymentRefreshTimer;
 
 	public override async void _Ready()
 	{
 		await RefreshDeploymentsAsync();
+		if (!IsInsideTree())
+			return;
+
+		deploymentRefreshTimer = new Timer
+		{
+			WaitTime = 5,
+			OneShot = false,
+			ProcessMode = ProcessModeEnum.Always
+		};
+		deploymentRefreshTimer.Timeout += RefreshPendingDeployments;
+		AddChild(deploymentRefreshTimer);
+		deploymentRefreshTimer.Start();
+	}
+
+	private void RefreshPendingDeployments()
+	{
+		if (!IsInsideTree())
+			return;
+
+		_ = RefreshDeploymentsAsync();
 	}
 
 	public async Task RefreshDeploymentsAsync()

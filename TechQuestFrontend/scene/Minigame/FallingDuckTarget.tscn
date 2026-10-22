@@ -1,16 +1,19 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://c7cfyu2ulu15o"]
 
-[ext_resource type="Script" path="res://scene/Minigame/FallingDuckTarget.cs" id="1"]
+[ext_resource type="Script" uid="uid://bsgpodsujf66q" path="res://scene/Minigame/FallingDuckTarget.cs" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://dlhfhg3y3th1w" path="res://asset/Icons/ducs.png" id="2_gj8eq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_duck"]
-radius = 22.0
+radius = 24.0
 
-[node name="FallingDuckTarget" type="Area2D"]
+[node name="FallingDuckTarget" type="Area2D" unique_id=442144290]
 collision_layer = 2
-collision_mask = 1
-script = ExtResource("1")
+script = ExtResource("1_script")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="DuckSprite" type="Sprite2D" parent="." unique_id=51531546]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_gj8eq")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="DuckCollision" type="CollisionShape2D" parent="." unique_id=1620282283]
+position = Vector2(0, 8)
 shape = SubResource("CircleShape2D_duck")

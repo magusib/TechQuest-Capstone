@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://j1jc80g5m0nl"]
+
+[ext_resource type="Script" uid="uid://0urru52mljj6" path="res://scene/AdventureGame/NPC/NPCInteraction/NpcInteraction.cs" id="1_fp858"]
+
+[node name="NpcInteraction" type="Control" unique_id=1361396695]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fp858")
+
+[node name="NPCInteractionPopUp" type="Panel" parent="." unique_id=1441843394]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -244.75
+offset_top = -150.0
+offset_right = 244.75
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="NPCInteractionPopUp" unique_id=176657280]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -249.25
+offset_top = -126.0
+offset_right = 249.25
+offset_bottom = 31.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Do you want to accept this Subject Challenge?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="YesButton" type="Button" parent="NPCInteractionPopUp" unique_id=348010831]
+layout_mode = 0
+offset_left = 84.75
+offset_top = 209.0
+offset_right = 234.75
+offset_bottom = 249.0
+text = "Yes"
+
+[node name="NoButton" type="Button" parent="NPCInteractionPopUp" unique_id=450220478]
+layout_mode = 0
+offset_left = 273.75
+offset_top = 212.0
+offset_right = 423.75
+offset_bottom = 252.0
+text = "No"

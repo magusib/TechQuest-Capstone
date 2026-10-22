@@ -7,8 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://73p7nxuntgdm" path="res://scene/AdventureGame/Difficulty/HardLevelMap/HardMapQuest.tscn" id="7_4b1mq"]
 [ext_resource type="Script" uid="uid://e8wcrhmu5i1q" path="res://scene/AdventureGame/Controll/AdminCamera2d.cs" id="7_4rsni"]
 [ext_resource type="Texture2D" uid="uid://xatf6wdjvp41" path="res://asset/parallax/hard/sky_background.png" id="9_gtyhq"]
+[ext_resource type="PackedScene" uid="uid://j1jc80g5m0nl" path="res://scene/AdventureGame/NPC/NPCInteraction/NPCInteraction.tscn" id="9_mga2r"]
 [ext_resource type="Texture2D" uid="uid://dgsj4rq146dw5" path="res://asset/parallax/hard/stars.png" id="10_entc3"]
 [ext_resource type="PackedScene" uid="uid://c65cdoovlusqa" path="res://scene/AdventureGame/Character/Character1.tscn" id="10_pk1vr"]
+[ext_resource type="PackedScene" uid="uid://c2ylsaoo8cok6" path="res://scene/AdventureGame/Question/HardMapQuestion.tscn" id="10_v5ivk"]
 [ext_resource type="Texture2D" uid="uid://bb8oc06o0m7hg" path="res://asset/parallax/hard/moon.png" id="11_l7br6"]
 [ext_resource type="Texture2D" uid="uid://d4cp6pjmag8lp" path="res://asset/parallax/hard/trees_back.png" id="12_mga2r"]
 [ext_resource type="Texture2D" uid="uid://d12ixtt2jwku0" path="res://asset/parallax/hard/trees_front.png" id="13_v5ivk"]
@@ -250,6 +252,12 @@ zoom = Vector2(1.5, 1.5)
 script = ExtResource("7_4rsni")
 
 [node name="HardMapQuest" parent="MapHUDLayer" unique_id=1921483137 instance=ExtResource("7_4b1mq")]
+visible = false
+
+[node name="NpcInteraction" parent="MapHUDLayer" unique_id=1361396695 instance=ExtResource("9_mga2r")]
+visible = false
+
+[node name="HardMapQuestion" parent="MapHUDLayer" unique_id=52639180 instance=ExtResource("10_v5ivk")]
 visible = false
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=878125192]

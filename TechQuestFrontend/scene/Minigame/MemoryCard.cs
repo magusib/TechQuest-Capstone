@@ -3,10 +3,11 @@ using System;
 
 public partial class MemoryCard : Button
 {
-	[Export]
-	public Texture2D CardBackTexture { get; set; }
+	[Export] public Texture2D CardBackTexture { get; set; }
 
-	private TextureRect image;
+	private TextureRect cardBack;
+	private TextureRect characterImage;
+	private Label matchIndicator;
 	private Texture2D faceTexture;
 	private int cardIndex;
 	private bool isMatched;
@@ -17,17 +18,14 @@ public partial class MemoryCard : Button
 
 	public override void _Ready()
 	{
+		cardBack = GetNode<TextureRect>("CardContent/CardBack");
+		characterImage = GetNode<TextureRect>("CardContent/CharacterImage");
+		matchIndicator = GetNode<Label>("CardContent/MatchIndicator");
 		FocusMode = FocusModeEnum.None;
 		ClipContents = true;
-		image = new TextureRect
-		{
-			ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
-			StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
-			MouseFilter = MouseFilterEnum.Ignore
-		};
-		MiniGameUi.Fill(image);
-		AddChild(image);
 		Pressed += OnPressed;
+		if (CardBackTexture != null)
+			cardBack.Texture = CardBackTexture;
 		ShowBack();
 	}
 
@@ -35,32 +33,37 @@ public partial class MemoryCard : Button
 	{
 		cardIndex = index;
 		faceTexture = texture;
+		if (characterImage != null)
+			characterImage.Texture = texture;
 		ShowBack();
 	}
 
 	public void ShowFace()
 	{
-		image.Texture = faceTexture;
-		Text = faceTexture == null ? "?" : "";
+		characterImage.Texture = faceTexture;
+		characterImage.Show();
+		cardBack.Hide();
+		matchIndicator.Hide();
 	}
 
 	public void ShowBack()
 	{
-		if (image != null)
-			image.Texture = CardBackTexture;
-		Text = CardBackTexture == null ? "?" : "";
+		if (CardBackTexture != null)
+			cardBack.Texture = CardBackTexture;
+		cardBack.Show();
+		characterImage.Hide();
+		matchIndicator.Hide();
 	}
 
 	public void SetMatched(bool matched)
 	{
 		isMatched = matched;
 		Disabled = matched;
+		if (matched)
+			matchIndicator.Show();
 	}
 
-	public void SetCardDisabled(bool disabled)
-	{
-		Disabled = disabled || isMatched;
-	}
+	public void SetCardDisabled(bool disabled) => Disabled = disabled || isMatched;
 
 	private void OnPressed()
 	{
