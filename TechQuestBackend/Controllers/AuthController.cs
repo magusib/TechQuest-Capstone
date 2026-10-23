@@ -533,7 +533,8 @@ namespace TechQuestBackend.Controllers
 
         private string GenerateJwtToken(User user)
         {
-            var jwtKey = _config["Jwt:Key"] ?? "TECHQUEST_SECRET_KEY_CHANGE_THIS_TO_A_LONG_RANDOM_VALUE";
+            var jwtKey = _config["Jwt:Key"]
+                ?? throw new InvalidOperationException("Jwt:Key must be configured with a secure secret.");
             var jwtIssuer = _config["Jwt:Issuer"] ?? "TechQuestBackend";
             var jwtAudience = _config["Jwt:Audience"] ?? "TechQuestGodot";
 

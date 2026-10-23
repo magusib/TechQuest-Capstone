@@ -24,7 +24,7 @@ namespace TechQuestBackend.Controllers
         [HttpPost("avatar")]
         [Authorize(Roles = "admin,professor")]
         [RequestSizeLimit(5 * 1024 * 1024)]
-        public async Task<IActionResult> UploadAvatar([FromForm] IFormFile image)
+        public async Task<IActionResult> UploadAvatar(IFormFile image)
         {
             if (image == null || image.Length == 0)
                 return BadRequest("Select an image to upload.");

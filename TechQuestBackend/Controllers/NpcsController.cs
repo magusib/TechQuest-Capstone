@@ -602,7 +602,7 @@ namespace TechQuestBackend.Controllers
         [HttpPost("image")]
         [Authorize(Roles = "admin")]
         [RequestSizeLimit(5 * 1024 * 1024)]
-        public async Task<IActionResult> UploadImage([FromForm] IFormFile image, CancellationToken cancellationToken)
+        public async Task<IActionResult> UploadImage(IFormFile image, CancellationToken cancellationToken)
         {
             if (image == null || image.Length == 0)
                 return BadRequest("Select an NPC image.");

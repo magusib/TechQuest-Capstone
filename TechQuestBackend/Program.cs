@@ -25,7 +25,10 @@ builder.Services.AddDbContext<TechQuestDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")
     ));
 
-var jwtKey = builder.Configuration["Jwt:Key"] ?? "TECHQUEST_SECRET_KEY_CHANGE_THIS_TO_A_LONG_RANDOM_VALUE";
+var jwtKey = builder.Configuration["Jwt:Key"];
+if (string.IsNullOrWhiteSpace(jwtKey))
+    throw new InvalidOperationException("Jwt:Key must be configured with a secure secret.");
+
 var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "TechQuestBackend";
 var jwtAudience = builder.Configuration["Jwt:Audience"] ?? "TechQuestGodot";
 
@@ -92,7 +95,7 @@ using (var scope = app.Services.CreateScope())
     }
     db.SaveChanges();
 
-    if (!db.Users.Any())
+    if (!db.Users.Any() && app.Environment.IsDevelopment())
     {
         db.Users.AddRange(
             new User
@@ -118,6 +121,29 @@ using (var scope = app.Services.CreateScope())
         );
 
         db.SaveChanges();
+    }
+
+    if (!db.Users.Any() && !app.Environment.IsDevelopment())
+    {
+        var adminEmail = builder.Configuration["BootstrapAdmin:Email"];
+        var adminPassword = builder.Configuration["BootstrapAdmin:Password"];
+        if (!string.IsNullOrWhiteSpace(adminEmail) || !string.IsNullOrWhiteSpace(adminPassword))
+        {
+            if (string.IsNullOrWhiteSpace(adminEmail) || string.IsNullOrWhiteSpace(adminPassword))
+                throw new InvalidOperationException("Both BootstrapAdmin:Email and BootstrapAdmin:Password must be configured.");
+
+            db.Users.Add(new User
+            {
+                FirstName = "System",
+                LastName = "Admin",
+                Email = adminEmail.Trim(),
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(adminPassword),
+                Role = "admin",
+                IsEmailVerified = true,
+                CreatedAt = DateTime.UtcNow
+            });
+            db.SaveChanges();
+        }
     }
 }
 
