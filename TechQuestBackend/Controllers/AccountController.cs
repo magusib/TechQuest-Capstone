@@ -33,12 +33,11 @@ namespace TechQuestBackend.Controllers
             if (extension is not ".png" and not ".jpg" and not ".jpeg")
                 return BadRequest("Avatar must be a PNG or JPEG image.");
 
-            if (!int.TryParse(User.FindFirstValue("userId"), out int userId))
-                return Unauthorized();
-
-            var user = await _db.Users.FindAsync(userId);
+            var user = await FindAuthenticatedUserAsync();
             if (user == null)
-                return NotFound();
+                return NotFound("The authenticated account was not found. Please log in again.");
+
+            int userId = user.Id;
 
             string uploadFolder = Path.Combine(_environment.WebRootPath ?? Path.Combine(_environment.ContentRootPath, "wwwroot"), "uploads", "avatars");
             Directory.CreateDirectory(uploadFolder);
@@ -56,30 +55,10 @@ namespace TechQuestBackend.Controllers
         [HttpGet("me")]
         public async Task<IActionResult> Me()
         {
-            if (!int.TryParse(User.FindFirstValue("userId"), out int userId))
-            {
-                return Unauthorized();
-            }
-
-            var user = await _db.Users
-                .AsNoTracking()
-                .Where(item => item.Id == userId)
-                .Select(item => new
-                {
-                    item.Id,
-                    item.FirstName,
-                    item.LastName,
-                    item.YearLevel,
-                    item.Email,
-                    item.Role,
-                    item.Avatar,
-                    item.CreatedAt,
-                    item.IsEmailVerified
-                })
-                .SingleOrDefaultAsync();
+            var user = await FindAuthenticatedUserAsync();
 
             if (user == null)
-                return NotFound();
+                return NotFound("The authenticated account was not found. Please log in again.");
 
             int totalCoins = 0;
             int totalPoints = 0;
@@ -174,6 +153,26 @@ namespace TechQuestBackend.Controllers
             _db.Users.Remove(user);
             await _db.SaveChangesAsync();
             return NoContent();
+        }
+
+        private async Task<Models.User?> FindAuthenticatedUserAsync()
+        {
+            if (int.TryParse(User.FindFirstValue("userId"), out int userId))
+            {
+                var userById = await _db.Users.SingleOrDefaultAsync(item => item.Id == userId);
+                if (userById != null)
+                    return userById;
+            }
+
+            string? email = User.FindFirstValue("email")
+                ?? User.FindFirstValue(ClaimTypes.Email)
+                ?? User.FindFirstValue("sub");
+
+            if (string.IsNullOrWhiteSpace(email))
+                return null;
+
+            return await _db.Users.SingleOrDefaultAsync(item =>
+                item.Email.ToLower() == email.Trim().ToLower());
         }
     }
 }
