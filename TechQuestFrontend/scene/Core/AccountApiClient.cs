@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 public static class AccountApiClient
 {
-	private const string ApiBaseUrl = "http://localhost:5000/api";
-	private const string ServerBaseUrl = "http://localhost:5000";
+	private const string ApiBaseUrl = "https://techquest-capstone.onrender.com/api";
+	private const string ServerBaseUrl = "https://techquest-capstone.onrender.com";
 	private static readonly System.Net.Http.HttpClient Client = new();
 	private static readonly JsonSerializerOptions JsonOptions = new()
 	{
@@ -46,7 +46,15 @@ public static class AccountApiClient
 		using HttpResponseMessage response = await Client.SendAsync(request);
 		string responseText = await response.Content.ReadAsStringAsync();
 		if (!response.IsSuccessStatusCode)
-			throw new InvalidOperationException(responseText);
+		{
+			if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+				throw new InvalidOperationException("Your login session no longer matches an account on the server. Please log out and log in again.");
+
+			string message = string.IsNullOrWhiteSpace(responseText)
+				? $"Avatar upload failed ({(int)response.StatusCode} {response.ReasonPhrase})."
+				: responseText;
+			throw new InvalidOperationException(message);
+		}
 
 		return JsonSerializer.Deserialize<AvatarUploadDto>(responseText, JsonOptions)?.Avatar
 			?? throw new InvalidOperationException("Avatar upload response was empty.");

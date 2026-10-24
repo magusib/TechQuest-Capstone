@@ -55,7 +55,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_jnscl")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="HomePanel" type="Panel" parent="." unique_id=1433847039]
 layout_mode = 1
@@ -417,11 +417,6 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 
-[node name="StudentTutorialPopup" parent="." instance=ExtResource("16_tutorial")]
+[node name="StudentTutorialPopup" parent="." unique_id=946263724 instance=ExtResource("16_tutorial")]
 visible = false
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2

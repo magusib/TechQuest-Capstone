@@ -24,7 +24,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_2toiv")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="ProgressBar" type="ProgressBar" parent="." unique_id=334214929]
 layout_mode = 0

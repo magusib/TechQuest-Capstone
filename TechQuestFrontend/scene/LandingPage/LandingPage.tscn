@@ -34,7 +34,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_ctk1i")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="Login" type="Button" parent="." unique_id=627731840]
 layout_mode = 1

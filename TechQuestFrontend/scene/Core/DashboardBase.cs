@@ -340,7 +340,12 @@ public abstract partial class DashboardBase : Control
 
 	protected virtual void OnTutorialPressed()
 	{
-		if (UserSession.Role == UserRole.Student)
+		// Each dashboard embeds its tutorial as a popup. Keep the tutorial on
+		// the dashboard for every role instead of routing Admin/Professor to a
+		// separate scene.
+		if (UserSession.Role == UserRole.Student ||
+			UserSession.Role == UserRole.Professor ||
+			UserSession.Role == UserRole.Admin)
 		{
 			string popupName = UserSession.Role switch
 			{
@@ -446,21 +451,6 @@ public abstract partial class DashboardBase : Control
 
 	protected virtual void OpenProfile()
 	{
-		string popupName = UserSession.Role switch
-		{
-			UserRole.Student => "StudentProfilePopup",
-			UserRole.Professor => "ProfessorProfilePopup",
-			UserRole.Admin => "AdminProfilePopup",
-			_ => ""
-		};
-
-		Control profilePopup = GetNodeOrNull<Control>(popupName);
-		if (profilePopup != null)
-		{
-			profilePopup.Visible = true;
-			return;
-		}
-
 		string profilePath = UserSession.Role switch
 		{
 			UserRole.Student => StudentProfilePath,

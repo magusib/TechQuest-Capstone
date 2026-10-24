@@ -568,4 +568,3 @@ C:\Users\Admin\AppData\Local\Temp\TechQuestBackendValidation\TechQuestBackend.de
 C:\Users\Admin\AppData\Local\Temp\TechQuestBackendValidation\TechQuestBackend.runtimeconfig.json
 C:\Users\Admin\AppData\Local\Temp\TechQuestBackendValidation\TechQuestBackend.dll
 C:\Users\Admin\AppData\Local\Temp\TechQuestBackendValidation\TechQuestBackend.pdb
-C:\Users\Admin\TechQuest-Capstone\TechQuestBackend\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

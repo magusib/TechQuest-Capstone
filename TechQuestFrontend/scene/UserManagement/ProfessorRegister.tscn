@@ -24,7 +24,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_ya7sn")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="RegisterPanel" type="Panel" parent="." unique_id=390936990]
 layout_mode = 0

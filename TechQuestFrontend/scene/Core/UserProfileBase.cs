@@ -17,7 +17,7 @@ public partial class UserProfileBase : Control
 	{
 		avatarHolder = GetNodeOrNull<TextureRect>("MainPanel/AvatarHolder");
 		backButton = GetNodeOrNull<Button>("MainPanel/BackButton");
-		uploadButton = GetNodeOrNull<Button>("MainPanel/InformationPanel/UplaodButton");
+		uploadButton = GetNodeOrNull<Button>("MainPanel/UploadButton");
 		firstNameLabel = GetNodeOrNull<Label>("MainPanel/InformationPanel/FirstnameLabel");
 		lastNameLabel = GetNodeOrNull<Label>("MainPanel/InformationPanel/LastnameLabel");
 		emailLabel = GetNodeOrNull<Label>("MainPanel/InformationPanel/EmailLabel");

@@ -22,7 +22,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_1jk6d")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="LoginPanel" type="Panel" parent="." unique_id=223171149]
 layout_mode = 0

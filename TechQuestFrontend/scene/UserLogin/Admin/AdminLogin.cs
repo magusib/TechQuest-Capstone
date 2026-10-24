@@ -5,7 +5,7 @@ using System.Text;
 public partial class AdminLogin : Control
 {
 	private const string API_BASE_URL =
-		"http://localhost:5000/api/Auth";
+		"https://techquest-capstone.onrender.com/api/Auth";
 
 	private HttpRequest httpRequest;
 	private Panel loginPanel;

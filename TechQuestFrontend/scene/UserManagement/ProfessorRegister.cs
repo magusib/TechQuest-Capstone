@@ -4,7 +4,7 @@ using System.Text;
 
 public partial class ProfessorRegister : Control
 {
-	private const string API_BASE_URL = "http://localhost:5000/api/Auth";
+	private const string API_BASE_URL = "https://techquest-capstone.onrender.com/api/Auth";
 
 	private HttpRequest httpRequest;
 	private Panel registerPanel;

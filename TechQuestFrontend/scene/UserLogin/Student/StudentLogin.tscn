@@ -23,7 +23,7 @@ grow_vertical = 2
 offset_transform_enabled = true
 texture = ExtResource("1_aiqbg")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="LoginPanel" type="Panel" parent="." unique_id=611325902]
 layout_mode = 0

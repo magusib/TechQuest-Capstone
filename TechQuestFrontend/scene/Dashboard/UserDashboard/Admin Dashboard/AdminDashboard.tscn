@@ -13,7 +13,6 @@
 [ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="12_y20va"]
 [ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="13_ngh7r"]
 [ext_resource type="Texture2D" uid="uid://cdy3upgkc6uxf" path="res://asset/Icons/Menu.png" id="14_3ixja"]
-[ext_resource type="PackedScene" uid="uid://bw63big3fpuwh" path="res://scene/Dashboard/UserDashboard/Student Dashboard/StudentProfile.tscn" id="16_e1aig"]
 [ext_resource type="PackedScene" uid="uid://du1wjyf2tggkf" path="res://scene/Dashboard/Modules/Tutorial/AdminTutorial.tscn" id="17_tutorial"]
 [ext_resource type="Script" uid="uid://ddchqti08tx3j" path="res://scene/Dashboard/UserDashboard/Admin Dashboard/AdminDashboard.cs" id="AdminDashboardScript"]
 
@@ -55,7 +54,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_jnscl")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="HomePanel" type="Panel" parent="." unique_id=812239077]
 layout_mode = 1
@@ -254,10 +253,10 @@ stretch_mode = 6
 
 [node name="MediumButton" type="TextureButton" parent="DificultySelectionButton2" unique_id=1144222953]
 layout_mode = 0
-offset_left = 627.0
-offset_top = 326.0
-offset_right = 987.0
-offset_bottom = 506.0
+offset_left = 704.0
+offset_top = 372.0
+offset_right = 1064.0
+offset_bottom = 552.0
 texture_normal = ExtResource("9_ueae1")
 ignore_texture_size = true
 stretch_mode = 6
@@ -383,10 +382,6 @@ popup/item_1/text = "Logout"
 popup/item_1/id = 1
 popup/item_2/text = "User Management"
 popup/item_2/id = 2
-
-[node name="AdminProfilePopup" parent="." unique_id=473532987 instance=ExtResource("16_e1aig")]
-visible = false
-layout_mode = 1
 
 [node name="AdminTutorialPopup" parent="." unique_id=189311027 instance=ExtResource("17_tutorial")]
 visible = false

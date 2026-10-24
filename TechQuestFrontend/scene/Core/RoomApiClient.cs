@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 public static class RoomApiClient
 {
-	private const string ApiBaseUrl = "http://localhost:5000/api";
+	private const string ApiBaseUrl = "https://techquest-capstone.onrender.com/api";
 	private static readonly System.Net.Http.HttpClient Client = new();
 	private static readonly JsonSerializerOptions JsonOptions = new()
 	{

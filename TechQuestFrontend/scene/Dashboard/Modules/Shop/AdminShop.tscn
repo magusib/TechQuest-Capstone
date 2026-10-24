@@ -43,7 +43,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_ufe2e")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="ShopPanel" type="Panel" parent="." unique_id=1997322233]
 layout_mode = 1

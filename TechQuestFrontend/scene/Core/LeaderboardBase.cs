@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 public partial class LeaderboardBase : Control
 {
-	private const string LeaderboardUrl = "http://localhost:5000/api/Leaderboard";
+	private const string LeaderboardUrl = "https://techquest-capstone.onrender.com/api/Leaderboard";
 	private HttpRequest request;
 	private string requestType = "";
 	private Godot.Collections.Array currentRows = new();

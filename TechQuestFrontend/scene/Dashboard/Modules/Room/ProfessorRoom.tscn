@@ -27,7 +27,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_wkes7")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="ProfessorRoom" type="Label" parent="." unique_id=88037220]
 layout_mode = 0

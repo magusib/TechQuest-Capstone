@@ -81,7 +81,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_b6kkh")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="LeaderboardPanel" type="PanelContainer" parent="." unique_id=1397800751]
 layout_mode = 1

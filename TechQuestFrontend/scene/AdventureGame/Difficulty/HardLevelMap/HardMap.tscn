@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://cqgh73ine640h"]
 
+[ext_resource type="PackedScene" path="res://scene/AdventureGame/Controll/MobileControls.tscn" id="mobile_controls"]
+
 [ext_resource type="Script" uid="uid://dyqscyjj3nhq7" path="res://scene/AdventureGame/MapPlayerSpawner.cs" id="1_player"]
 [ext_resource type="Script" uid="uid://daw7ow7fn8bgu" path="res://scene/AdventureGame/AdminMapHUD.cs" id="5_yeg5t"]
 [ext_resource type="PackedScene" uid="uid://bewsrcvqcr4v3" path="res://scene/AdventureGame/NPC/AdminNPC/AdminHardMapNPC.tscn" id="6_053qc"]
@@ -117,6 +119,8 @@ distance = -499.0
 script = ExtResource("1_player")
 
 [node name="MapHUDLayer" type="CanvasLayer" parent="." unique_id=484715452]
+
+[node name="MobileControls" parent="." instance=ExtResource("mobile_controls")]
 
 [node name="MapHUD" type="Control" parent="MapHUDLayer" unique_id=255316038]
 layout_mode = 3

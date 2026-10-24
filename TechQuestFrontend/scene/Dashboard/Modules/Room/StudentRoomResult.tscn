@@ -21,7 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_d58qk")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="RoomResult" type="Panel" parent="." unique_id=767478739]
 layout_mode = 1
