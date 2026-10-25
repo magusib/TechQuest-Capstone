@@ -36,6 +36,7 @@ public partial class ProfessorLogin : Control
 	private bool isForgotPasswordOTP = false;
 	private int otpAttempts = 0;
 	private const int MaxOTPAttempts = 3;
+	private bool loginRequestInProgress = false;
 
 	public override void _Ready()
 	{
@@ -81,6 +82,9 @@ public partial class ProfessorLogin : Control
 
 	private void OnLoginPressed()
 	{
+		if (loginRequestInProgress)
+			return;
+
 		string email = loginEmailInput.Text.Trim();
 		string password = loginPasswordInput.Text;
 
@@ -107,6 +111,8 @@ public partial class ProfessorLogin : Control
 
 	private void SendLoginRequest(string email, string password)
 	{
+		SetLoginBusy(true);
+
 		var data = new Godot.Collections.Dictionary
 		{
 			{ "email", email },
@@ -285,6 +291,7 @@ public partial class ProfessorLogin : Control
 
 		if (error != Error.Ok)
 		{
+			SetLoginBusy(false);
 			ShowMessage("Unable to connect to TechQuestBackend.");
 			GD.PrintErr($"HTTPRequest Error: {error}");
 		}
@@ -292,6 +299,7 @@ public partial class ProfessorLogin : Control
 
 	private void OnRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
 	{
+		SetLoginBusy(false);
 		string responseText = Encoding.UTF8.GetString(body);
 
 		if (result != (long)HttpRequest.Result.Success)
@@ -307,6 +315,13 @@ public partial class ProfessorLogin : Control
 		}
 
 		ShowMessage(GetApiErrorMessage(responseText));
+	}
+
+	private void SetLoginBusy(bool busy)
+	{
+		loginRequestInProgress = busy;
+		loginButton.Disabled = busy;
+		loginButton.Text = busy ? "Logging in..." : "Login";
 	}
 
 	private void HandleSuccessfulResponse(string responseText)

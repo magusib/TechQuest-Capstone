@@ -2,7 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://b4uq7j48menoo" path="res://asset/background/ptc 1.png" id="1_aiqbg"]
 [ext_resource type="Script" uid="uid://gv62nyx4telt" path="res://scene/UserLogin/Student/StudentLogin.cs" id="1_q54ml"]
-[ext_resource type="StyleBox" uid="uid://bofr3y60ei71y" path="res://asset/style/panel_bordered.tres" id="2_yljco"]
+[ext_resource type="Texture2D" uid="uid://s3wgaw46w4f5" path="res://asset/style/LargeBackground.png" id="3_nt8ub"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qfmqg"]
+texture = ExtResource("3_nt8ub")
 
 [node name="StudentLogin" type="Control" unique_id=1063139679]
 layout_mode = 3
@@ -27,11 +30,11 @@ stretch_mode = 6
 
 [node name="LoginPanel" type="Panel" parent="." unique_id=611325902]
 layout_mode = 0
-offset_left = 343.0
-offset_top = 71.0
-offset_right = 769.0
-offset_bottom = 578.0
-theme_override_styles/panel = ExtResource("2_yljco")
+offset_left = 282.0
+offset_top = 79.0
+offset_right = 852.0
+offset_bottom = 594.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_qfmqg")
 
 [node name="StudentLabel" type="Label" parent="LoginPanel" unique_id=911085754]
 layout_mode = 0
@@ -125,7 +128,6 @@ offset_left = 343.0
 offset_top = 71.0
 offset_right = 769.0
 offset_bottom = 578.0
-theme_override_styles/panel = ExtResource("2_yljco")
 
 [node name="RegisterLabel" type="Label" parent="RegisterPanel" unique_id=673475885]
 layout_mode = 0

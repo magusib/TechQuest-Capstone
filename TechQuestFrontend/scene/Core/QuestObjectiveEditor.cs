@@ -5,35 +5,26 @@ using System;
 public partial class QuestObjectiveEditor : VBoxContainer
 {
 	private readonly System.Collections.Generic.List<MiniGameDto> miniGames = new();
-	private readonly OptionButton objectiveType = new();
-	private readonly SpinBox targetQuantity = new();
-	private readonly OptionButton miniGameType = new();
-	private readonly CheckBox requireMiniGameSuccess = new();
+	private OptionButton objectiveType = null!;
+	private SpinBox targetQuantity = null!;
+	private OptionButton miniGameType = null!;
+	private CheckBox requireMiniGameSuccess = null!;
 
-	public QuestObjectiveEditor()
+	public override void _Ready()
 	{
-		Name = "QuestObjectiveEditor";
-		SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-		AddThemeConstantOverride("separation", 2);
+		objectiveType = GetNode<OptionButton>("ObjectiveRow/ObjectiveType");
+		targetQuantity = GetNode<SpinBox>("TargetQuantityRow/TargetQuantity");
+		miniGameType = GetNode<OptionButton>("MiniGameRow/MiniGameType");
+		requireMiniGameSuccess = GetNode<CheckBox>("RequireMiniGameSuccess");
 
-		objectiveType.AddItem("Manual");
-		objectiveType.AddItem("Complete NPC challenges");
-		objectiveType.AddItem("Play mini-games");
-		objectiveType.AddItem("Receive coins");
-		objectiveType.AddItem("Receive points");
-		objectiveType.Select(0);
-		AddRow("Objective", objectiveType);
-
-		targetQuantity.MinValue = 1;
-		targetQuantity.MaxValue = int.MaxValue;
-		targetQuantity.Step = 1;
-		targetQuantity.Value = 1;
-		AddRow("Target quantity", targetQuantity);
-
-		AddRow("Mini-game", miniGameType);
-
-		requireMiniGameSuccess.Text = "Require a successful mini-game";
-		AddChild(requireMiniGameSuccess);
+		if (objectiveType.ItemCount == 0)
+		{
+			objectiveType.AddItem("Manual");
+			objectiveType.AddItem("Complete NPC challenges");
+			objectiveType.AddItem("Play mini-games");
+			objectiveType.AddItem("Receive coins");
+			objectiveType.AddItem("Receive points");
+		}
 
 		objectiveType.ItemSelected += _ => UpdateVisibility();
 		UpdateVisibility();
@@ -91,28 +82,10 @@ public partial class QuestObjectiveEditor : VBoxContainer
 			miniGameType.Select(0);
 	}
 
-	private void AddRow(string labelText, Control control)
-	{
-		var row = new HBoxContainer
-		{
-			CustomMinimumSize = new Vector2(0, 28),
-			SizeFlagsHorizontal = Control.SizeFlags.ExpandFill
-		};
-		row.AddChild(new Label
-		{
-			Text = labelText,
-			CustomMinimumSize = new Vector2(160, 0),
-			VerticalAlignment = VerticalAlignment.Center
-		});
-		control.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-		row.AddChild(control);
-		AddChild(row);
-	}
-
 	private void UpdateVisibility()
 	{
 		int selected = objectiveType.Selected;
-		((Control)GetChild(2)).Visible = selected == 2;
+		GetNode<Control>("MiniGameRow").Visible = selected == 2;
 		requireMiniGameSuccess.Visible = selected == 2;
 	}
 }

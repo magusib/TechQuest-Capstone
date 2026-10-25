@@ -2,19 +2,31 @@
 
 [ext_resource type="Script" uid="uid://c1t7113f5t748" path="res://scene/LandingPage/LandingPage.cs" id="1_5dwvf"]
 [ext_resource type="Texture2D" uid="uid://fw6dc6tf5doi" path="res://asset/background/landing_page.png" id="2_ctk1i"]
-[ext_resource type="StyleBox" path="res://asset/style/button_dark_hover.tres" id="3_2p0pq"]
-[ext_resource type="StyleBox" path="res://asset/style/button_secondary_hover.tres" id="4_2p0pq"]
-[ext_resource type="StyleBox" path="res://asset/style/button_primary_pressed.tres" id="4_j5tnn"]
+[ext_resource type="FontFile" uid="uid://bggete2j6crlb" path="res://asset/style/SamuraiBlast-YznGj.ttf" id="3_6wmdr"]
+[ext_resource type="Texture2D" uid="uid://c68p5837dgq1h" path="res://asset/style/buttons/silver_default.png" id="3_j5tnn"]
+[ext_resource type="Texture2D" uid="uid://sti0vq4faxs2" path="res://asset/style/buttons/silver_hover.png" id="4_ln6l3"]
+[ext_resource type="Texture2D" uid="uid://bt5x1gldix2el" path="res://asset/style/buttons/silver_pressed.png" id="5_7jleb"]
+[ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="6_6wmdr"]
+[ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="7_7jleb"]
+[ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="8_6wmdr"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8icjc"]
-bg_color = Color(0.043654583, 0.015779978, 0.0008914221, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-shadow_color = Color(1, 1, 1, 0.6)
-shadow_size = 3
-shadow_offset = Vector2(3, 3)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_70yj7"]
+texture = ExtResource("3_j5tnn")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1o55p"]
+texture = ExtResource("4_ln6l3")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2uuf6"]
+texture = ExtResource("5_7jleb")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1b5o1"]
+texture = ExtResource("7_7jleb")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_djljo"]
+texture = ExtResource("6_6wmdr")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_61esm"]
+texture = ExtResource("8_6wmdr")
 
 [node name="LandinPage" type="Control" unique_id=744516378]
 layout_mode = 3
@@ -45,15 +57,16 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -79.0
 offset_top = 86.0
-offset_right = 104.0
-offset_bottom = 152.0
+offset_right = 111.0
+offset_bottom = 156.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 27
-theme_override_styles/normal = ExtResource("3_2p0pq")
-theme_override_styles/pressed = ExtResource("4_j5tnn")
-theme_override_styles/hover = ExtResource("4_2p0pq")
+theme_override_fonts/font = ExtResource("3_6wmdr")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxTexture_70yj7")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_1o55p")
+theme_override_styles/hover = SubResource("StyleBoxTexture_2uuf6")
 text = " Login"
 autowrap_mode = 1
 clip_text = true
@@ -61,10 +74,13 @@ expand_icon = true
 
 [node name="Exit" type="Button" parent="." unique_id=1083312678]
 layout_mode = 0
-offset_left = 475.0
-offset_top = 512.0
-offset_right = 694.0
-offset_bottom = 597.0
-theme_override_font_sizes/font_size = 27
-theme_override_styles/normal = SubResource("StyleBoxFlat_8icjc")
+offset_left = 555.0
+offset_top = 542.0
+offset_right = 745.0
+offset_bottom = 612.0
+theme_override_fonts/font = ExtResource("3_6wmdr")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxTexture_1b5o1")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_djljo")
+theme_override_styles/hover = SubResource("StyleBoxTexture_61esm")
 text = "Exit"

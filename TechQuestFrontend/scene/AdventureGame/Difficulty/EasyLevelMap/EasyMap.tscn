@@ -1,7 +1,5 @@
 [gd_scene format=3 uid="uid://m8r8saovq37w"]
 
-[ext_resource type="PackedScene" path="res://scene/AdventureGame/Controll/MobileControls.tscn" id="mobile_controls"]
-
 [ext_resource type="PackedScene" uid="uid://c65cdoovlusqa" path="res://scene/AdventureGame/Character/Character1.tscn" id="1_yyj5g"]
 [ext_resource type="Script" uid="uid://daw7ow7fn8bgu" path="res://scene/AdventureGame/AdminMapHUD.cs" id="2_74eu4"]
 [ext_resource type="Script" uid="uid://e8wcrhmu5i1q" path="res://scene/AdventureGame/Controll/AdminCamera2d.cs" id="6_db5mq"]
@@ -25,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://barmgdw6hbte0" path="res://asset/parallax/easy/02_Bushes.png" id="16_ienks"]
 [ext_resource type="Texture2D" uid="uid://5o5k7qb2ebgt" path="res://asset/parallax/easy/01_Mist.png" id="17_chwfs"]
 [ext_resource type="PackedScene" uid="uid://b6yg0abhx5012" path="res://scene/AdventureGame/Controll/killzone.tscn" id="22_lj2mp"]
+[ext_resource type="PackedScene" path="res://scene/AdventureGame/Controll/MobileControls.tscn" id="mobile_controls"]
 [ext_resource type="Script" uid="uid://c4m48lqvo52v2" path="res://scene/AdventureGame/NPC/AdminNPC/NpcDeploymentRenderer.cs" id="npc_deployment_renderer"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yej1q"]
@@ -137,8 +136,6 @@ distance = -499.0
 script = ExtResource("13_player")
 
 [node name="MapHUDLayer" type="CanvasLayer" parent="." unique_id=1360470967]
-
-[node name="MobileControls" parent="." instance=ExtResource("mobile_controls")]
 
 [node name="MapHUD" type="Control" parent="MapHUDLayer" unique_id=999541182]
 layout_mode = 3
@@ -293,6 +290,8 @@ anchor_bottom = 0.5
 [node name="EasyMapQuestion" parent="MapHUDLayer" unique_id=1453264261 instance=ExtResource("10_nm8f0")]
 visible = false
 
+[node name="MobileControls" parent="." unique_id=1297325620 instance=ExtResource("mobile_controls")]
+
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1896933515]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1514401365]
@@ -409,7 +408,7 @@ visible = false
 position = Vector2(599, 294)
 
 [node name="Camera2D" type="Camera2D" parent="Character1" unique_id=2107854592]
-position = Vector2(-1, -28)
+position = Vector2(-1, -48)
 zoom = Vector2(4, 3)
 position_smoothing_enabled = true
 

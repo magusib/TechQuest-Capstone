@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="2_s8a15"]
 [ext_resource type="Texture2D" uid="uid://dk37jnjagjxht" path="res://asset/Icons/exis.png" id="3_46652"]
 [ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="3_ggter"]
+[ext_resource type="Script" uid="uid://c8qh52xorbdj7" path="res://scene/Core/QuestObjectiveEditor.cs" id="quest_objective"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8icjc"]
 
@@ -434,91 +435,131 @@ text = "Add New Quest"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="QuestTitleLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel" unique_id=36258271]
+[node name="QuestFormScroll" type="ScrollContainer" parent="AdminQuestAdd/QuestPanel/QuestAddPanel" unique_id=22135902]
 layout_mode = 1
-offset_left = 14.0
-offset_top = 32.0
-offset_right = 94.0
-offset_bottom = 55.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 28.0
+offset_right = -8.0
+offset_bottom = -75.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="QuestFormContent" type="VBoxContainer" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll" unique_id=583959341]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="QuestTitleLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent" unique_id=36258271]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
 text = "QuestTitle"
 vertical_alignment = 1
 
-[node name="QuestTitle" type="LineEdit" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestTitleLabel" unique_id=1015758352]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = 2.0
-offset_top = 11.5
-offset_right = 274.0
-offset_bottom = 42.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="DescriptionLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel" unique_id=2032516764]
+[node name="QuestTitle" type="LineEdit" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/QuestTitleLabel" unique_id=1015758352]
 layout_mode = 0
-offset_left = 14.0
-offset_top = 76.0
-offset_right = 181.0
-offset_bottom = 117.0
+
+[node name="DescriptionLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent" unique_id=2032516764]
+custom_minimum_size = Vector2(0, 105)
+layout_mode = 2
 text = "Quest Description"
 vertical_alignment = 1
 
-[node name="Description" type="LineEdit" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/DescriptionLabel" unique_id=1347799656]
+[node name="Description" type="LineEdit" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/DescriptionLabel" unique_id=1347799656]
 layout_mode = 0
-offset_left = 3.0
-offset_top = 36.0
-offset_right = 348.0
-offset_bottom = 116.0
 
-[node name="CoinsRewardLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel" unique_id=1857359259]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 186.0
-offset_right = 128.0
-offset_bottom = 225.0
+[node name="QuestObjectiveEditor" type="VBoxContainer" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent" unique_id=1826319669]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+script = ExtResource("quest_objective")
+
+[node name="ObjectiveRow" type="HBoxContainer" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/QuestObjectiveEditor" unique_id=192986208]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="ObjectiveLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/QuestObjectiveEditor/ObjectiveRow" unique_id=371935103]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Objective"
+vertical_alignment = 1
+
+[node name="ObjectiveType" type="OptionButton" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/QuestObjectiveEditor/ObjectiveRow" unique_id=603030719]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TargetQuantityRow" type="HBoxContainer" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/QuestObjectiveEditor" unique_id=1048473689]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="TargetQuantityLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/QuestObjectiveEditor/TargetQuantityRow" unique_id=406146303]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Target quantity"
+vertical_alignment = 1
+
+[node name="TargetQuantity" type="SpinBox" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/QuestObjectiveEditor/TargetQuantityRow" unique_id=1419537580]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 2147483647.0
+value = 1.0
+
+[node name="MiniGameRow" type="HBoxContainer" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/QuestObjectiveEditor" unique_id=1739889216]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="MiniGameLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/QuestObjectiveEditor/MiniGameRow" unique_id=1117099752]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Mini-game"
+vertical_alignment = 1
+
+[node name="MiniGameType" type="OptionButton" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/QuestObjectiveEditor/MiniGameRow" unique_id=578272227]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RequireMiniGameSuccess" type="CheckBox" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/QuestObjectiveEditor" unique_id=1662254010]
+layout_mode = 2
+text = "Require a successful mini-game"
+
+[node name="CoinsRewardLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent" unique_id=1857359259]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
 text = "Coins Reward"
 vertical_alignment = 1
 
-[node name="CoinsReward" type="LineEdit" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/CoinsRewardLabel" unique_id=2096936788]
+[node name="CoinsReward" type="LineEdit" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/CoinsRewardLabel" unique_id=2096936788]
 layout_mode = 0
-offset_top = 33.0
-offset_right = 336.5
-offset_bottom = 70.0
 alignment = 1
 
-[node name="PointsRewardLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel" unique_id=427262218]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 249.0
-offset_right = 128.0
-offset_bottom = 288.0
+[node name="PointsRewardLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent" unique_id=427262218]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
 text = "Points Reward"
 vertical_alignment = 1
 
-[node name="PointsReward" type="LineEdit" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/PointsRewardLabel" unique_id=1306673935]
+[node name="PointsReward" type="LineEdit" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/PointsRewardLabel" unique_id=1306673935]
 layout_mode = 0
-offset_left = 1.0
-offset_top = 38.0
-offset_right = 346.0
-offset_bottom = 69.0
 alignment = 1
 
 [node name="SaveButton" type="Button" parent="AdminQuestAdd/QuestPanel/QuestAddPanel" unique_id=424820769]
 layout_mode = 0
 offset_left = 51.0
-offset_top = 324.0
+offset_top = 535.0
 offset_right = 144.0
-offset_bottom = 355.0
+offset_bottom = 566.0
 text = "Save"
 
 [node name="CloseButton" type="Button" parent="AdminQuestAdd/QuestPanel/QuestAddPanel" unique_id=1735106248]
 layout_mode = 0
 offset_left = 198.0
-offset_top = 324.0
+offset_top = 535.0
 offset_right = 296.0
-offset_bottom = 355.0
+offset_bottom = 566.0
 text = "Close"
 
 [node name="RewardPopup" type="Panel" parent="." unique_id=870851661]

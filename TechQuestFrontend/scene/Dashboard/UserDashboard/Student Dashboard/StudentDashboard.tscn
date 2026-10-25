@@ -10,9 +10,11 @@
 [ext_resource type="Texture2D" uid="uid://b6v4wt8dc8kuy" path="res://asset/Icons/TutorialButton.png" id="8_nnqrs"]
 [ext_resource type="Texture2D" uid="uid://361evl3lcsf3" path="res://asset/background/medium.png" id="9_ueae1"]
 [ext_resource type="Texture2D" uid="uid://gj3ech0242sn" path="res://asset/background/hard.png" id="10_8a06c"]
+[ext_resource type="Texture2D" uid="uid://ciea0q7hig3ds" path="res://asset/style/CoinBar.png" id="12_2twt2"]
 [ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="12_y20va"]
 [ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="13_ngh7r"]
 [ext_resource type="Texture2D" uid="uid://cdy3upgkc6uxf" path="res://asset/Icons/Menu.png" id="14_3ixja"]
+[ext_resource type="Texture2D" uid="uid://yxedy8dwjbr5" path="res://asset/style/PointBar.png" id="14_61vh3"]
 [ext_resource type="PackedScene" uid="uid://bw63big3fpuwh" path="res://scene/Dashboard/UserDashboard/Student Dashboard/StudentProfile.tscn" id="15_nnqrs"]
 [ext_resource type="PackedScene" uid="uid://84lavysqtevd" path="res://scene/Dashboard/Modules/Tutorial/StudentTutorial.tscn" id="16_tutorial"]
 [ext_resource type="Script" uid="uid://dglhwb03xftaf" path="res://scene/Dashboard/UserDashboard/Student Dashboard/StudentDashboard.cs" id="StudentDashboardScript"]
@@ -36,6 +38,12 @@ shadow_color = Color(0.08627451, 0.08627451, 0.3529412, 0.6)
 shadow_size = 30
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8icjc"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8wpx0"]
+texture = ExtResource("12_2twt2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j4ke4"]
+texture = ExtResource("14_61vh3")
 
 [node name="StudentDashboard" type="Control" unique_id=1379097029]
 layout_mode = 3
@@ -304,20 +312,21 @@ text = "Student Name"
 
 [node name="CoinsPanel" type="Panel" parent="TopBar/AvatarPanel" unique_id=246233926]
 layout_mode = 0
-offset_left = 50.0
-offset_top = 126.0
-offset_right = 300.0
+offset_left = 41.0
+offset_top = 111.0
+offset_right = 301.0
 offset_bottom = 161.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_8wpx0")
 
 [node name="CoinsIcon" type="TextureRect" parent="TopBar/AvatarPanel/CoinsPanel" unique_id=1811261139]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 10.0
+offset_left = 21.0
 offset_top = -14.0
-offset_right = 44.0
-offset_bottom = 14.0
+offset_right = 61.0
+offset_bottom = 16.0
 grow_vertical = 2
 texture = ExtResource("12_y20va")
 expand_mode = 1
@@ -342,20 +351,21 @@ vertical_alignment = 1
 
 [node name="PointsPanel" type="Panel" parent="TopBar/AvatarPanel" unique_id=1492091037]
 layout_mode = 0
-offset_left = 51.0
+offset_left = 41.0
 offset_top = 166.0
 offset_right = 301.0
-offset_bottom = 201.0
+offset_bottom = 216.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_j4ke4")
 
 [node name="PointsIcon" type="TextureRect" parent="TopBar/AvatarPanel/PointsPanel" unique_id=363006539]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 10.0
+offset_left = 21.0
 offset_top = -14.0
-offset_right = 44.0
-offset_bottom = 14.0
+offset_right = 61.0
+offset_bottom = 16.0
 grow_vertical = 2
 texture = ExtResource("13_ngh7r")
 expand_mode = 1

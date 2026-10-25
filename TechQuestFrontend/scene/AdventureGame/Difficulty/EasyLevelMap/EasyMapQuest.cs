@@ -61,36 +61,18 @@ public partial class EasyMapQuest : Control
 		adminQuestAddPanel.OffsetBottom = 290;
 		adminSaveButton = adminQuestAdd.FindChild("SaveButton", true, false) as Button;
 		adminFormCloseButton = adminQuestAddPanel.FindChild("CloseButton", true, false) as Button;
+		objectiveEditor = adminQuestAddPanel.GetNode<QuestObjectiveEditor>(
+			"QuestFormScroll/QuestFormContent/QuestObjectiveEditor");
 
-		var questFormScroll = new ScrollContainer
-		{
-			Name = "QuestFormScroll",
-			HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled,
-			VerticalScrollMode = ScrollContainer.ScrollMode.Auto
-		};
-		questFormScroll.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
-		questFormScroll.OffsetLeft = 8;
-		questFormScroll.OffsetTop = 28;
-		questFormScroll.OffsetRight = -8;
-		questFormScroll.OffsetBottom = -75;
-		adminQuestAddPanel.AddChild(questFormScroll);
+		// These controls are authored as LineEdit children of their labels. Move
+		// the label rows into the VBox so every field gets its own vertical space.
+		var questForm = adminQuestAddPanel.GetNode<VBoxContainer>(
+			"QuestFormScroll/QuestFormContent");
+		AddQuestFieldToForm(questForm, "QuestTitleLabel", 64);
+		AddQuestFieldToForm(questForm, "DescriptionLabel", 64);
+		AddQuestFieldToForm(questForm, "CoinsRewardLabel", 64);
+		AddQuestFieldToForm(questForm, "PointsRewardLabel", 64);
 
-		var questFormContent = new VBoxContainer
-		{
-			Name = "QuestFormContent",
-			SizeFlagsHorizontal = Control.SizeFlags.ExpandFill
-		};
-		questFormContent.AddThemeConstantOverride("separation", 8);
-		questFormScroll.AddChild(questFormContent);
-		AddQuestFieldToForm(questFormContent, "QuestTitleLabel", 70);
-		AddQuestFieldToForm(questFormContent, "DescriptionLabel", 125);
-		objectiveEditor = new QuestObjectiveEditor();
-		questFormContent.AddChild(objectiveEditor);
-		AddQuestFieldToForm(questFormContent, "CoinsRewardLabel", 80);
-		AddQuestFieldToForm(questFormContent, "PointsRewardLabel", 80);
-
-		adminSaveButton.Position = new Vector2(51, 535);
-		adminFormCloseButton.Position = new Vector2(198, 535);
 		adminQuestItemTemplate = adminQuestAdd.FindChild("QuestItem", true, false) as Control;
 		adminQuestItemTemplate.Hide();
 
@@ -265,6 +247,10 @@ public partial class EasyMapQuest : Control
 	{
 		Control field = adminQuestAddPanel.FindChild(fieldName, true, false) as Control
 			?? throw new InvalidOperationException($"Quest form field '{fieldName}' was not found.");
+		Control input = field.FindChild(fieldName == "QuestTitleLabel" ? "QuestTitle" :
+			fieldName == "DescriptionLabel" ? "Description" :
+			fieldName == "CoinsRewardLabel" ? "CoinsReward" : "PointsReward", true, false) as Control;
+
 		field.Reparent(form, false);
 		field.CustomMinimumSize = new Vector2(0, minimumHeight);
 		field.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
@@ -272,17 +258,16 @@ public partial class EasyMapQuest : Control
 		if (field is Label label)
 			label.VerticalAlignment = VerticalAlignment.Top;
 
-		if (fieldName == "QuestTitleLabel")
+		if (input != null)
 		{
-			Control titleInput = field.FindChild("QuestTitle", true, false) as Control
-				?? throw new InvalidOperationException("Quest title input was not found.");
-			titleInput.AnchorTop = 0;
-			titleInput.AnchorBottom = 0;
-			titleInput.AnchorRight = 1;
-			titleInput.OffsetLeft = 2;
-			titleInput.OffsetTop = 28;
-			titleInput.OffsetRight = -8;
-			titleInput.OffsetBottom = 59;
+			input.AnchorLeft = 0;
+			input.AnchorTop = 0;
+			input.AnchorRight = 1;
+			input.AnchorBottom = 0;
+			input.OffsetLeft = 2;
+			input.OffsetTop = 28;
+			input.OffsetRight = -8;
+			input.OffsetBottom = 59;
 		}
 	}
 

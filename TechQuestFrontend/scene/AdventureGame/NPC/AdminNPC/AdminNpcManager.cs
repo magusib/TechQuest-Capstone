@@ -14,9 +14,7 @@ public abstract partial class AdminNpcManager : Control
 	private Control addPopup;
 	private LineEdit npcNameInput;
 	private Button imageButton;
-	private Button animationSceneButton;
-	private Button clearAnimationSceneButton;
-	private Label animationSceneLabel;
+	private OptionButton animationSceneInput;
 	private Button saveButton;
 	private Label formMessage;
 	private AcceptDialog messageDialog;
@@ -24,9 +22,9 @@ public abstract partial class AdminNpcManager : Control
 	private ConfirmationDialog deployDialog;
 	private ConfirmationDialog undeployDialog;
 	private FileDialog fileDialog;
-	private FileDialog animationSceneDialog;
 	private string selectedImagePath = "";
 	private string selectedAnimationScenePath = "";
+	private readonly List<string> animationSceneChoices = new();
 	private NpcDto editingNpc;
 	private NpcDto selectedNpc;
 	private NpcDeploymentDto selectedDeployment;
@@ -75,8 +73,6 @@ public abstract partial class AdminNpcManager : Control
 		GetNode<Button>(npcPanelPath + "/CloseButton").Pressed += CloseSetup;
 		GetNode<Button>(npcPanelPath + "/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer/Buttons/CancelButton").Pressed += CloseForm;
 		imageButton.Pressed += OpenImagePicker;
-		animationSceneButton.Pressed += OpenAnimationScenePicker;
-		clearAnimationSceneButton.Pressed += ClearAnimationScene;
 		saveButton.Pressed += SaveNpc;
 		deleteDialog.Confirmed += DeleteSelectedNpc;
 		deployDialog.Confirmed += DeploySelectedNpc;
@@ -92,15 +88,6 @@ public abstract partial class AdminNpcManager : Control
 		AddChild(fileDialog);
 		fileDialog.FileSelected += OnImageSelected;
 
-		animationSceneDialog = new FileDialog
-		{
-			Title = "Choose NPC Animation Scene",
-			FileMode = FileDialog.FileModeEnum.OpenFile,
-			Access = FileDialog.AccessEnum.Resources,
-			Filters = new string[] { "*.tscn ; Godot Scenes" }
-		};
-		AddChild(animationSceneDialog);
-		animationSceneDialog.FileSelected += OnAnimationSceneSelected;
 	}
 
 	private void AddAnimationScenePicker()
@@ -108,25 +95,47 @@ public abstract partial class AdminNpcManager : Control
 		var fields = (VBoxContainer)imageButton.GetParent();
 		int insertIndex = imageButton.GetIndex() + 1;
 
-		animationSceneLabel = new Label
+		var animationLabel = new Label
 		{
-			Text = "Animation: Uploaded image (static)",
+			Text = "Animation scene (optional)",
 			AutowrapMode = TextServer.AutowrapMode.WordSmart
 		};
-		fields.AddChild(animationSceneLabel);
-		fields.MoveChild(animationSceneLabel, insertIndex);
+		fields.AddChild(animationLabel);
+		fields.MoveChild(animationLabel, insertIndex);
 
-		var buttons = new HBoxContainer();
-		animationSceneButton = new Button
+		animationSceneInput = new OptionButton
 		{
-			Text = "Select Animation Scene",
 			SizeFlagsHorizontal = Control.SizeFlags.ExpandFill
 		};
-		clearAnimationSceneButton = new Button { Text = "Clear" };
-		buttons.AddChild(animationSceneButton);
-		buttons.AddChild(clearAnimationSceneButton);
-		fields.AddChild(buttons);
-		fields.MoveChild(buttons, insertIndex + 1);
+		animationSceneInput.ItemSelected += OnAnimationSceneSelected;
+		fields.AddChild(animationSceneInput);
+		fields.MoveChild(animationSceneInput, insertIndex + 1);
+		PopulateAnimationSceneChoices();
+	}
+
+	private void PopulateAnimationSceneChoices()
+	{
+		if (animationSceneInput == null)
+			return;
+
+		animationSceneChoices.Clear();
+		animationSceneInput.Clear();
+		animationSceneInput.AddItem("No animation (use local image)");
+		animationSceneChoices.Add("");
+
+		string folder = $"res://scene/AdventureGame/NPC/{Difficulty}MapNPC";
+		string scenePrefix = $"{folder}/{Difficulty}MapNPC";
+		for (int index = 0; index <= 5; index++)
+		{
+			string path = index == 0
+				? $"{scenePrefix}.tscn"
+				: $"{scenePrefix}{index}.tscn";
+			if (!ResourceLoader.Exists(path))
+				continue;
+
+			animationSceneInput.AddItem(index == 0 ? "Default NPC" : $"NPC {index}");
+			animationSceneChoices.Add(path);
+		}
 	}
 
 	public void OpenNpcSetup()
@@ -463,10 +472,9 @@ public abstract partial class AdminNpcManager : Control
 	{
 		editingNpc = null;
 		selectedImagePath = "";
-		selectedAnimationScenePath = "";
+		SelectAnimationScene("");
 		npcNameInput.Text = "";
 		imageButton.Text = "SELECT LOCAL IMAGE (OPTIONAL)";
-		UpdateAnimationSceneLabel();
 		saveButton.Text = "SAVE";
 		formMessage.Text = "Add NPC";
 		addPopup.Show();
@@ -476,10 +484,9 @@ public abstract partial class AdminNpcManager : Control
 	{
 		editingNpc = npc;
 		selectedImagePath = "";
-		selectedAnimationScenePath = npc.AnimationScenePath ?? "";
+		SelectAnimationScene(npc.AnimationScenePath ?? "");
 		npcNameInput.Text = npc.NpcName;
 		imageButton.Text = "SELECT LOCAL IMAGE (OPTIONAL)";
-		UpdateAnimationSceneLabel();
 		saveButton.Text = "SAVE";
 		formMessage.Text = "Edit NPC";
 		addPopup.Show();
@@ -490,49 +497,31 @@ public abstract partial class AdminNpcManager : Control
 		fileDialog.PopupCentered(new Vector2I(720, 520));
 	}
 
-	private void OpenAnimationScenePicker()
+	private void OnAnimationSceneSelected(long index)
 	{
-		animationSceneDialog.PopupCentered(new Vector2I(900, 600));
+		int choiceIndex = (int)index;
+		selectedAnimationScenePath = choiceIndex >= 0 && choiceIndex < animationSceneChoices.Count
+			? animationSceneChoices[choiceIndex]
+			: "";
 	}
 
-	private void OnAnimationSceneSelected(string path)
-	{
-		string expectedPrefix = $"res://scene/AdventureGame/NPC/{Difficulty}MapNPC/";
-		if (!path.StartsWith(expectedPrefix, StringComparison.Ordinal) ||
-			!path.EndsWith(".tscn", StringComparison.OrdinalIgnoreCase))
-		{
-			ShowMessage($"Choose an animated scene from the {Difficulty} NPC folder.");
-			return;
-		}
-
-		AnimatedSprite2D previewSprite = null;
-		try
-		{
-			previewSprite = NpcMapSprite.CreateNpcSprite(null, path);
-			selectedAnimationScenePath = path;
-			UpdateAnimationSceneLabel();
-		}
-		catch (Exception exception)
-		{
-			ShowMessage("NPC animation scene could not be used: " + exception.Message);
-		}
-		finally
-		{
-			previewSprite?.Free();
-		}
-	}
-
-	private void ClearAnimationScene()
+	private void SelectAnimationScene(string path)
 	{
 		selectedAnimationScenePath = "";
-		UpdateAnimationSceneLabel();
-	}
+		if (animationSceneInput == null)
+			return;
 
-	private void UpdateAnimationSceneLabel()
-	{
-		animationSceneLabel.Text = string.IsNullOrWhiteSpace(selectedAnimationScenePath)
-			? "Animation: Uploaded image (static)"
-			: "Animation: " + Path.GetFileName(selectedAnimationScenePath);
+		for (int index = 0; index < animationSceneChoices.Count; index++)
+		{
+			if (animationSceneChoices[index] == path)
+			{
+				animationSceneInput.Select(index);
+				selectedAnimationScenePath = path;
+				return;
+			}
+		}
+
+		animationSceneInput.Select(0);
 	}
 
 	private void OnImageSelected(string path)
@@ -762,6 +751,7 @@ public abstract partial class AdminNpcManager : Control
 		addPopup.Hide();
 		editingNpc = null;
 		selectedImagePath = "";
+		SelectAnimationScene("");
 	}
 
 	private void CloseSetup()

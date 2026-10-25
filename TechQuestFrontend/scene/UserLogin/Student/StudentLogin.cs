@@ -99,6 +99,7 @@ public partial class StudentLogin : Control
 	private int otpAttempts = 0;
 
 	private const int MaxOTPAttempts = 3;
+	private bool loginRequestInProgress = false;
 
 
 	// =========================================================
@@ -316,6 +317,9 @@ public partial class StudentLogin : Control
 
 	private void OnLoginPressed()
 	{
+		if (loginRequestInProgress)
+			return;
+
 		string email =
 			loginEmailInput.Text.Trim();
 
@@ -368,6 +372,8 @@ public partial class StudentLogin : Control
 		string email,
 		string password)
 	{
+		SetLoginBusy(true);
+
 		var data =
 			new Godot.Collections.Dictionary
 			{
@@ -1020,6 +1026,7 @@ public partial class StudentLogin : Control
 
 		if (error != Error.Ok)
 		{
+			SetLoginBusy(false);
 			ShowMessage(
 				"Unable to connect to TechQuestBackend."
 			);
@@ -1041,6 +1048,7 @@ public partial class StudentLogin : Control
 		string[] headers,
 		byte[] body)
 	{
+		SetLoginBusy(false);
 		string responseText =
 			Encoding.UTF8.GetString(body);
 
@@ -1098,6 +1106,13 @@ public partial class StudentLogin : Control
 		ShowMessage(
 			GetApiErrorMessage(responseText)
 		);
+	}
+
+	private void SetLoginBusy(bool busy)
+	{
+		loginRequestInProgress = busy;
+		loginButton.Disabled = busy;
+		loginButton.Text = busy ? "Logging in..." : "Login";
 	}
 
 
