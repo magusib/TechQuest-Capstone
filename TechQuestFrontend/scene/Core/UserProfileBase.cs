@@ -57,8 +57,9 @@ public partial class UserProfileBase : Control
 
 			UserSession.UpdateYearLevel(profile.YearLevel);
 			UserSession.UpdateAvatar(profile.Avatar);
-			if (avatarHolder != null)
-				avatarHolder.Texture = await AccountApiClient.LoadAvatarAsync(profile.Avatar);
+			Texture2D texture = await AccountApiClient.LoadAvatarAsync(profile.Avatar);
+			if (GodotObject.IsInstanceValid(avatarHolder) && texture != null)
+				avatarHolder.Texture = texture;
 		}
 		catch (Exception error)
 		{
@@ -99,8 +100,9 @@ public partial class UserProfileBase : Control
 		{
 			string avatarPath = await AccountApiClient.UploadAvatarAsync(filePath);
 			UserSession.UpdateAvatar(avatarPath);
-			if (avatarHolder != null)
-				avatarHolder.Texture = await AccountApiClient.LoadAvatarAsync(avatarPath);
+			Texture2D texture = await AccountApiClient.LoadAvatarAsync(avatarPath);
+			if (GodotObject.IsInstanceValid(avatarHolder) && texture != null)
+				avatarHolder.Texture = texture;
 		}
 		catch (Exception error)
 		{

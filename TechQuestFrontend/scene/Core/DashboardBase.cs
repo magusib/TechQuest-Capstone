@@ -103,7 +103,7 @@ public abstract partial class DashboardBase : Control
 
 	private async void SetAvatar()
 	{
-		if (Avatar == null || string.IsNullOrWhiteSpace(UserSession.AvatarPath))
+		if (!GodotObject.IsInstanceValid(Avatar) || string.IsNullOrWhiteSpace(UserSession.AvatarPath))
 			return;
 
 		TextureRect avatar = Avatar;
