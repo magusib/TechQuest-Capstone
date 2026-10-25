@@ -84,10 +84,9 @@ public abstract partial class AdminNpcManager : Control
 
 		fileDialog = new FileDialog
 		{
-			Title = "Choose NPC Image",
+			Title = "Choose Local NPC Image Asset",
 			FileMode = FileDialog.FileModeEnum.OpenFile,
-			Access = FileDialog.AccessEnum.Filesystem,
-			UseNativeDialog = true,
+			Access = FileDialog.AccessEnum.Resources,
 			Filters = new string[] { "*.png ; PNG Images", "*.jpg ; JPG Images", "*.jpeg ; JPEG Images" }
 		};
 		AddChild(fileDialog);
@@ -466,7 +465,7 @@ public abstract partial class AdminNpcManager : Control
 		selectedImagePath = "";
 		selectedAnimationScenePath = "";
 		npcNameInput.Text = "";
-		imageButton.Text = "SELECT IMAGE (.png / .jpg / .jpeg)";
+		imageButton.Text = "SELECT LOCAL IMAGE (OPTIONAL)";
 		UpdateAnimationSceneLabel();
 		saveButton.Text = "SAVE";
 		formMessage.Text = "Add NPC";
@@ -479,7 +478,7 @@ public abstract partial class AdminNpcManager : Control
 		selectedImagePath = "";
 		selectedAnimationScenePath = npc.AnimationScenePath ?? "";
 		npcNameInput.Text = npc.NpcName;
-		imageButton.Text = "SELECT NEW IMAGE (OPTIONAL)";
+		imageButton.Text = "SELECT LOCAL IMAGE (OPTIONAL)";
 		UpdateAnimationSceneLabel();
 		saveButton.Text = "SAVE";
 		formMessage.Text = "Edit NPC";
@@ -538,10 +537,12 @@ public abstract partial class AdminNpcManager : Control
 
 	private void OnImageSelected(string path)
 	{
+		const string expectedPrefix = "res://Items/NPC/";
 		string extension = Path.GetExtension(path).ToLowerInvariant();
-		if (extension != ".png" && extension != ".jpg" && extension != ".jpeg")
+		if (!path.StartsWith(expectedPrefix, StringComparison.Ordinal) ||
+			(extension != ".png" && extension != ".jpg" && extension != ".jpeg"))
 		{
-			ShowMessage("Image must be PNG, JPG, or JPEG.");
+			ShowMessage("Choose a PNG or JPEG image from res://Items/NPC.");
 			return;
 		}
 
@@ -560,9 +561,11 @@ public abstract partial class AdminNpcManager : Control
 			ShowMessage("NPC name is required.");
 			return;
 		}
-		if (editingNpc == null && string.IsNullOrWhiteSpace(selectedImagePath))
+		if (editingNpc == null &&
+			string.IsNullOrWhiteSpace(selectedImagePath) &&
+			string.IsNullOrWhiteSpace(selectedAnimationScenePath))
 		{
-			ShowMessage("NPC image is required.");
+			ShowMessage("Choose a local NPC image or an animation scene.");
 			return;
 		}
 
@@ -572,7 +575,9 @@ public abstract partial class AdminNpcManager : Control
 		{
 			string imagePath = editingNpc?.NpcImage ?? "";
 			if (!string.IsNullOrWhiteSpace(selectedImagePath))
-				imagePath = await NpcApiClient.UploadImageAsync(selectedImagePath);
+				imagePath = selectedImagePath;
+			else if (!string.IsNullOrWhiteSpace(selectedAnimationScenePath))
+				imagePath = "";
 
 			var npc = new NpcDto
 			{

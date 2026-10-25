@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TechQuestBackend.Data;
+using System.Net.Http.Headers;
 
 namespace TechQuestBackend.Controllers
 {
@@ -14,20 +15,29 @@ namespace TechQuestBackend.Controllers
     {
         private readonly TechQuestDbContext _db;
         private readonly IWebHostEnvironment _environment;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public AccountController(TechQuestDbContext db, IWebHostEnvironment environment)
+        public AccountController(
+            TechQuestDbContext db,
+            IWebHostEnvironment environment,
+            IHttpClientFactory httpClientFactory)
         {
             _db = db;
             _environment = environment;
+            _httpClientFactory = httpClientFactory;
         }
 
         [HttpPost("avatar")]
         [Authorize(Roles = "admin,professor")]
-        [RequestSizeLimit(5 * 1024 * 1024)]
-        public async Task<IActionResult> UploadAvatar(IFormFile image)
+        [RequestSizeLimit(6 * 1024 * 1024)]
+        public async Task<IActionResult> UploadAvatar(IFormFile image, CancellationToken cancellationToken)
         {
             if (image == null || image.Length == 0)
                 return BadRequest("Select an image to upload.");
+
+            const long maxImageSize = 5 * 1024 * 1024;
+            if (image.Length > maxImageSize)
+                return BadRequest("Avatar must not be larger than 5 MB.");
 
             string extension = Path.GetExtension(image.FileName).ToLowerInvariant();
             if (extension is not ".png" and not ".jpg" and not ".jpeg")
@@ -38,17 +48,43 @@ namespace TechQuestBackend.Controllers
                 return NotFound("The authenticated account was not found. Please log in again.");
 
             int userId = user.Id;
+            string? supabaseUrl = Environment.GetEnvironmentVariable("SUPABASE_URL")?.TrimEnd('/');
+            string? serviceRoleKey = Environment.GetEnvironmentVariable("SUPABASE_SERVICE_ROLE_KEY");
+            if (string.IsNullOrWhiteSpace(supabaseUrl) || string.IsNullOrWhiteSpace(serviceRoleKey))
+                return StatusCode(StatusCodes.Status503ServiceUnavailable,
+                    "Avatar storage is not configured on the server.");
 
-            string uploadFolder = Path.Combine(_environment.WebRootPath ?? Path.Combine(_environment.ContentRootPath, "wwwroot"), "uploads", "avatars");
-            Directory.CreateDirectory(uploadFolder);
+            string fileName = $"{user.Role}/{userId}/{Guid.NewGuid():N}{extension}";
+            string uploadUrl = $"{supabaseUrl}/storage/v1/object/avatars/" +
+                string.Join("/", fileName.Split('/').Select(Uri.EscapeDataString));
+            string publicUrl = $"{supabaseUrl}/storage/v1/object/public/avatars/" +
+                string.Join("/", fileName.Split('/').Select(Uri.EscapeDataString));
 
-            string fileName = $"{userId}_{Guid.NewGuid():N}{extension}";
-            string filePath = Path.Combine(uploadFolder, fileName);
-            await using (var stream = System.IO.File.Create(filePath))
-                await image.CopyToAsync(stream);
+            using HttpRequestMessage uploadRequest = new(HttpMethod.Post, uploadUrl);
+            uploadRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", serviceRoleKey);
+            uploadRequest.Headers.Add("apikey", serviceRoleKey);
+            uploadRequest.Headers.Add("x-upsert", "true");
 
-            user.Avatar = $"/uploads/avatars/{fileName}";
-            await _db.SaveChangesAsync();
+            await using Stream imageStream = image.OpenReadStream();
+            using StreamContent imageContent = new(imageStream);
+            imageContent.Headers.ContentType = new MediaTypeHeaderValue(
+                extension == ".png" ? "image/png" : "image/jpeg");
+            uploadRequest.Content = imageContent;
+
+            HttpClient client = _httpClientFactory.CreateClient();
+            using HttpResponseMessage uploadResponse = await client.SendAsync(
+                uploadRequest, cancellationToken);
+            if (!uploadResponse.IsSuccessStatusCode)
+            {
+                string storageError = await uploadResponse.Content.ReadAsStringAsync(cancellationToken);
+                return StatusCode(StatusCodes.Status502BadGateway,
+                    string.IsNullOrWhiteSpace(storageError)
+                        ? "Avatar storage upload failed."
+                        : "Avatar storage upload failed: " + storageError);
+            }
+
+            user.Avatar = publicUrl;
+            await _db.SaveChangesAsync(cancellationToken);
             return Ok(new { avatar = user.Avatar });
         }
 

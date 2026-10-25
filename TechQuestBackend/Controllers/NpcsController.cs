@@ -510,10 +510,12 @@ namespace TechQuestBackend.Controllers
                 return BadRequest("NPC name is required.");
             if (!IsDifficulty(request.Difficulty))
                 return BadRequest("Difficulty must be Easy, Medium, or Hard.");
-            if (string.IsNullOrWhiteSpace(request.NpcImage))
-                return BadRequest("NPC image is required.");
-            if (!HasValidImagePath(request.NpcImage))
-                return BadRequest("NPC image must be an uploaded PNG, JPG, or JPEG image.");
+            if (string.IsNullOrWhiteSpace(request.NpcImage) &&
+                string.IsNullOrWhiteSpace(request.AnimationScenePath))
+                return BadRequest("Choose a local NPC image or an animation scene.");
+            if (!string.IsNullOrWhiteSpace(request.NpcImage) &&
+                !HasValidImagePath(request.NpcImage))
+                return BadRequest("NPC image must be a local asset under res://Items/NPC.");
             if (!IsValidAnimationScenePath(request.AnimationScenePath, request.Difficulty))
                 return BadRequest("NPC animation scene must be a scene in the matching difficulty NPC folder.");
             string npcName = request.NpcName.Trim();
@@ -561,7 +563,7 @@ namespace TechQuestBackend.Controllers
             if (!string.IsNullOrWhiteSpace(request.NpcImage))
             {
                 if (!HasValidImagePath(request.NpcImage))
-                    return BadRequest("NPC image must be an uploaded PNG, JPG, or JPEG image.");
+                    return BadRequest("NPC image must be a local asset under res://Items/NPC.");
                 npc.NpcImage = request.NpcImage;
             }
 
@@ -932,7 +934,7 @@ namespace TechQuestBackend.Controllers
         private static bool HasValidImagePath(string imagePath)
         {
             string extension = Path.GetExtension(imagePath).ToLowerInvariant();
-            return imagePath.StartsWith("/uploads/npcs/", StringComparison.Ordinal) &&
+            return imagePath.StartsWith("res://Items/NPC/", StringComparison.Ordinal) &&
                 (extension == ".png" || extension == ".jpg" || extension == ".jpeg");
         }
 
