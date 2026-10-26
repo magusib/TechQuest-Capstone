@@ -3,9 +3,74 @@
 [ext_resource type="Texture2D" uid="uid://b4uq7j48menoo" path="res://asset/background/ptc 1.png" id="1_aiqbg"]
 [ext_resource type="Script" uid="uid://gv62nyx4telt" path="res://scene/UserLogin/Student/StudentLogin.cs" id="1_q54ml"]
 [ext_resource type="Texture2D" uid="uid://s3wgaw46w4f5" path="res://asset/style/LargeBackground.png" id="3_nt8ub"]
+[ext_resource type="Texture2D" uid="uid://cyqkrvyj6vbo8" path="res://asset/style/label1.png" id="4_j4ke4"]
+[ext_resource type="FontFile" uid="uid://bggete2j6crlb" path="res://asset/style/fonts/SamuraiBlast-YznGj.ttf" id="5_47jqb"]
+[ext_resource type="Texture2D" uid="uid://cbwf5nbtd1cno" path="res://asset/style/label.png" id="5_j4ke4"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="7_b1yf1"]
+[ext_resource type="FontFile" uid="uid://b8rfotddug7nh" path="res://asset/style/fonts/Tondur-1jdvg.ttf" id="7_pfkr1"]
+[ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="8_gfhng"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="8_pfkr1"]
+[ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="9_23uyx"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="9_hr1b7"]
+[ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="10_7y620"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qfmqg"]
 texture = ExtResource("3_nt8ub")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j4ke4"]
+texture = ExtResource("4_j4ke4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v6nw4"]
+texture = ExtResource("5_j4ke4")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_47jqb"]
+bg_color = Color(0, 0, 0, 0.67058825)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7pvgu"]
+texture = ExtResource("5_j4ke4")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gfhng"]
+bg_color = Color(0, 0, 0, 0.67058825)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a2eea"]
+texture = ExtResource("8_gfhng")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_731hc"]
+texture = ExtResource("9_23uyx")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ehr5o"]
+texture = ExtResource("10_7y620")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_47jqb"]
+texture = ExtResource("7_b1yf1")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b1yf1"]
+texture = ExtResource("8_pfkr1")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hr1b7"]
+texture = ExtResource("9_hr1b7")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qhkdf"]
+texture = ExtResource("3_nt8ub")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jhglr"]
+texture = ExtResource("4_j4ke4")
 
 [node name="StudentLogin" type="Control" unique_id=1063139679]
 layout_mode = 3
@@ -29,107 +94,169 @@ expand_mode = 1
 stretch_mode = 6
 
 [node name="LoginPanel" type="Panel" parent="." unique_id=611325902]
-layout_mode = 0
-offset_left = 282.0
-offset_top = 79.0
-offset_right = 852.0
-offset_bottom = 594.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -285.0
+offset_top = -257.5
+offset_right = 285.0
+offset_bottom = 257.5
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_qfmqg")
 
 [node name="StudentLabel" type="Label" parent="LoginPanel" unique_id=911085754]
 layout_mode = 0
-offset_left = 130.0
-offset_top = 58.0
-offset_right = 259.0
-offset_bottom = 92.0
+offset_left = 124.0
+offset_top = -8.5
+offset_right = 443.0
+offset_bottom = 52.0
+theme_override_colors/font_color = Color(0.00064832927, 0.00012684631, 3.5252017e-11, 1)
+theme_override_fonts/font = ExtResource("5_47jqb")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxTexture_j4ke4")
 text = "Student Login"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="EmailLabel" type="Label" parent="LoginPanel" unique_id=1427499501]
 layout_mode = 0
-offset_left = 42.0
-offset_top = 119.0
-offset_right = 185.0
-offset_bottom = 169.0
+offset_left = 58.0
+offset_top = 113.5
+offset_right = 191.0
+offset_bottom = 160.5
+theme_override_fonts/font = ExtResource("5_47jqb")
+theme_override_styles/normal = SubResource("StyleBoxTexture_v6nw4")
 text = "Email"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="EmailInput" type="LineEdit" parent="LoginPanel" unique_id=1550370886]
 layout_mode = 0
-offset_left = 41.0
-offset_top = 154.0
-offset_right = 401.0
-offset_bottom = 204.0
-placeholder_text = "Enter PTC Email"
+offset_left = 68.0
+offset_top = 164.5
+offset_right = 503.0
+offset_bottom = 214.5
+theme_override_styles/normal = SubResource("StyleBoxFlat_47jqb")
+placeholder_text = "    Enter PTC Email"
 
 [node name="PasswordLabel" type="Label" parent="LoginPanel" unique_id=1041171321]
 layout_mode = 0
-offset_left = 45.0
+offset_left = 58.0
 offset_top = 237.0
-offset_right = 228.0
-offset_bottom = 283.0
+offset_right = 191.0
+offset_bottom = 284.0
+theme_override_fonts/font = ExtResource("5_47jqb")
+theme_override_styles/normal = SubResource("StyleBoxTexture_7pvgu")
 text = "Password"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PasswordInput" type="LineEdit" parent="LoginPanel" unique_id=27587226]
 layout_mode = 0
-offset_left = 39.0
-offset_top = 275.0
-offset_right = 402.0
-offset_bottom = 327.0
-placeholder_text = "Enter password"
+offset_left = 68.0
+offset_top = 285.0
+offset_right = 503.0
+offset_bottom = 335.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_gfhng")
+placeholder_text = "    Enter password"
 secret = true
 
 [node name="ForgotPasswordLink" type="Button" parent="LoginPanel" unique_id=1883308405]
 layout_mode = 0
-offset_left = 220.0
-offset_top = 335.0
-offset_right = 440.0
-offset_bottom = 378.0
-theme_override_colors/font_color = Color(0.12156863, 0.06666667, 0.68235296, 1)
+offset_left = 302.0
+offset_top = 332.5
+offset_right = 522.0
+offset_bottom = 375.5
+theme_override_colors/font_color = Color(0, 0, 0.4, 1)
+theme_override_fonts/font = ExtResource("7_pfkr1")
+theme_override_font_sizes/font_size = 25
 text = "Forget Password?"
 flat = true
 
 [node name="LoginButton" type="Button" parent="LoginPanel" unique_id=182744784]
 layout_mode = 0
-offset_left = 103.0
-offset_top = 379.0
-offset_right = 324.0
-offset_bottom = 419.0
+offset_left = 177.0
+offset_top = 377.5
+offset_right = 398.0
+offset_bottom = 417.5
+theme_override_fonts/font = ExtResource("5_47jqb")
+theme_override_font_sizes/font_size = 23
+theme_override_styles/normal = SubResource("StyleBoxTexture_a2eea")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_731hc")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ehr5o")
 text = "Login"
 
 [node name="RegisterLabel" type="Label" parent="LoginPanel" unique_id=1387634254]
 layout_mode = 0
-offset_left = 93.0
-offset_top = 451.0
-offset_right = 445.0
-offset_bottom = 484.0
+offset_left = 119.0
+offset_top = 453.5
+offset_right = 471.0
+offset_bottom = 486.5
+theme_override_fonts/font = ExtResource("7_pfkr1")
+theme_override_font_sizes/font_size = 25
 text = "Don't Have an Account?"
 
 [node name="RegisterButton" type="Button" parent="LoginPanel" unique_id=816642472]
 layout_mode = 0
-offset_left = 236.0
-offset_top = 443.0
-offset_right = 450.0
-offset_bottom = 486.0
-theme_override_colors/font_color = Color(0.1254902, 0.11372549, 0.8745098, 1)
+offset_left = 247.0
+offset_top = 444.5
+offset_right = 461.0
+offset_bottom = 487.5
+theme_override_colors/font_color = Color(0.10920871, 0.03235139, 0, 1)
+theme_override_fonts/font = ExtResource("7_pfkr1")
+theme_override_font_sizes/font_size = 25
 text = "Register here"
 flat = true
 
 [node name="Back" type="Button" parent="LoginPanel" unique_id=137082189]
 layout_mode = 0
-offset_left = 12.0
-offset_top = 21.0
-offset_right = 87.0
-offset_bottom = 52.0
+offset_left = -2.0
+offset_top = 4.5
+offset_right = 89.0
+offset_bottom = 35.5
+theme_override_fonts/font = ExtResource("5_47jqb")
+theme_override_styles/normal = SubResource("StyleBoxTexture_47jqb")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_b1yf1")
+theme_override_styles/hover = SubResource("StyleBoxTexture_hr1b7")
 text = "Back"
+icon_alignment = 1
+expand_icon = true
 
 [node name="RegisterPanel" type="Panel" parent="." unique_id=1230641977]
 visible = false
-layout_mode = 0
-offset_left = 343.0
-offset_top = 71.0
-offset_right = 769.0
-offset_bottom = 578.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -313.0
+offset_top = -289.375
+offset_right = 313.0
+offset_bottom = 289.375
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_qhkdf")
 
 [node name="RegisterLabel" type="Label" parent="RegisterPanel" unique_id=673475885]
+layout_mode = 0
+offset_left = 149.0
+offset_top = -6.625
+offset_right = 468.0
+offset_bottom = 53.375
+theme_override_colors/font_color = Color(0.0035191667, 0.0035191681, 0.0035191672, 1)
+theme_override_fonts/font = ExtResource("5_47jqb")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_jhglr")
+text = "Student Registration"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FirstNameLabel" type="Label" parent="RegisterPanel" unique_id=1880692566]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
@@ -141,6 +268,11 @@ offset_top = 100.0
 offset_right = 343.0
 offset_bottom = 131.0
 placeholder_text = "Enter your firstname"
+
+[node name="LastNameLabel" type="Label" parent="RegisterPanel" unique_id=913468770]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
 
 [node name="LastNameInput" type="LineEdit" parent="RegisterPanel" unique_id=861869422]
 layout_mode = 0
@@ -224,6 +356,26 @@ offset_left = 304.0
 offset_top = 250.0
 offset_right = 432.0
 offset_bottom = 378.0
+
+[node name="YearLevelLabel" type="Label" parent="RegisterPanel" unique_id=918950244]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="EmailLabel" type="Label" parent="RegisterPanel" unique_id=1854003322]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="PasswordLabel" type="Label" parent="RegisterPanel" unique_id=73964495]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="ConfirmPasswordLabel" type="Label" parent="RegisterPanel" unique_id=366515675]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
 
 [node name="ForgotPasswordPopup" type="Panel" parent="." unique_id=304798729]
 visible = false

@@ -47,17 +47,7 @@ public partial class NpcInteraction : Control
 			answerTip = configuration.AnswerTip;
 			promptLabel.Text =
 				"Do you want to accept this Subject Challenge?\n" +
-				"Subject: " + configuration.SubjectName + "\n" +
-				"Mini-game: " + configuration.MiniGameName + "\n" +
-				"Question time limit: " + configuration.TimerSeconds + " seconds";
-			if (configuration.ChallengeState == "QuestionReady")
-				promptLabel.Text += "\nYour mini-game result is saved. Continue to the answer tip and question.";
-			else if (configuration.ChallengeState == "MiniGamePending")
-				promptLabel.Text += "\nThis challenge is in progress. Continue the assigned mini-game.";
-			else if (configuration.AlreadyStarted)
-				promptLabel.Text += "\nThis challenge has already been started and cannot be restarted.";
-			else if (!configuration.MiniGameId.HasValue)
-				promptLabel.Text += "\nThis NPC does not have a mini-game assigned.";
+				"Subject: " + configuration.SubjectName;
 
 			yesButton.Text = configuration.AlreadyStarted ? "Continue" : "Yes";
 			yesButton.Disabled = (configuration.AlreadyStarted &&

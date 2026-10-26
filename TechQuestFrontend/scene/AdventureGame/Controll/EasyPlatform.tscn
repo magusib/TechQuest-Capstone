@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cn4kgwvovi4qt"]
+
+[ext_resource type="Texture2D" uid="uid://bu4oldeimjef0" path="res://asset/platform/easyplaform.png" id="1_xojua"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_irfmc"]
+size = Vector2(61, 14)
+
+[node name="EasyPlatform" type="AnimatableBody2D" unique_id=1541027979]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=744344280]
+position = Vector2(108.74813, 48.496353)
+scale = Vector2(0.56614673, 0.40855333)
+texture = ExtResource("1_xojua")
+region_enabled = true
+region_rect = Rect2(127.05936, 146.79669, 121.717224, 71.18793)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=723495528]
+position = Vector2(108.5, 50)
+shape = SubResource("RectangleShape2D_irfmc")
+one_way_collision = true

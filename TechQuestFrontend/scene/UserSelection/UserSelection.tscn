@@ -2,17 +2,22 @@
 
 [ext_resource type="Texture2D" uid="uid://fw6dc6tf5doi" path="res://asset/background/landing_page.png" id="1_vv4ep"]
 [ext_resource type="Script" uid="uid://bywdpqe0nufrq" path="res://scene/UserSelection/UserSelection.cs" id="1_wo25a"]
-[ext_resource type="FontFile" path="res://asset/style/SamuraiBlast-YznGj.ttf" id="3_t1k5p"]
+[ext_resource type="FontFile" uid="uid://bggete2j6crlb" path="res://asset/style/fonts/SamuraiBlast-YznGj.ttf" id="3_nh3gu"]
 [ext_resource type="Theme" uid="uid://w25w37577ylx" path="res://asset/theme/TechQuestTheme.tres" id="4_ocnue"]
 [ext_resource type="Texture2D" uid="uid://c6wkdumgr6fg6" path="res://asset/style/UI_Flat_Banner02a.png" id="4_qfmqg"]
-[ext_resource type="FontFile" path="res://asset/style/BouncyBalloon-drJXX.ttf" id="5_es0cc"]
+[ext_resource type="FontFile" uid="uid://cb3fr24mny6tm" path="res://asset/style/fonts/BouncyBalloon-drJXX.ttf" id="5_6sr6x"]
 [ext_resource type="Texture2D" uid="uid://bb0ta7fpshg6x" path="res://asset/style/buttons/navy_default.png" id="6_61qkx"]
 [ext_resource type="Texture2D" uid="uid://dh200awrt2vr6" path="res://asset/style/buttons/navy_pressed.png" id="7_vcljh"]
 [ext_resource type="Texture2D" uid="uid://bl41b4avx37o6" path="res://asset/style/buttons/navy_hover.png" id="8_g8e04"]
-[ext_resource type="FontFile" path="res://asset/style/SmashedGraffiti-XGP5K.ttf" id="10_cgqqj"]
+[ext_resource type="Texture2D" uid="uid://c211vt52ahar2" path="res://asset/style/buttons/teal_default.png" id="10_i7tql"]
+[ext_resource type="Texture2D" uid="uid://ii6qy2at32jn" path="res://asset/style/buttons/teal_pressed.png" id="11_du3e7"]
 [ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="11_nh3gu"]
 [ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="12_6sr6x"]
+[ext_resource type="Texture2D" uid="uid://bvs5gyj3sco8v" path="res://asset/style/buttons/teal_hover.png" id="12_m72a3"]
+[ext_resource type="Texture2D" uid="uid://1gulk27338gb" path="res://asset/style/buttons/purple_default.png" id="13_b3nbq"]
 [ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="13_i7tql"]
+[ext_resource type="Texture2D" uid="uid://ccp6phfbab71x" path="res://asset/style/buttons/purple_pressed.png" id="14_46eqy"]
+[ext_resource type="Texture2D" uid="uid://b2a73j458kdvc" path="res://asset/style/buttons/purple_hover.png" id="15_ab6tm"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4cfjs"]
 texture = ExtResource("4_qfmqg")
@@ -26,9 +31,23 @@ texture = ExtResource("7_vcljh")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ygheh"]
 texture = ExtResource("8_g8e04")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o2dy6"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_61esm"]
+texture = ExtResource("10_i7tql")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_emk8k"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_smo7w"]
+texture = ExtResource("11_du3e7")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0rscr"]
+texture = ExtResource("12_m72a3")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8d8rd"]
+texture = ExtResource("13_b3nbq")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b5ihy"]
+texture = ExtResource("14_46eqy")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1rkld"]
+texture = ExtResource("15_ab6tm")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6wmdr"]
 texture = ExtResource("11_nh3gu")
@@ -70,7 +89,7 @@ offset_right = 229.5
 offset_bottom = 178.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.17230904, 0.035190463, 0.03845639, 1)
-theme_override_fonts/font = ExtResource("3_t1k5p")
+theme_override_fonts/font = ExtResource("3_nh3gu")
 theme_override_font_sizes/font_size = 34
 theme_override_styles/normal = SubResource("StyleBoxTexture_4cfjs")
 text = "Select User"
@@ -81,12 +100,12 @@ clip_text = true
 [node name="StudentButton" type="Button" parent="." unique_id=1592716539]
 layout_mode = 0
 offset_left = 555.0
-offset_top = 397.0
+offset_top = 400.0
 offset_right = 765.0
-offset_bottom = 467.0
+offset_bottom = 470.0
 theme_override_colors/font_color = Color(0.86036915, 0.8603692, 0.8603692, 1)
-theme_override_fonts/font = ExtResource("5_es0cc")
-theme_override_font_sizes/font_size = 29
+theme_override_fonts/font = ExtResource("5_6sr6x")
+theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxTexture_bkx0h")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_2agwh")
 theme_override_styles/hover = SubResource("StyleBoxTexture_ygheh")
@@ -94,22 +113,31 @@ text = "Student"
 
 [node name="ProfessorButton" type="Button" parent="." unique_id=1572082555]
 layout_mode = 0
-offset_left = 547.0
-offset_top = 490.0
-offset_right = 757.0
-offset_bottom = 560.0
+offset_left = 555.0
+offset_top = 500.0
+offset_right = 765.0
+offset_bottom = 570.0
 theme = ExtResource("4_ocnue")
-theme_override_styles/normal = SubResource("StyleBoxFlat_o2dy6")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_6sr6x")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxTexture_61esm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_smo7w")
+theme_override_styles/hover = SubResource("StyleBoxTexture_0rscr")
 text = "Professor"
 
 [node name="AdminButton" type="Button" parent="." unique_id=407946225]
 layout_mode = 0
-offset_left = 545.0
-offset_top = 588.0
-offset_right = 755.0
-offset_bottom = 658.0
+offset_left = 555.0
+offset_top = 600.0
+offset_right = 765.0
+offset_bottom = 670.0
 theme = ExtResource("4_ocnue")
-theme_override_styles/normal = SubResource("StyleBoxFlat_emk8k")
+theme_override_fonts/font = ExtResource("5_6sr6x")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxTexture_8d8rd")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_b5ihy")
+theme_override_styles/hover = SubResource("StyleBoxTexture_1rkld")
 text = "Admin"
 
 [node name="BackButton" type="Button" parent="." unique_id=1104224701]
@@ -119,7 +147,7 @@ offset_top = 184.0
 offset_right = 726.0
 offset_bottom = 224.0
 theme_override_colors/font_color = Color(0.958888, 0.9588881, 0.958888, 1)
-theme_override_fonts/font = ExtResource("10_cgqqj")
+theme_override_fonts/font = ExtResource("3_nh3gu")
 theme_override_font_sizes/font_size = 23
 theme_override_styles/normal = SubResource("StyleBoxTexture_6wmdr")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_djljo")

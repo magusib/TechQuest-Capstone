@@ -4,7 +4,7 @@ using Godot;
 public partial class Character : CharacterBody2D
 {
 	private const float SPEED = 300.0f;
-	private const float JUMP_VELOCITY = -400.0f;
+	private const float JUMP_VELOCITY = -450.0f;
 
 	private float gravity;
 	private AnimatedSprite2D animatedSprite;

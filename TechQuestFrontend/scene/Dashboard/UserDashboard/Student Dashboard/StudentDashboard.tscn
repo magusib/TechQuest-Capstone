@@ -11,11 +11,14 @@
 [ext_resource type="Texture2D" uid="uid://361evl3lcsf3" path="res://asset/background/medium.png" id="9_ueae1"]
 [ext_resource type="Texture2D" uid="uid://gj3ech0242sn" path="res://asset/background/hard.png" id="10_8a06c"]
 [ext_resource type="Texture2D" uid="uid://ciea0q7hig3ds" path="res://asset/style/CoinBar.png" id="12_2twt2"]
+[ext_resource type="FontFile" uid="uid://b8rfotddug7nh" path="res://asset/style/fonts/Tondur-1jdvg.ttf" id="12_5u5gg"]
 [ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="12_y20va"]
 [ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="13_ngh7r"]
+[ext_resource type="Texture2D" uid="uid://dclpu3xmblprx" path="res://asset/style/UI_Flat_Banner03a.png" id="13_qhkdf"]
 [ext_resource type="Texture2D" uid="uid://cdy3upgkc6uxf" path="res://asset/Icons/Menu.png" id="14_3ixja"]
 [ext_resource type="Texture2D" uid="uid://yxedy8dwjbr5" path="res://asset/style/PointBar.png" id="14_61vh3"]
 [ext_resource type="PackedScene" uid="uid://bw63big3fpuwh" path="res://scene/Dashboard/UserDashboard/Student Dashboard/StudentProfile.tscn" id="15_nnqrs"]
+[ext_resource type="FontFile" uid="uid://d0h5mdironndc" path="res://asset/style/fonts/BoostStroke-7OA5A.ttf" id="16_qhkdf"]
 [ext_resource type="PackedScene" uid="uid://84lavysqtevd" path="res://scene/Dashboard/Modules/Tutorial/StudentTutorial.tscn" id="16_tutorial"]
 [ext_resource type="Script" uid="uid://dglhwb03xftaf" path="res://scene/Dashboard/UserDashboard/Student Dashboard/StudentDashboard.cs" id="StudentDashboardScript"]
 
@@ -38,6 +41,9 @@ shadow_color = Color(0.08627451, 0.08627451, 0.3529412, 0.6)
 shadow_size = 30
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8icjc"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3qt71"]
+texture = ExtResource("13_qhkdf")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8wpx0"]
 texture = ExtResource("12_2twt2")
@@ -308,7 +314,13 @@ offset_left = 140.0
 offset_top = 65.0
 offset_right = 298.0
 offset_bottom = 107.0
+theme_override_colors/font_color = Color(0.07235374, 0.022975085, 4.512258e-09, 1)
+theme_override_fonts/font = ExtResource("12_5u5gg")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_3qt71")
 text = "Student Name"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CoinsPanel" type="Panel" parent="TopBar/AvatarPanel" unique_id=246233926]
 layout_mode = 0
@@ -339,12 +351,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -13.0
-offset_right = 24.0
-offset_bottom = 13.0
+offset_left = -28.0
+offset_top = -16.0
+offset_right = 53.0
+offset_bottom = 14.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("16_qhkdf")
+theme_override_font_sizes/font_size = 27
 text = "Coins"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -378,12 +393,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -24.5
-offset_top = -12.5
-offset_right = 24.5
-offset_bottom = 12.5
+offset_left = -31.0
+offset_top = -15.0
+offset_right = 68.0
+offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0.008202022, 0.008202025, 0.008202025, 1)
+theme_override_fonts/font = ExtResource("16_qhkdf")
+theme_override_font_sizes/font_size = 27
 text = "Points"
 horizontal_alignment = 1
 vertical_alignment = 1
