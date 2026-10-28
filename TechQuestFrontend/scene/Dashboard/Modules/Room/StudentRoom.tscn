@@ -2,10 +2,40 @@
 
 [ext_resource type="Script" uid="uid://dyq2fr4yl3k7e" path="res://scene/Dashboard/Modules/Room/StudentRoom.cs" id="1_ftlk2"]
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_jhxtp"]
+[ext_resource type="Texture2D" uid="uid://s3wgaw46w4f5" path="res://asset/style/LargeBackground.png" id="3_6rjp0"]
 [ext_resource type="Texture2D" uid="uid://dsts8knioaak1" path="res://asset/Icons/logo.png" id="3_clcet"]
+[ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="5_4reej"]
+[ext_resource type="Texture2D" uid="uid://cyqkrvyj6vbo8" path="res://asset/style/label1.png" id="6_a6ilm"]
+[ext_resource type="Texture2D" uid="uid://cbwf5nbtd1cno" path="res://asset/style/label.png" id="7_k0xx1"]
+[ext_resource type="Texture2D" uid="uid://dsi454hvjo25p" path="res://asset/style/buttons/slate_default.png" id="8_87nl1"]
+[ext_resource type="Texture2D" uid="uid://ejmylisq3jm5" path="res://asset/style/buttons/slate_pressed.png" id="9_ke8pu"]
+[ext_resource type="Texture2D" uid="uid://7h7pdiyc62hs" path="res://asset/style/buttons/slate_hover.png" id="10_vey5k"]
+[ext_resource type="Texture2D" uid="uid://15txwm2nnpi8" path="res://asset/style/ButtonClose2.png" id="11_o6ifr"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8icjc"]
-bg_color = Color(0.20152655, 0.20152661, 0.20152646, 1)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ufe2e"]
+texture = ExtResource("3_6rjp0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cwogk"]
+texture = ExtResource("6_a6ilm")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8s1dg"]
+texture = ExtResource("7_k0xx1")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uym1y"]
+bg_color = Color(0, 0, 0, 0.5882353)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2fmlc"]
+texture = ExtResource("8_87nl1")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_24ohb"]
+texture = ExtResource("9_ke8pu")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fdo3v"]
+texture = ExtResource("10_vey5k")
 
 [node name="StudentRoom" type="Control" unique_id=1931668617]
 layout_mode = 3
@@ -28,62 +58,93 @@ expand_mode = 1
 stretch_mode = 6
 
 [node name="Panel" type="Panel" parent="." unique_id=1523147313]
-layout_mode = 0
-offset_left = 353.0
-offset_top = 122.0
-offset_right = 802.0
-offset_bottom = 522.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_8icjc")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -263.25
+offset_top = -215.0
+offset_right = 263.25
+offset_bottom = 215.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_ufe2e")
 
 [node name="Logo" type="TextureRect" parent="." unique_id=1547226188]
 layout_mode = 0
-offset_left = 431.0
-offset_top = 37.0
-offset_right = 738.0
-offset_bottom = 183.0
+offset_left = 487.0
+offset_top = 78.0
+offset_right = 794.0
+offset_bottom = 224.0
 texture = ExtResource("3_clcet")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="StudentRoom" type="Label" parent="." unique_id=1297113067]
 layout_mode = 0
-offset_left = 535.0
-offset_top = 191.0
-offset_right = 646.0
-offset_bottom = 214.0
+offset_left = 490.0
+offset_top = 203.0
+offset_right = 786.0
+offset_bottom = 256.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_4reej")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_cwogk")
 text = "Student Room"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="RoomCode" type="Label" parent="." unique_id=1767920575]
 layout_mode = 0
-offset_left = 388.0
-offset_top = 259.0
-offset_right = 504.0
-offset_bottom = 294.0
+offset_left = 530.0
+offset_top = 274.0
+offset_right = 759.0
+offset_bottom = 327.0
+theme_override_colors/font_color = Color(0.99116415, 0.99116427, 0.99116415, 1)
+theme_override_fonts/font = ExtResource("5_4reej")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxTexture_8s1dg")
 text = "Room Code"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CodeInput" type="LineEdit" parent="." unique_id=2141597304]
 layout_mode = 0
-offset_left = 411.0
-offset_top = 292.0
-offset_right = 735.0
-offset_bottom = 352.0
+offset_left = 487.0
+offset_top = 341.0
+offset_right = 796.0
+offset_bottom = 402.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_uym1y")
 alignment = 1
 
 [node name="JoinRoomButton" type="Button" parent="." unique_id=1490315837]
 layout_mode = 0
-offset_left = 471.0
-offset_top = 422.0
-offset_right = 699.0
-offset_bottom = 479.0
+offset_left = 525.0
+offset_top = 448.0
+offset_right = 753.0
+offset_bottom = 505.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_4reej")
+theme_override_font_sizes/font_size = 19
+theme_override_styles/normal = SubResource("StyleBoxTexture_2fmlc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_24ohb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_fdo3v")
 text = "Join Room"
 
 [node name="BackButton" type="Button" parent="." unique_id=1425451928]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 56.0
-offset_right = 126.0
-offset_bottom = 95.0
-text = "Back"
+offset_left = 754.0
+offset_top = 133.0
+offset_right = 886.0
+offset_bottom = 185.0
+icon = ExtResource("11_o6ifr")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
 [node name="AcceptDialog" type="AcceptDialog" parent="." unique_id=295275713]
 oversampling_override = 1.0

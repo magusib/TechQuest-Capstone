@@ -33,7 +33,7 @@ anchor_bottom = 0.5
 offset_left = -215.5
 offset_top = -230.0
 offset_right = 215.5
-offset_bottom = 230.0
+offset_bottom = 275.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -104,14 +104,6 @@ offset_left = 14.0
 offset_top = 13.0
 offset_right = 488.0
 offset_bottom = 438.0
-
-[node name="CloseButton" type="Button" parent="QuizReview"]
-layout_mode = 0
-offset_left = 380.0
-offset_top = 450.0
-offset_right = 488.0
-offset_bottom = 488.0
-text = "Close"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="QuizReview/ScrollContainer" unique_id=182155134]
 layout_mode = 2
@@ -232,3 +224,11 @@ text = "Correct Answer:"
 
 [node name="CloseButton" type="Button" parent="QuizReview/ScrollContainer/VBoxContainer" unique_id=1152710277]
 layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="QuizReview" unique_id=74960485]
+layout_mode = 0
+offset_left = 380.0
+offset_top = 450.0
+offset_right = 488.0
+offset_bottom = 488.0
+text = "Close"

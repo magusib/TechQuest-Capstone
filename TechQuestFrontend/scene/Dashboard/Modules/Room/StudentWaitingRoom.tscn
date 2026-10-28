@@ -2,11 +2,64 @@
 
 [ext_resource type="Script" uid="uid://b66y70w7anrfj" path="res://scene/Dashboard/Modules/Room/StudentWaitingRoom.cs" id="1_rp77t"]
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_k7wij"]
+[ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="3_p14df"]
+[ext_resource type="Texture2D" uid="uid://cyqkrvyj6vbo8" path="res://asset/style/label1.png" id="3_wnrwt"]
+[ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="4_0smu5"]
+[ext_resource type="Texture2D" uid="uid://s3wgaw46w4f5" path="res://asset/style/LargeBackground.png" id="4_65hki"]
+[ext_resource type="FontFile" uid="uid://cb3fr24mny6tm" path="res://asset/style/fonts/BouncyBalloon-drJXX.ttf" id="5_dk6yt"]
+[ext_resource type="Texture2D" uid="uid://48mrtajplp0w" path="res://asset/style/label2.png" id="5_jsjkg"]
+[ext_resource type="Texture2D" uid="uid://de8m8exy7pwis" path="res://asset/style/buttons/white_default.png" id="6_l20lo"]
+[ext_resource type="Texture2D" uid="uid://dd6q1g1w7dqjt" path="res://asset/style/LineEdit.png" id="6_wc0va"]
+[ext_resource type="Texture2D" uid="uid://dq5qspnbcspkv" path="res://asset/style/buttons/white_pressed.png" id="7_wnrwt"]
+[ext_resource type="Texture2D" uid="uid://bjjjun4th25ea" path="res://asset/style/buttons/white_hover.png" id="8_0smu5"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="9_jsjkg"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="10_wc0va"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="11_7weu6"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ulj5c"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mv464"]
+texture = ExtResource("3_wnrwt")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ftn7h"]
+texture = ExtResource("5_jsjkg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j73ui"]
+texture = ExtResource("6_wc0va")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_awoj8"]
 bg_color = Color(0.060530342, 0.060530365, 0.060530297, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_klnm8"]
+texture = ExtResource("9_jsjkg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xbtbh"]
+texture = ExtResource("10_wc0va")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_16cq1"]
+texture = ExtResource("11_7weu6")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nt5lt"]
+texture = ExtResource("3_p14df")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_44frp"]
+texture = ExtResource("4_65hki")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nkh17"]
+texture = ExtResource("6_l20lo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t31r1"]
+texture = ExtResource("7_wnrwt")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h3v16"]
+texture = ExtResource("8_0smu5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dpd51"]
+texture = ExtResource("9_jsjkg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5ijy3"]
+texture = ExtResource("10_wc0va")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rfluu"]
+texture = ExtResource("11_7weu6")
 
 [node name="StudentWaitingRoom" type="Control" unique_id=2007119540]
 layout_mode = 3
@@ -31,55 +84,82 @@ stretch_mode = 6
 [node name="Header" type="Node" parent="." unique_id=1285236181]
 
 [node name="Panel" type="Panel" parent="Header" unique_id=1694174898]
-offset_right = 1151.0
-offset_bottom = 100.0
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 150.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_mv464")
 
 [node name="SubjectLabel" type="Label" parent="Header" unique_id=1363783355]
-offset_left = 60.0
-offset_top = 18.0
-offset_right = 184.0
-offset_bottom = 59.0
+offset_left = 92.0
+offset_top = 15.0
+offset_right = 216.0
+offset_bottom = 56.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_0smu5")
+theme_override_font_sizes/font_size = 20
 text = "Subject:"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="RoomCodePanel" type="Panel" parent="Header" unique_id=33886108]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -137.0
+offset_left = -147.0
 offset_top = 21.0
-offset_right = 175.0
-offset_bottom = 80.0
+offset_right = 298.0
+offset_bottom = 123.0
 grow_horizontal = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ulj5c")
+theme_override_styles/panel = SubResource("StyleBoxTexture_ftn7h")
 
 [node name="RoomCodeLabel" type="Label" parent="Header/RoomCodePanel" unique_id=1458990828]
 layout_mode = 0
-offset_left = 15.0
-offset_top = 12.0
-offset_right = 180.0
-offset_bottom = 47.0
+offset_left = 39.0
+offset_top = 28.0
+offset_right = 204.0
+offset_bottom = 63.0
+theme_override_fonts/font = ExtResource("4_0smu5")
+theme_override_styles/normal = SubResource("StyleBoxTexture_j73ui")
 text = "Room Code:"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="RoomCode" type="Label" parent="Header/RoomCodePanel" unique_id=1990516983]
 layout_mode = 0
-offset_left = 123.0
-offset_top = 9.0
-offset_right = 286.0
-offset_bottom = 48.0
+offset_left = 221.0
+offset_top = 25.0
+offset_right = 384.0
+offset_bottom = 64.0
+theme_override_fonts/font = ExtResource("4_0smu5")
+theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_awoj8")
 
 [node name="StudentCountLabel" type="Label" parent="Header" unique_id=1543575398]
-offset_left = 58.0
-offset_top = 53.0
-offset_right = 204.0
-offset_bottom = 80.0
+offset_left = 78.0
+offset_top = 64.0
+offset_right = 241.0
+offset_bottom = 108.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_0smu5")
+theme_override_font_sizes/font_size = 20
 text = "Student:"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Button" type="Button" parent="Header" unique_id=1434547643]
-offset_left = 1056.0
-offset_top = 27.0
-offset_right = 1122.0
-offset_bottom = 62.0
+offset_left = 1087.0
+offset_top = 48.0
+offset_right = 1221.0
+offset_bottom = 92.0
+theme_override_colors/font_color = Color(0.0023445832, 0.0023445936, 0.002344586, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_dk6yt")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxTexture_klnm8")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_xbtbh")
+theme_override_styles/hover = SubResource("StyleBoxTexture_16cq1")
 text = "Back"
 
 [node name="AvatarPanel" type="Panel" parent="." unique_id=1522237358]
@@ -95,6 +175,7 @@ offset_right = 550.5
 offset_bottom = 236.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_nt5lt")
 
 [node name="StudentScrool" type="ScrollContainer" parent="AvatarPanel" unique_id=2032473577]
 layout_mode = 0
@@ -109,11 +190,12 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/h_separation = 80
 theme_override_constants/v_separation = 50
-columns = 4
+columns = 5
 
 [node name="AvatarPanel" type="Panel" parent="AvatarPanel/StudentScrool/AvatarGridContianer" unique_id=395592175]
 custom_minimum_size = Vector2(200, 150)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_44frp")
 
 [node name="AvatarContainer" type="VBoxContainer" parent="AvatarPanel/StudentScrool/AvatarGridContianer/AvatarPanel" unique_id=187686241]
 layout_mode = 0
@@ -133,19 +215,33 @@ stretch_mode = 5
 layout_mode = 2
 text = "Name"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ChangeAvatarButton" type="Button" parent="." unique_id=1807733037]
 layout_mode = 0
-offset_left = 245.0
-offset_top = 583.0
-offset_right = 388.0
-offset_bottom = 627.0
+offset_left = 244.0
+offset_top = 608.0
+offset_right = 567.0
+offset_bottom = 693.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_dk6yt")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxTexture_nkh17")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_t31r1")
+theme_override_styles/hover = SubResource("StyleBoxTexture_h3v16")
 text = "Change Avatar"
 
 [node name="StartButton" type="Button" parent="." unique_id=7934932]
 layout_mode = 0
-offset_left = 748.0
-offset_top = 578.0
-offset_right = 930.0
-offset_bottom = 622.0
+offset_left = 767.0
+offset_top = 609.0
+offset_right = 1090.0
+offset_bottom = 694.0
+theme_override_fonts/font = ExtResource("5_dk6yt")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxTexture_dpd51")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_5ijy3")
+theme_override_styles/hover = SubResource("StyleBoxTexture_rfluu")
 text = "Start"

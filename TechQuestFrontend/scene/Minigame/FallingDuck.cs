@@ -132,6 +132,22 @@ public partial class FallingDuck : Node2D
 		float halfWidth = GetPlayerHalfWidth();
 		float x = Mathf.Clamp(player.Position.X, halfWidth, Math.Max(halfWidth, GetViewportRect().Size.X - halfWidth));
 		player.Position = new Vector2(x, player.Position.Y);
+		CheckDuckCollisions();
+	}
+
+	private void CheckDuckCollisions()
+	{
+		if (duckContainer == null)
+			return;
+
+		foreach (Node child in duckContainer.GetChildren())
+		{
+			if (child is FallingDuckTarget duck && duck.GetOverlappingBodies().Contains(player))
+			{
+				FinishGame(false);
+				return;
+			}
+		}
 	}
 
 	private float GetPlayerHalfWidth()

@@ -1,15 +1,33 @@
 [gd_scene format=3 uid="uid://bw63big3fpuwh"]
 
 [ext_resource type="Script" uid="uid://diih1vxba7wbq" path="res://scene/Dashboard/UserDashboard/Student Dashboard/StudentProfile.cs" id="1_jduhw"]
-[ext_resource type="Texture2D" uid="uid://dk37jnjagjxht" path="res://asset/Icons/exis.png" id="3_xrdo8"]
+[ext_resource type="Texture2D" uid="uid://s3wgaw46w4f5" path="res://asset/style/LargeBackground.png" id="2_ltfgj"]
+[ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="3_2jtuw"]
+[ext_resource type="Texture2D" uid="uid://cyqkrvyj6vbo8" path="res://asset/style/label1.png" id="4_r6fcj"]
+[ext_resource type="Texture2D" uid="uid://dd6q1g1w7dqjt" path="res://asset/style/LineEdit.png" id="5_2bplj"]
+[ext_resource type="Texture2D" uid="uid://dclpu3xmblprx" path="res://asset/style/UI_Flat_Banner03a.png" id="6_36akd"]
+[ext_resource type="Texture2D" uid="uid://15txwm2nnpi8" path="res://asset/style/ButtonClose2.png" id="8_w0nmt"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrdo8"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oi5a0"]
+texture = ExtResource("2_ltfgj")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yu1oo"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6pp3k"]
+texture = ExtResource("4_r6fcj")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lqrox"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u4hah"]
+texture = ExtResource("5_2bplj")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_unv7x"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eayyd"]
+texture = ExtResource("6_36akd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ncwme"]
+texture = ExtResource("6_36akd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i55v8"]
+texture = ExtResource("6_36akd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t3ypx"]
+texture = ExtResource("6_36akd")
 
 [node name="StudentProfilePopup" type="Control" unique_id=473532987]
 layout_mode = 3
@@ -27,19 +45,28 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -228.0
-offset_top = -174.0
-offset_right = 225.0
-offset_bottom = 170.5
+offset_left = -341.5
+offset_top = -247.0
+offset_right = 341.5
+offset_bottom = 247.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_oi5a0")
 
 [node name="ProfileLabel" type="Label" parent="MainPanel" unique_id=1968731308]
-layout_mode = 0
-offset_left = 4.0
-offset_top = 10.0
-offset_right = 460.0
-offset_bottom = 33.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -191.75
+offset_top = -31.0
+offset_right = 191.75
+offset_bottom = 54.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_2jtuw")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxTexture_6pp3k")
 text = "Student Profile"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -51,31 +78,34 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -77.0
-offset_right = 200.0
-offset_bottom = 160.75
+offset_left = -284.25
+offset_top = -138.0
+offset_right = 272.0
+offset_bottom = 138.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_u4hah")
 
 [node name="FirstnameLabel" type="Label" parent="MainPanel/InformationPanel" unique_id=900413173]
 layout_mode = 0
-offset_left = 12.5
-offset_top = 95.75
-offset_right = 155.5
-offset_bottom = 118.75
-theme_override_styles/normal = SubResource("StyleBoxFlat_xrdo8")
+offset_left = 40.25
+offset_top = 122.0
+offset_right = 200.25
+offset_bottom = 152.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxTexture_eayyd")
 text = "First Name"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="LastnameLabel" type="Label" parent="MainPanel/InformationPanel" unique_id=1704902825]
 layout_mode = 0
-offset_left = 211.5
-offset_top = 95.75
-offset_right = 395.5
-offset_bottom = 118.75
-theme_override_styles/normal = SubResource("StyleBoxFlat_yu1oo")
+offset_left = 338.25
+offset_top = 122.0
+offset_right = 498.25
+offset_bottom = 152.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxTexture_ncwme")
 text = "Last Name"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -87,24 +117,26 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -96.5
-offset_top = 10.875
-offset_right = 68.5
-offset_bottom = 33.875
+offset_left = -75.0
+offset_top = 34.0
+offset_right = 75.0
+offset_bottom = 64.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_lqrox")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxTexture_i55v8")
 text = "Year Level"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="EmailLabel" type="Label" parent="MainPanel/InformationPanel" unique_id=1566638141]
 layout_mode = 0
-offset_left = 23.5
-offset_top = 170.75
-offset_right = 354.5
-offset_bottom = 200.75
-theme_override_styles/normal = SubResource("StyleBoxFlat_unv7x")
+offset_left = 13.25
+offset_top = 217.0
+offset_right = 544.25
+offset_bottom = 247.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxTexture_t3ypx")
 text = "Email"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -116,10 +148,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -98.0
-offset_top = -132.0
-offset_right = 98.0
-offset_bottom = -4.0
+offset_left = -148.0
+offset_top = -191.0
+offset_right = 149.0
+offset_bottom = -21.0
 grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 1
@@ -149,11 +181,11 @@ metadata/_aseprite_wizard_interface_config_ = {
 
 [node name="BackButton" type="Button" parent="MainPanel" unique_id=444774344]
 layout_mode = 0
-offset_left = 408.0
-offset_top = 3.0
-offset_right = 451.0
-offset_bottom = 38.0
-icon = ExtResource("3_xrdo8")
+offset_left = 493.5
+offset_top = -15.0
+offset_right = 658.5
+offset_bottom = 43.0
+icon = ExtResource("8_w0nmt")
 flat = true
 icon_alignment = 1
 expand_icon = true

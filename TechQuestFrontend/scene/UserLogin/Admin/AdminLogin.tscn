@@ -2,7 +2,69 @@
 
 [ext_resource type="Script" uid="uid://djbevwslsikre" path="res://scene/UserLogin/Admin/AdminLogin.cs" id="1_2ebgm"]
 [ext_resource type="Texture2D" uid="uid://4kraosl2m556" path="res://asset/background/ptc.png" id="2_4xa1r"]
-[ext_resource type="StyleBox" uid="uid://bofr3y60ei71y" path="res://asset/style/panel_bordered.tres" id="3_5g4d2"]
+[ext_resource type="Texture2D" uid="uid://s3wgaw46w4f5" path="res://asset/style/LargeBackground.png" id="3_dg7x3"]
+[ext_resource type="FontFile" uid="uid://bggete2j6crlb" path="res://asset/style/fonts/SamuraiBlast-YznGj.ttf" id="4_3kfk4"]
+[ext_resource type="Texture2D" uid="uid://cyqkrvyj6vbo8" path="res://asset/style/label1.png" id="5_yf1tb"]
+[ext_resource type="Texture2D" uid="uid://cbwf5nbtd1cno" path="res://asset/style/label.png" id="6_c1j6d"]
+[ext_resource type="FontFile" uid="uid://b8rfotddug7nh" path="res://asset/style/fonts/Tondur-1jdvg.ttf" id="7_ixjl5"]
+[ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="8_0qexy"]
+[ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="9_48oky"]
+[ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="10_qj43e"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="11_0vd0u"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="12_coi0o"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="13_s2tct"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qsxgl"]
+texture = ExtResource("3_dg7x3")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tshpi"]
+texture = ExtResource("5_yf1tb")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4rnv2"]
+texture = ExtResource("6_c1j6d")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6r3jn"]
+bg_color = Color(0, 0, 0, 0.67058825)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bwryf"]
+texture = ExtResource("6_c1j6d")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n85ui"]
+bg_color = Color(0, 0, 0, 0.67058825)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fisq1"]
+texture = ExtResource("8_0qexy")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mndlb"]
+texture = ExtResource("9_48oky")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_aktcj"]
+texture = ExtResource("10_qj43e")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sxi52"]
+texture = ExtResource("11_0vd0u")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pliy7"]
+texture = ExtResource("12_coi0o")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gtc5m"]
+texture = ExtResource("13_s2tct")
 
 [node name="AdminLogin" type="Control" unique_id=1294343850]
 layout_mode = 3
@@ -24,80 +86,117 @@ texture = ExtResource("2_4xa1r")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="LoginPanel" type="Panel" parent="." unique_id=408138715]
-layout_mode = 0
-offset_left = 343.0
-offset_top = 71.0
-offset_right = 769.0
-offset_bottom = 578.0
-theme_override_styles/panel = ExtResource("3_5g4d2")
+[node name="LoginPanel" type="Panel" parent="." unique_id=1342866229]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -285.0
+offset_top = -257.5
+offset_right = 285.0
+offset_bottom = 257.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_qsxgl")
 
-[node name="AdminLabel" type="Label" parent="LoginPanel" unique_id=636004158]
+[node name="AdminLabel" type="Label" parent="LoginPanel" unique_id=1769872454]
 layout_mode = 0
-offset_left = 130.0
-offset_top = 58.0
-offset_right = 259.0
-offset_bottom = 92.0
+offset_left = 124.0
+offset_top = -8.5
+offset_right = 443.0
+offset_bottom = 52.0
+theme_override_colors/font_color = Color(0.00064832927, 0.00012684631, 3.5252017e-11, 1)
+theme_override_fonts/font = ExtResource("4_3kfk4")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxTexture_tshpi")
 text = "Admin Login"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="EmailLabel" type="Label" parent="LoginPanel" unique_id=1361880210]
+[node name="EmailLabel" type="Label" parent="LoginPanel" unique_id=1787213603]
 layout_mode = 0
-offset_left = 42.0
-offset_top = 119.0
-offset_right = 185.0
-offset_bottom = 169.0
+offset_left = 58.0
+offset_top = 113.5
+offset_right = 191.0
+offset_bottom = 160.5
+theme_override_fonts/font = ExtResource("4_3kfk4")
+theme_override_styles/normal = SubResource("StyleBoxTexture_4rnv2")
 text = "Email"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="EmailInput" type="LineEdit" parent="LoginPanel" unique_id=79079261]
+[node name="EmailInput" type="LineEdit" parent="LoginPanel" unique_id=285119911]
 layout_mode = 0
-offset_left = 41.0
-offset_top = 154.0
-offset_right = 401.0
-offset_bottom = 204.0
-placeholder_text = "Enter PTC Email"
+offset_left = 68.0
+offset_top = 164.5
+offset_right = 503.0
+offset_bottom = 214.5
+theme_override_styles/normal = SubResource("StyleBoxFlat_6r3jn")
+placeholder_text = "    Enter PTC Email"
 
-[node name="PasswordLabel" type="Label" parent="LoginPanel" unique_id=396764207]
+[node name="PasswordLabel" type="Label" parent="LoginPanel" unique_id=113670678]
 layout_mode = 0
-offset_left = 45.0
+offset_left = 58.0
 offset_top = 237.0
-offset_right = 228.0
-offset_bottom = 283.0
+offset_right = 191.0
+offset_bottom = 284.0
+theme_override_fonts/font = ExtResource("4_3kfk4")
+theme_override_styles/normal = SubResource("StyleBoxTexture_bwryf")
 text = "Password"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="PasswordInput" type="LineEdit" parent="LoginPanel" unique_id=289602900]
+[node name="PasswordInput" type="LineEdit" parent="LoginPanel" unique_id=1665811866]
 layout_mode = 0
-offset_left = 39.0
-offset_top = 275.0
-offset_right = 402.0
-offset_bottom = 327.0
-placeholder_text = "Enter password"
+offset_left = 68.0
+offset_top = 285.0
+offset_right = 503.0
+offset_bottom = 335.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_n85ui")
+placeholder_text = "    Enter password"
 secret = true
 
-[node name="ForgotPasswordLink" type="Button" parent="LoginPanel" unique_id=2014579430]
+[node name="ForgotPasswordLink" type="Button" parent="LoginPanel" unique_id=646406028]
+visible = false
 layout_mode = 0
-offset_left = 220.0
-offset_top = 335.0
-offset_right = 440.0
-offset_bottom = 378.0
-theme_override_colors/font_color = Color(0.12156863, 0.06666667, 0.68235296, 1)
+offset_left = 302.0
+offset_top = 332.5
+offset_right = 522.0
+offset_bottom = 375.5
+theme_override_colors/font_color = Color(0, 0, 0.4, 1)
+theme_override_fonts/font = ExtResource("7_ixjl5")
+theme_override_font_sizes/font_size = 25
 text = "Forget Password?"
 flat = true
 
-[node name="LoginButton" type="Button" parent="LoginPanel" unique_id=1733836019]
+[node name="LoginButton" type="Button" parent="LoginPanel" unique_id=1740062947]
 layout_mode = 0
-offset_left = 103.0
-offset_top = 379.0
-offset_right = 324.0
-offset_bottom = 419.0
+offset_left = 177.0
+offset_top = 377.5
+offset_right = 398.0
+offset_bottom = 417.5
+theme_override_fonts/font = ExtResource("4_3kfk4")
+theme_override_font_sizes/font_size = 23
+theme_override_styles/normal = SubResource("StyleBoxTexture_fisq1")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_mndlb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_aktcj")
 text = "Login"
 
-[node name="Back" type="Button" parent="LoginPanel" unique_id=1941482022]
+[node name="Back" type="Button" parent="LoginPanel" unique_id=1863259963]
 layout_mode = 0
-offset_left = 12.0
-offset_top = 21.0
-offset_right = 87.0
-offset_bottom = 52.0
+offset_left = -2.0
+offset_top = 4.5
+offset_right = 89.0
+offset_bottom = 35.5
+theme_override_fonts/font = ExtResource("4_3kfk4")
+theme_override_styles/normal = SubResource("StyleBoxTexture_sxi52")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_pliy7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_gtc5m")
 text = "Back"
+icon_alignment = 1
+expand_icon = true
 
 [node name="ForgotPasswordPopup" type="Panel" parent="." unique_id=1718699978]
 visible = false

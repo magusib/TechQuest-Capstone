@@ -1,8 +1,8 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene format=3 uid="uid://c30s46w2xyxow"]
 
-[ext_resource type="Script" path="res://scene/Minigame/FallingDuck.cs" id="1_script"]
-[ext_resource type="PackedScene" path="res://scene/Minigame/FallingDuckTarget.tscn" id="2_duck"]
-[ext_resource type="Texture2D" path="res://Items/Characters/Character 1.png" id="3_player"]
+[ext_resource type="Script" uid="uid://dg58g1ngrlrqp" path="res://scene/Minigame/FallingDuck.cs" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://c7cfyu2ulu15o" path="res://scene/Minigame/FallingDuckTarget.tscn" id="2_duck"]
+[ext_resource type="Texture2D" uid="uid://dgvxtehnyu75m" path="res://asset/character animation/minigamecha.png" id="3_fgu2e"]
 
 [sub_resource type="Gradient" id="Gradient_sky"]
 colors = PackedColorArray(0.33, 0.68, 0.84, 1, 0.78, 0.9, 0.91, 1)
@@ -11,21 +11,27 @@ colors = PackedColorArray(0.33, 0.68, 0.84, 1, 0.78, 0.9, 0.91, 1)
 gradient = SubResource("Gradient_sky")
 width = 1280
 height = 720
-fill_from = Vector2(0, 0)
 fill_to = Vector2(0, 1)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
+size = Vector2(60, 88)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
 bg_color = Color(0.96, 0.98, 0.97, 0.96)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
-content_margin_left = 16.0
-content_margin_top = 8.0
-content_margin_right = 16.0
-content_margin_bottom = 8.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
+content_margin_left = 12.0
+content_margin_top = 7.0
+content_margin_right = 12.0
+content_margin_bottom = 7.0
 bg_color = Color(0.98, 0.78, 0.3, 1)
 border_width_left = 2
 border_width_top = 2
@@ -36,46 +42,37 @@ corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
-content_margin_left = 12.0
-content_margin_top = 7.0
-content_margin_right = 12.0
-content_margin_bottom = 7.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
-size = Vector2(60, 88)
-
-[node name="FallingDuck" type="Node2D"]
+[node name="FallingDuck" type="Node2D" unique_id=510871249]
 script = ExtResource("1_script")
-DuckSpeed = 210.0
-SpawnInterval = 0.9
-DuckSpawnMargin = 40.0
-GameDurationSeconds = 30
 DuckScene = ExtResource("2_duck")
 
-[node name="Background" type="Sprite2D" parent="."]
+[node name="Background" type="Sprite2D" parent="." unique_id=1988007136]
 texture = SubResource("GradientTexture2D_sky")
 centered = false
 
-[node name="PlayArea" type="Node2D" parent="."]
+[node name="PlayArea" type="Node2D" parent="." unique_id=784589237]
 
-[node name="Player" type="CharacterBody2D" parent="PlayArea"]
+[node name="Player" type="CharacterBody2D" parent="PlayArea" unique_id=1313419326]
 position = Vector2(640, 610)
 collision_layer = 1
 collision_mask = 2
 
-[node name="PlayerSprite" type="Sprite2D" parent="PlayArea/Player"]
-texture = ExtResource("3_player")
-scale = Vector2(0.07, 0.07)
+[node name="PlayerSprite" type="Sprite2D" parent="PlayArea/Player" unique_id=728368911]
+position = Vector2(-2, 3.4099731)
+scale = Vector2(1.351352, 2.4773083)
+texture = ExtResource("3_fgu2e")
+region_enabled = true
+region_rect = Rect2(-0.34926987, 203.66667, 74.019165, 52.33333)
 
-[node name="PlayerCollision" type="CollisionShape2D" parent="PlayArea/Player"]
+[node name="PlayerCollision" type="CollisionShape2D" parent="PlayArea/Player" unique_id=465736445]
 shape = SubResource("RectangleShape2D_player")
 
-[node name="DuckContainer" type="Node2D" parent="PlayArea"]
+[node name="DuckContainer" type="Node2D" parent="PlayArea" unique_id=939370897]
 
-[node name="HUD" type="CanvasLayer" parent="."]
-layer = 1
+[node name="HUD" type="CanvasLayer" parent="." unique_id=666775539]
 
-[node name="MainUI" type="Control" parent="HUD"]
+[node name="MainUI" type="Control" parent="HUD" unique_id=1477884106]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -83,8 +80,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HeaderPanel" type="PanelContainer" parent="HUD/MainUI"]
+[node name="HeaderPanel" type="PanelContainer" parent="HUD/MainUI" unique_id=368099693]
 layout_mode = 1
+anchors_preset = 10
 anchor_right = 1.0
 offset_left = 20.0
 offset_top = 16.0
@@ -92,11 +90,11 @@ offset_right = -20.0
 offset_bottom = 78.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="HeaderLayout" type="HBoxContainer" parent="HUD/MainUI/HeaderPanel"]
+[node name="HeaderLayout" type="HBoxContainer" parent="HUD/MainUI/HeaderPanel" unique_id=1224887299]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="GameTitle" type="Label" parent="HUD/MainUI/HeaderPanel/HeaderLayout"]
+[node name="GameTitle" type="Label" parent="HUD/MainUI/HeaderPanel/HeaderLayout" unique_id=481151012]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.08, 0.23, 0.3, 1)
@@ -104,7 +102,7 @@ theme_override_font_sizes/font_size = 26
 text = "FALLING DUCK"
 vertical_alignment = 1
 
-[node name="TimerLabel" type="Label" parent="HUD/MainUI/HeaderPanel/HeaderLayout"]
+[node name="TimerLabel" type="Label" parent="HUD/MainUI/HeaderPanel/HeaderLayout" unique_id=746908651]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.08, 0.23, 0.3, 1)
@@ -113,7 +111,7 @@ text = "30"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SurvivalLabel" type="Label" parent="HUD/MainUI/HeaderPanel/HeaderLayout"]
+[node name="SurvivalLabel" type="Label" parent="HUD/MainUI/HeaderPanel/HeaderLayout" unique_id=1716520385]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.08, 0.23, 0.3, 1)
@@ -122,15 +120,15 @@ text = "Survive!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CloseButton" type="Button" parent="HUD/MainUI/HeaderPanel/HeaderLayout"]
+[node name="CloseButton" type="Button" parent="HUD/MainUI/HeaderPanel/HeaderLayout" unique_id=687711450]
 custom_minimum_size = Vector2(92, 40)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_button")
-theme_override_styles/hover = SubResource("StyleBoxFlat_button")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button")
 text = "Close"
 
-[node name="InstructionsPanel" type="PanelContainer" parent="HUD/MainUI"]
+[node name="InstructionsPanel" type="PanelContainer" parent="HUD/MainUI" unique_id=1006590709]
 layout_mode = 1
 offset_left = 22.0
 offset_top = 91.0
@@ -138,16 +136,18 @@ offset_right = 372.0
 offset_bottom = 149.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="InstructionsLabel" type="Label" parent="HUD/MainUI/InstructionsPanel"]
+[node name="InstructionsLabel" type="Label" parent="HUD/MainUI/InstructionsPanel" unique_id=1117399292]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.1, 0.23, 0.28, 1)
 theme_override_font_sizes/font_size = 15
 text = "Use A/D or the arrow keys. Touch controls also work."
-autowrap_mode = 3
 vertical_alignment = 1
+autowrap_mode = 3
 
-[node name="TouchControls" type="HBoxContainer" parent="HUD/MainUI"]
+[node name="TouchControls" type="HBoxContainer" parent="HUD/MainUI" unique_id=1913786983]
+visible = false
 layout_mode = 1
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -159,26 +159,28 @@ offset_bottom = -28.0
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="MoveLeftButton" type="Button" parent="HUD/MainUI/TouchControls"]
+[node name="MoveLeftButton" type="Button" parent="HUD/MainUI/TouchControls" unique_id=668404280]
 custom_minimum_size = Vector2(150, 58)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_button")
-theme_override_styles/hover = SubResource("StyleBoxFlat_button")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button")
 text = "LEFT"
 
-[node name="MoveRightButton" type="Button" parent="HUD/MainUI/TouchControls"]
+[node name="MoveRightButton" type="Button" parent="HUD/MainUI/TouchControls" unique_id=1286540242]
 custom_minimum_size = Vector2(150, 58)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_button")
-theme_override_styles/hover = SubResource("StyleBoxFlat_button")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button")
 text = "RIGHT"
 
-[node name="BottomPanel" type="PanelContainer" parent="HUD/MainUI"]
+[node name="BottomPanel" type="PanelContainer" parent="HUD/MainUI" unique_id=935271537]
+visible = false
 layout_mode = 1
+anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -188,7 +190,7 @@ offset_right = -20.0
 offset_bottom = -12.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="StatusLabel" type="Label" parent="HUD/MainUI/BottomPanel"]
+[node name="StatusLabel" type="Label" parent="HUD/MainUI/BottomPanel" unique_id=109527343]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.08, 0.23, 0.3, 1)
 theme_override_font_sizes/font_size = 16
@@ -196,27 +198,27 @@ text = "Avoid the falling ducks!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ResultOverlay" type="Control" parent="HUD/MainUI"]
+[node name="ResultOverlay" type="Control" parent="HUD/MainUI" unique_id=1102000415]
 visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 z_index = 10
-
-[node name="Dimmer" type="ColorRect" parent="HUD/MainUI/ResultOverlay"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.03, 0.1, 0.14, 0.65)
-mouse_filter = 2
 
-[node name="ResultPanel" type="PanelContainer" parent="HUD/MainUI/ResultOverlay"]
+[node name="Dimmer" type="ColorRect" parent="HUD/MainUI/ResultOverlay" unique_id=1002440651]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.03, 0.1, 0.14, 0.65)
+
+[node name="ResultPanel" type="PanelContainer" parent="HUD/MainUI/ResultOverlay" unique_id=83898484]
 custom_minimum_size = Vector2(460, 320)
 layout_mode = 1
 anchors_preset = 8
@@ -232,66 +234,65 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="ResultLayout" type="VBoxContainer" parent="HUD/MainUI/ResultOverlay/ResultPanel"]
+[node name="ResultLayout" type="VBoxContainer" parent="HUD/MainUI/ResultOverlay/ResultPanel" unique_id=367727167]
 layout_mode = 2
 theme_override_constants/separation = 9
 
-[node name="ResultTitle" type="Label" parent="HUD/MainUI/ResultOverlay/ResultPanel/ResultLayout"]
+[node name="ResultTitle" type="Label" parent="HUD/MainUI/ResultOverlay/ResultPanel/ResultLayout" unique_id=1639984758]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.08, 0.23, 0.3, 1)
 theme_override_font_sizes/font_size = 26
 text = "ROUND COMPLETE"
 horizontal_alignment = 1
 
-[node name="ResultMessage" type="Label" parent="HUD/MainUI/ResultOverlay/ResultPanel/ResultLayout"]
+[node name="ResultMessage" type="Label" parent="HUD/MainUI/ResultOverlay/ResultPanel/ResultLayout" unique_id=1968972848]
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.1, 0.2, 0.24, 1)
 theme_override_font_sizes/font_size = 17
 text = "Your result will appear here."
-autowrap_mode = 3
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
-[node name="AnswerTipLabel" type="Label" parent="HUD/MainUI/ResultOverlay/ResultPanel/ResultLayout"]
+[node name="AnswerTipLabel" type="Label" parent="HUD/MainUI/ResultOverlay/ResultPanel/ResultLayout" unique_id=683839946]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.12, 0.42, 0.27, 1)
 theme_override_font_sizes/font_size = 16
-autowrap_mode = 3
 horizontal_alignment = 1
+autowrap_mode = 3
 
-[node name="CoinPenaltyLabel" type="Label" parent="HUD/MainUI/ResultOverlay/ResultPanel/ResultLayout"]
+[node name="CoinPenaltyLabel" type="Label" parent="HUD/MainUI/ResultOverlay/ResultPanel/ResultLayout" unique_id=252859037]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.68, 0.22, 0.15, 1)
 theme_override_font_sizes/font_size = 16
-autowrap_mode = 3
 horizontal_alignment = 1
+autowrap_mode = 3
 
-[node name="PlayAgainButton" type="Button" parent="HUD/MainUI/ResultOverlay/ResultPanel/ResultLayout"]
+[node name="PlayAgainButton" type="Button" parent="HUD/MainUI/ResultOverlay/ResultPanel/ResultLayout" unique_id=1478358139]
 custom_minimum_size = Vector2(180, 40)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_button")
-theme_override_styles/hover = SubResource("StyleBoxFlat_button")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button")
 text = "Play Again"
 
-[node name="RetryResultButton" type="Button" parent="HUD/MainUI/ResultOverlay/ResultPanel/ResultLayout"]
+[node name="RetryResultButton" type="Button" parent="HUD/MainUI/ResultOverlay/ResultPanel/ResultLayout" unique_id=277135254]
 visible = false
 custom_minimum_size = Vector2(180, 40)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_button")
-theme_override_styles/hover = SubResource("StyleBoxFlat_button")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button")
 text = "Retry Result"
 
-[node name="ResultCloseButton" type="Button" parent="HUD/MainUI/ResultOverlay/ResultPanel/ResultLayout"]
+[node name="ResultCloseButton" type="Button" parent="HUD/MainUI/ResultOverlay/ResultPanel/ResultLayout" unique_id=781870148]
 custom_minimum_size = Vector2(180, 40)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_button")
-theme_override_styles/hover = SubResource("StyleBoxFlat_button")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button")
 text = "Close"
 
-[node name="CountdownTimer" type="Timer" parent="."]
+[node name="CountdownTimer" type="Timer" parent="." unique_id=233612392]
 process_mode = 3
-wait_time = 1.0

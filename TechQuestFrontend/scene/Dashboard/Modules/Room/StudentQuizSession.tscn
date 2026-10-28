@@ -2,6 +2,91 @@
 
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="1_hjrag"]
 [ext_resource type="Script" uid="uid://dr1t7bdmni4hd" path="res://scene/Dashboard/Modules/Room/StudentQuizSession.cs" id="1_pni4i"]
+[ext_resource type="Texture2D" uid="uid://eemnt7qlvphw" path="res://asset/style/ButtonLargeBlue.png" id="3_8yr05"]
+[ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="3_aumap"]
+[ext_resource type="Texture2D" uid="uid://cfytc0v6b4xy1" path="res://asset/style/window.png" id="4_8yr05"]
+[ext_resource type="Texture2D" uid="uid://c8anoohjb5tod" path="res://asset/style/buttons/orange_default.png" id="5_1pkic"]
+[ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="5_4p7hf"]
+[ext_resource type="Texture2D" uid="uid://tuei7ijxu7rt" path="res://asset/style/buttons/orange_pressed.png" id="6_uoolb"]
+[ext_resource type="Texture2D" uid="uid://di6tdqmh4ggks" path="res://asset/style/buttons/orange_hover.png" id="7_ipavr"]
+[ext_resource type="Texture2D" uid="uid://b4fvn8y1h3i1k" path="res://asset/style/buttons/maroon_default.png" id="8_dn82y"]
+[ext_resource type="Texture2D" uid="uid://coi1wu2nu2526" path="res://asset/style/buttons/maroon_pressed.png" id="9_0rh5l"]
+[ext_resource type="Texture2D" uid="uid://bc7gstp8svbhq" path="res://asset/style/buttons/maroon_hover.png" id="10_ka0h2"]
+[ext_resource type="Texture2D" uid="uid://rs0m0itpvfy0" path="res://asset/style/buttons/yellow_default.png" id="11_4p7hf"]
+[ext_resource type="Texture2D" uid="uid://mas6pii6ysco" path="res://asset/style/buttons/yellow_pressed.png" id="12_dpt8v"]
+[ext_resource type="Texture2D" uid="uid://be2vws7bdi271" path="res://asset/style/buttons/yellow_hover.png" id="13_1mue4"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="14_35jv5"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="15_xsxuu"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="16_p5gww"]
+[ext_resource type="Texture2D" uid="uid://c3aeuxjvdc3oq" path="res://asset/style/buttons/brown_default.png" id="19_dpt8v"]
+[ext_resource type="Texture2D" uid="uid://dwkpdb1xf0r28" path="res://asset/style/buttons/brown_pressed.png" id="20_1mue4"]
+[ext_resource type="Texture2D" uid="uid://dile2t1n0wa6g" path="res://asset/style/buttons/brown_hover.png" id="21_35jv5"]
+[ext_resource type="Texture2D" uid="uid://yynogflsmlhx" path="res://asset/style/buttons/green_default.png" id="22_xsxuu"]
+[ext_resource type="Texture2D" uid="uid://dm21k071ic5l6" path="res://asset/style/buttons/green_pressed.png" id="23_p5gww"]
+[ext_resource type="Texture2D" uid="uid://b6a4ucts8ur24" path="res://asset/style/buttons/green_hover.png" id="24_na6te"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_na6te"]
+texture = ExtResource("3_8yr05")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8yr05"]
+texture = ExtResource("5_4p7hf")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cah6h"]
+texture = ExtResource("4_8yr05")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uy022"]
+texture = ExtResource("5_1pkic")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n70n7"]
+texture = ExtResource("6_uoolb")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gwsml"]
+texture = ExtResource("7_ipavr")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4t4gk"]
+texture = ExtResource("8_dn82y")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_crdci"]
+texture = ExtResource("9_0rh5l")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b1kyw"]
+texture = ExtResource("10_ka0h2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kpowk"]
+texture = ExtResource("11_4p7hf")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iefpa"]
+texture = ExtResource("12_dpt8v")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lyx2i"]
+texture = ExtResource("13_1mue4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_exnky"]
+texture = ExtResource("14_35jv5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_afk58"]
+texture = ExtResource("15_xsxuu")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wr0b7"]
+texture = ExtResource("16_p5gww")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1pkic"]
+texture = ExtResource("19_dpt8v")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uoolb"]
+texture = ExtResource("20_1mue4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ipavr"]
+texture = ExtResource("21_35jv5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dn82y"]
+texture = ExtResource("22_xsxuu")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0rh5l"]
+texture = ExtResource("23_p5gww")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4p7hf"]
+texture = ExtResource("24_na6te")
 
 [node name="StudentQuizSession" type="Control" unique_id=1258307384]
 layout_mode = 3
@@ -27,41 +112,56 @@ stretch_mode = 6
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 81.0
+offset_bottom = 129.0
 grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_na6te")
 
 [node name="SubjectNameLabel" type="Label" parent="QuestionHeaderPanel" unique_id=699221500]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -271.0
-offset_top = 20.0
-offset_right = 331.0
-offset_bottom = 59.0
+offset_left = -255.0
+offset_top = 28.0
+offset_right = 347.0
+offset_bottom = 87.0
 grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_aumap")
+theme_override_font_sizes/font_size = 25
 text = "Subject Name"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="NumberOfQuestionLabel" type="Label" parent="QuestionHeaderPanel" unique_id=1494609298]
 layout_mode = 0
-offset_left = 18.0
-offset_top = 16.0
-offset_right = 175.0
-offset_bottom = 53.0
+offset_left = 101.0
+offset_top = 25.0
+offset_right = 319.0
+offset_bottom = 91.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_aumap")
+theme_override_font_sizes/font_size = 25
 text = "Question: 0/0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="TimerLabel" type="Label" parent="QuestionHeaderPanel" unique_id=1827876664]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -132.0
-offset_top = 21.0
-offset_right = -19.0
-offset_bottom = 55.0
+offset_left = -251.0
+offset_top = 34.0
+offset_right = -66.0
+offset_bottom = 83.0
 grow_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_aumap")
+theme_override_font_sizes/font_size = 25
 text = "Time: 00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="QuizPanel" type="Panel" parent="." unique_id=164686342]
 layout_mode = 1
@@ -76,49 +176,23 @@ offset_right = 526.0
 offset_bottom = 276.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_8yr05")
 
 [node name="QuestionLabel" type="Label" parent="QuizPanel" unique_id=1459744697]
 layout_mode = 0
-offset_left = 276.0
+offset_left = 109.0
 offset_top = 35.0
-offset_right = 729.0
-offset_bottom = 104.0
+offset_right = 936.0
+offset_bottom = 169.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_aumap")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxTexture_cah6h")
 text = "Question"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MultipleChoicesContainer" type="VBoxContainer" parent="QuizPanel" unique_id=308870127]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -465.0
-offset_top = -45.0
-offset_right = 473.0
-offset_bottom = 202.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 25
-alignment = 1
-
-[node name="ChoicesA Button" type="Button" parent="QuizPanel/MultipleChoicesContainer" unique_id=1546925586]
-layout_mode = 2
-text = "Choices A"
-
-[node name="ChoicesB Button" type="Button" parent="QuizPanel/MultipleChoicesContainer" unique_id=1723400836]
-layout_mode = 2
-text = "Choices B"
-
-[node name="ChoicesC Button" type="Button" parent="QuizPanel/MultipleChoicesContainer" unique_id=1332002910]
-layout_mode = 2
-text = "Choices C"
-
-[node name="ChoicesD Button" type="Button" parent="QuizPanel/MultipleChoicesContainer" unique_id=262008099]
-layout_mode = 2
-text = "Choices D"
-
-[node name="TrueorFalseContainer" type="VBoxContainer" parent="QuizPanel" unique_id=699642755]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -126,21 +200,107 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -386.5
-offset_top = 37.0
-offset_right = 386.5
-offset_bottom = 218.5
+offset_left = -465.0
+offset_top = -50.0
+offset_right = 473.0
+offset_bottom = 225.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="ChoicesA Button" type="Button" parent="QuizPanel/MultipleChoicesContainer" unique_id=1546925586]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_aumap")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_uy022")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_n70n7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_gwsml")
+text = "Choices A"
+
+[node name="ChoicesB Button" type="Button" parent="QuizPanel/MultipleChoicesContainer" unique_id=1723400836]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_aumap")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_4t4gk")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_crdci")
+theme_override_styles/hover = SubResource("StyleBoxTexture_b1kyw")
+text = "Choices B"
+
+[node name="ChoicesC Button" type="Button" parent="QuizPanel/MultipleChoicesContainer" unique_id=1332002910]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_aumap")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_kpowk")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_iefpa")
+theme_override_styles/hover = SubResource("StyleBoxTexture_lyx2i")
+text = "Choices C"
+
+[node name="ChoicesD Button" type="Button" parent="QuizPanel/MultipleChoicesContainer" unique_id=262008099]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_aumap")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_exnky")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_afk58")
+theme_override_styles/hover = SubResource("StyleBoxTexture_wr0b7")
+text = "Choices D"
+
+[node name="TrueorFalseContainer" type="VBoxContainer" parent="QuizPanel" unique_id=699642755]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -380.0
+offset_top = 2.0
+offset_right = 393.0
+offset_bottom = 183.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
 alignment = 1
 
 [node name="TrueButton" type="Button" parent="QuizPanel/TrueorFalseContainer" unique_id=1321170197]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(3.723028e-05, 3.723038e-05, 3.7230548e-05, 1)
+theme_override_fonts/font = ExtResource("3_aumap")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_1pkic")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_uoolb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ipavr")
 text = "True"
 
 [node name="FalseButton" type="Button" parent="QuizPanel/TrueorFalseContainer" unique_id=671051197]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_aumap")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_dn82y")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_0rh5l")
+theme_override_styles/hover = SubResource("StyleBoxTexture_4p7hf")
 text = "False"
 
 [node name="IdentificationContainer" type="VBoxContainer" parent="QuizPanel" unique_id=1067992498]

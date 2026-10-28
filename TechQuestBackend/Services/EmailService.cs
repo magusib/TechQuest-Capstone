@@ -7,7 +7,7 @@ namespace TechQuestBackend.Services
     public class EmailService
     {
         private const string SenderEmail =
-            "yhajjmagusib@gmail.com";
+            "techquestteam5@gmail.com";
 
         private const string AppPassword =
             "frfn jxoy ryrg ucmt";

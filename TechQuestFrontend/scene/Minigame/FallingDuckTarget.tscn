@@ -8,6 +8,9 @@ radius = 24.0
 
 [node name="FallingDuckTarget" type="Area2D" unique_id=442144290]
 collision_layer = 2
+collision_mask = 1
+monitoring = true
+monitorable = true
 script = ExtResource("1_script")
 
 [node name="DuckSprite" type="Sprite2D" parent="." unique_id=51531546]

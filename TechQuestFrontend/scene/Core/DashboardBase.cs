@@ -451,6 +451,27 @@ public abstract partial class DashboardBase : Control
 
 	protected virtual void OpenProfile()
 	{
+		string popupName = UserSession.Role switch
+		{
+			UserRole.Student => "StudentProfilePopup",
+			UserRole.Professor => "ProfessorProfilePopup",
+			UserRole.Admin => "AdminProfilePopup",
+			_ => ""
+		};
+
+		if (!string.IsNullOrWhiteSpace(popupName))
+		{
+			Control profilePopup = GetNodeOrNull<Control>(popupName);
+			if (profilePopup != null)
+			{
+				profilePopup.Visible = true;
+				profilePopup.MoveToFront();
+				return;
+			}
+		}
+
+		// Keep standalone-scene navigation as a fallback for dashboards that do
+		// not yet embed their profile popup.
 		string profilePath = UserSession.Role switch
 		{
 			UserRole.Student => StudentProfilePath,

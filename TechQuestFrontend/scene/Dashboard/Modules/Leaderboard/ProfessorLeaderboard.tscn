@@ -2,6 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="1_h1alc"]
 [ext_resource type="Script" uid="uid://dknavje4qe5yo" path="res://scene/Dashboard/Modules/Leaderboard/ProfessorLeaderboard.cs" id="2_leaderboard"]
+[ext_resource type="Texture2D" uid="uid://s3wgaw46w4f5" path="res://asset/style/LargeBackground.png" id="3_76orx"]
+[ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="4_faphn"]
+[ext_resource type="Texture2D" uid="uid://nteql2k0ifsv" path="res://asset/style/buttons/blue_default.png" id="5_267jj"]
+[ext_resource type="Texture2D" uid="uid://db0y8d6ro752s" path="res://asset/style/buttons/blue_pressed.png" id="6_wfxca"]
+[ext_resource type="Texture2D" uid="uid://1c42figjlqbr" path="res://asset/style/buttons/blue_hover.png" id="7_84u83"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g2nod"]
 bg_color = Color(0.035, 0.09, 0.17, 0.98)
@@ -27,17 +32,23 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pr3hv"]
-bg_color = Color(0.07, 0.18, 0.31, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.2, 0.48, 0.75, 1)
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r27xb"]
+texture = ExtResource("3_76orx")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7ecli"]
+texture = ExtResource("3_76orx")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kibx3"]
+texture = ExtResource("3_76orx")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u5qk0"]
+texture = ExtResource("5_267jj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_imxrd"]
+texture = ExtResource("6_wfxca")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wh1bw"]
+texture = ExtResource("7_84u83")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h1alc"]
 bg_color = Color(0.035, 0.09, 0.17, 0.98)
@@ -133,7 +144,7 @@ offset_top = 30.0
 offset_right = 354.0
 offset_bottom = 205.0
 size_flags_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_pr3hv")
+theme_override_styles/panel = SubResource("StyleBoxTexture_r27xb")
 
 [node name="CardVBox" type="VBoxContainer" parent="LeaderboardPanel/MainVBox/Top3Panel/SecondPlace" unique_id=1270741054]
 layout_mode = 2
@@ -170,7 +181,7 @@ layout_mode = 0
 offset_left = 404.0
 offset_right = 704.0
 offset_bottom = 180.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_pr3hv")
+theme_override_styles/panel = SubResource("StyleBoxTexture_7ecli")
 
 [node name="CardVBox" type="VBoxContainer" parent="LeaderboardPanel/MainVBox/Top3Panel/FirstPlace" unique_id=2142434801]
 layout_mode = 2
@@ -208,7 +219,7 @@ offset_left = 754.0
 offset_top = 30.0
 offset_right = 1034.0
 offset_bottom = 210.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_pr3hv")
+theme_override_styles/panel = SubResource("StyleBoxTexture_kibx3")
 
 [node name="CardVBox" type="VBoxContainer" parent="LeaderboardPanel/MainVBox/Top3Panel/ThirdPlace" unique_id=1144876195]
 layout_mode = 2
@@ -291,9 +302,12 @@ theme_override_constants/separation = 50
 alignment = 1
 
 [node name="PreviousRankingButton" type="Button" parent="LeaderboardPanel/MainVBox/BottomButtons" unique_id=1949570643]
-custom_minimum_size = Vector2(220, 45)
+custom_minimum_size = Vector2(284, 45)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_6xk10")
+theme_override_fonts/font = ExtResource("4_faphn")
+theme_override_styles/normal = SubResource("StyleBoxTexture_u5qk0")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_imxrd")
+theme_override_styles/hover = SubResource("StyleBoxTexture_wh1bw")
 text = "PREVIOUS RANKING"
 
 [node name="PreviousRankingPopup" type="Control" parent="." unique_id=1050171790]
