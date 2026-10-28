@@ -10,10 +10,12 @@
 [ext_resource type="Texture2D" uid="uid://b3ywy4l7escxr" path="res://asset/background/first.png" id="8_jgfm1"]
 [ext_resource type="Texture2D" uid="uid://361evl3lcsf3" path="res://asset/background/medium.png" id="9_ueae1"]
 [ext_resource type="Texture2D" uid="uid://gj3ech0242sn" path="res://asset/background/hard.png" id="10_8a06c"]
+[ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="12_p3dgv"]
 [ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="12_y20va"]
 [ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="13_ngh7r"]
+[ext_resource type="Texture2D" uid="uid://dclpu3xmblprx" path="res://asset/style/UI_Flat_Banner03a.png" id="13_x5f5y"]
 [ext_resource type="Texture2D" uid="uid://cdy3upgkc6uxf" path="res://asset/Icons/Menu.png" id="14_3ixja"]
-[ext_resource type="PackedScene" uid="uid://bw63big3fpuwh" path="res://scene/Dashboard/UserDashboard/Admin Dashboard/AdminProfile.tscn" id="15_e1aig"]
+[ext_resource type="PackedScene" uid="uid://bw63big3fpuwh" path="res://scene/Dashboard/UserDashboard/Student Dashboard/StudentProfile.tscn" id="15_e1aig"]
 [ext_resource type="PackedScene" uid="uid://du1wjyf2tggkf" path="res://scene/Dashboard/Modules/Tutorial/AdminTutorial.tscn" id="17_tutorial"]
 [ext_resource type="Script" uid="uid://ddchqti08tx3j" path="res://scene/Dashboard/UserDashboard/Admin Dashboard/AdminDashboard.cs" id="AdminDashboardScript"]
 
@@ -36,6 +38,9 @@ shadow_color = Color(0.08627451, 0.08627451, 0.3529412, 0.6)
 shadow_size = 30
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8icjc"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a6i8o"]
+texture = ExtResource("13_x5f5y")
 
 [node name="AdminDashboard" type="Control" unique_id=1379097029]
 layout_mode = 3
@@ -244,30 +249,30 @@ offset_bottom = 40.0
 
 [node name="EasyButton" type="TextureButton" parent="DificultySelectionButton2" unique_id=741207341]
 layout_mode = 0
-offset_left = 227.0
-offset_top = 244.0
-offset_right = 587.0
-offset_bottom = 424.0
+offset_left = 330.0
+offset_top = 295.0
+offset_right = 690.0
+offset_bottom = 475.0
 texture_normal = ExtResource("8_jgfm1")
 ignore_texture_size = true
 stretch_mode = 6
 
 [node name="MediumButton" type="TextureButton" parent="DificultySelectionButton2" unique_id=1144222953]
 layout_mode = 0
-offset_left = 704.0
-offset_top = 372.0
-offset_right = 1064.0
-offset_bottom = 552.0
+offset_left = 663.0
+offset_top = 391.0
+offset_right = 1023.0
+offset_bottom = 571.0
 texture_normal = ExtResource("9_ueae1")
 ignore_texture_size = true
 stretch_mode = 6
 
 [node name="HardButton" type="TextureButton" parent="DificultySelectionButton2" unique_id=115110784]
 layout_mode = 0
-offset_left = 170.0
-offset_top = 445.0
-offset_right = 530.0
-offset_bottom = 625.0
+offset_left = 256.0
+offset_top = 519.0
+offset_right = 616.0
+offset_bottom = 699.0
 texture_normal = ExtResource("10_8a06c")
 ignore_texture_size = true
 stretch_mode = 6
@@ -296,11 +301,17 @@ stretch_mode = 5
 
 [node name="PlayerName" type="Label" parent="TopBar/AvatarPanel" unique_id=481293679]
 layout_mode = 0
-offset_left = 112.0
-offset_top = 63.0
-offset_right = 266.0
-offset_bottom = 105.0
-text = "           Admin Name"
+offset_left = 140.0
+offset_top = 65.0
+offset_right = 298.0
+offset_bottom = 107.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("12_p3dgv")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_a6i8o")
+text = "Admin Name"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CoinsPanel" type="Panel" parent="TopBar/AvatarPanel" unique_id=246233926]
 visible = false

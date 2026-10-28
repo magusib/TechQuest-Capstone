@@ -11,9 +11,11 @@
 [ext_resource type="Texture2D" uid="uid://crr41an3wfhqs" path="res://asset/Icons/CharacterButton.png" id="6_kewjt"]
 [ext_resource type="Texture2D" uid="uid://b6v4wt8dc8kuy" path="res://asset/Icons/TutorialButton.png" id="8_a6i8o"]
 [ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="12_8tglb"]
+[ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="12_kewjt"]
 [ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="13_1tjyp"]
+[ext_resource type="Texture2D" uid="uid://dclpu3xmblprx" path="res://asset/style/UI_Flat_Banner03a.png" id="13_dbnod"]
 [ext_resource type="Texture2D" uid="uid://cdy3upgkc6uxf" path="res://asset/Icons/Menu.png" id="14_qs01i"]
-[ext_resource type="PackedScene" uid="uid://bw63big3fpuwh" path="res://scene/Dashboard/UserDashboard/Professor Dashboard/ProfessorProfile.tscn" id="15_a6i8o"]
+[ext_resource type="PackedScene" uid="uid://bw63big3fpuwh" path="res://scene/Dashboard/UserDashboard/Student Dashboard/StudentProfile.tscn" id="15_a6i8o"]
 [ext_resource type="PackedScene" uid="uid://cmwvves4q23wy" path="res://scene/Dashboard/Modules/Tutorial/ProfessorTutorial.tscn" id="17_tutorial"]
 [ext_resource type="Script" uid="uid://ccjsvxw8gbe5s" path="res://scene/Dashboard/UserDashboard/Professor Dashboard/ProfessorDashboard.cs" id="ProfessorDashboardScript"]
 
@@ -36,6 +38,9 @@ shadow_color = Color(0.08627451, 0.08627451, 0.3529412, 0.6)
 shadow_size = 30
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8icjc"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_furx4"]
+texture = ExtResource("13_dbnod")
 
 [node name="ProfessorDashboard" type="Control" unique_id=1379097029]
 layout_mode = 3
@@ -244,30 +249,30 @@ offset_bottom = 40.0
 
 [node name="EasyButton" type="TextureButton" parent="DificultySelectionButton2" unique_id=2131982848]
 layout_mode = 0
-offset_left = 227.0
-offset_top = 244.0
-offset_right = 587.0
-offset_bottom = 424.0
+offset_left = 330.0
+offset_top = 295.0
+offset_right = 690.0
+offset_bottom = 475.0
 texture_normal = ExtResource("2_a03os")
 ignore_texture_size = true
 stretch_mode = 6
 
 [node name="MediumButton" type="TextureButton" parent="DificultySelectionButton2" unique_id=1041033597]
 layout_mode = 0
-offset_left = 627.0
-offset_top = 326.0
-offset_right = 987.0
-offset_bottom = 506.0
+offset_left = 663.0
+offset_top = 391.0
+offset_right = 1023.0
+offset_bottom = 571.0
 texture_normal = ExtResource("3_1yium")
 ignore_texture_size = true
 stretch_mode = 6
 
 [node name="HardButton" type="TextureButton" parent="DificultySelectionButton2" unique_id=749453891]
 layout_mode = 0
-offset_left = 170.0
-offset_top = 445.0
-offset_right = 530.0
-offset_bottom = 625.0
+offset_left = 256.0
+offset_top = 519.0
+offset_right = 616.0
+offset_bottom = 699.0
 texture_normal = ExtResource("4_q46u4")
 ignore_texture_size = true
 stretch_mode = 6
@@ -296,11 +301,17 @@ stretch_mode = 5
 
 [node name="PlayerName" type="Label" parent="TopBar/AvatarPanel" unique_id=481293679]
 layout_mode = 0
-offset_left = 159.0
-offset_top = 60.0
-offset_right = 313.0
-offset_bottom = 102.0
+offset_left = 140.0
+offset_top = 65.0
+offset_right = 336.0
+offset_bottom = 107.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("12_kewjt")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_furx4")
 text = "Professor Name"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CoinsPanel" type="Panel" parent="TopBar/AvatarPanel" unique_id=246233926]
 visible = false

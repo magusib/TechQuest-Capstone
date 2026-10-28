@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dtnat7g07njki"]
 
 [ext_resource type="Script" uid="uid://ceps81nkwkigj" path="res://scene/UserLogin/Professor/ProfessorLogin.cs" id="1_fcjo8"]
-[ext_resource type="Texture2D" uid="uid://4kraosl2m556" path="res://asset/background/ptc.png" id="2_1jk6d"]
+[ext_resource type="Texture2D" uid="uid://c0vtg66nl4tu7" path="res://asset/background/4.png" id="2_d5aqo"]
 [ext_resource type="Texture2D" uid="uid://s3wgaw46w4f5" path="res://asset/style/LargeBackground.png" id="3_c4d7h"]
 [ext_resource type="FontFile" uid="uid://bggete2j6crlb" path="res://asset/style/fonts/SamuraiBlast-YznGj.ttf" id="4_xl84i"]
 [ext_resource type="Texture2D" uid="uid://cyqkrvyj6vbo8" path="res://asset/style/label1.png" id="5_org8y"]
@@ -170,7 +170,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_1jk6d")
+texture = ExtResource("2_d5aqo")
 expand_mode = 1
 stretch_mode = 6
 

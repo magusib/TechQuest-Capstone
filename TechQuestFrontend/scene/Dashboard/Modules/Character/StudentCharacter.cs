@@ -7,7 +7,7 @@ public partial class StudentCharacter : Control
 {
 	private HBoxContainer characterContainer;
 	private PanelContainer itemTemplate;
-	private Window storylinePopup;
+	private Panel storylinePopup;
 	private HBoxContainer carouselArrows;
 	private List<ShopItemDto> characters = new();
 	private int selectedIndex;
@@ -18,7 +18,7 @@ public partial class StudentCharacter : Control
 	{
 		characterContainer = GetNode<HBoxContainer>("CharacterPanel/MainContainer/CharacterArea/CharacterScroll/CharacterContainer");
 		itemTemplate = GetNode<PanelContainer>("StudentCharacterItem");
-		storylinePopup = GetNode<Window>("CharacterStorylinePopup");
+		storylinePopup = GetNode<Panel>("CharacterStorylinePopup");
 		carouselArrows = GetNode<HBoxContainer>("CharacterPanel/MainContainer/CarouselArrows");
 		GetNode<Button>("CharacterPanel/MainContainer/Header/BackButton").Pressed += OnBackPressed;
 		GetNode<Button>("CharacterPanel/MainContainer/CategoryButtons/AvatarButton").Pressed += OnAvatarPressed;
@@ -153,7 +153,8 @@ public partial class StudentCharacter : Control
 			string.IsNullOrWhiteSpace(item.Storyline)
 				? "No storyline is stored for this character yet."
 				: item.Storyline;
-		storylinePopup.PopupCentered();
+		storylinePopup.Position = (GetViewportRect().Size - storylinePopup.Size) / 2.0f;
+		storylinePopup.Show();
 	}
 
 	private void OnBackPressed()

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dwfhp46edi4dg"]
 
-[ext_resource type="Texture2D" uid="uid://cwydayrej323" path="res://asset/background/Progress Bar .png" id="1_2toiv"]
 [ext_resource type="Script" uid="uid://b3w1uful2efw0" path="res://scene/MainPage/MainPage.cs" id="1_4cfjs"]
+[ext_resource type="Texture2D" uid="uid://bsxg0344paw5x" path="res://asset/background/3.png" id="2_c46of"]
 [ext_resource type="Texture2D" uid="uid://dqav3wwgdakle" path="res://asset/style/LoadingBarFillYellow.png" id="3_c46of"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_47jqb"]
@@ -23,7 +23,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_2toiv")
+texture = ExtResource("2_c46of")
 expand_mode = 1
 stretch_mode = 6
 

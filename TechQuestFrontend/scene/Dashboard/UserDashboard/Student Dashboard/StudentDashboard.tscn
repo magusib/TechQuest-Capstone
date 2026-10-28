@@ -258,30 +258,30 @@ offset_bottom = 40.0
 
 [node name="EasyButton" type="TextureButton" parent="DificultySelectionButton2" unique_id=208908162]
 layout_mode = 0
-offset_left = 227.0
-offset_top = 244.0
-offset_right = 587.0
-offset_bottom = 424.0
+offset_left = 330.0
+offset_top = 295.0
+offset_right = 690.0
+offset_bottom = 475.0
 texture_normal = ExtResource("8_jgfm1")
 ignore_texture_size = true
 stretch_mode = 6
 
 [node name="MediumButton" type="TextureButton" parent="DificultySelectionButton2" unique_id=1039497163]
 layout_mode = 0
-offset_left = 627.0
-offset_top = 326.0
-offset_right = 987.0
-offset_bottom = 506.0
+offset_left = 663.0
+offset_top = 391.0
+offset_right = 1023.0
+offset_bottom = 571.0
 texture_normal = ExtResource("9_ueae1")
 ignore_texture_size = true
 stretch_mode = 6
 
 [node name="HardButton" type="TextureButton" parent="DificultySelectionButton2" unique_id=544102024]
 layout_mode = 0
-offset_left = 170.0
-offset_top = 445.0
-offset_right = 530.0
-offset_bottom = 625.0
+offset_left = 256.0
+offset_top = 519.0
+offset_right = 616.0
+offset_bottom = 699.0
 texture_normal = ExtResource("10_8a06c")
 ignore_texture_size = true
 stretch_mode = 6

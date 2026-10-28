@@ -2,6 +2,11 @@
 
 [ext_resource type="Script" uid="uid://igw5lvdt3emv" path="res://scene/Dashboard/Modules/Character/StudentAvatar.cs" id="1"]
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="1_h0vdb"]
+[ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="3_n52gr"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pqt2k"]
+texture = ExtResource("3_n52gr")
+region_rect = Rect2(0, 2, 96, 62)
 
 [node name="StudentAvatar" type="Control" unique_id=1658290712]
 layout_mode = 3
@@ -125,6 +130,7 @@ offset_right = 115.0
 offset_bottom = 278.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_pqt2k")
 
 [node name="ItemContainer" type="VBoxContainer" parent="StudentAvatarItem" unique_id=909549519]
 layout_mode = 2

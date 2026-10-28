@@ -2,6 +2,45 @@
 
 [ext_resource type="Script" uid="uid://cfw76nxcxitqd" path="res://scene/Dashboard/Modules/Character/StudentCharacter.cs" id="1_qnh6h"]
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_hy3kk"]
+[ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="3_c7jb3"]
+[ext_resource type="Texture2D" uid="uid://il7e0nrrsjnt" path="res://asset/style/ButtonLargeWhiteActive.png" id="3_dmn67"]
+[ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="4_sgu0i"]
+[ext_resource type="Texture2D" uid="uid://dclpu3xmblprx" path="res://asset/style/UI_Flat_Banner03a.png" id="5_dmn67"]
+[ext_resource type="FontFile" uid="uid://cb3fr24mny6tm" path="res://asset/style/fonts/BouncyBalloon-drJXX.ttf" id="6_b4fhq"]
+[ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="7_pxkvj"]
+[ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="8_4ypt6"]
+[ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="9_njkk4"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="10_2yq8t"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="11_66n56"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="12_mo455"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n52gr"]
+texture = ExtResource("3_dmn67")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q81td"]
+texture = ExtResource("3_c7jb3")
+region_rect = Rect2(0, 2, 96, 62)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vcku8"]
+texture = ExtResource("5_dmn67")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_aj4x0"]
+texture = ExtResource("7_pxkvj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y6nt3"]
+texture = ExtResource("8_4ypt6")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_36wwc"]
+texture = ExtResource("9_njkk4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5rik3"]
+texture = ExtResource("10_2yq8t")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2fmny"]
+texture = ExtResource("11_66n56")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xnwyc"]
+texture = ExtResource("12_mo455")
 
 [node name="StudentCharacter" type="Control" unique_id=1541581775]
 layout_mode = 3
@@ -57,6 +96,7 @@ layout_mode = 2
 [node name="Title" type="Label" parent="CharacterPanel/MainContainer/Header" unique_id=1299509949]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxTexture_n52gr")
 text = "CHARACTER"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -111,22 +151,35 @@ custom_minimum_size = Vector2(55, 45)
 layout_mode = 2
 text = "→"
 
-[node name="CharacterStorylinePopup" type="Window" parent="." unique_id=1483819523]
-oversampling_override = 1.0
-initial_position = 2
-size = Vector2i(600, 450)
+[node name="CharacterStorylinePopup" type="Panel" parent="." unique_id=1483819523]
 visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -215.0
+offset_right = 280.0
+offset_bottom = 215.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="CharacterStorylinePopup" unique_id=310959433]
-anchors_preset = 15
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CharacterStorylinePopup/MarginContainer" unique_id=1825061707]
 layout_mode = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 12
 
 [node name="CharacterName" type="Label" parent="CharacterStorylinePopup/MarginContainer/VBoxContainer" unique_id=280978298]
 layout_mode = 2
@@ -135,10 +188,12 @@ horizontal_alignment = 1
 
 [node name="StoryScroll" type="ScrollContainer" parent="CharacterStorylinePopup/MarginContainer/VBoxContainer" unique_id=173795808]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="StorylineText" type="Label" parent="CharacterStorylinePopup/MarginContainer/VBoxContainer/StoryScroll" unique_id=1928088225]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Character storyline..."
 autowrap_mode = 2
 
@@ -160,8 +215,10 @@ offset_right = 115.0
 offset_bottom = 278.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_q81td")
 
 [node name="ItemContainer" type="VBoxContainer" parent="StudentCharacterItem" unique_id=1692691158]
+custom_minimum_size = Vector2(0, 400)
 layout_mode = 2
 theme_override_constants/separation = 10
 
@@ -173,13 +230,25 @@ stretch_mode = 5
 
 [node name="CharacterName" type="Label" parent="StudentCharacterItem/ItemContainer" unique_id=798388908]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_sgu0i")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_vcku8")
 text = "Name"
 horizontal_alignment = 1
 
 [node name="StorylineButton" type="Button" parent="StudentCharacterItem/ItemContainer" unique_id=806780479]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_b4fhq")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_aj4x0")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_y6nt3")
+theme_override_styles/hover = SubResource("StyleBoxTexture_36wwc")
 text = "STORYLINE"
 
 [node name="UseButton" type="Button" parent="StudentCharacterItem/ItemContainer" unique_id=2080224100]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_5rik3")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_2fmny")
+theme_override_styles/hover = SubResource("StyleBoxTexture_xnwyc")
 text = "USE"

@@ -6,11 +6,12 @@ namespace TechQuestBackend.Services
 {
     public class EmailService
     {
-        private const string SenderEmail =
-            "techquestteam5@gmail.com";
+        private readonly IConfiguration _configuration;
 
-        private const string AppPassword =
-            "frfn jxoy ryrg ucmt";
+        public EmailService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
         public async Task<bool> SendOTP(
             string email,
@@ -18,12 +19,19 @@ namespace TechQuestBackend.Services
         {
             try
             {
+                string senderEmail = GetRequiredSetting("Email:SenderEmail");
+                string appPassword = GetRequiredSetting("Email:AppPassword");
+                string smtpHost = _configuration["Email:SmtpHost"] ?? "smtp.gmail.com";
+                int smtpPort = int.TryParse(_configuration["Email:SmtpPort"], out int configuredPort)
+                    ? configuredPort
+                    : 587;
+
                 var message = new MimeMessage();
 
                 message.From.Add(
                     new MailboxAddress(
                         "TechQuest",
-                        SenderEmail
+                        senderEmail
                     )
                 );
 
@@ -52,14 +60,16 @@ namespace TechQuestBackend.Services
                 using var smtp = new SmtpClient();
 
                 await smtp.ConnectAsync(
-                    "smtp.gmail.com",
-                    587,
-                    SecureSocketOptions.StartTls
+                    smtpHost,
+                    smtpPort,
+                    smtpPort == 465
+                        ? SecureSocketOptions.SslOnConnect
+                        : SecureSocketOptions.StartTls
                 );
 
                 await smtp.AuthenticateAsync(
-                    SenderEmail,
-                    AppPassword
+                    senderEmail,
+                    appPassword
                 );
 
                 await smtp.SendAsync(message);
@@ -82,6 +92,12 @@ namespace TechQuestBackend.Services
 
                 return false;
             }
+        }
+
+        private string GetRequiredSetting(string key)
+        {
+            return _configuration[key]
+                ?? throw new InvalidOperationException($"Missing email configuration: {key}");
         }
     }
 }
