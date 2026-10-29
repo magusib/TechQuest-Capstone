@@ -2,6 +2,19 @@
 
 [ext_resource type="Script" uid="uid://cj3gq1yoq2kon" path="res://scene/Dashboard/Modules/Shop/StudentAvatarShop.cs" id="1_spvis"]
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_jwm5n"]
+[ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="3_28oe2"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="4_82hpw"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="5_g0xfb"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="6_fo76r"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c7ioj"]
+texture = ExtResource("4_82hpw")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2dbku"]
+texture = ExtResource("5_g0xfb")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_avogo"]
+texture = ExtResource("6_fo76r")
 
 [node name="StudentAvatarShop" type="Control" unique_id=1783287785]
 layout_mode = 3
@@ -86,8 +99,8 @@ horizontal_scroll_mode = 0
 custom_minimum_size = Vector2(1040, 0)
 layout_mode = 2
 size_flags_vertical = 8
-theme_override_constants/h_separation = 18
-theme_override_constants/v_separation = 18
+theme_override_constants/h_separation = 100
+theme_override_constants/v_separation = 50
 columns = 3
 
 [node name="ItemPanel" type="Panel" parent="ShopPanel" unique_id=6133067]
@@ -122,12 +135,24 @@ offset_right = 166.0
 offset_bottom = 269.0
 text = "Name"
 
-[node name="PurchaseButton" type="Button" parent="ShopPanel/ItemPanel" unique_id=1519993511]
-layout_mode = 0
-offset_left = 76.0
-offset_top = 286.0
-offset_right = 203.0
-offset_bottom = 317.0
+[node name="PurchaseButton" type="Button" parent="ShopPanel/ItemPanel" unique_id=932900944]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -95.0
+offset_top = -61.0
+offset_right = 104.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_28oe2")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_c7ioj")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_2dbku")
+theme_override_styles/hover = SubResource("StyleBoxTexture_avogo")
 text = "Purchase"
 
 [node name="BackButton" type="Button" parent="." unique_id=2068034593]

@@ -42,14 +42,6 @@ offset_right = 1006.0
 offset_bottom = 81.5
 text = "Add NPC"
 
-[node name="AddButton2" type="Button" parent="HardNPCPanel" unique_id=762688535]
-layout_mode = 0
-offset_left = 883.5
-offset_top = 50.5
-offset_right = 1006.0
-offset_bottom = 81.5
-text = "Add NPC"
-
 [node name="CloseButton" type="Button" parent="HardNPCPanel" unique_id=1445348749]
 layout_mode = 1
 anchors_preset = 1

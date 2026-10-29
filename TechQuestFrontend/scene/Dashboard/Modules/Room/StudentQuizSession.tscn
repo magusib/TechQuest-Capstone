@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://yynogflsmlhx" path="res://asset/style/buttons/green_default.png" id="22_xsxuu"]
 [ext_resource type="Texture2D" uid="uid://dm21k071ic5l6" path="res://asset/style/buttons/green_pressed.png" id="23_p5gww"]
 [ext_resource type="Texture2D" uid="uid://b6a4ucts8ur24" path="res://asset/style/buttons/green_hover.png" id="24_na6te"]
+[ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="25_dpt8v"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_na6te"]
 texture = ExtResource("3_8yr05")
@@ -87,6 +88,15 @@ texture = ExtResource("23_p5gww")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4p7hf"]
 texture = ExtResource("24_na6te")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dpt8v"]
+texture = ExtResource("14_35jv5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1mue4"]
+texture = ExtResource("15_xsxuu")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_35jv5"]
+texture = ExtResource("16_p5gww")
 
 [node name="StudentQuizSession" type="Control" unique_id=1258307384]
 layout_mode = 3
@@ -193,7 +203,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MultipleChoicesContainer" type="VBoxContainer" parent="QuizPanel" unique_id=308870127]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -262,6 +271,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_wr0b7")
 text = "Choices D"
 
 [node name="TrueorFalseContainer" type="VBoxContainer" parent="QuizPanel" unique_id=699642755]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -312,9 +322,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -292.5
-offset_top = 68.0
+offset_top = 16.0
 offset_right = 292.5
-offset_bottom = 230.0
+offset_bottom = 178.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
@@ -324,7 +334,15 @@ alignment = 1
 custom_minimum_size = Vector2(0, 70)
 custom_maximum_size = Vector2(700, -1)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_aumap")
+theme_override_font_sizes/font_size = 18
 
 [node name="SubmitButton" type="Button" parent="QuizPanel/IdentificationContainer" unique_id=2094689871]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("25_dpt8v")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_dpt8v")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_1mue4")
+theme_override_styles/hover = SubResource("StyleBoxTexture_35jv5")
 text = "Submit Answer"

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://d3tgybt6c4y85"
+path="res://.godot/imported/HardMapNPC 1.aseprite-842794d46c8e8154330da97bc5d1a05f.res"
+
+[deps]
+
+source_file="res://asset/npc animation/Hard NPC Animations/HardMapNPC 1.aseprite"
+dest_files=["res://.godot/imported/HardMapNPC 1.aseprite-842794d46c8e8154330da97bc5d1a05f.res"]
+
+[params]
+

@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://bw63big3fpuwh"]
+[gd_scene format=3]
 
 [ext_resource type="Script" uid="uid://t7oxblboijow" path="res://scene/Dashboard/UserDashboard/Professor Dashboard/ProfessorProfile.cs" id="1_xt1yg"]
 [ext_resource type="Texture2D" uid="uid://s3wgaw46w4f5" path="res://asset/style/LargeBackground.png" id="2_u18bl"]

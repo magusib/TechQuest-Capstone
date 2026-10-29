@@ -2,6 +2,61 @@
 
 [ext_resource type="Script" uid="uid://col0h2er2lwnr" path="res://scene/Dashboard/Modules/Shop/ProfessorShop.cs" id="1_37531"]
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_6imhl"]
+[ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="3_da1y2"]
+[ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="3_v2lk6"]
+[ext_resource type="Texture2D" uid="uid://eemnt7qlvphw" path="res://asset/style/ButtonLargeBlue.png" id="4_tlyab"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="4_twb22"]
+[ext_resource type="Texture2D" uid="uid://bb0ta7fpshg6x" path="res://asset/style/buttons/navy_default.png" id="4_yu8wx"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="5_e6spk"]
+[ext_resource type="Texture2D" uid="uid://dh200awrt2vr6" path="res://asset/style/buttons/navy_pressed.png" id="5_sc1xd"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="6_3m561"]
+[ext_resource type="Texture2D" uid="uid://bl41b4avx37o6" path="res://asset/style/buttons/navy_hover.png" id="6_da1y2"]
+[ext_resource type="Texture2D" uid="uid://1gulk27338gb" path="res://asset/style/buttons/purple_default.png" id="7_tlyab"]
+[ext_resource type="Texture2D" uid="uid://ccp6phfbab71x" path="res://asset/style/buttons/purple_pressed.png" id="8_6pxty"]
+[ext_resource type="Texture2D" uid="uid://b2a73j458kdvc" path="res://asset/style/buttons/purple_hover.png" id="9_0jgse"]
+[ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="12_6pxty"]
+[ext_resource type="Texture2D" uid="uid://dclpu3xmblprx" path="res://asset/style/UI_Flat_Banner03a.png" id="13_0jgse"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6pxty"]
+texture = ExtResource("4_tlyab")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8stj8"]
+texture = ExtResource("4_yu8wx")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dp87b"]
+texture = ExtResource("5_sc1xd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_72ft1"]
+texture = ExtResource("6_da1y2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hqswc"]
+texture = ExtResource("7_tlyab")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1phk8"]
+texture = ExtResource("8_6pxty")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4yycq"]
+texture = ExtResource("9_0jgse")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f63pi"]
+texture = ExtResource("12_6pxty")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glqgq"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_right = 88
+corner_radius_bottom_left = 88
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cxihs"]
+texture = ExtResource("13_0jgse")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p7fwl"]
+texture = ExtResource("4_twb22")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gtio2"]
+texture = ExtResource("5_e6spk")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yu8wx"]
+texture = ExtResource("6_3m561")
 
 [node name="ProfessorShop" type="Control" unique_id=49887313]
 layout_mode = 3
@@ -37,14 +92,19 @@ offset_bottom = 295.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ShopTitle" type="Label" parent="ShopPanel" unique_id=4177978]
+[node name="ShopTitle" type="Label" parent="ShopPanel" unique_id=641867889]
 layout_mode = 0
-offset_left = 30.0
-offset_top = 20.0
-offset_right = 600.0
-offset_bottom = 65.0
-theme_override_font_sizes/font_size = 28
+offset_left = 10.0
+offset_top = 16.5
+offset_right = 580.0
+offset_bottom = 87.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_da1y2")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxTexture_6pxty")
 text = "PROFESSOR CHARACTER SHOP"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CategoryButtons" type="HBoxContainer" parent="ShopPanel" unique_id=1987506456]
 layout_mode = 0
@@ -54,14 +114,24 @@ offset_right = 430.0
 offset_bottom = 130.0
 theme_override_constants/separation = 12
 
-[node name="CharacterButton" type="Button" parent="ShopPanel/CategoryButtons" unique_id=1590732471]
+[node name="CharacterButton" type="Button" parent="ShopPanel/CategoryButtons" unique_id=1378156340]
 custom_minimum_size = Vector2(180, 45)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_v2lk6")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_8stj8")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_dp87b")
+theme_override_styles/hover = SubResource("StyleBoxTexture_72ft1")
 text = "CHARACTER"
 
-[node name="AvatarButton" type="Button" parent="ShopPanel/CategoryButtons" unique_id=463872664]
+[node name="AvatarButton" type="Button" parent="ShopPanel/CategoryButtons" unique_id=63021431]
 custom_minimum_size = Vector2(180, 45)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_v2lk6")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_hqswc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_1phk8")
+theme_override_styles/hover = SubResource("StyleBoxTexture_4yycq")
 text = "AVATAR"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ShopPanel" unique_id=105022366]
@@ -75,50 +145,71 @@ horizontal_scroll_mode = 0
 [node name="ItemGrid" type="GridContainer" parent="ShopPanel/ScrollContainer" unique_id=1790528719]
 custom_minimum_size = Vector2(1040, 0)
 layout_mode = 2
-theme_override_constants/h_separation = 18
-theme_override_constants/v_separation = 18
+theme_override_constants/h_separation = 100
+theme_override_constants/v_separation = 50
 columns = 3
 
-[node name="ItemPanel" type="Panel" parent="ShopPanel" unique_id=1891862233]
+[node name="ItemPanel" type="Panel" parent="ShopPanel" unique_id=747700308]
 layout_mode = 0
 offset_left = 69.0
 offset_top = 148.5
 offset_right = 347.0
 offset_bottom = 579.5
+theme_override_styles/panel = SubResource("StyleBoxTexture_f63pi")
 
-[node name="ItemPlaceholder" type="TextureRect" parent="ShopPanel/ItemPanel" unique_id=120473942]
-layout_mode = 0
-offset_left = 21.0
-offset_top = 13.0
-offset_right = 255.0
-offset_bottom = 365.0
+[node name="ItemPlaceholder" type="TextureRect" parent="ShopPanel/ItemPanel" unique_id=159578102]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 4.0
+offset_top = 23.0
+offset_right = -4.0
+offset_bottom = 374.0
+grow_horizontal = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="ShopPanel/ItemPanel" unique_id=247184611]
+[node name="Label" type="Label" parent="ShopPanel/ItemPanel" unique_id=588507430]
 layout_mode = 0
-offset_left = 212.0
-offset_top = 16.0
-offset_right = 260.0
-offset_bottom = 39.0
-text = "Price"
+offset_left = 166.0
+offset_top = 17.0
+offset_right = 273.0
+offset_bottom = 40.0
+theme_override_fonts/font = ExtResource("3_v2lk6")
+theme_override_styles/normal = SubResource("StyleBoxFlat_glqgq")
+text = "0 Coins"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Label2" type="Label" parent="ShopPanel/ItemPanel" unique_id=197508436]
-layout_mode = 0
-offset_left = 117.0
-offset_top = 325.0
-offset_right = 230.0
-offset_bottom = 348.0
-text = "Name"
-
-[node name="BackButton" type="Button" parent="." unique_id=1524563099]
+[node name="Label2" type="Label" parent="ShopPanel/ItemPanel" unique_id=1935150634]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -122.0
-offset_top = 24.0
-offset_right = -16.0
-offset_bottom = 63.0
-grow_horizontal = 0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -135.0
+offset_top = 98.0
+offset_right = 135.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_v2lk6")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_cxihs")
+text = "Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BackButton" type="Button" parent="." unique_id=24626142]
+layout_mode = 0
+offset_left = 1045.0
+offset_top = 94.0
+offset_right = 1151.0
+offset_bottom = 133.0
+theme_override_fonts/font = ExtResource("3_v2lk6")
+theme_override_styles/normal = SubResource("StyleBoxTexture_p7fwl")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_gtio2")
+theme_override_styles/hover = SubResource("StyleBoxTexture_yu8wx")
 text = "Back"

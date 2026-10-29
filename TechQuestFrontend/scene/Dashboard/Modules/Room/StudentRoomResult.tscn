@@ -2,6 +2,55 @@
 
 [ext_resource type="Script" uid="uid://jr0dqqq214c3" path="res://scene/Dashboard/Modules/Room/StudentRoomResult.cs" id="1_cah6h"]
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="1_d58qk"]
+[ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="3_lyx2i"]
+[ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="4_exnky"]
+[ext_resource type="Texture2D" uid="uid://dclpu3xmblprx" path="res://asset/style/UI_Flat_Banner03a.png" id="5_afk58"]
+[ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="6_wr0b7"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="7_qaqcl"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="8_abxwh"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="9_3ug7d"]
+[ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="10_hu71x"]
+[ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="11_8bh66"]
+[ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="12_6783q"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6rjp0"]
+texture = ExtResource("3_lyx2i")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4reej"]
+texture = ExtResource("5_afk58")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a6ilm"]
+texture = ExtResource("7_qaqcl")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k0xx1"]
+texture = ExtResource("8_abxwh")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_87nl1"]
+texture = ExtResource("9_3ug7d")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ke8pu"]
+texture = ExtResource("10_hu71x")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vey5k"]
+texture = ExtResource("11_8bh66")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o6ifr"]
+texture = ExtResource("12_6783q")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lyx2i"]
+texture = ExtResource("3_lyx2i")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_exnky"]
+texture = ExtResource("5_afk58")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_afk58"]
+texture = ExtResource("10_hu71x")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wr0b7"]
+texture = ExtResource("11_8bh66")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qaqcl"]
+texture = ExtResource("12_6783q")
 
 [node name="StudentRoomResult" type="Control" unique_id=1928203100]
 layout_mode = 3
@@ -36,6 +85,7 @@ offset_right = 215.5
 offset_bottom = 275.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_6rjp0")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="RoomResult" unique_id=361741345]
 layout_mode = 0
@@ -43,15 +93,23 @@ offset_left = 26.5
 offset_top = 19.0
 offset_right = 404.5
 offset_bottom = 460.0
-theme_override_constants/separation = 30
+theme_override_constants/separation = 25
 
 [node name="QuizResultLabel" type="Label" parent="RoomResult/VBoxContainer" unique_id=908099689]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_exnky")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_4reej")
 text = "Quiz Result"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="SubjectNameLabel" type="Label" parent="RoomResult/VBoxContainer" unique_id=1300431637]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
+theme_override_font_sizes/font_size = 18
 text = "Subject Name"
 horizontal_alignment = 1
 
@@ -60,27 +118,43 @@ layout_mode = 2
 
 [node name="ScoreLabel" type="Label" parent="RoomResult/VBoxContainer" unique_id=1406635801]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
+theme_override_font_sizes/font_size = 20
 text = "Score: 0/0"
 horizontal_alignment = 1
 
 [node name="CorrectLabel" type="Label" parent="RoomResult/VBoxContainer" unique_id=1213773429]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Correct Answer:"
 
 [node name="IncorrectLabel" type="Label" parent="RoomResult/VBoxContainer" unique_id=1740785823]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Incorrect Answer:"
 
 [node name="PercentageLabel" type="Label" parent="RoomResult/VBoxContainer" unique_id=285037829]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Percentage"
 
 [node name="ReviewButton" type="Button" parent="RoomResult/VBoxContainer" unique_id=494088054]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_exnky")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_a6ilm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_k0xx1")
+theme_override_styles/hover = SubResource("StyleBoxTexture_87nl1")
 text = "Review Answer"
 
 [node name="BackButton" type="Button" parent="RoomResult/VBoxContainer" unique_id=1433561213]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_exnky")
+theme_override_styles/normal = SubResource("StyleBoxTexture_ke8pu")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_vey5k")
+theme_override_styles/hover = SubResource("StyleBoxTexture_o6ifr")
 text = "Back"
 
 [node name="QuizReview" type="Panel" parent="." unique_id=288258048]
@@ -97,6 +171,7 @@ offset_right = 250.0
 offset_bottom = 250.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_lyx2i")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="QuizReview" unique_id=1945448826]
 layout_mode = 0
@@ -111,16 +186,23 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="QuizReviewLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer" unique_id=291920291]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_exnky")
+theme_override_styles/normal = SubResource("StyleBoxTexture_exnky")
 text = "Quiz Review"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="SubjectNameLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer" unique_id=802479133]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Subject Name:"
 
 [node name="ScoreLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer" unique_id=1178053009]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Score:"
 
 [node name="MultipleChoicesPanel" type="Panel" parent="QuizReview/ScrollContainer/VBoxContainer" unique_id=482121091]
@@ -137,31 +219,38 @@ theme_override_constants/separation = 20
 
 [node name="QuestionLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/MultipleChoicesPanel/MultipleChoicesContainer" unique_id=682958801]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Question "
 horizontal_alignment = 1
 
 [node name="ChoicesA Label" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/MultipleChoicesPanel/MultipleChoicesContainer" unique_id=1698777927]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Choices A"
 
 [node name="ChoicesB Label" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/MultipleChoicesPanel/MultipleChoicesContainer" unique_id=752105314]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Choices B"
 
 [node name="ChoicesC Label" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/MultipleChoicesPanel/MultipleChoicesContainer" unique_id=420210179]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Choices C"
 
 [node name="ChoicesD Label" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/MultipleChoicesPanel/MultipleChoicesContainer" unique_id=848503587]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Choices D"
 
 [node name="YourAnswerLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/MultipleChoicesPanel/MultipleChoicesContainer" unique_id=1314418057]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Your Answer:"
 
 [node name="CorrectAnswerLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/MultipleChoicesPanel/MultipleChoicesContainer" unique_id=238795945]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Correct Answer:"
 
 [node name="TrueOrFalsePanel" type="Panel" parent="QuizReview/ScrollContainer/VBoxContainer" unique_id=935264605]
@@ -178,23 +267,28 @@ theme_override_constants/separation = 20
 
 [node name="QuestionLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/TrueOrFalsePanel/TrueOrFalseContainer" unique_id=458208044]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Question "
 horizontal_alignment = 1
 
 [node name="TrueLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/TrueOrFalsePanel/TrueOrFalseContainer" unique_id=359489025]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "True"
 
 [node name="FalseLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/TrueOrFalsePanel/TrueOrFalseContainer" unique_id=1760538137]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "False"
 
 [node name="YourAnswerLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/TrueOrFalsePanel/TrueOrFalseContainer" unique_id=1970239323]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Your Answer:"
 
 [node name="CorrectAnswerLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/TrueOrFalsePanel/TrueOrFalseContainer" unique_id=922088242]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Correct Answer:"
 
 [node name="IdentificationPanel" type="Panel" parent="QuizReview/ScrollContainer/VBoxContainer" unique_id=473875807]
@@ -211,24 +305,32 @@ theme_override_constants/separation = 20
 
 [node name="QuestionLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/IdentificationPanel/IdentificationContainer" unique_id=2144214690]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Question "
 horizontal_alignment = 1
 
 [node name="YourAnswerLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/IdentificationPanel/IdentificationContainer" unique_id=1895499282]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Your Answer:"
 
 [node name="CorrectAnswerLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/IdentificationPanel/IdentificationContainer" unique_id=1815886789]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Correct Answer:"
 
 [node name="CloseButton" type="Button" parent="QuizReview/ScrollContainer/VBoxContainer" unique_id=1152710277]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_wr0b7")
 
 [node name="CloseButton" type="Button" parent="QuizReview" unique_id=74960485]
 layout_mode = 0
-offset_left = 380.0
-offset_top = 450.0
-offset_right = 488.0
-offset_bottom = 488.0
+offset_left = 165.0
+offset_top = 449.0
+offset_right = 320.0
+offset_bottom = 487.0
+theme_override_fonts/font = ExtResource("4_exnky")
+theme_override_styles/normal = SubResource("StyleBoxTexture_afk58")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_wr0b7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qaqcl")
 text = "Close"

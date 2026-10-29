@@ -1,9 +1,16 @@
 [gd_scene format=3 uid="uid://du1wjyf2tggkf"]
 
 [ext_resource type="Script" uid="uid://bir448gpc5yum" path="res://scene/Dashboard/Modules/Tutorial/AdminTutorial.cs" id="1_32dci"]
-[ext_resource type="Texture2D" uid="uid://dk37jnjagjxht" path="res://asset/Icons/exis.png" id="2_4hako"]
-[ext_resource type="Texture2D" uid="uid://djkcmxvc8psqv" path="res://asset/Icons/next.png" id="3_q2qxb"]
-[ext_resource type="Texture2D" uid="uid://yvumvh0cbira" path="res://asset/Icons/previous.png" id="4_qh83j"]
+[ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="2_qh83j"]
+[ext_resource type="Texture2D" uid="uid://dclpu3xmblprx" path="res://asset/style/UI_Flat_Banner03a.png" id="3_00cfu"]
+[ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="4_73jii"]
+[ext_resource type="Texture2D" uid="uid://15txwm2nnpi8" path="res://asset/style/ButtonClose2.png" id="5_uy8dk"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_84erq"]
+texture = ExtResource("2_qh83j")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cgc4u"]
+texture = ExtResource("3_00cfu")
 
 [node name="AdminTutorial" type="Control" unique_id=771159583]
 layout_mode = 3
@@ -16,17 +23,16 @@ script = ExtResource("1_32dci")
 
 [node name="MainPanel" type="Panel" parent="." unique_id=973801025]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -488.0
-offset_top = -253.5
-offset_right = 488.0
-offset_bottom = 253.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = -24.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_84erq")
 
 [node name="HeaderPanel" type="Panel" parent="MainPanel" unique_id=270731857]
 layout_mode = 1
@@ -34,6 +40,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 58.5
 grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_cgc4u")
 
 [node name="AdminTutorial" type="Label" parent="MainPanel/HeaderPanel" unique_id=445812191]
 layout_mode = 1
@@ -48,6 +55,9 @@ offset_right = 62.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_73jii")
+theme_override_font_sizes/font_size = 26
 text = "Admin Tutorial"
 
 [node name="BackButton" type="Button" parent="MainPanel/HeaderPanel" unique_id=736844715]
@@ -57,61 +67,131 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -52.0
-offset_top = -20.5
-offset_right = -7.0
-offset_bottom = 20.5
+offset_left = -87.0
+offset_top = -39.75
+offset_right = 29.0
+offset_bottom = 53.0
 grow_horizontal = 0
 grow_vertical = 2
-icon = ExtResource("2_4hako")
+icon = ExtResource("5_uy8dk")
 flat = true
 icon_alignment = 1
 expand_icon = true
 
 [node name="TutorialPanel" type="Panel" parent="MainPanel" unique_id=918685856]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -462.0
-offset_top = -165.0
-offset_right = 462.0
-offset_bottom = 205.0
+anchors_preset = -1
+anchor_left = 0.03
+anchor_top = 0.14
+anchor_right = 0.97
+anchor_bottom = 0.96
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NextButton" type="Button" parent="MainPanel" unique_id=329880424]
+[node name="ScrollContainer" type="ScrollContainer" parent="MainPanel/TutorialPanel" unique_id=1306023424]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 151.5
-offset_top = -48.0
-offset_right = 248.5
 grow_horizontal = 2
-grow_vertical = 0
-icon = ExtResource("3_q2qxb")
-flat = true
-icon_alignment = 1
-expand_icon = true
+grow_vertical = 2
+horizontal_scroll_mode = 0
 
-[node name="PreviousButton" type="Button" parent="MainPanel" unique_id=1969976375]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -248.5
-offset_top = -48.0
-offset_right = -151.5
-grow_horizontal = 2
-grow_vertical = 0
-icon = ExtResource("4_qh83j")
-flat = true
-icon_alignment = 1
-expand_icon = true
+[node name="TutorialMargins" type="MarginContainer" parent="MainPanel/TutorialPanel/ScrollContainer" unique_id=2145466269]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 16
+
+[node name="TutorialSections" type="VBoxContainer" parent="MainPanel/TutorialPanel/ScrollContainer/TutorialMargins" unique_id=1592393651]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="TutorailTextLabel" type="RichTextLabel" parent="MainPanel/TutorialPanel/ScrollContainer/TutorialMargins/TutorialSections" unique_id=977831603]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 17
+bbcode_enabled = true
+text = "[center][color=#F5C451][font_size=32][b]⚔ TECHQUEST ⚔[/b][/font_size][/color]
+[color=#55CFFF][font_size=24][b]✦ GAME TUTORIAL ✦[/b][/font_size][/color]
+[color=#FFFFFF][i]Your Adventure Begins Here![/i][/color][/center]
+
+[color=#4DD9FF]━━━━━━━━━━━━━━━━━━━━━━━━━━━━[/color]
+
+[center][color=#FFD166][font_size=22][b]🌟 WELCOME, ADVENTURER! 🌟[/b][/font_size][/color][/center]
+
+Welcome, Adventurer! Your journey starts here. Explore the academy, meet characters, complete quests, and discover new challenges along the way!
+
+[color=#4DD9FF]━━━━━━━━━━━━━━━━━━━━━━━━━━━━[/color]
+
+[color=#55CFFF][font_size=22][b]🗺 ADVENTURE GAME[/b][/font_size][/color]
+
+In Adventure Mode, you can explore the map, walk, jump, interact with NPCs, play mini-games, and answer quizzes.
+
+[color=#7CFFB2][b]✦ Your Mission:[/b][/color]
+Explore the academy and discover what awaits you!
+
+[color=#4DD9FF]━━━━━━━━━━━━━━━━━━━━━━━━━━━━[/color]
+
+[color=#55CFFF][font_size=22][b]🎮 LEARN THE CONTROLS[/b][/font_size][/color]
+
+Move your character around the map, find NPCs, and discover quest locations.
+
+[color=#FFD166][b]⌨ MOVEMENT KEYS[/b][/color]
+
+[color=#7DC8FF][b]  [ A ] / [ ← ][/b][/color]  Move Left
+[color=#7DC8FF][b]  [ D ] / [ → ][/b][/color]  Move Right
+[color=#7DC8FF][b]  [ SPACE ][/b][/color]  Jump
+
+[color=#7CFFB2][i]Master the controls and prepare for your adventure![/i][/color]
+
+[color=#4DD9FF]━━━━━━━━━━━━━━━━━━━━━━━━━━━━[/color]
+
+[color=#C6A0FF][font_size=22][b]💬 TALK TO NPCs[/b][/font_size][/color]
+
+Approach an NPC and interact with them to discover their challenges. Complete their challenges to earn rewards and make progress in your adventure.
+
+[color=#FFD166][b]💡 ADVENTURER'S TIP[/b][/color]
+[color=#FFF0A6]Pay attention to the NPC's instructions so you know what to do![/color]
+
+[color=#4DD9FF]━━━━━━━━━━━━━━━━━━━━━━━━━━━━[/color]
+
+[color=#FFD166][font_size=22][b]📜 COMPLETE YOUR QUESTS[/b][/font_size][/color]
+
+Open your Quest Menu to view your objectives and track your progress. Complete the required activities, interact with NPCs, play mini-games, and collect the required coins and points.
+
+[color=#7CFFB2][b]★ QUEST OBJECTIVE ★[/b][/color]
+Keep completing your objectives to finish your quests!
+
+[color=#4DD9FF]━━━━━━━━━━━━━━━━━━━━━━━━━━━━[/color]
+
+[color=#FF9D66][font_size=22][b]🕹 PLAY MINI-GAMES[/b][/font_size][/color]
+
+Take on mini-games to test your skills! Follow the instructions for each challenge, complete its requirements, and earn rewards.
+
+[color=#FFD166][b]🏆 CHALLENGE YOURSELF![/b][/color]
+Improve your skills and enjoy every mini-game!
+
+[color=#4DD9FF]━━━━━━━━━━━━━━━━━━━━━━━━━━━━[/color]
+
+[color=#C6A0FF][font_size=22][b]❓ QUIZ GAME[/b][/font_size][/color]
+
+Look for quiz challenges around the map and test your knowledge by answering questions.
+
+[color=#7CFFB2][b]✦ Earn rewards by answering correctly! ✦[/b][/color]
+
+Continue your learning adventure and prove your knowledge!
+
+[color=#4DD9FF]━━━━━━━━━━━━━━━━━━━━━━━━━━━━[/color]
+
+[center][color=#FFD166][font_size=26][b]🏆 YOU'RE READY TO BEGIN! 🏆[/b][/font_size][/color]
+
+[color=#FFFFFF]Explore the academy, complete challenges, help NPCs, and become a TechQuest champion![/color]
+
+[color=#55CFFF][font_size=20][b]⚔ GOOD LUCK, ADVENTURER! ⚔[/b][/font_size][/color]
+[color=#7CFFB2][i]Your quest begins now![/i][/color][/center]"
+fit_content = true
+scroll_active = false

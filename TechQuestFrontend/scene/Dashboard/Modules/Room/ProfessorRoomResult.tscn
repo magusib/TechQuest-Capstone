@@ -2,6 +2,28 @@
 
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="1_01xee"]
 [ext_resource type="Script" uid="uid://cwqk80xt863xm" path="res://scene/Dashboard/Modules/Room/ProfessorRoomResult.cs" id="2_fvlsb"]
+[ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="3_donf5"]
+[ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="4_0fnl5"]
+[ext_resource type="Texture2D" uid="uid://dclpu3xmblprx" path="res://asset/style/UI_Flat_Banner03a.png" id="5_3k3pe"]
+[ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="6_b2pfs"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="7_b2pfs"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="8_4o44x"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="9_ugtlk"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_aqdwg"]
+texture = ExtResource("3_donf5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lj8cm"]
+texture = ExtResource("5_3k3pe")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4o44x"]
+texture = ExtResource("7_b2pfs")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ugtlk"]
+texture = ExtResource("8_4o44x")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vl3gu"]
+texture = ExtResource("9_ugtlk")
 
 [node name="ProfessorRoomResult" type="Control" unique_id=1563331723]
 layout_mode = 3
@@ -25,11 +47,19 @@ stretch_mode = 6
 metadata/_edit_use_anchors_ = true
 
 [node name="RoomResultPanel" type="Panel" parent="." unique_id=2070494999]
-layout_mode = 0
-offset_left = 79.0
-offset_top = 72.0
-offset_right = 1072.0
-offset_bottom = 616.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -496.5
+offset_top = -272.0
+offset_right = 496.5
+offset_bottom = 272.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_aqdwg")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="RoomResultPanel" unique_id=1115254671]
 layout_mode = 0
@@ -46,16 +76,24 @@ theme_override_constants/separation = 50
 
 [node name="StudentResultLabel" type="Label" parent="RoomResultPanel/ScrollContainer/RoomResultContainer" unique_id=1454442048]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_0fnl5")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxTexture_lj8cm")
 text = "Student Result"
 horizontal_alignment = 1
 
 [node name="SubjectNameLabel" type="Label" parent="RoomResultPanel/ScrollContainer/RoomResultContainer" unique_id=823657537]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_b2pfs")
+theme_override_font_sizes/font_size = 25
 text = "Subject Name:"
 horizontal_alignment = 1
 
 [node name="RoomCodeLabel" type="Label" parent="RoomResultPanel/ScrollContainer/RoomResultContainer" unique_id=743425734]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_b2pfs")
+theme_override_font_sizes/font_size = 25
 text = "Room Code:"
 horizontal_alignment = 1
 
@@ -74,17 +112,26 @@ theme_override_constants/separation = 50
 
 [node name="StudentNameLabel" type="Label" parent="RoomResultPanel/ScrollContainer/RoomResultContainer/StudentScorePanel/StudentScoreContainer" unique_id=1792974112]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_b2pfs")
+theme_override_font_sizes/font_size = 20
 text = "Student Name:"
 
 [node name="StudentScoreLabel" type="Label" parent="RoomResultPanel/ScrollContainer/RoomResultContainer/StudentScorePanel/StudentScoreContainer" unique_id=1140325178]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_b2pfs")
+theme_override_font_sizes/font_size = 20
 text = "Student Score:"
 
 [node name="BackButton" type="Button" parent="." unique_id=1525223564]
 layout_mode = 0
-offset_left = 13.0
-offset_top = 13.0
-offset_right = 92.0
-offset_bottom = 51.0
+offset_left = 998.0
+offset_top = 117.0
+offset_right = 1106.0
+offset_bottom = 155.0
+theme_override_fonts/font = ExtResource("4_0fnl5")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_4o44x")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ugtlk")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vl3gu")
 text = "Back
 "

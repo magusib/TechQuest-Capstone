@@ -92,7 +92,7 @@ public partial class MapPlayerSpawner : Node2D
 		if (UserSession.IsAdmin)
 			return;
 
-		Camera2D adminCamera = GetNodeOrNull<Camera2D>("MapHUDLayer/AdminMapHUD/AdminCamera2D");
+		Camera2D adminCamera = GetNodeOrNull<Camera2D>("AdminCamera2D");
 		if (adminCamera == null)
 			return;
 

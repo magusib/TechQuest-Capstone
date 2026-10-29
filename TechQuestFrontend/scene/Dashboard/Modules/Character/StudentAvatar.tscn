@@ -3,10 +3,86 @@
 [ext_resource type="Script" uid="uid://igw5lvdt3emv" path="res://scene/Dashboard/Modules/Character/StudentAvatar.cs" id="1"]
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="1_h0vdb"]
 [ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="3_n52gr"]
+[ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="3_s5pun"]
+[ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="4_kvw6e"]
+[ext_resource type="Texture2D" uid="uid://cyqkrvyj6vbo8" path="res://asset/style/label1.png" id="4_xv7tf"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="5_6i52s"]
+[ext_resource type="Texture2D" uid="uid://dclpu3xmblprx" path="res://asset/style/UI_Flat_Banner03a.png" id="5_swojf"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="6_nugp3"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="7_4ryhj"]
+[ext_resource type="Texture2D" uid="uid://bb0ta7fpshg6x" path="res://asset/style/buttons/navy_default.png" id="8_w3saw"]
+[ext_resource type="Texture2D" uid="uid://dh200awrt2vr6" path="res://asset/style/buttons/navy_pressed.png" id="9_0p7dv"]
+[ext_resource type="Texture2D" uid="uid://bl41b4avx37o6" path="res://asset/style/buttons/navy_hover.png" id="10_f36sp"]
+[ext_resource type="Texture2D" uid="uid://1gulk27338gb" path="res://asset/style/buttons/purple_default.png" id="11_mn0xo"]
+[ext_resource type="Texture2D" uid="uid://ccp6phfbab71x" path="res://asset/style/buttons/purple_pressed.png" id="12_r8g6a"]
+[ext_resource type="Texture2D" uid="uid://b2a73j458kdvc" path="res://asset/style/buttons/purple_hover.png" id="13_xf8tk"]
+[ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="14_w3saw"]
+[ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="15_0p7dv"]
+[ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="16_f36sp"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qebxm"]
+texture = ExtResource("4_xv7tf")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b8bx3"]
+texture = ExtResource("5_6i52s")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_65el4"]
+texture = ExtResource("6_nugp3")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1mmbt"]
+texture = ExtResource("7_4ryhj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ok1g8"]
+texture = ExtResource("8_w3saw")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8l6mk"]
+texture = ExtResource("9_0p7dv")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rtgyd"]
+texture = ExtResource("10_f36sp")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mhxg7"]
+texture = ExtResource("11_mn0xo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bfodj"]
+texture = ExtResource("12_r8g6a")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2fbp5"]
+texture = ExtResource("13_xf8tk")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pmqx0"]
+texture = ExtResource("14_w3saw")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g50rr"]
+texture = ExtResource("15_0p7dv")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gl2re"]
+texture = ExtResource("16_f36sp")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jvy1l"]
+texture = ExtResource("14_w3saw")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_txpxb"]
+texture = ExtResource("15_0p7dv")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4tj6t"]
+texture = ExtResource("16_f36sp")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pqt2k"]
 texture = ExtResource("3_n52gr")
 region_rect = Rect2(0, 2, 96, 62)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mkebh"]
+texture = ExtResource("5_swojf")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mo455"]
+texture = ExtResource("5_6i52s")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_16564"]
+texture = ExtResource("6_nugp3")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lrwpg"]
+texture = ExtResource("7_4ryhj")
 
 [node name="StudentAvatar" type="Control" unique_id=1658290712]
 layout_mode = 3
@@ -60,15 +136,25 @@ custom_minimum_size = Vector2(0, 55)
 layout_mode = 2
 
 [node name="Title" type="Label" parent="AvatarPanel/MainContainer/Header" unique_id=1870194423]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_s5pun")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxTexture_qebxm")
 text = "AVATAR"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="BackButton" type="Button" parent="AvatarPanel/MainContainer/Header" unique_id=1054947186]
-custom_minimum_size = Vector2(55, 45)
+custom_minimum_size = Vector2(113, 45)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_s5pun")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_b8bx3")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_65el4")
+theme_override_styles/hover = SubResource("StyleBoxTexture_1mmbt")
 text = "Back"
 
 [node name="CategoryButtons" type="HBoxContainer" parent="AvatarPanel/MainContainer" unique_id=471501423]
@@ -79,11 +165,21 @@ alignment = 1
 [node name="CharacterButton" type="Button" parent="AvatarPanel/MainContainer/CategoryButtons" unique_id=711680137]
 custom_minimum_size = Vector2(180, 45)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_s5pun")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_ok1g8")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_8l6mk")
+theme_override_styles/hover = SubResource("StyleBoxTexture_rtgyd")
 text = "CHARACTER"
 
 [node name="AvatarButton" type="Button" parent="AvatarPanel/MainContainer/CategoryButtons" unique_id=1856506656]
 custom_minimum_size = Vector2(180, 45)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_s5pun")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_mhxg7")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_bfodj")
+theme_override_styles/hover = SubResource("StyleBoxTexture_2fbp5")
 text = "AVATAR"
 
 [node name="AvatarArea" type="PanelContainer" parent="AvatarPanel/MainContainer" unique_id=1783689982]
@@ -107,13 +203,21 @@ theme_override_constants/separation = 18
 alignment = 1
 
 [node name="LeftArrow" type="Button" parent="AvatarPanel/MainContainer/CarouselArrows" unique_id=1864973221]
-custom_minimum_size = Vector2(55, 45)
+custom_minimum_size = Vector2(120, 45)
 layout_mode = 2
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxTexture_pmqx0")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_g50rr")
+theme_override_styles/hover = SubResource("StyleBoxTexture_gl2re")
 text = "←"
 
 [node name="RightArrow" type="Button" parent="AvatarPanel/MainContainer/CarouselArrows" unique_id=1864973222]
-custom_minimum_size = Vector2(55, 45)
+custom_minimum_size = Vector2(120, 45)
 layout_mode = 2
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxTexture_jvy1l")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_txpxb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_4tj6t")
 text = "→"
 
 [node name="StudentAvatarItem" type="PanelContainer" parent="." unique_id=1466177943]
@@ -144,9 +248,17 @@ stretch_mode = 5
 
 [node name="AvatarName" type="Label" parent="StudentAvatarItem/ItemContainer" unique_id=1906826780]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_kvw6e")
+theme_override_styles/normal = SubResource("StyleBoxTexture_mkebh")
 text = "Avatar"
 horizontal_alignment = 1
 
 [node name="UseButton" type="Button" parent="StudentAvatarItem/ItemContainer" unique_id=21413776]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_s5pun")
+theme_override_styles/normal = SubResource("StyleBoxTexture_mo455")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_16564")
+theme_override_styles/hover = SubResource("StyleBoxTexture_lrwpg")
 text = "USE"

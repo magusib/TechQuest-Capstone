@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cco5hp5rkydq2"
+path="res://.godot/imported/MediumMapNPC 2.aseprite-b2db5bffe20c045452d99e8b92fac5f0.res"
+
+[deps]
+
+source_file="res://asset/npc animation/Medium NPC Animations/MediumMapNPC 2.aseprite"
+dest_files=["res://.godot/imported/MediumMapNPC 2.aseprite-b2db5bffe20c045452d99e8b92fac5f0.res"]
+
+[params]
+

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dadutb36wr1nd"
+path="res://.godot/imported/EasyMapNPC 5.aseprite-b96bfa7088f8024186c243c95b9de249.res"
+
+[deps]
+
+source_file="res://asset/npc animation/Easy NPC Animations/EasyMapNPC 5.aseprite"
+dest_files=["res://.godot/imported/EasyMapNPC 5.aseprite-b96bfa7088f8024186c243c95b9de249.res"]
+
+[params]
+

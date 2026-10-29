@@ -75,8 +75,8 @@ horizontal_scroll_mode = 0
 [node name="ItemGrid" type="GridContainer" parent="ShopPanel/ScrollContainer" unique_id=1956358120]
 custom_minimum_size = Vector2(1040, 0)
 layout_mode = 2
-theme_override_constants/h_separation = 18
-theme_override_constants/v_separation = 18
+theme_override_constants/h_separation = 100
+theme_override_constants/v_separation = 50
 columns = 3
 
 [node name="ItemPanel" type="Panel" parent="ShopPanel" unique_id=1406702008]

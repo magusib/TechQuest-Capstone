@@ -2,6 +2,8 @@ using Godot;
 
 public partial class AdminCamera2d : Camera2D
 {
+	private const float CameraSpeed = 600f;
+
 	public override void _Ready()
 	{
 		UpdateCameraState();
@@ -16,15 +18,8 @@ public partial class AdminCamera2d : Camera2D
 			return;
 		}
 
-		if (Input.IsActionPressed("move_left"))
-		{
-			GlobalPosition += new Vector2(-10, 0);
-		}
-
-		if (Input.IsActionPressed("move_right"))
-		{
-			GlobalPosition += new Vector2(10, 0);
-		}
+		Vector2 direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+		GlobalPosition += direction * CameraSpeed * (float)delta;
 	}
 
 	private void UpdateCameraState()

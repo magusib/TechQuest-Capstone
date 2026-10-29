@@ -2,8 +2,70 @@
 
 [ext_resource type="Script" uid="uid://dqpupq3kmnutt" path="res://scene/Dashboard/Modules/Shop/StudentShop.cs" id="1_cys1c"]
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_7j4ni"]
+[ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="3_fsoxq"]
+[ext_resource type="Texture2D" uid="uid://eemnt7qlvphw" path="res://asset/style/ButtonLargeBlue.png" id="4_a5yq5"]
+[ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="5_04hb4"]
+[ext_resource type="Texture2D" uid="uid://bb0ta7fpshg6x" path="res://asset/style/buttons/navy_default.png" id="6_mbydn"]
+[ext_resource type="Texture2D" uid="uid://dh200awrt2vr6" path="res://asset/style/buttons/navy_pressed.png" id="7_852gr"]
+[ext_resource type="Texture2D" uid="uid://bl41b4avx37o6" path="res://asset/style/buttons/navy_hover.png" id="8_coo7t"]
+[ext_resource type="Texture2D" uid="uid://1gulk27338gb" path="res://asset/style/buttons/purple_default.png" id="9_v4t6m"]
+[ext_resource type="Texture2D" uid="uid://ccp6phfbab71x" path="res://asset/style/buttons/purple_pressed.png" id="10_fq7oi"]
+[ext_resource type="Texture2D" uid="uid://b2a73j458kdvc" path="res://asset/style/buttons/purple_hover.png" id="11_ke2o5"]
+[ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="12_852gr"]
+[ext_resource type="Texture2D" uid="uid://dclpu3xmblprx" path="res://asset/style/UI_Flat_Banner03a.png" id="13_coo7t"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="14_fq7oi"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="15_ke2o5"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="16_4t3wb"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7j4ni"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fi8cg"]
+texture = ExtResource("4_a5yq5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4t3wb"]
+texture = ExtResource("6_mbydn")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ivl5p"]
+texture = ExtResource("7_852gr")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g0pdd"]
+texture = ExtResource("8_coo7t")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bt6vq"]
+texture = ExtResource("9_v4t6m")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l6tlc"]
+texture = ExtResource("10_fq7oi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s2s56"]
+texture = ExtResource("11_ke2o5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v4t6m"]
+texture = ExtResource("12_852gr")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fq7oi"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_right = 88
+corner_radius_bottom_left = 88
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ke2o5"]
+texture = ExtResource("13_coo7t")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6ukqn"]
+texture = ExtResource("14_fq7oi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mx1y8"]
+texture = ExtResource("15_ke2o5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yfjm8"]
+texture = ExtResource("16_4t3wb")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s6ei6"]
+texture = ExtResource("14_fq7oi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8psuw"]
+texture = ExtResource("15_ke2o5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1m751"]
+texture = ExtResource("16_4t3wb")
 
 [node name="StudentShop" type="Control" unique_id=1842537281]
 layout_mode = 3
@@ -44,19 +106,25 @@ layout_mode = 0
 offset_left = 30.0
 offset_top = 20.0
 offset_right = 600.0
-offset_bottom = 65.0
-theme_override_font_sizes/font_size = 28
+offset_bottom = 90.5
+theme_override_fonts/font = ExtResource("3_fsoxq")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxTexture_fi8cg")
 text = "STUDENT CHARACTER SHOP"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CoinLabel" type="Label" parent="ShopPanel" unique_id=2068034591]
 layout_mode = 0
-offset_left = 820.0
-offset_top = 25.0
-offset_right = 1035.0
-offset_bottom = 58.0
+offset_left = 830.0
+offset_top = 93.5
+offset_right = 1045.0
+offset_bottom = 126.5
+theme_override_fonts/font = ExtResource("5_04hb4")
 theme_override_font_sizes/font_size = 20
 text = "Coins: 0"
-horizontal_alignment = 2
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CategoryButtons" type="HBoxContainer" parent="ShopPanel" unique_id=1118980487]
 layout_mode = 0
@@ -66,14 +134,24 @@ offset_right = 430.0
 offset_bottom = 130.0
 theme_override_constants/separation = 12
 
-[node name="CharacterButton" type="Button" parent="ShopPanel/CategoryButtons" unique_id=288349219]
+[node name="CharacterButton" type="Button" parent="ShopPanel/CategoryButtons" unique_id=208731966]
 custom_minimum_size = Vector2(180, 45)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("5_04hb4")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_4t3wb")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ivl5p")
+theme_override_styles/hover = SubResource("StyleBoxTexture_g0pdd")
 text = "CHARACTER"
 
-[node name="AvatarButton" type="Button" parent="ShopPanel/CategoryButtons" unique_id=1853508393]
+[node name="AvatarButton" type="Button" parent="ShopPanel/CategoryButtons" unique_id=1820760273]
 custom_minimum_size = Vector2(180, 45)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("5_04hb4")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_bt6vq")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_l6tlc")
+theme_override_styles/hover = SubResource("StyleBoxTexture_s2s56")
 text = "AVATAR"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ShopPanel" unique_id=363665352]
@@ -87,50 +165,62 @@ horizontal_scroll_mode = 0
 [node name="ItemGrid" type="GridContainer" parent="ShopPanel/ScrollContainer" unique_id=1434994322]
 custom_minimum_size = Vector2(1040, 0)
 layout_mode = 2
-theme_override_constants/h_separation = 18
-theme_override_constants/v_separation = 18
+theme_override_constants/h_separation = 100
+theme_override_constants/v_separation = 50
 columns = 3
 
-[node name="ItemPanel" type="Panel" parent="ShopPanel" unique_id=1309697706]
+[node name="ItemPanel" type="Panel" parent="ShopPanel" unique_id=997784399]
 layout_mode = 0
 offset_left = 69.0
 offset_top = 148.5
 offset_right = 347.0
 offset_bottom = 579.5
+theme_override_styles/panel = SubResource("StyleBoxTexture_v4t6m")
 
-[node name="ItemPlaceholder" type="TextureRect" parent="ShopPanel/ItemPanel" unique_id=475066769]
-layout_mode = 0
-offset_left = 21.0
-offset_top = 13.0
-offset_right = 255.0
-offset_bottom = 365.0
+[node name="ItemPlaceholder" type="TextureRect" parent="ShopPanel/ItemPanel" unique_id=1414264403]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 4.0
+offset_top = 23.0
+offset_right = -4.0
+offset_bottom = 374.0
+grow_horizontal = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="ShopPanel/ItemPanel" unique_id=758578872]
+[node name="Label" type="Label" parent="ShopPanel/ItemPanel" unique_id=1910613552]
 layout_mode = 0
-offset_left = 212.0
+offset_left = 166.0
 offset_top = 17.0
-offset_right = 260.0
+offset_right = 273.0
 offset_bottom = 40.0
-theme_override_styles/normal = SubResource("StyleBoxTexture_7j4ni")
+theme_override_fonts/font = ExtResource("5_04hb4")
+theme_override_styles/normal = SubResource("StyleBoxFlat_fq7oi")
 text = "0 Coins"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Label2" type="Label" parent="ShopPanel/ItemPanel" unique_id=1756911342]
-layout_mode = 0
-offset_left = 117.0
-offset_top = 325.0
-offset_right = 230.0
-offset_bottom = 348.0
+[node name="Label2" type="Label" parent="ShopPanel/ItemPanel" unique_id=1595507289]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -135.0
+offset_top = 98.0
+offset_right = 135.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_04hb4")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_ke2o5")
 text = "Name"
-
-[node name="StorylineButton" type="Button" parent="ShopPanel/ItemPanel" unique_id=333895909]
-layout_mode = 0
-offset_left = 72.0
-offset_top = 355.0
-offset_right = 204.0
-offset_bottom = 386.0
-text = "STORYLINE"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PurchaseButton" type="Button" parent="ShopPanel/ItemPanel" unique_id=1715789344]
 layout_mode = 1
@@ -139,22 +229,27 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -53.5
-offset_top = -40.0
-offset_right = 53.5
-offset_bottom = -5.0
+offset_left = -95.0
+offset_top = -61.0
+offset_right = 104.0
+offset_bottom = -26.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_fonts/font = ExtResource("5_04hb4")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_6ukqn")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_mx1y8")
+theme_override_styles/hover = SubResource("StyleBoxTexture_yfjm8")
 text = "Purchase"
 
-[node name="BackButton" type="Button" parent="." unique_id=1601621619]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -122.0
-offset_top = 24.0
-offset_right = -16.0
-offset_bottom = 63.0
-grow_horizontal = 0
+[node name="BackButton" type="Button" parent="." unique_id=1883646748]
+layout_mode = 0
+offset_left = 1041.0
+offset_top = 97.0
+offset_right = 1147.0
+offset_bottom = 136.0
+theme_override_fonts/font = ExtResource("5_04hb4")
+theme_override_styles/normal = SubResource("StyleBoxTexture_s6ei6")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_8psuw")
+theme_override_styles/hover = SubResource("StyleBoxTexture_1m751")
 text = "Back"

@@ -486,7 +486,7 @@ text = "Manage Quest"
 [node name="AdminMediumNpc" parent="MapHUDLayer/AdminMapHUD" unique_id=784066392 instance=ExtResource("6_e12kd")]
 layout_mode = 1
 
-[node name="AdminCamera2D" type="Camera2D" parent="MapHUDLayer/AdminMapHUD" unique_id=2052885174]
+[node name="AdminCamera2D" type="Camera2D" parent="." unique_id=2052885174]
 visible = false
 position = Vector2(600, 248)
 zoom = Vector2(1.5, 1.5)

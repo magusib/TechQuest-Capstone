@@ -401,7 +401,7 @@ text = "Manage Quest"
 visible = false
 layout_mode = 1
 
-[node name="AdminCamera2D" type="Camera2D" parent="MapHUDLayer/AdminMapHUD" unique_id=707336764]
+[node name="AdminCamera2D" type="Camera2D" parent="." unique_id=707336764]
 visible = false
 position = Vector2(600, 248)
 zoom = Vector2(1.5, 1.5)

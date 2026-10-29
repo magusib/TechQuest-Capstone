@@ -2,12 +2,116 @@
 
 [ext_resource type="Script" uid="uid://b3kswubeyxx4b" path="res://scene/Dashboard/Modules/Room/ProfessorRoom.cs" id="1_sm8m0"]
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_wkes7"]
+[ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="3_001c7"]
+[ext_resource type="Texture2D" uid="uid://cyqkrvyj6vbo8" path="res://asset/style/label1.png" id="4_kcbcg"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="5_oyp1o"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="6_alfoo"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="7_2l3st"]
+[ext_resource type="Texture2D" uid="uid://b4fvn8y1h3i1k" path="res://asset/style/buttons/maroon_default.png" id="8_alfoo"]
+[ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="8_exnh8"]
+[ext_resource type="Texture2D" uid="uid://coi1wu2nu2526" path="res://asset/style/buttons/maroon_pressed.png" id="9_2l3st"]
+[ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="9_atu8i"]
+[ext_resource type="Texture2D" uid="uid://dsi454hvjo25p" path="res://asset/style/buttons/slate_default.png" id="10_6s7bj"]
+[ext_resource type="Texture2D" uid="uid://bc7gstp8svbhq" path="res://asset/style/buttons/maroon_hover.png" id="10_exnh8"]
+[ext_resource type="Texture2D" uid="uid://ejmylisq3jm5" path="res://asset/style/buttons/slate_pressed.png" id="11_p12sl"]
+[ext_resource type="Texture2D" uid="uid://7h7pdiyc62hs" path="res://asset/style/buttons/slate_hover.png" id="12_cjlff"]
+[ext_resource type="Texture2D" uid="uid://bb0ta7fpshg6x" path="res://asset/style/buttons/navy_default.png" id="13_byxpg"]
+[ext_resource type="Texture2D" uid="uid://dh200awrt2vr6" path="res://asset/style/buttons/navy_pressed.png" id="14_1b7l5"]
+[ext_resource type="Texture2D" uid="uid://bl41b4avx37o6" path="res://asset/style/buttons/navy_hover.png" id="15_hh7ex"]
+[ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="16_tbd2n"]
+[ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="17_38fhw"]
+[ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="18_lsgbr"]
+[ext_resource type="Texture2D" uid="uid://dclpu3xmblprx" path="res://asset/style/UI_Flat_Banner03a.png" id="22_2l3st"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wkes7"]
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_45ija"]
+texture = ExtResource("4_kcbcg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e01qg"]
+texture = ExtResource("5_oyp1o")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iqp21"]
+texture = ExtResource("6_alfoo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tob0h"]
+texture = ExtResource("7_2l3st")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7h8hp"]
+texture = ExtResource("8_alfoo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rsb7w"]
+texture = ExtResource("9_2l3st")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qbhjv"]
+texture = ExtResource("10_exnh8")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w3saw"]
+texture = ExtResource("8_exnh8")
+region_rect = Rect2(1, 2, 94, 62)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0p7dv"]
+texture = ExtResource("10_6s7bj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f36sp"]
+texture = ExtResource("11_p12sl")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mn0xo"]
+texture = ExtResource("12_cjlff")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r8g6a"]
+texture = ExtResource("13_byxpg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xf8tk"]
+texture = ExtResource("14_1b7l5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s2v1t"]
+texture = ExtResource("15_hh7ex")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bwff4"]
+texture = ExtResource("16_tbd2n")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s6cl6"]
+texture = ExtResource("17_38fhw")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_occrp"]
+texture = ExtResource("18_lsgbr")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vl3gu"]
+texture = ExtResource("8_exnh8")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_46mn3"]
+texture = ExtResource("22_2l3st")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y8kfy"]
+texture = ExtResource("22_2l3st")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a58ah"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rvvjf"]
+texture = ExtResource("10_6s7bj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6qdkc"]
+texture = ExtResource("11_p12sl")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_igtit"]
+texture = ExtResource("12_cjlff")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ys2bc"]
+texture = ExtResource("5_oyp1o")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_84vay"]
+texture = ExtResource("6_alfoo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dsbva"]
+texture = ExtResource("7_2l3st")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fs2ys"]
+texture = ExtResource("16_tbd2n")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4mpo8"]
+texture = ExtResource("17_38fhw")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_628v5"]
+texture = ExtResource("18_lsgbr")
 
 [node name="ProfessorRoom" type="Control" unique_id=788382029]
 layout_mode = 3
@@ -30,35 +134,62 @@ expand_mode = 1
 stretch_mode = 6
 
 [node name="ProfessorRoom" type="Label" parent="." unique_id=88037220]
-layout_mode = 0
-offset_left = 472.0
-offset_top = 21.0
-offset_right = 595.0
-offset_bottom = 44.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -215.25
+offset_top = 28.0
+offset_right = 215.25
+offset_bottom = 99.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_001c7")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxTexture_45ija")
 text = "Professor Room"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="BackButton" type="Button" parent="." unique_id=70363397]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 56.0
-offset_right = 126.0
-offset_bottom = 95.0
+offset_left = 126.0
+offset_top = 134.0
+offset_right = 259.0
+offset_bottom = 173.0
+theme_override_fonts/font = ExtResource("3_001c7")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_e01qg")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_iqp21")
+theme_override_styles/hover = SubResource("StyleBoxTexture_tob0h")
 text = "Back"
 
 [node name="CreateRoomButton" type="Button" parent="." unique_id=1346276661]
 layout_mode = 0
-offset_left = 935.0
-offset_top = 99.0
-offset_right = 1054.0
-offset_bottom = 142.0
+offset_left = 906.0
+offset_top = 129.0
+offset_right = 1163.0
+offset_bottom = 172.0
+theme_override_fonts/font = ExtResource("3_001c7")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_7h8hp")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_rsb7w")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qbhjv")
 text = "Create Room"
 
 [node name="RoomManagementPanel" type="Panel" parent="." unique_id=741532966]
-layout_mode = 0
-offset_left = 48.0
-offset_top = 144.0
-offset_right = 1089.0
-offset_bottom = 618.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -520.5
+offset_top = -171.0
+offset_right = 520.5
+offset_bottom = 303.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="RoomManagementPanel" unique_id=627684477]
 layout_mode = 1
@@ -78,7 +209,7 @@ theme_override_constants/separation = 50
 custom_minimum_size = Vector2(0, 320)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_wkes7")
+theme_override_styles/panel = SubResource("StyleBoxTexture_w3saw")
 
 [node name="RoomListContainer" type="VBoxContainer" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel" unique_id=200098743]
 layout_mode = 2
@@ -87,16 +218,24 @@ theme_override_constants/separation = 45
 
 [node name="SubjectLabel" type="Label" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer" unique_id=738717871]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("9_atu8i")
+theme_override_font_sizes/font_size = 20
 horizontal_alignment = 1
 
 [node name="RoomCodeLabel" type="Label" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer" unique_id=1819120600]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("9_atu8i")
+theme_override_font_sizes/font_size = 20
 
 [node name="StudentCountLabel" type="Label" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer" unique_id=1953093648]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("9_atu8i")
+theme_override_font_sizes/font_size = 20
 
 [node name="StatusLabel" type="Label" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer" unique_id=105039901]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("9_atu8i")
+theme_override_font_sizes/font_size = 20
 
 [node name="RoomButton" type="HBoxContainer" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer" unique_id=1055253670]
 layout_mode = 2
@@ -104,15 +243,33 @@ theme_override_constants/separation = 150
 alignment = 1
 
 [node name="Manage" type="Button" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer/RoomButton" unique_id=1811676998]
+custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_001c7")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_0p7dv")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_f36sp")
+theme_override_styles/hover = SubResource("StyleBoxTexture_mn0xo")
 text = "Manage"
 
 [node name="Close" type="Button" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer/RoomButton" unique_id=771293882]
+custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_001c7")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_r8g6a")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_xf8tk")
+theme_override_styles/hover = SubResource("StyleBoxTexture_s2v1t")
 text = "Close"
 
 [node name="Delete" type="Button" parent="RoomManagementPanel/ScrollContainer/VBoxContainer/RoomListPanel/RoomListContainer/RoomButton" unique_id=763940445]
+custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_001c7")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_bwff4")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_s6cl6")
+theme_override_styles/hover = SubResource("StyleBoxTexture_occrp")
 text = "Delete"
 
 [node name="CreateRoomWindow" type="Panel" parent="." unique_id=926011956]
@@ -129,6 +286,7 @@ offset_right = 250.0
 offset_bottom = 225.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_vl3gu")
 
 [node name="CreateRoomPanel" type="Panel" parent="CreateRoomWindow" unique_id=216906645]
 layout_mode = 0
@@ -144,23 +302,48 @@ offset_bottom = 418.0
 theme_override_constants/separation = 40
 
 [node name="SubjectNameLabel" type="Label" parent="CreateRoomWindow/CreateRoomPanel/RoomCodeContainer" unique_id=932375347]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
-text = "Subject Name:"
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_001c7")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_46mn3")
+text = "Subject Name"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="SubjectNameInput" type="LineEdit" parent="CreateRoomWindow/CreateRoomPanel/RoomCodeContainer" unique_id=1815235529]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("9_atu8i")
+alignment = 1
 
 [node name="RoomCodeLabel" type="Label" parent="CreateRoomWindow/CreateRoomPanel/RoomCodeContainer" unique_id=1705929181]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_001c7")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_y8kfy")
 text = "RoomCode"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CodeLabel" type="Label" parent="CreateRoomWindow/CreateRoomPanel/RoomCodeContainer" unique_id=1717830761]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("9_atu8i")
+theme_override_styles/normal = SubResource("StyleBoxTexture_a58ah")
 text = "----------"
 horizontal_alignment = 1
 
 [node name="GenerateCodeButton" type="Button" parent="CreateRoomWindow/CreateRoomPanel/RoomCodeContainer" unique_id=681366218]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_001c7")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_rvvjf")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_6qdkc")
+theme_override_styles/hover = SubResource("StyleBoxTexture_igtit")
 text = "Generate Room Code"
 
 [node name="RoomButtonContainer" type="HBoxContainer" parent="CreateRoomWindow/CreateRoomPanel/RoomCodeContainer" unique_id=1115906463]
@@ -169,12 +352,24 @@ theme_override_constants/separation = 100
 alignment = 1
 
 [node name="SaveButton" type="Button" parent="CreateRoomWindow/CreateRoomPanel/RoomCodeContainer/RoomButtonContainer" unique_id=376234721]
+custom_minimum_size = Vector2(120, 40)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_001c7")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_ys2bc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_84vay")
+theme_override_styles/hover = SubResource("StyleBoxTexture_dsbva")
 text = "Save
 "
 
 [node name="CancelButton" type="Button" parent="CreateRoomWindow/CreateRoomPanel/RoomCodeContainer/RoomButtonContainer" unique_id=284371894]
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_001c7")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_fs2ys")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_4mpo8")
+theme_override_styles/hover = SubResource("StyleBoxTexture_628v5")
 text = "Cancel"
 
 [node name="DeleteRoomConfirmation" type="ConfirmationDialog" parent="." unique_id=435456129]

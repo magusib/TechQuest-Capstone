@@ -3,13 +3,23 @@
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_u8pjn"]
 [ext_resource type="Script" uid="uid://dvb2sq12ny0et" path="res://scene/Dashboard/Modules/Leaderboard/AdminLeaderboard.cs" id="3_admin_leaderboard"]
 [ext_resource type="Texture2D" uid="uid://s3wgaw46w4f5" path="res://asset/style/LargeBackground.png" id="3_xcegf"]
+[ext_resource type="Texture2D" uid="uid://cyqkrvyj6vbo8" path="res://asset/style/label1.png" id="4_50qdi"]
 [ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="4_bgmqx"]
 [ext_resource type="Texture2D" uid="uid://nteql2k0ifsv" path="res://asset/style/buttons/blue_default.png" id="5_b24k6"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="5_eqht5"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="6_3fkum"]
 [ext_resource type="Texture2D" uid="uid://db0y8d6ro752s" path="res://asset/style/buttons/blue_pressed.png" id="6_205h4"]
 [ext_resource type="Texture2D" uid="uid://1c42figjlqbr" path="res://asset/style/buttons/blue_hover.png" id="7_50qdi"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="7_hcln5"]
 [ext_resource type="Texture2D" uid="uid://bb0ta7fpshg6x" path="res://asset/style/buttons/navy_default.png" id="8_eqht5"]
 [ext_resource type="Texture2D" uid="uid://dh200awrt2vr6" path="res://asset/style/buttons/navy_pressed.png" id="9_3fkum"]
+[ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="9_eqht5"]
 [ext_resource type="Texture2D" uid="uid://bl41b4avx37o6" path="res://asset/style/buttons/navy_hover.png" id="10_hcln5"]
+[ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="16_pmqx0"]
+[ext_resource type="Texture2D" uid="uid://dclpu3xmblprx" path="res://asset/style/UI_Flat_Banner03a.png" id="17_g50rr"]
+[ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="18_gl2re"]
+[ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="19_jvy1l"]
+[ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="20_txpxb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d2mi3"]
 bg_color = Color(0.035, 0.09, 0.17, 0.98)
@@ -23,17 +33,17 @@ corner_radius_top_right = 18
 corner_radius_bottom_right = 18
 corner_radius_bottom_left = 18
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u8pjn"]
-bg_color = Color(0.1, 0.3, 0.55, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.35, 0.65, 0.95, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_84u83"]
+texture = ExtResource("4_50qdi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_34eyf"]
+texture = ExtResource("5_eqht5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0ebhm"]
+texture = ExtResource("6_3fkum")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ros08"]
+texture = ExtResource("7_hcln5")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t0hl8"]
 texture = ExtResource("3_xcegf")
@@ -61,6 +71,45 @@ texture = ExtResource("9_3fkum")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ict4w"]
 texture = ExtResource("10_hcln5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7ecli"]
+texture = ExtResource("16_pmqx0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kibx3"]
+texture = ExtResource("17_g50rr")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uex5a"]
+texture = ExtResource("18_gl2re")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gm76y"]
+texture = ExtResource("19_jvy1l")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ia44p"]
+texture = ExtResource("20_txpxb")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tn48q"]
+texture = ExtResource("16_pmqx0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7aell"]
+texture = ExtResource("17_g50rr")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w5ac5"]
+texture = ExtResource("18_gl2re")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l6mdh"]
+texture = ExtResource("19_jvy1l")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p8egc"]
+texture = ExtResource("20_txpxb")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qnaqw"]
+texture = ExtResource("5_eqht5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_onn8q"]
+texture = ExtResource("6_3fkum")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0t23y"]
+texture = ExtResource("7_hcln5")
 
 [node name="AdminLeaderboard" type="Control" unique_id=595879347]
 layout_mode = 3
@@ -106,18 +155,25 @@ custom_minimum_size = Vector2(0, 55)
 layout_mode = 2
 
 [node name="TitleLabel" type="Label" parent="LeaderboardPanel/MainVBox/Header" unique_id=457865448]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.91, 0.96, 1, 1)
-theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_bgmqx")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxTexture_84u83")
 text = "LEADERBOARD"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="BackButton" type="Button" parent="LeaderboardPanel/MainVBox/Header" unique_id=86198070]
-custom_minimum_size = Vector2(55, 45)
+custom_minimum_size = Vector2(120, 45)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_u8pjn")
+theme_override_fonts/font = ExtResource("4_bgmqx")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_34eyf")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_0ebhm")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ros08")
 text = "Back"
 
 [node name="Top3Panel" type="Control" parent="LeaderboardPanel/MainVBox" unique_id=1099150923]
@@ -140,6 +196,7 @@ theme_override_constants/separation = 3
 
 [node name="RankLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/SecondPlace/CardVBox" unique_id=1708912130]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("9_eqht5")
 theme_override_font_sizes/font_size = 17
 text = "🥈  2ND PLACE"
 horizontal_alignment = 1
@@ -153,13 +210,15 @@ stretch_mode = 5
 
 [node name="NameLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/SecondPlace/CardVBox" unique_id=177389274]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("9_eqht5")
 theme_override_font_sizes/font_size = 17
 text = "Student"
 horizontal_alignment = 1
 
 [node name="PointsLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/SecondPlace/CardVBox" unique_id=173774641]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.45, 0.8, 1, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_eqht5")
 text = "0 POINTS"
 horizontal_alignment = 1
 
@@ -177,6 +236,7 @@ theme_override_constants/separation = 3
 
 [node name="RankLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/FirstPlace/CardVBox" unique_id=184366890]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("9_eqht5")
 theme_override_font_sizes/font_size = 17
 text = "🥇  1ST PLACE"
 horizontal_alignment = 1
@@ -190,13 +250,15 @@ stretch_mode = 5
 
 [node name="NameLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/FirstPlace/CardVBox" unique_id=772433092]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("9_eqht5")
 theme_override_font_sizes/font_size = 17
 text = "Student"
 horizontal_alignment = 1
 
 [node name="PointsLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/FirstPlace/CardVBox" unique_id=1919555188]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.45, 0.8, 1, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_eqht5")
 text = "0 POINTS"
 horizontal_alignment = 1
 
@@ -215,6 +277,7 @@ theme_override_constants/separation = 3
 
 [node name="RankLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/ThirdPlace/CardVBox" unique_id=838753612]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("9_eqht5")
 theme_override_font_sizes/font_size = 17
 text = "🥉  3RD PLACE"
 horizontal_alignment = 1
@@ -228,13 +291,15 @@ stretch_mode = 5
 
 [node name="NameLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/ThirdPlace/CardVBox" unique_id=541127617]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("9_eqht5")
 theme_override_font_sizes/font_size = 17
 text = "Student"
 horizontal_alignment = 1
 
 [node name="PointsLabel" type="Label" parent="LeaderboardPanel/MainVBox/Top3Panel/ThirdPlace/CardVBox" unique_id=1106125182]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.45, 0.8, 1, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_eqht5")
 text = "0 POINTS"
 horizontal_alignment = 1
 
@@ -247,6 +312,7 @@ theme_override_constants/separation = 5
 [node name="RankLabel" type="Label" parent="LeaderboardPanel/MainVBox/RankingHeader" unique_id=1634502312]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("9_eqht5")
 text = "RANK"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -254,6 +320,7 @@ vertical_alignment = 1
 [node name="NameLabel" type="Label" parent="LeaderboardPanel/MainVBox/RankingHeader" unique_id=1130629661]
 custom_minimum_size = Vector2(459, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("9_eqht5")
 text = "NAME"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -261,6 +328,7 @@ vertical_alignment = 1
 [node name="YearLevelLabel" type="Label" parent="LeaderboardPanel/MainVBox/RankingHeader" unique_id=1559308878]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("9_eqht5")
 text = "YEAR LEVEL"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -268,6 +336,7 @@ vertical_alignment = 1
 [node name="PointsLabel" type="Label" parent="LeaderboardPanel/MainVBox/RankingHeader" unique_id=1912263348]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("9_eqht5")
 text = "POINTS"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -322,7 +391,7 @@ offset_left = 330.0
 offset_top = 130.0
 offset_right = 950.0
 offset_bottom = 555.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_d2mi3")
+theme_override_styles/panel = SubResource("StyleBoxTexture_7ecli")
 
 [node name="PopupVBox" type="VBoxContainer" parent="PreviousRankingPopup/PopupPanel" unique_id=1403551691]
 layout_mode = 2
@@ -331,13 +400,18 @@ theme_override_constants/separation = 12
 [node name="TitleLabel" type="Label" parent="PreviousRankingPopup/PopupPanel/PopupVBox" unique_id=279513354]
 custom_minimum_size = Vector2(0, 55)
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_bgmqx")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxTexture_kibx3")
 text = "PREVIOUS RANKING"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="InfoLabel" type="Label" parent="PreviousRankingPopup/PopupPanel/PopupVBox" unique_id=717009302]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("9_eqht5")
+theme_override_font_sizes/font_size = 18
 text = "Top 3 before the latest leaderboard reset"
 horizontal_alignment = 1
 
@@ -348,26 +422,33 @@ theme_override_constants/separation = 12
 
 [node name="First" type="Label" parent="PreviousRankingPopup/PopupPanel/PopupVBox/PreviousTop3" unique_id=659490564]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_fonts/font = ExtResource("9_eqht5")
+theme_override_font_sizes/font_size = 20
 text = "🥇  Student  —  0 Points"
 horizontal_alignment = 1
 
 [node name="Second" type="Label" parent="PreviousRankingPopup/PopupPanel/PopupVBox/PreviousTop3" unique_id=138412551]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_fonts/font = ExtResource("9_eqht5")
+theme_override_font_sizes/font_size = 20
 text = "🥈  Student  —  0Points"
 horizontal_alignment = 1
 
 [node name="Third" type="Label" parent="PreviousRankingPopup/PopupPanel/PopupVBox/PreviousTop3" unique_id=647863806]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_fonts/font = ExtResource("9_eqht5")
+theme_override_font_sizes/font_size = 20
 text = "🥉  Student  —  0 Points"
 horizontal_alignment = 1
 
 [node name="CloseButton" type="Button" parent="PreviousRankingPopup/PopupPanel/PopupVBox" unique_id=1910438335]
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_u8pjn")
+theme_override_fonts/font = ExtResource("4_bgmqx")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_uex5a")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_gm76y")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ia44p")
 text = "CLOSE"
 
 [node name="ResetConfirmationPopup" type="Control" parent="." unique_id=1526034590]
@@ -385,7 +466,7 @@ offset_left = 310.0
 offset_top = 190.0
 offset_right = 970.0
 offset_bottom = 485.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_d2mi3")
+theme_override_styles/panel = SubResource("StyleBoxTexture_tn48q")
 
 [node name="PopupVBox" type="VBoxContainer" parent="ResetConfirmationPopup/PopupPanel" unique_id=926880651]
 layout_mode = 2
@@ -394,13 +475,17 @@ theme_override_constants/separation = 12
 [node name="TitleLabel" type="Label" parent="ResetConfirmationPopup/PopupPanel/PopupVBox" unique_id=95174522]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_bgmqx")
 theme_override_font_sizes/font_size = 23
-text = "RESET LEADERBOARD?"
+theme_override_styles/normal = SubResource("StyleBoxTexture_7aell")
+text = "RESET LEADERBOARD"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MessageLabel" type="Label" parent="ResetConfirmationPopup/PopupPanel/PopupVBox" unique_id=192960611]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("9_eqht5")
 text = "All students' current points will become 0.
 The current Top 3 must be saved as the Previous Ranking."
 horizontal_alignment = 1
@@ -416,11 +501,19 @@ alignment = 1
 [node name="CancelButton" type="Button" parent="ResetConfirmationPopup/PopupPanel/PopupVBox/Buttons" unique_id=930814305]
 custom_minimum_size = Vector2(150, 45)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_u8pjn")
+theme_override_fonts/font = ExtResource("4_bgmqx")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_w5ac5")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_l6mdh")
+theme_override_styles/hover = SubResource("StyleBoxTexture_p8egc")
 text = "CANCEL"
 
 [node name="ConfirmButton" type="Button" parent="ResetConfirmationPopup/PopupPanel/PopupVBox/Buttons" unique_id=1280566535]
 custom_minimum_size = Vector2(150, 45)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_u8pjn")
+theme_override_fonts/font = ExtResource("4_bgmqx")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_qnaqw")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_onn8q")
+theme_override_styles/hover = SubResource("StyleBoxTexture_0t23y")
 text = "RESET"

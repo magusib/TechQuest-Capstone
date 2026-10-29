@@ -2,11 +2,119 @@
 
 [ext_resource type="Script" uid="uid://dj81vfo8s86ln" path="res://scene/Dashboard/Modules/Room/ProfessorWaitingRoom.cs" id="1_dr0wb"]
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="1_igeyh"]
+[ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="3_h0pkt"]
+[ext_resource type="Texture2D" uid="uid://cyqkrvyj6vbo8" path="res://asset/style/label1.png" id="3_igows"]
+[ext_resource type="Texture2D" uid="uid://ckq0v57uu8ldu" path="res://asset/style/ButtonLargeRedActive.png" id="4_yke6g"]
+[ext_resource type="Texture2D" uid="uid://dd6q1g1w7dqjt" path="res://asset/style/LineEdit.png" id="6_1jgd2"]
+[ext_resource type="Texture2D" uid="uid://s3wgaw46w4f5" path="res://asset/style/LargeBackground.png" id="6_cvc1s"]
+[ext_resource type="FontFile" uid="uid://cb3fr24mny6tm" path="res://asset/style/fonts/BouncyBalloon-drJXX.ttf" id="7_hoj7u"]
+[ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="7_u4qy6"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="8_jk2cp"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="9_kfq2h"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="10_fkdqd"]
+[ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="13_5l67f"]
+[ext_resource type="Texture2D" uid="uid://sti0vq4faxs2" path="res://asset/style/buttons/silver_hover.png" id="14_p1jmf"]
+[ext_resource type="Texture2D" uid="uid://bt5x1gldix2el" path="res://asset/style/buttons/silver_pressed.png" id="15_rql4u"]
+[ext_resource type="Texture2D" uid="uid://de8m8exy7pwis" path="res://asset/style/buttons/white_default.png" id="16_pd7sh"]
+[ext_resource type="Texture2D" uid="uid://dq5qspnbcspkv" path="res://asset/style/buttons/white_pressed.png" id="17_v2la2"]
+[ext_resource type="Texture2D" uid="uid://bjjjun4th25ea" path="res://asset/style/buttons/white_hover.png" id="18_t8v8f"]
+[ext_resource type="Texture2D" uid="uid://dsi454hvjo25p" path="res://asset/style/buttons/slate_default.png" id="19_5toov"]
+[ext_resource type="Texture2D" uid="uid://ejmylisq3jm5" path="res://asset/style/buttons/slate_pressed.png" id="20_aqdwg"]
+[ext_resource type="Texture2D" uid="uid://7h7pdiyc62hs" path="res://asset/style/buttons/slate_hover.png" id="21_lj8cm"]
+[ext_resource type="Texture2D" uid="uid://dclpu3xmblprx" path="res://asset/style/UI_Flat_Banner03a.png" id="22_aqdwg"]
+[ext_resource type="Texture2D" uid="uid://b4fvn8y1h3i1k" path="res://asset/style/buttons/maroon_default.png" id="23_lj8cm"]
+[ext_resource type="Texture2D" uid="uid://coi1wu2nu2526" path="res://asset/style/buttons/maroon_pressed.png" id="24_hg6xa"]
+[ext_resource type="Texture2D" uid="uid://bc7gstp8svbhq" path="res://asset/style/buttons/maroon_hover.png" id="25_oojy7"]
+[ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="26_f4skk"]
+[ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="27_xxxpd"]
+[ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="28_6ckvr"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dr0wb"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wnrwt"]
+texture = ExtResource("3_igows")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qo7ap"]
+texture = ExtResource("4_yke6g")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yke6g"]
+texture = ExtResource("6_1jgd2")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h0pkt"]
 bg_color = Color(0.060530342, 0.060530365, 0.060530297, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cvc1s"]
+texture = ExtResource("8_jk2cp")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u4qy6"]
+texture = ExtResource("9_kfq2h")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kt4n5"]
+texture = ExtResource("10_fkdqd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_alfoo"]
+texture = ExtResource("3_h0pkt")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_101wr"]
+texture = ExtResource("6_cvc1s")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wj3fw"]
+texture = ExtResource("14_p1jmf")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5l67f"]
+texture = ExtResource("15_rql4u")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p1jmf"]
+texture = ExtResource("15_rql4u")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_huwie"]
+texture = ExtResource("16_pd7sh")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_58kj0"]
+texture = ExtResource("17_v2la2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qmsdv"]
+texture = ExtResource("18_t8v8f")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rql4u"]
+texture = ExtResource("19_5toov")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pd7sh"]
+texture = ExtResource("20_aqdwg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v2la2"]
+texture = ExtResource("21_lj8cm")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hg6xa"]
+texture = ExtResource("3_h0pkt")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oojy7"]
+texture = ExtResource("22_aqdwg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f4skk"]
+texture = ExtResource("23_lj8cm")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xxxpd"]
+texture = ExtResource("24_hg6xa")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6ckvr"]
+texture = ExtResource("25_oojy7")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nodxe"]
+texture = ExtResource("8_jk2cp")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_in7kj"]
+texture = ExtResource("9_kfq2h")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iisns"]
+texture = ExtResource("10_fkdqd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_muj4y"]
+texture = ExtResource("26_f4skk")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ok7cu"]
+texture = ExtResource("27_xxxpd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d1dq0"]
+texture = ExtResource("28_6ckvr")
 
 [node name="ProfessorWaitingRoom" type="Control" unique_id=1281319834]
 layout_mode = 3
@@ -31,55 +139,77 @@ stretch_mode = 6
 [node name="Header" type="Node" parent="." unique_id=1521383113]
 
 [node name="Panel" type="Panel" parent="Header" unique_id=1897759270]
-offset_right = 1151.0
-offset_bottom = 100.0
+offset_right = 1280.0
+offset_bottom = 150.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_wnrwt")
 
 [node name="SubjectLabel" type="Label" parent="Header" unique_id=1775501975]
-offset_left = 60.0
-offset_top = 18.0
-offset_right = 184.0
-offset_bottom = 59.0
+offset_left = 92.0
+offset_top = 15.0
+offset_right = 216.0
+offset_bottom = 56.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_u4qy6")
+theme_override_font_sizes/font_size = 20
 text = "Subject:"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="RoomCodePanel" type="Panel" parent="Header" unique_id=1418361053]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -137.0
+offset_left = -147.0
 offset_top = 21.0
-offset_right = 175.0
-offset_bottom = 80.0
+offset_right = 298.0
+offset_bottom = 123.0
 grow_horizontal = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_dr0wb")
+theme_override_styles/panel = SubResource("StyleBoxTexture_qo7ap")
 
 [node name="RoomCodeLabel" type="Label" parent="Header/RoomCodePanel" unique_id=1258694705]
 layout_mode = 0
-offset_left = 15.0
-offset_top = 12.0
-offset_right = 180.0
-offset_bottom = 47.0
+offset_left = 39.0
+offset_top = 28.0
+offset_right = 204.0
+offset_bottom = 63.0
+theme_override_fonts/font = ExtResource("7_u4qy6")
+theme_override_styles/normal = SubResource("StyleBoxTexture_yke6g")
 text = "Room Code:"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="RoomCode" type="Label" parent="Header/RoomCodePanel" unique_id=960439480]
 layout_mode = 0
-offset_left = 123.0
-offset_top = 9.0
-offset_right = 286.0
-offset_bottom = 48.0
+offset_left = 221.0
+offset_top = 25.0
+offset_right = 384.0
+offset_bottom = 64.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_h0pkt")
 
 [node name="StudentCountLabel" type="Label" parent="Header" unique_id=1836758833]
-offset_left = 58.0
-offset_top = 53.0
-offset_right = 204.0
-offset_bottom = 80.0
+offset_left = 78.0
+offset_top = 64.0
+offset_right = 241.0
+offset_bottom = 108.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_u4qy6")
+theme_override_font_sizes/font_size = 20
 text = "Student Joined:"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Button" type="Button" parent="Header" unique_id=1260667385]
-offset_left = 1056.0
-offset_top = 27.0
-offset_right = 1122.0
-offset_bottom = 62.0
+offset_left = 1087.0
+offset_top = 48.0
+offset_right = 1221.0
+offset_bottom = 92.0
+rotation = -0.00044870964
+theme_override_colors/font_color = Color(0.9941079, 0.9941079, 0.9941079, 1)
+theme_override_fonts/font = ExtResource("7_hoj7u")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxTexture_cvc1s")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_u4qy6")
+theme_override_styles/hover = SubResource("StyleBoxTexture_kt4n5")
 text = "Back"
 
 [node name="AvatarPanel" type="Panel" parent="." unique_id=3778710]
@@ -95,6 +225,7 @@ offset_right = 550.5
 offset_bottom = 308.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_alfoo")
 
 [node name="StudentScrool" type="ScrollContainer" parent="AvatarPanel" unique_id=1003722978]
 layout_mode = 0
@@ -114,6 +245,7 @@ columns = 4
 [node name="AvatarPanel" type="Panel" parent="AvatarPanel/StudentScrool/AvatarGridContianer" unique_id=947685140]
 custom_minimum_size = Vector2(200, 150)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_101wr")
 
 [node name="AvatarContainer" type="VBoxContainer" parent="AvatarPanel/StudentScrool/AvatarGridContianer/AvatarPanel" unique_id=1147104173]
 layout_mode = 0
@@ -131,31 +263,54 @@ stretch_mode = 5
 
 [node name="StudentNameLabel" type="Label" parent="AvatarPanel/StudentScrool/AvatarGridContianer/AvatarPanel/AvatarContainer" unique_id=607503754]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("7_u4qy6")
+theme_override_font_sizes/font_size = 16
 text = "Name"
 horizontal_alignment = 1
 
 [node name="UplaodQuizButton" type="Button" parent="." unique_id=222074287]
 layout_mode = 0
-offset_left = 674.0
-offset_top = 137.0
-offset_right = 777.0
-offset_bottom = 168.0
+offset_left = 515.0
+offset_top = 149.0
+offset_right = 736.0
+offset_bottom = 205.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("13_5l67f")
+theme_override_styles/normal = SubResource("StyleBoxTexture_wj3fw")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_5l67f")
+theme_override_styles/hover = SubResource("StyleBoxTexture_p1jmf")
 text = "Upload Quiz"
 
 [node name="DownloadFormatButton" type="Button" parent="." unique_id=2137433095]
 layout_mode = 0
-offset_left = 935.0
-offset_top = 137.0
-offset_right = 1099.0
-offset_bottom = 168.0
+offset_left = 114.0
+offset_top = 149.0
+offset_right = 335.0
+offset_bottom = 205.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("13_5l67f")
+theme_override_styles/normal = SubResource("StyleBoxTexture_huwie")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_58kj0")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qmsdv")
 text = "Download Format"
 
 [node name="ResultsButton" type="Button" parent="." unique_id=587163240]
 layout_mode = 0
-offset_left = 798.0
-offset_top = 137.0
-offset_right = 920.0
-offset_bottom = 168.0
+offset_left = 948.0
+offset_top = 149.0
+offset_right = 1169.0
+offset_bottom = 205.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("13_5l67f")
+theme_override_styles/normal = SubResource("StyleBoxTexture_rql4u")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_pd7sh")
+theme_override_styles/hover = SubResource("StyleBoxTexture_v2la2")
 text = "Student Results"
 
 [node name="UploadQuizPopup" type="Panel" parent="." unique_id=723615039]
@@ -172,6 +327,7 @@ offset_right = 225.0
 offset_bottom = 225.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_hg6xa")
 
 [node name="UploadQuizPanel" type="Panel" parent="UploadQuizPopup" unique_id=56979141]
 layout_mode = 0
@@ -189,26 +345,42 @@ offset_bottom = 425.0
 theme_override_constants/separation = 30
 
 [node name="UplaodQuizLabel" type="Label" parent="UploadQuizPopup/UploadQuizContainer" unique_id=1063105584]
+custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("13_5l67f")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_oojy7")
 text = "Uplaod Quiz"
 horizontal_alignment = 1
 
 [node name="FileLabel" type="Label" parent="UploadQuizPopup/UploadQuizContainer" unique_id=2030872629]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("13_5l67f")
+theme_override_font_sizes/font_size = 20
 text = "Filename"
 
 [node name="UploadFileButton" type="Button" parent="UploadQuizPopup/UploadQuizContainer" unique_id=1303202311]
-custom_maximum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(428, 50)
+custom_maximum_size = Vector2(250, 100)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("13_5l67f")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_f4skk")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_xxxpd")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6ckvr")
 text = "UploadFile"
 
 [node name="TimerLabel" type="Label" parent="UploadQuizPopup/UploadQuizContainer" unique_id=277009567]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("13_5l67f")
+theme_override_font_sizes/font_size = 20
 text = "Timer"
 
 [node name="TimerInput" type="LineEdit" parent="UploadQuizPopup/UploadQuizContainer" unique_id=145761108]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("7_u4qy6")
 placeholder_text = "5 seconds or 5 minutes"
 
 [node name="ButtonContainer" type="HBoxContainer" parent="UploadQuizPopup/UploadQuizContainer" unique_id=1180774843]
@@ -217,9 +389,19 @@ theme_override_constants/separation = 50
 alignment = 1
 
 [node name="UploadButton" type="Button" parent="UploadQuizPopup/UploadQuizContainer/ButtonContainer" unique_id=1216838903]
+custom_minimum_size = Vector2(120, 40)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("13_5l67f")
+theme_override_styles/normal = SubResource("StyleBoxTexture_nodxe")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_in7kj")
+theme_override_styles/hover = SubResource("StyleBoxTexture_iisns")
 text = "Upload"
 
 [node name="CancelButton" type="Button" parent="UploadQuizPopup/UploadQuizContainer/ButtonContainer" unique_id=380923621]
+custom_minimum_size = Vector2(120, 40)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("13_5l67f")
+theme_override_styles/normal = SubResource("StyleBoxTexture_muj4y")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ok7cu")
+theme_override_styles/hover = SubResource("StyleBoxTexture_d1dq0")
 text = "Cancel"
