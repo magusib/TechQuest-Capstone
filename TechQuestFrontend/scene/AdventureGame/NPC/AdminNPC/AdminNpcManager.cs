@@ -39,7 +39,7 @@ public abstract partial class AdminNpcManager : Control
 	private bool isUndeployingNpc;
 	private bool isSavingConfiguration;
 	private Control configurationPopup;
-	private LineEdit subjectInput;
+	private OptionButton subjectInput;
 	private LineEdit questionInput;
 	private LineEdit correctAnswerInput;
 	private LineEdit answerTipInput;
@@ -312,7 +312,7 @@ public abstract partial class AdminNpcManager : Control
 		configurationPopup = GetNode<Control>(Difficulty + "MapNPCManagement");
 		configurationPopup.Hide();
 		configurationTitle = configurationPopup.GetNode<Label>("NPCManagementLabel");
-		subjectInput = configurationPopup.GetNode<LineEdit>("SubjectLabel/Subject");
+		subjectInput = configurationPopup.GetNode<OptionButton>("SubjectLabel/Subject");
 		miniGameInput = configurationPopup.GetNode<OptionButton>("MinigameLabel/MinigameOptions");
 		questionInput = configurationPopup.GetNode<LineEdit>("QuestionLabel/Question");
 		configurationPopup.GetNode<Control>("AnswerChoicesLabel").Hide();
@@ -338,7 +338,7 @@ public abstract partial class AdminNpcManager : Control
 			editingConfiguration = configuration;
 			configurationTitle.Text = "Manage " + npc.NpcName + " (Deployment " +
 				deployment.DeploymentId + ")";
-			subjectInput.Text = configuration.SubjectName;
+			SelectSubject(configuration.SubjectName);
 			questionInput.Text = configuration.Question;
 			correctAnswerInput.Text = configuration.CorrectAnswer;
 			answerTipInput.Text = configuration.AnswerTip;
@@ -379,12 +379,68 @@ public abstract partial class AdminNpcManager : Control
 			gameType == "QuickTapChallenge";
 	}
 
+	private void SelectSubject(string selectedSubject)
+	{
+		subjectInput.Clear();
+		subjectInput.AddItem("Select a subject");
+
+		string[] subjects = Difficulty switch
+		{
+			"Easy" =>
+			[
+				"GECUTS - Understanding the Self",
+				"GECMMW - Math in the Modern World",
+				"FIL 1 - Komunikasyon sa Akademikong Filipino",
+				"NSTP 1 - Civic Welfare & Training Services 1",
+				"PATHFIT 1 - Physical Activities Toward Health and Fitness 1",
+				"GECARTA - Art Appreciation",
+				"GECSTS - Science, Technology and Society",
+				"FIL 2 - Pagbasa at Pagsulat tungo sa Pananaliksik",
+				"NSTP 2 - Civic Welfare & Training Services 2",
+				"PATHFIT 2 - Advance Physical Fitness",
+				"GECPC - Purposive Communication"
+			],
+			"Medium" =>
+			[
+				"GECTCW - The Contemporary world",
+				"GECETH - Professional Ethics",
+				"GEEMST - Living in IT Era",
+				"PATHFIT 3 - Teamsports",
+				"PATHFIT 4 - Dance",
+				"GEEAH - Reading in Visual Arts"
+			],
+			"Hard" =>
+			[
+				"GEESSP - The Entrepreneurial Mind",
+				"GEMRZL - Rizal Life Works and Writing",
+				"SP 101 - Social Issues and Professional Practices"
+			],
+			_ => throw new InvalidOperationException($"Unsupported NPC difficulty: {Difficulty}")
+		};
+
+		int selectedIndex = -1;
+		foreach (string subject in subjects)
+		{
+			subjectInput.AddItem(subject);
+			if (string.Equals(subject, selectedSubject, StringComparison.OrdinalIgnoreCase))
+				selectedIndex = subjectInput.ItemCount - 1;
+		}
+
+		if (selectedIndex < 0 && !string.IsNullOrWhiteSpace(selectedSubject))
+		{
+			subjectInput.AddItem(selectedSubject);
+			selectedIndex = subjectInput.ItemCount - 1;
+		}
+
+		subjectInput.Select(Math.Max(0, selectedIndex));
+	}
+
 	private async void SaveConfigurationAsync()
 	{
 		if (editingConfiguration == null || isSavingConfiguration)
 			return;
 
-		if (string.IsNullOrWhiteSpace(subjectInput.Text) ||
+		if (subjectInput.Selected <= 0 ||
 			string.IsNullOrWhiteSpace(questionInput.Text) ||
 			string.IsNullOrWhiteSpace(correctAnswerInput.Text))
 		{
@@ -400,7 +456,7 @@ public abstract partial class AdminNpcManager : Control
 
 		isSavingConfiguration = true;
 		saveConfigurationButton.Disabled = true;
-		editingConfiguration.SubjectName = subjectInput.Text.Trim();
+		editingConfiguration.SubjectName = subjectInput.GetItemText(subjectInput.Selected);
 		int miniGameId = miniGameInput.GetItemId(miniGameInput.Selected);
 		editingConfiguration.MiniGameId = miniGameId > 0 ? miniGameId : null;
 		editingConfiguration.Question = questionInput.Text.Trim();

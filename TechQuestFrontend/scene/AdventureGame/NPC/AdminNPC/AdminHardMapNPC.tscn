@@ -295,7 +295,7 @@ offset_right = 241.0
 offset_bottom = 148.0
 text = "Subject Name"
 
-[node name="Subject" type="LineEdit" parent="HardMapNPCManagement/SubjectLabel" unique_id=1263405458]
+[node name="Subject" type="OptionButton" parent="HardMapNPCManagement/SubjectLabel" unique_id=1263405458]
 layout_mode = 0
 offset_left = 2.0
 offset_top = 31.0

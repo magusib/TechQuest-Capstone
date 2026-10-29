@@ -142,12 +142,35 @@ public partial class FallingDuck : Node2D
 
 		foreach (Node child in duckContainer.GetChildren())
 		{
-			if (child is FallingDuckTarget duck && duck.GetOverlappingBodies().Contains(player))
+			if (child is FallingDuckTarget duck
+				&& (duck.GetOverlappingBodies().Contains(player) || IsPlayerTouchingDuck(duck)))
 			{
 				FinishGame(false);
 				return;
 			}
 		}
+	}
+
+	private bool IsPlayerTouchingDuck(FallingDuckTarget duck)
+	{
+		CollisionShape2D duckCollision = duck.GetNodeOrNull<CollisionShape2D>("DuckCollision");
+		if (playerCollision?.Shape is not RectangleShape2D playerShape
+			|| duckCollision?.Shape is not CircleShape2D duckShape)
+			return false;
+
+		Transform2D playerTransform = playerCollision.GlobalTransform;
+		Vector2 halfSize = playerShape.Size / 2;
+		Vector2 halfExtents = new(
+			Mathf.Abs(playerTransform.X.X) * halfSize.X + Mathf.Abs(playerTransform.Y.X) * halfSize.Y,
+			Mathf.Abs(playerTransform.X.Y) * halfSize.X + Mathf.Abs(playerTransform.Y.Y) * halfSize.Y);
+		Transform2D duckTransform = duckCollision.GlobalTransform;
+		float duckRadius = duckShape.Radius * Math.Max(duckTransform.X.Length(), duckTransform.Y.Length());
+		Vector2 difference = duckCollision.GlobalPosition - playerCollision.GlobalPosition;
+		Vector2 nearestPoint = new(
+			Mathf.Clamp(difference.X, -halfExtents.X, halfExtents.X),
+			Mathf.Clamp(difference.Y, -halfExtents.Y, halfExtents.Y));
+
+		return (difference - nearestPoint).LengthSquared() <= duckRadius * duckRadius;
 	}
 
 	private float GetPlayerHalfWidth()

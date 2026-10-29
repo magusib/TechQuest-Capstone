@@ -42,7 +42,6 @@ public partial class StudentRoomResult : Control
 		identificationTemplate.Visible = false;
 		GetNode<Button>("RoomResult/VBoxContainer/ReviewButton").Pressed += reviewPanel.Show;
 		GetNode<Button>("QuizReview/CloseButton").Pressed += reviewPanel.Hide;
-		GetNode<Button>("BackButton").Pressed += OnBackPressed;
 		GetNode<Button>("RoomResult/VBoxContainer/BackButton").Pressed += OnBackPressed;
 		_ = LoadResultAsync();
 	}
