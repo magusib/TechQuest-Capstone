@@ -9,7 +9,7 @@ public partial class StudentLogin : Control
 	// =========================================================
 
 	private const string API_BASE_URL =
-		"https://techquest-capstone.onrender.com/api/Auth";
+		"https://api.techquestapp.tech/api/Auth";
 
 
 	// =========================================================
@@ -95,11 +95,13 @@ public partial class StudentLogin : Control
 
 	private bool isRegistrationOTP = false;
 	private bool isForgotPasswordOTP = false;
+	private bool isOTPResend = false;
 
 	private int otpAttempts = 0;
 
 	private const int MaxOTPAttempts = 3;
 	private bool loginRequestInProgress = false;
+	private bool requestInProgress = false;
 
 
 	// =========================================================
@@ -432,6 +434,9 @@ public partial class StudentLogin : Control
 
 	private void OnCreateAccountPressed()
 	{
+		if (requestInProgress)
+			return;
+
 		string firstName =
 			firstNameInput.Text.Trim();
 
@@ -567,6 +572,8 @@ public partial class StudentLogin : Control
 
 	private void SendStudentRegistration()
 	{
+		SetRegistrationBusy(true);
+
 		int yearLevel =
 			yearLevelDropdown.Selected + 1;
 
@@ -898,6 +905,9 @@ public partial class StudentLogin : Control
 
 	private void OnOTPResendPressed()
 	{
+		if (requestInProgress)
+			return;
+
 		if (string.IsNullOrWhiteSpace(pendingEmail))
 		{
 			ShowMessage(
@@ -911,6 +921,8 @@ public partial class StudentLogin : Control
 		otpInput.Clear();
 
 		otpAttempts = 0;
+		isOTPResend = true;
+		SetOTPBusy(true);
 
 
 		// =====================================================
@@ -984,6 +996,11 @@ public partial class StudentLogin : Control
 		string endpoint,
 		Godot.Collections.Dictionary data)
 	{
+		if (requestInProgress)
+			return;
+
+		requestInProgress = true;
+
 		string json =
 			Json.Stringify(data);
 
@@ -1026,6 +1043,8 @@ public partial class StudentLogin : Control
 
 		if (error != Error.Ok)
 		{
+			requestInProgress = false;
+			SetRegistrationBusy(false);
 			SetLoginBusy(false);
 			ShowMessage(
 				"Unable to connect to TechQuestBackend."
@@ -1048,6 +1067,8 @@ public partial class StudentLogin : Control
 		string[] headers,
 		byte[] body)
 	{
+		requestInProgress = false;
+		SetRegistrationBusy(false);
 		SetLoginBusy(false);
 		string responseText =
 			Encoding.UTF8.GetString(body);
@@ -1076,6 +1097,8 @@ public partial class StudentLogin : Control
 
 		if (result != (long)HttpRequest.Result.Success)
 		{
+			isOTPResend = false;
+			SetOTPBusy(false);
 			ShowMessage(
 				"Could not connect to TechQuestBackend."
 			);
@@ -1094,6 +1117,8 @@ public partial class StudentLogin : Control
 			HandleSuccessfulResponse(
 				responseText
 			);
+			isOTPResend = false;
+			SetOTPBusy(false);
 
 			return;
 		}
@@ -1103,6 +1128,8 @@ public partial class StudentLogin : Control
 		// ERROR
 		// =====================================================
 
+		isOTPResend = false;
+		SetOTPBusy(false);
 		ShowMessage(
 			GetApiErrorMessage(responseText)
 		);
@@ -1115,6 +1142,12 @@ public partial class StudentLogin : Control
 		loginButton.Text = busy ? "Logging in..." : "Login";
 	}
 
+	private void SetRegistrationBusy(bool busy)
+	{
+		createAccountButton.Disabled = busy;
+		createAccountButton.Text = busy ? "Registering..." : "Register";
+	}
+
 
 	// =========================================================
 	// SUCCESS RESPONSE
@@ -1123,6 +1156,14 @@ public partial class StudentLogin : Control
 	private void HandleSuccessfulResponse(
 		string responseText)
 	{
+		if (isOTPResend)
+		{
+			ShowMessage(isRegistrationOTP
+				? "Registration OTP resent successfully."
+				: "Password reset OTP resent successfully.");
+			return;
+		}
+
 		// =====================================================
 		// LOGIN
 		// =====================================================

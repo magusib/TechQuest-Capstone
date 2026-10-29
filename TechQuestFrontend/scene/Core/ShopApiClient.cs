@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 public static class ShopApiClient
 {
-    private const string ApiBaseUrl = "https://techquest-capstone.onrender.com/api";
+    private const string ApiBaseUrl = "https://api.techquestapp.tech/api";
     private static readonly System.Net.Http.HttpClient Client = new();
     private static readonly JsonSerializerOptions JsonOptions = new()
     {

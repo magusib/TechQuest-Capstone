@@ -33,6 +33,7 @@ texture = ExtResource("4_j4ke4")
 texture = ExtResource("5_j4ke4")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_47jqb"]
+content_margin_left = 10.0
 bg_color = Color(0, 0, 0, 0.67058825)
 border_width_left = 1
 border_width_top = 1
@@ -47,6 +48,7 @@ corner_radius_bottom_left = 10
 texture = ExtResource("5_j4ke4")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gfhng"]
+content_margin_left = 10.0
 bg_color = Color(0, 0, 0, 0.67058825)
 border_width_left = 1
 border_width_top = 1
@@ -85,6 +87,7 @@ texture = ExtResource("4_j4ke4")
 texture = ExtResource("14_23uyx")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_23uyx"]
+content_margin_left = 10.0
 bg_color = Color(0, 0, 0, 0.5882353)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
@@ -95,6 +98,7 @@ corner_radius_bottom_left = 5
 texture = ExtResource("14_23uyx")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7y620"]
+content_margin_left = 10.0
 bg_color = Color(0, 0, 0, 0.5882353)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
@@ -129,6 +133,7 @@ corner_radius_bottom_left = 5
 texture = ExtResource("14_23uyx")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dsomj"]
+content_margin_left = 10.0
 bg_color = Color(0, 0, 0, 0.5882353)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
@@ -139,6 +144,7 @@ corner_radius_bottom_left = 5
 texture = ExtResource("14_23uyx")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r0fcb"]
+content_margin_left = 10.0
 bg_color = Color(0, 0, 0, 0.5882353)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
@@ -149,6 +155,7 @@ corner_radius_bottom_left = 5
 texture = ExtResource("14_23uyx")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ofu2"]
+content_margin_left = 10.0
 bg_color = Color(0, 0, 0, 0.5882353)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
@@ -795,7 +802,9 @@ offset_left = 51.0
 offset_top = 175.5
 offset_right = 510.0
 offset_bottom = 266.5
+theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxFlat_s5u3a")
+alignment = 1
 
 [node name="ConfirmButton" type="Button" parent="OTPPopup" unique_id=102427100]
 layout_mode = 0

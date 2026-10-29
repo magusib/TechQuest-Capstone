@@ -415,7 +415,6 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_niop7")
 text = "Cancel"
 
 [node name="OTPPopup" type="Panel" parent="." unique_id=2068755496]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -466,7 +465,9 @@ offset_left = 51.0
 offset_top = 175.5
 offset_right = 510.0
 offset_bottom = 266.5
+theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxFlat_eniql")
+alignment = 1
 
 [node name="ConfirmButton" type="Button" parent="OTPPopup" unique_id=711886124]
 layout_mode = 0

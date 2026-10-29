@@ -96,32 +96,51 @@ using (var scope = app.Services.CreateScope())
     }
     db.SaveChanges();
 
-    if (!db.Users.Any() && app.Environment.IsDevelopment())
+    if (app.Environment.IsDevelopment())
     {
-        db.Users.AddRange(
-            new User
-            {
-                FirstName = "System",
-                LastName = "Admin",
-                Email = "admin@paterostechnologicalcollege.edu.ph",
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin123!"),
-                Role = "admin",
-                IsEmailVerified = true,
-                CreatedAt = DateTime.UtcNow
-            },
-            new User
-            {
-                FirstName = "System",
-                LastName = "Professor",
-                Email = "professor@paterostechnologicalcollege.edu.ph",
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword("Professor123!"),
-                Role = "professor",
-                IsEmailVerified = true,
-                CreatedAt = DateTime.UtcNow
-            }
-        );
+        // Keep development credentials outside the source code.
+        var adminPassword = builder.Configuration["SeedUsers:AdminPassword"];
+        var professorPassword = builder.Configuration["SeedUsers:ProfessorPassword"];
 
-        db.SaveChanges();
+        if (!string.IsNullOrWhiteSpace(adminPassword) || !string.IsNullOrWhiteSpace(professorPassword))
+        {
+            if (string.IsNullOrWhiteSpace(adminPassword) || string.IsNullOrWhiteSpace(professorPassword))
+                throw new InvalidOperationException(
+                    "Both SeedUsers:AdminPassword and SeedUsers:ProfessorPassword must be configured.");
+
+            const string adminEmail = "admin@paterostechnologicalcollege.edu.ph";
+            const string professorEmail = "professor@paterostechnologicalcollege.edu.ph";
+
+            if (!db.Users.Any(user => user.Email == adminEmail))
+            {
+                db.Users.Add(new User
+                {
+                    FirstName = "System",
+                    LastName = "Admin",
+                    Email = adminEmail,
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword(adminPassword),
+                    Role = "admin",
+                    IsEmailVerified = true,
+                    CreatedAt = DateTime.UtcNow
+                });
+            }
+
+            if (!db.Users.Any(user => user.Email == professorEmail))
+            {
+                db.Users.Add(new User
+                {
+                    FirstName = "System",
+                    LastName = "Professor",
+                    Email = professorEmail,
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword(professorPassword),
+                    Role = "professor",
+                    IsEmailVerified = true,
+                    CreatedAt = DateTime.UtcNow
+                });
+            }
+
+            db.SaveChanges();
+        }
     }
 
     if (!db.Users.Any() && !app.Environment.IsDevelopment())

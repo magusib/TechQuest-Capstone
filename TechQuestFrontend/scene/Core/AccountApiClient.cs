@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 public static class AccountApiClient
 {
-	private const string ApiBaseUrl = "https://techquest-capstone.onrender.com/api";
-	private const string ServerBaseUrl = "https://techquest-capstone.onrender.com";
+	private const string ApiBaseUrl = "https://api.techquestapp.tech/api";
+	private const string ServerBaseUrl = "https://api.techquestapp.tech";
 	private static readonly System.Net.Http.HttpClient Client = new();
 	private static readonly JsonSerializerOptions JsonOptions = new()
 	{

@@ -4,7 +4,7 @@ using System.Text;
 
 public partial class ProfessorRegister : Control
 {
-	private const string API_BASE_URL = "https://techquest-capstone.onrender.com/api/Auth";
+	private const string API_BASE_URL = "https://api.techquestapp.tech/api/Auth";
 
 	private HttpRequest httpRequest;
 	private Panel registerPanel;
@@ -37,8 +37,10 @@ public partial class ProfessorRegister : Control
 	private string pendingEmail = "";
 	private bool isRegistrationOTP = false;
 	private bool isForgotPasswordOTP = false;
+	private bool isOTPResend = false;
 	private int otpAttempts = 0;
 	private const int MaxOTPAttempts = 3;
+	private bool requestInProgress = false;
 
 	public override void _Ready()
 	{
@@ -87,6 +89,9 @@ public partial class ProfessorRegister : Control
 
 	private void OnRegisterPressed()
 	{
+		if (requestInProgress)
+			return;
+
 		string firstName = firstNameInput.Text.Trim();
 		string lastName = lastNameInput.Text.Trim();
 		string email = emailInput.Text.Trim();
@@ -139,6 +144,7 @@ public partial class ProfessorRegister : Control
 		isRegistrationOTP = true;
 		isForgotPasswordOTP = false;
 		pendingEmail = email;
+		SetRegistrationBusy(true);
 
 		SendProfessorRegistration();
 	}
@@ -196,6 +202,12 @@ public partial class ProfessorRegister : Control
 		forgotSaveButton.Disabled = busy;
 		forgotCancelButton.Disabled = busy;
 		forgotSaveButton.Text = busy ? "Sending..." : "Save";
+	}
+
+	private void SetRegistrationBusy(bool busy)
+	{
+		registerButton.Disabled = busy;
+		registerButton.Text = busy ? "Registering..." : "Register";
 	}
 
 	private void SetOTPBusy(bool busy)
@@ -313,6 +325,9 @@ public partial class ProfessorRegister : Control
 
 	private void OnOTPResendPressed()
 	{
+		if (requestInProgress)
+			return;
+
 		if (string.IsNullOrWhiteSpace(pendingEmail))
 		{
 			ShowMessage("Email information is missing.");
@@ -321,6 +336,8 @@ public partial class ProfessorRegister : Control
 
 		otpInput.Clear();
 		otpAttempts = 0;
+		isOTPResend = true;
+		SetOTPBusy(true);
 
 		if (isRegistrationOTP)
 		{
@@ -353,12 +370,19 @@ public partial class ProfessorRegister : Control
 
 	private void SendPostRequest(string endpoint, Godot.Collections.Dictionary data)
 	{
+		if (requestInProgress)
+			return;
+
+		requestInProgress = true;
+
 		string json = Json.Stringify(data);
 		string[] headers = { "Content-Type: application/json" };
 		Error error = httpRequest.Request(API_BASE_URL + endpoint, headers, HttpClient.Method.Post, json);
 
 		if (error != Error.Ok)
 		{
+			requestInProgress = false;
+			SetRegistrationBusy(false);
 			ShowMessage("Unable to connect to TechQuestBackend.");
 			GD.PrintErr($"HTTPRequest Error: {error}");
 		}
@@ -366,10 +390,14 @@ public partial class ProfessorRegister : Control
 
 	private void OnRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
 	{
+		requestInProgress = false;
+		SetRegistrationBusy(false);
 		string responseText = Encoding.UTF8.GetString(body);
 
 		if (result != (long)HttpRequest.Result.Success)
 		{
+			isOTPResend = false;
+			SetOTPBusy(false);
 			ShowMessage("Could not connect to TechQuestBackend.");
 			return;
 		}
@@ -377,14 +405,26 @@ public partial class ProfessorRegister : Control
 		if (responseCode >= 200 && responseCode < 300)
 		{
 			HandleSuccessfulResponse(responseText);
+			isOTPResend = false;
+			SetOTPBusy(false);
 			return;
 		}
 
+		isOTPResend = false;
+		SetOTPBusy(false);
 		ShowMessage(GetApiErrorMessage(responseText));
 	}
 
 	private void HandleSuccessfulResponse(string responseText)
 	{
+		if (isOTPResend)
+		{
+			ShowMessage(isRegistrationOTP
+				? "Registration OTP resent successfully."
+				: "Password reset OTP resent successfully.");
+			return;
+		}
+
 		if (isRegistrationOTP && !otpPopup.Visible)
 		{
 			otpInput.Clear();

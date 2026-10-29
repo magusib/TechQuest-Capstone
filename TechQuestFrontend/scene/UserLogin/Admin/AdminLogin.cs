@@ -5,7 +5,7 @@ using System.Text;
 public partial class AdminLogin : Control
 {
 	private const string API_BASE_URL =
-		"https://techquest-capstone.onrender.com/api/Auth";
+		"https://api.techquestapp.tech/api/Auth";
 
 	private HttpRequest httpRequest;
 	private Panel loginPanel;
@@ -34,9 +34,11 @@ public partial class AdminLogin : Control
 
 	private string pendingEmail = "";
 	private bool isForgotPasswordOTP = false;
+	private bool isOTPResend = false;
 	private int otpAttempts = 0;
 	private const int MaxOTPAttempts = 3;
 	private bool loginRequestInProgress = false;
+	private bool requestInProgress = false;
 
 	public override void _Ready()
 	{
@@ -253,6 +255,9 @@ public partial class AdminLogin : Control
 
 	private void OnOTPResendPressed()
 	{
+		if (requestInProgress)
+			return;
+
 		if (string.IsNullOrWhiteSpace(pendingEmail))
 		{
 			ShowMessage("Email information is missing.");
@@ -261,6 +266,8 @@ public partial class AdminLogin : Control
 
 		otpInput.Clear();
 		otpAttempts = 0;
+		isOTPResend = true;
+		SetOTPBusy(true);
 
 		var data = new Godot.Collections.Dictionary
 		{
@@ -279,6 +286,11 @@ public partial class AdminLogin : Control
 
 	private void SendPostRequest(string endpoint, Godot.Collections.Dictionary data)
 	{
+		if (requestInProgress)
+			return;
+
+		requestInProgress = true;
+
 		string json = Json.Stringify(data);
 		string[] headers = { "Content-Type: application/json" };
 
@@ -291,6 +303,7 @@ public partial class AdminLogin : Control
 
 		if (error != Error.Ok)
 		{
+			requestInProgress = false;
 			SetLoginBusy(false);
 			ShowMessage("Unable to connect to TechQuestBackend.");
 			GD.PrintErr($"HTTPRequest Error: {error}");
@@ -299,11 +312,14 @@ public partial class AdminLogin : Control
 
 	private void OnRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
 	{
+		requestInProgress = false;
 		SetLoginBusy(false);
 		string responseText = Encoding.UTF8.GetString(body);
 
 		if (result != (long)HttpRequest.Result.Success)
 		{
+			isOTPResend = false;
+			SetOTPBusy(false);
 			ShowMessage("Could not connect to TechQuestBackend.");
 			return;
 		}
@@ -311,9 +327,13 @@ public partial class AdminLogin : Control
 		if (responseCode >= 200 && responseCode < 300)
 		{
 			HandleSuccessfulResponse(responseText);
+			isOTPResend = false;
+			SetOTPBusy(false);
 			return;
 		}
 
+		isOTPResend = false;
+		SetOTPBusy(false);
 		ShowMessage(GetApiErrorMessage(responseText));
 	}
 
@@ -326,6 +346,12 @@ public partial class AdminLogin : Control
 
 	private void HandleSuccessfulResponse(string responseText)
 	{
+		if (isOTPResend)
+		{
+			ShowMessage("Password reset OTP resent successfully.");
+			return;
+		}
+
 		if (responseText.Contains("login", StringComparison.OrdinalIgnoreCase))
 		{
 			if (!StoreSession(responseText))
