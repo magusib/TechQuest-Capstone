@@ -566,6 +566,14 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "Current Lifespan: 100 / 100"
 
+[node name="FullRestoreTimerLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Full restore: Ready / none"
+
+[node name="WalkingRestoreTimerLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "+1 while walking: 01:00"
+
 [node name="CostLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Cost: 500 Coins"

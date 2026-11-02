@@ -135,6 +135,7 @@ public partial class Character : CharacterBody2D
 		if (UserSession.IsStudent && isActivelyWalking && !walkingRecoveryInProgress)
 		{
 			walkingRecoverySeconds += delta;
+			UserSession.UpdateWalkingRecoveryProgress(walkingRecoverySeconds);
 			if (walkingRecoverySeconds >= 60)
 			{
 				walkingRecoverySeconds = 0;
@@ -145,6 +146,7 @@ public partial class Character : CharacterBody2D
 		else if (!isActivelyWalking)
 		{
 			walkingRecoverySeconds = 0;
+			UserSession.UpdateWalkingRecoveryProgress(0);
 		}
 	}
 
@@ -154,8 +156,8 @@ public partial class Character : CharacterBody2D
 		try
 		{
 			LifespanResponseDto response = await LifespanApiClient.WalkingRecoveryAsync();
-			UserSession.UpdateLifespan(response.Lifespan);
-			UserSession.UpdateStudentProfile(response.TotalCoins, UserSession.Points);
+			UserSession.ApplyLifespanResponse(response);
+			UserSession.UpdateWalkingRecoveryProgress(0);
 			GD.Print($"Walking recovery succeeded. Lifespan is now {response.Lifespan}/{UserSession.MaximumLifespan}.");
 		}
 		catch (Exception exception)

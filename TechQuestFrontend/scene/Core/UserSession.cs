@@ -28,6 +28,9 @@ public static class UserSession
 	public static int Points { get; private set; }
 	public static int Lifespan { get; private set; } = 100;
 	public const int MaximumLifespan = 100;
+	public static DateTimeOffset? LifespanAutoRecoveryAtUtc { get; private set; }
+	public static DateTimeOffset? LifespanWalkingRecoveryAvailableAtUtc { get; private set; }
+	public static double WalkingRecoverySeconds { get; private set; }
 
 	public static string AvatarPath { get; private set; } = "";
 
@@ -68,6 +71,9 @@ public static class UserSession
 		Coins = role == UserRole.Student ? Math.Max(0, coins) : 0;
 		Points = role == UserRole.Student ? Math.Max(0, points) : 0;
 		Lifespan = role == UserRole.Student ? MaximumLifespan : 0;
+		LifespanAutoRecoveryAtUtc = null;
+		LifespanWalkingRecoveryAvailableAtUtc = null;
+		WalkingRecoverySeconds = 0;
 
 		AvatarPath = avatarPath ?? "";
 
@@ -164,6 +170,37 @@ public static class UserSession
 			return;
 
 		Lifespan = Math.Clamp(lifespan, 0, MaximumLifespan);
+	}
+
+	public static void ApplyLifespanResponse(LifespanResponseDto response)
+	{
+		if (response == null)
+			return;
+
+		UpdateLifespan(response.Lifespan);
+		UpdateStudentProfile(response.TotalCoins, Points);
+		UpdateLifespanRecoveryTimers(
+			response.LifespanAutoRecoveryAtUtc,
+			response.LifespanWalkingRecoveryAvailableAtUtc);
+	}
+
+	public static void UpdateLifespanRecoveryTimers(
+		DateTimeOffset? autoRecoveryAtUtc,
+		DateTimeOffset? walkingRecoveryAvailableAtUtc)
+	{
+		if (!IsStudent)
+			return;
+
+		LifespanAutoRecoveryAtUtc = autoRecoveryAtUtc;
+		LifespanWalkingRecoveryAvailableAtUtc = walkingRecoveryAvailableAtUtc;
+	}
+
+	public static void UpdateWalkingRecoveryProgress(double seconds)
+	{
+		if (!IsStudent)
+			return;
+
+		WalkingRecoverySeconds = Math.Clamp(seconds, 0, 60);
 	}
 
 	public static void UpdateAvatar(string avatarPath)
@@ -267,6 +304,10 @@ public static class UserSession
 		Token = "";
 		Coins = 0;
 		Points = 0;
+		Lifespan = 100;
+		LifespanAutoRecoveryAtUtc = null;
+		LifespanWalkingRecoveryAvailableAtUtc = null;
+		WalkingRecoverySeconds = 0;
 		AvatarPath = "";
 
 		GD.Print("UserSession cleared.");

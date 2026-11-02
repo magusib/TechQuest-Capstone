@@ -20,7 +20,7 @@ public partial class Killzone : Area2D
         try
         {
             LifespanResponseDto response = await LifespanApiClient.DeductAsync(5, "killzone");
-            UserSession.UpdateLifespan(response.Lifespan);
+            UserSession.ApplyLifespanResponse(response);
         }
         catch (Exception exception)
         {

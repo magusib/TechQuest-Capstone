@@ -11,6 +11,8 @@ public partial class MapHUD : Control
 	private Control purchasePanel;
 	private Label currentLifespanLabel;
 	private Label notificationLabel;
+	private Label fullRestoreTimerLabel;
+	private Label walkingRestoreTimerLabel;
 	private bool purchaseInProgress;
 
 	public override void _Ready()
@@ -30,6 +32,8 @@ public partial class MapHUD : Control
 		purchasePanel = GetNodeOrNull<Control>("../LifespanPurchasePanel");
 		currentLifespanLabel = GetNodeOrNull<Label>("../LifespanPurchasePanel/MarginContainer/VBoxContainer/CurrentLifespanLabel");
 		notificationLabel = GetNodeOrNull<Label>("../LifespanPurchasePanel/MarginContainer/VBoxContainer/NotificationLabel");
+		fullRestoreTimerLabel = GetNodeOrNull<Label>("../LifespanPurchasePanel/MarginContainer/VBoxContainer/FullRestoreTimerLabel");
+		walkingRestoreTimerLabel = GetNodeOrNull<Label>("../LifespanPurchasePanel/MarginContainer/VBoxContainer/WalkingRestoreTimerLabel");
 		if (restoreLifespanButton != null)
 			restoreLifespanButton.Pressed += OpenPurchasePanel;
 		Button restoreButton = GetNodeOrNull<Button>("../LifespanPurchasePanel/MarginContainer/VBoxContainer/RestoreButton");
@@ -72,6 +76,34 @@ public partial class MapHUD : Control
 			lifespanProgressBar.Value = UserSession.Lifespan;
 		if (currentLifespanLabel != null)
 			currentLifespanLabel.Text = $"Current Lifespan: {UserSession.Lifespan} / {UserSession.MaximumLifespan}";
+		if (fullRestoreTimerLabel != null)
+			fullRestoreTimerLabel.Text = $"Full restore: {FormatRemaining(GetRemaining(UserSession.LifespanAutoRecoveryAtUtc))}";
+		if (walkingRestoreTimerLabel != null)
+		{
+			double remainingWalkingSeconds = Math.Max(0, 60 - UserSession.WalkingRecoverySeconds);
+			walkingRestoreTimerLabel.Text = $"+1 while walking: {FormatSeconds(remainingWalkingSeconds)}";
+		}
+	}
+
+	private static TimeSpan GetRemaining(DateTimeOffset? target)
+	{
+		return target.HasValue
+			? target.Value - DateTimeOffset.UtcNow
+			: TimeSpan.Zero;
+	}
+
+	private static string FormatRemaining(TimeSpan remaining)
+	{
+		if (remaining <= TimeSpan.Zero)
+			return "Ready / none";
+
+		return $"{(int)remaining.TotalHours:00}:{remaining.Minutes:00}:{remaining.Seconds:00}";
+	}
+
+	private static string FormatSeconds(double seconds)
+	{
+		int wholeSeconds = Math.Clamp((int)Math.Ceiling(seconds), 0, 60);
+		return $"{wholeSeconds / 60:00}:{wholeSeconds % 60:00}";
 	}
 
 	private async void RefreshLifespanAsync()
@@ -79,8 +111,7 @@ public partial class MapHUD : Control
 		try
 		{
 			LifespanResponseDto response = await LifespanApiClient.GetAsync();
-			UserSession.UpdateLifespan(response.Lifespan);
-			UserSession.UpdateStudentProfile(response.TotalCoins, UserSession.Points);
+			UserSession.ApplyLifespanResponse(response);
 			RefreshLifespanLabels();
 			RefreshCurrencyLabels();
 		}
@@ -109,8 +140,7 @@ public partial class MapHUD : Control
 		try
 		{
 			LifespanResponseDto response = await LifespanApiClient.PurchaseAsync();
-			UserSession.UpdateLifespan(response.Lifespan);
-			UserSession.UpdateStudentProfile(response.TotalCoins, UserSession.Points);
+			UserSession.ApplyLifespanResponse(response);
 			if (notificationLabel != null)
 		{
 			notificationLabel.Text = "Lifespan restored successfully.";

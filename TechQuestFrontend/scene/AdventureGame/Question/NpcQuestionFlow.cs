@@ -211,7 +211,7 @@ public abstract partial class NpcQuestionFlow : Control
 			try
 			{
 				LifespanResponseDto lifespan = await LifespanApiClient.GetAsync();
-				UserSession.UpdateLifespan(lifespan.Lifespan);
+				UserSession.ApplyLifespanResponse(lifespan);
 			}
 			catch (Exception lifespanException)
 			{

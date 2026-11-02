@@ -69,5 +69,7 @@ public class LifespanResponseDto
     public int Lifespan { get; set; }
     public int MaximumLifespan { get; set; }
     public int TotalCoins { get; set; }
+    public DateTimeOffset? LifespanAutoRecoveryAtUtc { get; set; }
+    public DateTimeOffset? LifespanWalkingRecoveryAvailableAtUtc { get; set; }
     public string Message { get; set; } = "";
 }

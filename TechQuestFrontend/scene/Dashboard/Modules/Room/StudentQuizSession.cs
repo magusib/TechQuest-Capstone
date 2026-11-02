@@ -226,7 +226,7 @@ public partial class StudentQuizSession : Control
 			try
 			{
 				LifespanResponseDto lifespan = await LifespanApiClient.GetAsync();
-				UserSession.UpdateLifespan(lifespan.Lifespan);
+				UserSession.ApplyLifespanResponse(lifespan);
 			}
 			catch (Exception lifespanException)
 			{

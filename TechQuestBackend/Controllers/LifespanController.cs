@@ -138,6 +138,8 @@ namespace TechQuestBackend.Controllers
                 Lifespan = profile.Lifespan,
                 MaximumLifespan = MaximumLifespan,
                 TotalCoins = profile.TotalCoins,
+                LifespanAutoRecoveryAtUtc = ToUtcOffset(profile.LifespanAutoRecoveryAt),
+                LifespanWalkingRecoveryAvailableAtUtc = ToUtcOffset(profile.LifespanWalkRecoveryAt?.Add(WalkingRecoveryDelay)),
                 Message = "Lifespan restored successfully."
             });
         }
@@ -173,8 +175,17 @@ namespace TechQuestBackend.Controllers
             {
                 Lifespan = profile.Lifespan,
                 MaximumLifespan = MaximumLifespan,
-                TotalCoins = profile.TotalCoins
+                TotalCoins = profile.TotalCoins,
+                LifespanAutoRecoveryAtUtc = ToUtcOffset(profile.LifespanAutoRecoveryAt),
+                LifespanWalkingRecoveryAvailableAtUtc = ToUtcOffset(profile.LifespanWalkRecoveryAt?.Add(WalkingRecoveryDelay))
             };
+        }
+
+        private static DateTimeOffset? ToUtcOffset(DateTime? value)
+        {
+            return value.HasValue
+                ? new DateTimeOffset(DateTime.SpecifyKind(value.Value, DateTimeKind.Utc))
+                : null;
         }
 
         private int GetUserId()
@@ -194,6 +205,8 @@ namespace TechQuestBackend.Controllers
         public int Lifespan { get; set; }
         public int MaximumLifespan { get; set; }
         public int TotalCoins { get; set; }
+        public DateTimeOffset? LifespanAutoRecoveryAtUtc { get; set; }
+        public DateTimeOffset? LifespanWalkingRecoveryAvailableAtUtc { get; set; }
         public string Message { get; set; } = "";
     }
 }
