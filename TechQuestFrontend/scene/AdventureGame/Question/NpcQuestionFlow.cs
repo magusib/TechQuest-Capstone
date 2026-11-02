@@ -208,6 +208,15 @@ public abstract partial class NpcQuestionFlow : Control
 
 			isFinalized = true;
 			UserSession.UpdateStudentProfile(result.TotalCoins, result.TotalPoints);
+			try
+			{
+				LifespanResponseDto lifespan = await LifespanApiClient.GetAsync();
+				UserSession.UpdateLifespan(lifespan.Lifespan);
+			}
+			catch (Exception lifespanException)
+			{
+				GD.PrintErr("Could not refresh lifespan after quiz: " + lifespanException.Message);
+			}
 			NpcMapSprite.RemoveDeploymentSprite(GetTree().CurrentScene, question.DeploymentId);
 			ShowResult(result);
 		}

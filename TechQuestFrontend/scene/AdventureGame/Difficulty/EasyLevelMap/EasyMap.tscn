@@ -463,6 +463,77 @@ stretch_mode = 5
 layout_mode = 2
 text = "0"
 
+[node name="LifespanPanel" type="HBoxContainer" parent="MapHUDLayer/MapHUD/TopRight" unique_id=547639437]
+custom_minimum_size = Vector2(240, 44)
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="LifespanLabel" type="Label" parent="MapHUDLayer/MapHUD/TopRight/LifespanPanel" unique_id=419096325]
+layout_mode = 2
+text = "Lifespan: 100 / 100"
+
+[node name="LifespanProgressBar" type="ProgressBar" parent="MapHUDLayer/MapHUD/TopRight/LifespanPanel" unique_id=802432970]
+custom_minimum_size = Vector2(90, 24)
+layout_mode = 2
+value = 100.0
+show_percentage = false
+
+[node name="RestoreLifespanButton" type="Button" parent="MapHUDLayer/MapHUD/TopRight/LifespanPanel" unique_id=2130226657]
+custom_minimum_size = Vector2(78, 36)
+layout_mode = 2
+text = "Restore"
+
+[node name="LifespanPurchasePanel" type="PanelContainer" parent="MapHUDLayer" unique_id=1787022902]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = -150.0
+offset_right = 210.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MapHUDLayer/LifespanPurchasePanel" unique_id=759301240]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer" unique_id=942204802]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer" unique_id=530706905]
+layout_mode = 2
+text = "Restore Lifespan"
+horizontal_alignment = 1
+
+[node name="CurrentLifespanLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer" unique_id=963699927]
+layout_mode = 2
+text = "Current Lifespan: 100 / 100"
+
+[node name="CostLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer" unique_id=21867837]
+layout_mode = 2
+text = "Cost: 500 Coins"
+
+[node name="RestoreButton" type="Button" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer" unique_id=1693019177]
+layout_mode = 2
+text = "Restore Lifespan"
+
+[node name="CloseButton" type="Button" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer" unique_id=1428704111]
+layout_mode = 2
+text = "Close"
+
+[node name="NotificationLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer" unique_id=393719374]
+visible = false
+layout_mode = 2
+autowrap_mode = 2
+
 [node name="AdminMapHUD" type="Control" parent="MapHUDLayer" unique_id=478903357]
 visible = false
 layout_mode = 3

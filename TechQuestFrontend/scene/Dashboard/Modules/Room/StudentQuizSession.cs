@@ -223,6 +223,15 @@ public partial class StudentQuizSession : Control
 				MultiplayerRoomState.Score,
 				MultiplayerRoomState.Questions.Count,
 				MultiplayerRoomState.Answers);
+			try
+			{
+				LifespanResponseDto lifespan = await LifespanApiClient.GetAsync();
+				UserSession.UpdateLifespan(lifespan.Lifespan);
+			}
+			catch (Exception lifespanException)
+			{
+				GD.PrintErr("Could not refresh lifespan after room quiz: " + lifespanException.Message);
+			}
 		}
 		catch (Exception exception)
 		{

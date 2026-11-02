@@ -12,6 +12,7 @@ public partial class Character : CharacterBody2D
 	private Label nameLabel;
 	private double walkingRecoverySeconds;
 	private bool walkingRecoveryInProgress;
+	private Vector2 previousPosition;
 
 	public override void _Ready()
 	{
@@ -34,6 +35,8 @@ public partial class Character : CharacterBody2D
 
 		// Default animation
 		animatedSprite.Play("Idle");
+		previousPosition = GlobalPosition;
+		GD.Print($"Lifespan walking recovery enabled. IsStudent={UserSession.IsStudent}, userId={UserSession.UserId}");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -124,16 +127,23 @@ public partial class Character : CharacterBody2D
 		// =========================
 		MoveAndSlide();
 
-		if (UserSession.IsStudent && direction != 0 && !walkingRecoveryInProgress)
+		// Measure actual displacement after MoveAndSlide. This is more reliable than
+		// Velocity.X because collision and input-release timing can make velocity 0
+		// even while the character is visibly moving for a short period.
+		float distanceMoved = GlobalPosition.DistanceTo(previousPosition);
+		previousPosition = GlobalPosition;
+		bool isActivelyWalking = distanceMoved > 0.05f && IsOnFloor();
+		if (UserSession.IsStudent && isActivelyWalking && !walkingRecoveryInProgress)
 		{
 			walkingRecoverySeconds += delta;
 			if (walkingRecoverySeconds >= 60)
 			{
 				walkingRecoverySeconds = 0;
+				GD.Print($"One minute of active walking completed. Requesting +1 Lifespan. Current={UserSession.Lifespan}/{UserSession.MaximumLifespan}");
 				RecoverFromWalkingAsync();
 			}
 		}
-		else if (direction == 0)
+		else if (!isActivelyWalking)
 		{
 			walkingRecoverySeconds = 0;
 		}
@@ -147,6 +157,7 @@ public partial class Character : CharacterBody2D
 			LifespanResponseDto response = await LifespanApiClient.WalkingRecoveryAsync();
 			UserSession.UpdateLifespan(response.Lifespan);
 			UserSession.UpdateStudentProfile(response.TotalCoins, UserSession.Points);
+			GD.Print($"Walking recovery succeeded. Lifespan is now {response.Lifespan}/{UserSession.MaximumLifespan}.");
 		}
 		catch (Exception exception)
 		{
