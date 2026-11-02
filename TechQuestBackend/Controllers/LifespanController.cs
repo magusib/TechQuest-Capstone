@@ -160,8 +160,16 @@ namespace TechQuestBackend.Controllers
                 return;
             }
 
-            if (profile.LifespanAutoRecoveryAt.HasValue &&
-                DateTime.UtcNow >= profile.LifespanAutoRecoveryAt.Value)
+            DateTime now = DateTime.UtcNow;
+            if (!profile.LifespanAutoRecoveryAt.HasValue)
+            {
+                // Backfill a schedule for profiles created before the recovery
+                // timestamp was stored, so the client can always show the timer.
+                profile.LifespanAutoRecoveryAt = now.Add(AutomaticRecoveryDelay);
+                return;
+            }
+
+            if (now >= profile.LifespanAutoRecoveryAt.Value)
             {
                 profile.Lifespan = MaximumLifespan;
                 profile.LifespanAutoRecoveryAt = null;
