@@ -12,7 +12,6 @@ public partial class Character : CharacterBody2D
 	private Label nameLabel;
 	private double walkingRecoverySeconds;
 	private bool walkingRecoveryInProgress;
-	private Vector2 previousPosition;
 
 	public override void _Ready()
 	{
@@ -35,7 +34,6 @@ public partial class Character : CharacterBody2D
 
 		// Default animation
 		animatedSprite.Play("Idle");
-		previousPosition = GlobalPosition;
 		GD.Print($"Lifespan walking recovery enabled. IsStudent={UserSession.IsStudent}, userId={UserSession.UserId}");
 	}
 
@@ -127,12 +125,10 @@ public partial class Character : CharacterBody2D
 		// =========================
 		MoveAndSlide();
 
-		// Measure actual displacement after MoveAndSlide. This is more reliable than
-		// Velocity.X because collision and input-release timing can make velocity 0
-		// even while the character is visibly moving for a short period.
-		float distanceMoved = GlobalPosition.DistanceTo(previousPosition);
-		previousPosition = GlobalPosition;
-		bool isActivelyWalking = distanceMoved > 0.05f && IsOnFloor();
+		// Count active left/right input, not the direction of travel. This means
+		// walking left, then right, then left again continues the same minute timer.
+		// A brief direction change will not reset the accumulated walking time.
+		bool isActivelyWalking = direction != 0 && IsOnFloor();
 		if (UserSession.IsStudent && isActivelyWalking && !walkingRecoveryInProgress)
 		{
 			walkingRecoverySeconds += delta;
