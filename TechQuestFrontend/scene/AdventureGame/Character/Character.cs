@@ -128,7 +128,10 @@ public partial class Character : CharacterBody2D
 		// Count active left/right input, not the direction of travel. This means
 		// walking left, then right, then left again continues the same minute timer.
 		// A brief direction change will not reset the accumulated walking time.
-		bool isActivelyWalking = direction != 0 && IsOnFloor();
+		// Use the horizontal input itself as the walking signal. IsOnFloor() can
+		// briefly be false on slopes, tile seams, or during a physics update even
+		// though the player is still walking, which would reset the one-minute timer.
+		bool isActivelyWalking = !Mathf.IsZeroApprox(direction);
 		if (UserSession.IsStudent && isActivelyWalking && !walkingRecoveryInProgress)
 		{
 			walkingRecoverySeconds += delta;
