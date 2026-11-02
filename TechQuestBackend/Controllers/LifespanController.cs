@@ -63,7 +63,9 @@ namespace TechQuestBackend.Controllers
 
             ApplyAutomaticRecovery(profile);
             profile.Lifespan = Math.Max(0, profile.Lifespan - request.Amount);
-            profile.LifespanAutoRecoveryAt = DateTime.UtcNow.Add(AutomaticRecoveryDelay);
+            profile.LifespanAutoRecoveryAt = profile.Lifespan == 0
+                ? DateTime.UtcNow.Add(AutomaticRecoveryDelay)
+                : null;
             profile.LifespanWalkRecoveryAt = null;
 
             await _db.SaveChangesAsync(cancellationToken);
@@ -154,8 +156,10 @@ namespace TechQuestBackend.Controllers
 
         private static void ApplyAutomaticRecovery(TechQuestBackend.Models.StudentProfile profile)
         {
-            if (profile.Lifespan >= MaximumLifespan)
+            if (profile.Lifespan > 0)
             {
+                // Full automatic recovery is only available when the player is
+                // completely depleted, not when lifespan is merely below 100.
                 profile.LifespanAutoRecoveryAt = null;
                 return;
             }

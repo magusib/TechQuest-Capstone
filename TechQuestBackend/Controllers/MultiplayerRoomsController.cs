@@ -318,7 +318,9 @@ namespace TechQuestBackend.Controllers
                 if (request.TotalQuestions > 0 && request.Score < request.TotalQuestions)
                 {
                     profile.Lifespan = Math.Max(0, profile.Lifespan - 10);
-                    profile.LifespanAutoRecoveryAt = DateTime.UtcNow.AddHours(3);
+                    profile.LifespanAutoRecoveryAt = profile.Lifespan == 0
+                        ? DateTime.UtcNow.AddHours(3)
+                        : null;
                     profile.LifespanWalkRecoveryAt = null;
                 }
             }
