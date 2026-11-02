@@ -19,6 +19,12 @@ namespace TechQuestBackend.Models
 
         public int TotalPoints { get; set; }
 
+        public int Lifespan { get; set; } = 100;
+
+        public DateTime? LifespanAutoRecoveryAt { get; set; }
+
+        public DateTime? LifespanWalkRecoveryAt { get; set; }
+
         public User? User { get; set; }
 
         public Character? Character { get; set; }

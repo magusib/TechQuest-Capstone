@@ -1,6 +1,47 @@
 [gd_scene format=3 uid="uid://ohbyt6qe6r2g"]
 
 [ext_resource type="Script" uid="uid://scjnavtuwhta" path="res://scene/AdventureGame/Question/MediumMapQuestion.cs" id="1_p2pip"]
+[ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="2_5san4"]
+[ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="3_d8c0w"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="3_u21r3"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="4_d8c0w"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="5_y2eqd"]
+[ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="7_6iaod"]
+[ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="8_w2pd4"]
+[ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="9_uk7r5"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o61l1"]
+texture = ExtResource("2_5san4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_agqw3"]
+texture = ExtResource("3_u21r3")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gm8w4"]
+texture = ExtResource("4_d8c0w")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vwc5r"]
+texture = ExtResource("5_y2eqd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y2eqd"]
+texture = ExtResource("2_5san4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6iaod"]
+texture = ExtResource("7_6iaod")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w2pd4"]
+texture = ExtResource("8_w2pd4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uk7r5"]
+texture = ExtResource("9_uk7r5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mtsrt"]
+texture = ExtResource("2_5san4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rnni1"]
+texture = ExtResource("2_5san4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rm0r3"]
+texture = ExtResource("2_5san4")
 
 [node name="MediumMapQuestion" type="Control" unique_id=533294355]
 layout_mode = 3
@@ -24,6 +65,7 @@ offset_right = 304.75
 offset_bottom = 195.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_o61l1")
 
 [node name="SubjectLabel" type="Label" parent="MediumMapQuestionPanel" unique_id=577000379]
 layout_mode = 1
@@ -35,6 +77,8 @@ offset_top = 14.0
 offset_right = 78.875
 offset_bottom = 53.0
 grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_d8c0w")
+theme_override_font_sizes/font_size = 20
 text = "Subject Name"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -45,6 +89,8 @@ offset_left = 421.75
 offset_top = 15.5
 offset_right = 584.5
 offset_bottom = 58.0
+theme_override_fonts/font = ExtResource("3_d8c0w")
+theme_override_font_sizes/font_size = 20
 text = "Time"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -108,6 +154,9 @@ offset_right = 59.75
 offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_agqw3")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_gm8w4")
+theme_override_styles/hover = SubResource("StyleBoxTexture_vwc5r")
 text = "Submit"
 
 [node name="AnswerTipPanel" type="Panel" parent="." unique_id=668482658]
@@ -124,6 +173,7 @@ offset_right = 189.5
 offset_bottom = 119.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_y2eqd")
 
 [node name="AnswerTipLabel" type="Label" parent="AnswerTipPanel" unique_id=1225881335]
 layout_mode = 0
@@ -157,10 +207,12 @@ offset_right = 117.25
 offset_bottom = -17.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_6iaod")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_w2pd4")
+theme_override_styles/hover = SubResource("StyleBoxTexture_uk7r5")
 text = "Proceed to Question"
 
 [node name="QuestionResult" type="Control" parent="." unique_id=1963868415]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -182,6 +234,7 @@ offset_right = 181.0
 offset_bottom = 160.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_mtsrt")
 
 [node name="TimeReachLabel" type="Label" parent="QuestionResult/TimeReachPanel" unique_id=1350518542]
 layout_mode = 1
@@ -255,6 +308,7 @@ offset_right = 181.0
 offset_bottom = 160.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_rnni1")
 
 [node name="WrongAnswerLabel" type="Label" parent="QuestionResult/WrongAnswerPanel" unique_id=1256026249]
 layout_mode = 1
@@ -315,6 +369,7 @@ grow_vertical = 0
 text = "OK"
 
 [node name="CorrectAnswerPanel" type="Panel" parent="QuestionResult" unique_id=1043749467]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -327,6 +382,7 @@ offset_right = 181.0
 offset_bottom = 160.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_rm0r3")
 
 [node name="CorrectAnswerLabel2" type="Label" parent="QuestionResult/CorrectAnswerPanel" unique_id=654349611]
 layout_mode = 1

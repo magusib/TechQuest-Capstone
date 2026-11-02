@@ -1,7 +1,79 @@
 [gd_scene format=3 uid="uid://o6qcgdarl6p1"]
 
 [ext_resource type="Script" uid="uid://ck3m27y5u5q0s" path="res://scene/AdventureGame/NPC/AdminNPC/AdminEasyNpc.cs" id="1_8qiw6"]
-[ext_resource type="Texture2D" uid="uid://dk37jnjagjxht" path="res://asset/Icons/exis.png" id="1_t4pwg"]
+[ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="3_no8dy"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="4_ld62j"]
+[ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="4_qmiwp"]
+[ext_resource type="FontFile" uid="uid://cb3fr24mny6tm" path="res://asset/style/fonts/BouncyBalloon-drJXX.ttf" id="5_5y02u"]
+[ext_resource type="Texture2D" uid="uid://cyqkrvyj6vbo8" path="res://asset/style/label1.png" id="5_31rxc"]
+[ext_resource type="Texture2D" uid="uid://15txwm2nnpi8" path="res://asset/style/ButtonClose2.png" id="5_a8is0"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="5_qmiwp"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="6_31rxc"]
+[ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="7_a8is0"]
+[ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="8_5y02u"]
+[ext_resource type="Texture2D" uid="uid://deig1btxm3lw3" path="res://asset/style/BackgroundBar.png" id="9_31rxc"]
+[ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="9_uvuq6"]
+[ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="12_a8is0"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a8is0"]
+texture = ExtResource("3_no8dy")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5y02u"]
+texture = ExtResource("5_31rxc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uvuq6"]
+texture = ExtResource("7_a8is0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eto00"]
+texture = ExtResource("8_5y02u")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qeya8"]
+texture = ExtResource("9_uvuq6")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_31rxc"]
+texture = ExtResource("3_no8dy")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0t3sy"]
+texture = ExtResource("7_a8is0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_voqro"]
+texture = ExtResource("8_5y02u")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6s0dj"]
+texture = ExtResource("9_uvuq6")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hl2cr"]
+texture = ExtResource("4_ld62j")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0ephg"]
+texture = ExtResource("5_qmiwp")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4pkeb"]
+texture = ExtResource("6_31rxc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8qiw6"]
+texture = ExtResource("3_no8dy")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qmiwp"]
+texture = ExtResource("9_31rxc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t1kow"]
+texture = ExtResource("4_ld62j")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n48hp"]
+texture = ExtResource("5_qmiwp")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fprxo"]
+texture = ExtResource("6_31rxc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q2unn"]
+texture = ExtResource("7_a8is0")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h5rgw"]
+texture = ExtResource("8_5y02u")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jneyn"]
+texture = ExtResource("9_uvuq6")
 
 [node name="AdminEasyNpc" type="Control" unique_id=1225481529]
 layout_mode = 3
@@ -25,21 +97,37 @@ offset_right = 533.5
 offset_bottom = 255.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_a8is0")
 
 [node name="EasyNPCLabel" type="Label" parent="EasyNPCPanel" unique_id=1923615755]
-layout_mode = 0
-offset_left = 17.5
-offset_top = 19.5
-offset_right = 250.5
-offset_bottom = 42.5
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -273.5
+offset_top = -24.0
+offset_right = 273.5
+offset_bottom = 48.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_qmiwp")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_5y02u")
 text = "Admin Easy NPC Management"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="AddButton" type="Button" parent="EasyNPCPanel" unique_id=2001876266]
 layout_mode = 0
-offset_left = 875.5
+offset_left = 837.5
 offset_top = 51.5
-offset_right = 998.0
-offset_bottom = 82.5
+offset_right = 997.5
+offset_bottom = 84.5
+theme_override_fonts/font = ExtResource("5_5y02u")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_uvuq6")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_eto00")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qeya8")
 text = "Add NPC"
 
 [node name="CloseButton" type="Button" parent="EasyNPCPanel" unique_id=2144900671]
@@ -47,12 +135,12 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -31.5
-offset_top = -19.5
-offset_right = 18.5
-offset_bottom = 23.5
+offset_left = -59.5
+offset_top = -21.5
+offset_right = 55.5
+offset_bottom = 53.5
 grow_horizontal = 0
-icon = ExtResource("1_t4pwg")
+icon = ExtResource("5_a8is0")
 flat = true
 icon_alignment = 1
 expand_icon = true
@@ -81,7 +169,8 @@ grow_vertical = 2
 
 [node name="ItemContainer" type="GridContainer" parent="EasyNPCPanel/NPCListPanel/ScrollContainer" unique_id=109616871]
 layout_mode = 2
-theme_override_constants/h_separation = 50
+theme_override_constants/h_separation = 60
+theme_override_constants/v_separation = 30
 columns = 4
 
 [node name="NPCItemPanel" type="Panel" parent="EasyNPCPanel/NPCListPanel" unique_id=1053067234]
@@ -185,6 +274,7 @@ offset_right = 210.0
 offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_31rxc")
 
 [node name="MarginContainer" type="MarginContainer" parent="EasyNPCPanel/AddNPCPopup/AddItemPopup" unique_id=1591610994]
 layout_mode = 1
@@ -204,6 +294,8 @@ theme_override_constants/separation = 12
 
 [node name="Title" type="Label" parent="EasyNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer" unique_id=946659165]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_qmiwp")
+theme_override_font_sizes/font_size = 18
 text = "ADD EASY NPC ITEM"
 horizontal_alignment = 1
 
@@ -215,20 +307,27 @@ text = "SELECT IMAGE (.png / .jpg / .jpeg)"
 [node name="ItemName" type="LineEdit" parent="EasyNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer" unique_id=1501993983]
 layout_mode = 2
 placeholder_text = "NPC Name"
+alignment = 1
 
 [node name="Buttons" type="HBoxContainer" parent="EasyNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer" unique_id=160375335]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 150
 alignment = 2
 
 [node name="CancelButton" type="Button" parent="EasyNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer/Buttons" unique_id=722660652]
 custom_minimum_size = Vector2(120, 45)
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_0t3sy")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_voqro")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6s0dj")
 text = "CLOSE"
 
 [node name="AddButton" type="Button" parent="EasyNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer/Buttons" unique_id=1520558028]
 custom_minimum_size = Vector2(120, 45)
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_hl2cr")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_0ephg")
+theme_override_styles/hover = SubResource("StyleBoxTexture_4pkeb")
 text = "ADD ITEM"
 
 [node name="NPCMessageDialog" type="Node" parent="EasyNPCPanel" unique_id=2053766851]
@@ -260,6 +359,7 @@ ok_button_text = "Yes"
 dialog_text = "Do  you want to Undeploy this NPC?"
 
 [node name="EasyMapNPCManagement" type="Panel" parent="." unique_id=1975667320]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -272,34 +372,38 @@ offset_right = 260.0
 offset_bottom = 301.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_8qiw6")
 
 [node name="NPCManagementLabel" type="Label" parent="EasyMapNPCManagement" unique_id=1488793700]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -119.5
-offset_top = 18.0
-offset_right = 119.5
-offset_bottom = 57.0
+offset_left = -279.0
+offset_top = -30.0
+offset_right = 283.0
+offset_bottom = 52.0
 grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("12_a8is0")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_qmiwp")
 text = "Easy Map NPC Management"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SubjectLabel" type="Label" parent="EasyMapNPCManagement" unique_id=1869310951]
 layout_mode = 0
-offset_left = 26.0
+offset_left = 30.0
 offset_top = 64.0
-offset_right = 241.0
+offset_right = 245.0
 offset_bottom = 148.0
 text = "Subject Name"
 
 [node name="Subject" type="OptionButton" parent="EasyMapNPCManagement/SubjectLabel" unique_id=1027204946]
 layout_mode = 0
-offset_left = 2.0
 offset_top = 31.0
-offset_right = 465.0
+offset_right = 463.0
 offset_bottom = 67.0
 alignment = 1
 
@@ -313,17 +417,16 @@ text = "Choose Mini Game"
 
 [node name="MinigameOptions" type="OptionButton" parent="EasyMapNPCManagement/MinigameLabel" unique_id=399282216]
 layout_mode = 0
-offset_left = 3.0
 offset_top = 28.0
-offset_right = 455.0
+offset_right = 452.0
 offset_bottom = 60.0
 alignment = 1
 
 [node name="QuestionLabel" type="Label" parent="EasyMapNPCManagement" unique_id=1477563219]
 layout_mode = 0
-offset_left = 36.0
+offset_left = 30.0
 offset_top = 205.0
-offset_right = 107.0
+offset_right = 101.0
 offset_bottom = 249.5
 text = "Question"
 horizontal_alignment = 1
@@ -336,6 +439,7 @@ offset_right = 450.0
 offset_bottom = 87.0
 
 [node name="AnswerChoicesLabel" type="Label" parent="EasyMapNPCManagement" unique_id=2014102001]
+visible = false
 layout_mode = 0
 offset_left = 36.0
 offset_top = 293.0
@@ -351,40 +455,38 @@ offset_bottom = 63.0
 
 [node name="CorrectAnswerLabel" type="Label" parent="EasyMapNPCManagement" unique_id=183876399]
 layout_mode = 0
-offset_left = 37.0
-offset_top = 360.0
+offset_left = 30.0
+offset_top = 308.0
 offset_right = 150.0
-offset_bottom = 304.0
+offset_bottom = 331.0
 text = "Correct Answer"
 
 [node name="CorrectAnswer" type="LineEdit" parent="EasyMapNPCManagement/CorrectAnswerLabel" unique_id=183876400]
 layout_mode = 0
-offset_left = 4.0
 offset_top = 27.0
-offset_right = 448.0
+offset_right = 444.0
 offset_bottom = 63.0
 
 [node name="AnswerTipLabel" type="Label" parent="EasyMapNPCManagement" unique_id=183876398]
 layout_mode = 0
-offset_left = 37.0
-offset_top = 435.0
-offset_right = 133.0
-offset_bottom = 358.5
+offset_left = 30.0
+offset_top = 381.0
+offset_right = 126.0
+offset_bottom = 404.0
 text = "Answer Tip"
 
 [node name="AnswerTip" type="LineEdit" parent="EasyMapNPCManagement/AnswerTipLabel" unique_id=294797952]
 layout_mode = 0
-offset_left = 4.0
 offset_top = 27.0
-offset_right = 448.0
+offset_right = 444.0
 offset_bottom = 72.0
 
 [node name="TimerLabel" type="Label" parent="EasyMapNPCManagement" unique_id=719009369]
 layout_mode = 0
-offset_left = 49.0
-offset_top = 515.0
-offset_right = 89.0
-offset_bottom = 435.5
+offset_left = 30.0
+offset_top = 471.0
+offset_right = 152.0
+offset_bottom = 494.0
 text = "Timer (seconds)"
 
 [node name="Time" type="LineEdit" parent="EasyMapNPCManagement/TimerLabel" unique_id=442062694]
@@ -399,11 +501,14 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 26.0
-offset_top = -37.0
-offset_right = 176.0
-offset_bottom = 3.0
+offset_left = 36.0
+offset_top = -53.0
+offset_right = 186.0
+offset_bottom = -13.0
 grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_t1kow")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_n48hp")
+theme_override_styles/hover = SubResource("StyleBoxTexture_fprxo")
 text = "Save"
 
 [node name="CancelButton" type="Button" parent="EasyMapNPCManagement" unique_id=1761284501]
@@ -413,10 +518,13 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -198.0
-offset_top = -116.0
-offset_right = -48.0
-offset_bottom = -76.0
+offset_left = -194.0
+offset_top = -54.0
+offset_right = -44.0
+offset_bottom = -14.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_q2unn")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_h5rgw")
+theme_override_styles/hover = SubResource("StyleBoxTexture_jneyn")
 text = "Cancel"

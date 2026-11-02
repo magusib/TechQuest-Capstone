@@ -233,6 +233,13 @@ namespace TechQuestBackend.Controllers
             int coinsDeducted = Math.Min(coinPenalty, profile.TotalCoins);
             int pointsDeducted = Math.Min(pointPenalty, profile.TotalPoints);
 
+            if (!isCorrect)
+            {
+                profile.Lifespan = Math.Max(0, profile.Lifespan - 10);
+                profile.LifespanAutoRecoveryAt = DateTime.UtcNow.AddHours(3);
+                profile.LifespanWalkRecoveryAt = null;
+            }
+
             profile.TotalCoins = profile.TotalCoins - coinsDeducted + coinReward;
             profile.TotalPoints = profile.TotalPoints - pointsDeducted + pointReward;
             var leaderboard = await _db.Leaderboards

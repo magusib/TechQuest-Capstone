@@ -94,8 +94,12 @@ namespace TechQuestBackend.Data
                 entity.HasIndex(s => s.UserId).IsUnique();
                 entity.Property(s => s.TotalCoins).HasDefaultValue(0);
                 entity.Property(s => s.TotalPoints).HasDefaultValue(0);
+                entity.Property(s => s.Lifespan).HasDefaultValue(100);
+                entity.Property(s => s.LifespanAutoRecoveryAt);
+                entity.Property(s => s.LifespanWalkRecoveryAt);
                 entity.HasCheckConstraint("CK_Student_profile_TotalCoins_NonNegative", "\"TotalCoins\" >= 0");
                 entity.HasCheckConstraint("CK_Student_profile_TotalPoints_NonNegative", "\"TotalPoints\" >= 0");
+                entity.HasCheckConstraint("CK_Student_profile_Lifespan_Range", "\"Lifespan\" >= 0 AND \"Lifespan\" <= 100");
                 entity.HasOne(s => s.User)
                     .WithOne()
                     .HasForeignKey<StudentProfile>(s => s.UserId)

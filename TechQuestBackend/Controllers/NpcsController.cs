@@ -308,6 +308,10 @@ namespace TechQuestBackend.Controllers
             if (profile == null)
                 return BadRequest("Student profile was not found.");
 
+            if (profile.Lifespan <= 0)
+                return StatusCode(StatusCodes.Status403Forbidden,
+                    "You have no remaining Lifespan. Restore it before challenging an NPC.");
+
             var deployment = await _db.NpcDeployments
                 .Include(item => item.Npc)
                 .FirstOrDefaultAsync(item => item.DeploymentId == deploymentId &&

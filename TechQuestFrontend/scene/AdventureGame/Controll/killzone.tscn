@@ -1,13 +1,11 @@
 [gd_scene format=3 uid="uid://b6yg0abhx5012"]
 
-[ext_resource type="Script" uid="uid://dydmaygxjvxgm" path="res://scene/AdventureGame/Controll/killzone.gd" id="1_xxfqy"]
+[ext_resource type="Script" path="res://scene/AdventureGame/Controll/Killzone.cs" id="1_killzone"]
 
 [node name="Killzone" type="Area2D" unique_id=2081880991]
-script = ExtResource("1_xxfqy")
+script = ExtResource("1_killzone")
 
 [node name="Timer" type="Timer" parent="." unique_id=279888114]
 wait_time = 0.009999999999999998
 one_shot = true
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

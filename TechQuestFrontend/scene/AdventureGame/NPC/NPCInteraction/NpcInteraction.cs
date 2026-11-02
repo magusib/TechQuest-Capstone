@@ -12,6 +12,7 @@ public partial class NpcInteraction : Control
 	private bool isLoading;
 	private string challengeState = "";
 	private string answerTip = "";
+	private AcceptDialog lifespanDialog;
 
 	public override void _Ready()
 	{
@@ -21,11 +22,23 @@ public partial class NpcInteraction : Control
 		yesButton = interactionPopup.GetNode<Button>("YesButton");
 		yesButton.Pressed += AcceptChallenge;
 		interactionPopup.GetNode<Button>("NoButton").Pressed += DeclineChallenge;
+		lifespanDialog = new AcceptDialog
+		{
+			Title = "Lifespan Required",
+			DialogText = "You have no remaining Lifespan. Restore it through recovery or purchase before challenging an NPC."
+		};
+		AddChild(lifespanDialog);
 		Hide();
 	}
 
 	public async void ShowChallenge(Node source, int assignedDeploymentId)
 	{
+		if (UserSession.Lifespan <= 0)
+		{
+			lifespanDialog.PopupCentered();
+			return;
+		}
+
 		int currentGeneration = ++requestGeneration;
 		interactionSource = source;
 		deploymentId = assignedDeploymentId;

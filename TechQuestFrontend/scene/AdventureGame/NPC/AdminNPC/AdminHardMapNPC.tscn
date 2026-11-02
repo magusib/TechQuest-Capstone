@@ -1,7 +1,78 @@
 [gd_scene format=3 uid="uid://bewsrcvqcr4v3"]
 
 [ext_resource type="Script" uid="uid://w2l1c2d0p1lr" path="res://scene/AdventureGame/NPC/AdminNPC/AdminHardNpc.cs" id="1_kwlqn"]
-[ext_resource type="Texture2D" uid="uid://dk37jnjagjxht" path="res://asset/Icons/exis.png" id="1_o1gk0"]
+[ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="2_2y1vu"]
+[ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="3_1ovid"]
+[ext_resource type="Texture2D" uid="uid://cyqkrvyj6vbo8" path="res://asset/style/label1.png" id="4_t6gs6"]
+[ext_resource type="Texture2D" uid="uid://15txwm2nnpi8" path="res://asset/style/ButtonClose2.png" id="5_2y1vu"]
+[ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="5_a5ev2"]
+[ext_resource type="FontFile" uid="uid://cb3fr24mny6tm" path="res://asset/style/fonts/BouncyBalloon-drJXX.ttf" id="5_nde53"]
+[ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="6_0mnra"]
+[ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="7_xlo4m"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="9_bcsrc"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="10_fkn6j"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="11_dycdc"]
+[ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="12_dycdc"]
+[ext_resource type="Texture2D" uid="uid://deig1btxm3lw3" path="res://asset/style/BackgroundBar.png" id="13_nde53"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5pvcd"]
+texture = ExtResource("2_2y1vu")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yfd2t"]
+texture = ExtResource("4_t6gs6")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2y1vu"]
+texture = ExtResource("5_a5ev2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1ovid"]
+texture = ExtResource("6_0mnra")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t6gs6"]
+texture = ExtResource("7_xlo4m")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bcsrc"]
+texture = ExtResource("2_2y1vu")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_31rxc"]
+texture = ExtResource("5_a5ev2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a8is0"]
+texture = ExtResource("6_0mnra")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5y02u"]
+texture = ExtResource("7_xlo4m")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uvuq6"]
+texture = ExtResource("9_bcsrc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gq1qb"]
+texture = ExtResource("10_fkn6j")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tw1dw"]
+texture = ExtResource("11_dycdc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qeya8"]
+texture = ExtResource("2_2y1vu")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eto00"]
+texture = ExtResource("13_nde53")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d8pfg"]
+texture = ExtResource("9_bcsrc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2u27l"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rync7"]
+texture = ExtResource("11_dycdc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4x7ur"]
+texture = ExtResource("5_a5ev2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_62m7a"]
+texture = ExtResource("6_0mnra")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ytc35"]
+texture = ExtResource("7_xlo4m")
 
 [node name="AdminHardNpc" type="Control" unique_id=1083729785]
 layout_mode = 3
@@ -25,21 +96,37 @@ offset_right = 533.5
 offset_bottom = 255.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_5pvcd")
 
 [node name="HardNPCLabel" type="Label" parent="HardNPCPanel" unique_id=1671551649]
-layout_mode = 0
-offset_left = 17.5
-offset_top = 19.5
-offset_right = 250.5
-offset_bottom = 42.5
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -273.5
+offset_top = -22.0
+offset_right = 273.5
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_1ovid")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_yfd2t")
 text = "Admin Hard NPC Management"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="AddButton" type="Button" parent="HardNPCPanel" unique_id=370546153]
 layout_mode = 0
-offset_left = 883.5
-offset_top = 50.5
-offset_right = 1006.0
-offset_bottom = 81.5
+offset_left = 837.5
+offset_top = 51.5
+offset_right = 997.5
+offset_bottom = 84.5
+theme_override_fonts/font = ExtResource("5_nde53")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_2y1vu")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_1ovid")
+theme_override_styles/hover = SubResource("StyleBoxTexture_t6gs6")
 text = "Add NPC"
 
 [node name="CloseButton" type="Button" parent="HardNPCPanel" unique_id=1445348749]
@@ -47,12 +134,12 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -31.5
-offset_top = -19.5
-offset_right = 18.5
-offset_bottom = 23.5
+offset_left = -59.5
+offset_top = -21.5
+offset_right = 55.5
+offset_bottom = 53.5
 grow_horizontal = 0
-icon = ExtResource("1_o1gk0")
+icon = ExtResource("5_2y1vu")
 flat = true
 icon_alignment = 1
 expand_icon = true
@@ -81,7 +168,9 @@ grow_vertical = 2
 
 [node name="ItemContainer" type="GridContainer" parent="HardNPCPanel/NPCListPanel/ScrollContainer" unique_id=1009140256]
 layout_mode = 2
-columns = 3
+theme_override_constants/h_separation = 60
+theme_override_constants/v_separation = 30
+columns = 4
 
 [node name="NPCItemPanel" type="Panel" parent="HardNPCPanel/NPCListPanel" unique_id=2068533627]
 layout_mode = 0
@@ -184,6 +273,7 @@ offset_right = 210.0
 offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_bcsrc")
 
 [node name="MarginContainer" type="MarginContainer" parent="HardNPCPanel/AddNPCPopup/AddItemPopup" unique_id=1768327348]
 layout_mode = 1
@@ -203,6 +293,8 @@ theme_override_constants/separation = 12
 
 [node name="Title" type="Label" parent="HardNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer" unique_id=428876758]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_1ovid")
+theme_override_font_sizes/font_size = 18
 text = "ADD Hard NPC ITEM"
 horizontal_alignment = 1
 
@@ -214,20 +306,27 @@ text = "SELECT IMAGE (.png / .jpg / .jpeg)"
 [node name="ItemName" type="LineEdit" parent="HardNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer" unique_id=1849636042]
 layout_mode = 2
 placeholder_text = "NPC Name"
+alignment = 1
 
 [node name="Buttons" type="HBoxContainer" parent="HardNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer" unique_id=1232585780]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 150
 alignment = 2
 
 [node name="CancelButton" type="Button" parent="HardNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer/Buttons" unique_id=1057738269]
 custom_minimum_size = Vector2(120, 45)
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_31rxc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_a8is0")
+theme_override_styles/hover = SubResource("StyleBoxTexture_5y02u")
 text = "CLOSE"
 
 [node name="AddButton" type="Button" parent="HardNPCPanel/AddNPCPopup/AddItemPopup/MarginContainer/VBoxContainer/Buttons" unique_id=532001432]
 custom_minimum_size = Vector2(120, 45)
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_uvuq6")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_gq1qb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_tw1dw")
 text = "ADD ITEM"
 
 [node name="NPCMessageDialog" type="Node" parent="HardNPCPanel" unique_id=463369010]
@@ -267,39 +366,43 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -260.0
-offset_top = -370.0
+offset_top = -301.0
 offset_right = 260.0
-offset_bottom = 370.0
+offset_bottom = 301.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_qeya8")
 
 [node name="NPCManagementLabel" type="Label" parent="HardMapNPCManagement" unique_id=28334940]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -119.5
-offset_top = 18.0
-offset_right = 119.5
-offset_bottom = 57.0
+offset_left = -281.0
+offset_top = -34.0
+offset_right = 281.0
+offset_bottom = 48.0
 grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("12_dycdc")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_eto00")
 text = "Hard Map NPC Management"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SubjectLabel" type="Label" parent="HardMapNPCManagement" unique_id=1615980709]
 layout_mode = 0
-offset_left = 26.0
+offset_left = 30.0
 offset_top = 64.0
-offset_right = 241.0
+offset_right = 245.0
 offset_bottom = 148.0
 text = "Subject Name"
 
 [node name="Subject" type="OptionButton" parent="HardMapNPCManagement/SubjectLabel" unique_id=1263405458]
 layout_mode = 0
-offset_left = 2.0
 offset_top = 31.0
-offset_right = 465.0
+offset_right = 463.0
 offset_bottom = 67.0
 alignment = 1
 
@@ -313,29 +416,29 @@ text = "Choose Mini Game"
 
 [node name="MinigameOptions" type="OptionButton" parent="HardMapNPCManagement/MinigameLabel" unique_id=261050007]
 layout_mode = 0
-offset_left = 3.0
 offset_top = 28.0
-offset_right = 455.0
+offset_right = 452.0
 offset_bottom = 60.0
 alignment = 1
 
 [node name="QuestionLabel" type="Label" parent="HardMapNPCManagement" unique_id=1842270766]
 layout_mode = 0
-offset_left = 36.0
-offset_top = 205.0
-offset_right = 107.0
-offset_bottom = 249.5
+offset_left = 30.0
+offset_top = 201.0
+offset_right = 101.0
+offset_bottom = 245.5
 text = "Question"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Question" type="LineEdit" parent="HardMapNPCManagement/QuestionLabel" unique_id=1401184322]
 layout_mode = 0
-offset_top = 32.0
+offset_top = 37.0
 offset_right = 450.0
-offset_bottom = 87.0
+offset_bottom = 92.0
 
 [node name="AnswerChoicesLabel" type="Label" parent="HardMapNPCManagement" unique_id=2014102005]
+visible = false
 layout_mode = 0
 offset_left = 36.0
 offset_top = 293.0
@@ -351,40 +454,38 @@ offset_bottom = 63.0
 
 [node name="CorrectAnswerLabel" type="Label" parent="HardMapNPCManagement" unique_id=157899166]
 layout_mode = 0
-offset_left = 37.0
-offset_top = 360.0
+offset_left = 30.0
+offset_top = 302.0
 offset_right = 150.0
-offset_bottom = 304.0
+offset_bottom = 325.0
 text = "Correct Answer"
 
 [node name="CorrectAnswer" type="LineEdit" parent="HardMapNPCManagement/CorrectAnswerLabel" unique_id=157899167]
 layout_mode = 0
-offset_left = 4.0
 offset_top = 27.0
-offset_right = 448.0
+offset_right = 444.0
 offset_bottom = 63.0
 
 [node name="AnswerTipLabel" type="Label" parent="HardMapNPCManagement" unique_id=157899165]
 layout_mode = 0
-offset_left = 37.0
-offset_top = 435.0
-offset_right = 133.0
-offset_bottom = 358.5
+offset_left = 30.0
+offset_top = 369.0
+offset_right = 126.0
+offset_bottom = 392.0
 text = "Answer Tip"
 
 [node name="AnswerTip" type="LineEdit" parent="HardMapNPCManagement/AnswerTipLabel" unique_id=2064178832]
 layout_mode = 0
-offset_left = 4.0
 offset_top = 27.0
-offset_right = 448.0
+offset_right = 444.0
 offset_bottom = 72.0
 
 [node name="TimerLabel" type="Label" parent="HardMapNPCManagement" unique_id=1462909225]
 layout_mode = 0
-offset_left = 49.0
-offset_top = 515.0
-offset_right = 89.0
-offset_bottom = 435.5
+offset_left = 30.0
+offset_top = 450.0
+offset_right = 152.0
+offset_bottom = 473.0
 text = "Timer (seconds)"
 
 [node name="Time" type="LineEdit" parent="HardMapNPCManagement/TimerLabel" unique_id=947640273]
@@ -399,11 +500,14 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 59.0
-offset_top = -62.0
-offset_right = 209.0
-offset_bottom = -22.0
+offset_left = 51.0
+offset_top = -65.0
+offset_right = 201.0
+offset_bottom = -25.0
 grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_d8pfg")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_2u27l")
+theme_override_styles/hover = SubResource("StyleBoxTexture_rync7")
 text = "Save"
 
 [node name="CancelButton" type="Button" parent="HardMapNPCManagement" unique_id=900785457]
@@ -419,4 +523,7 @@ offset_right = -54.0
 offset_bottom = -21.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_4x7ur")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_62m7a")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ytc35")
 text = "Cancel"

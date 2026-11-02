@@ -291,6 +291,8 @@ namespace TechQuestBackend.Controllers
                 return BadRequest("Score cannot be negative.");
             if (request.TotalQuestions < 0)
                 return BadRequest("Total questions cannot be negative.");
+            if (request.Score > request.TotalQuestions)
+                return BadRequest("Score cannot exceed the number of questions.");
 
             var room = await _db.MultiplayerRooms.SingleOrDefaultAsync(r => r.RoomId == roomId);
             if (room == null)
@@ -312,6 +314,13 @@ namespace TechQuestBackend.Controllers
             {
                 result = new RoomResult { RoomId = roomId, StudentId = profile.StudentId };
                 _db.RoomResults.Add(result);
+
+                if (request.TotalQuestions > 0 && request.Score < request.TotalQuestions)
+                {
+                    profile.Lifespan = Math.Max(0, profile.Lifespan - 10);
+                    profile.LifespanAutoRecoveryAt = DateTime.UtcNow.AddHours(3);
+                    profile.LifespanWalkRecoveryAt = null;
+                }
             }
 
             result.Score = request.Score;

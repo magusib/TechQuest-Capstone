@@ -2,10 +2,14 @@
 
 [ext_resource type="Texture2D" uid="uid://1ld0m5m6yrh2" path="res://asset/Icons/quest.png" id="1_aauik"]
 [ext_resource type="Script" uid="uid://ddsrk5mqsbydy" path="res://scene/AdventureGame/Difficulty/EasyLevelMap/EasyMapQuest.cs" id="1_dciw5"]
+[ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="2_iasag"]
 [ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="2_s8a15"]
 [ext_resource type="Texture2D" uid="uid://dk37jnjagjxht" path="res://asset/Icons/exis.png" id="3_46652"]
 [ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="3_ggter"]
 [ext_resource type="Script" uid="uid://c8qh52xorbdj7" path="res://scene/Core/QuestObjectiveEditor.cs" id="quest_objective"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g24cr"]
+texture = ExtResource("2_iasag")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8icjc"]
 
@@ -39,6 +43,7 @@ offset_right = 409.0
 offset_bottom = 255.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_g24cr")
 
 [node name="StudentQuest" type="TextureRect" parent="StudentQuestPopup/QuestPanel" unique_id=1825382242]
 layout_mode = 1

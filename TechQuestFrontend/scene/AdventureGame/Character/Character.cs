@@ -1,5 +1,6 @@
 
 using Godot;
+using System;
 
 public partial class Character : CharacterBody2D
 {
@@ -9,6 +10,8 @@ public partial class Character : CharacterBody2D
 	private float gravity;
 	private AnimatedSprite2D animatedSprite;
 	private Label nameLabel;
+	private double walkingRecoverySeconds;
+	private bool walkingRecoveryInProgress;
 
 	public override void _Ready()
 	{
@@ -120,5 +123,38 @@ public partial class Character : CharacterBody2D
 		// APPLY MOVEMENT
 		// =========================
 		MoveAndSlide();
+
+		if (UserSession.IsStudent && direction != 0 && !walkingRecoveryInProgress)
+		{
+			walkingRecoverySeconds += delta;
+			if (walkingRecoverySeconds >= 60)
+			{
+				walkingRecoverySeconds = 0;
+				RecoverFromWalkingAsync();
+			}
+		}
+		else if (direction == 0)
+		{
+			walkingRecoverySeconds = 0;
+		}
+	}
+
+	private async void RecoverFromWalkingAsync()
+	{
+		walkingRecoveryInProgress = true;
+		try
+		{
+			LifespanResponseDto response = await LifespanApiClient.WalkingRecoveryAsync();
+			UserSession.UpdateLifespan(response.Lifespan);
+			UserSession.UpdateStudentProfile(response.TotalCoins, UserSession.Points);
+		}
+		catch (Exception exception)
+		{
+			GD.PrintErr("Walking recovery failed: " + exception.Message);
+		}
+		finally
+		{
+			walkingRecoveryInProgress = false;
+		}
 	}
 }

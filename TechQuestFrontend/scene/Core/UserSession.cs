@@ -26,6 +26,8 @@ public static class UserSession
 
 	public static int Coins { get; private set; }
 	public static int Points { get; private set; }
+	public static int Lifespan { get; private set; } = 100;
+	public const int MaximumLifespan = 100;
 
 	public static string AvatarPath { get; private set; } = "";
 
@@ -65,6 +67,7 @@ public static class UserSession
 		// Coins/points are meaningful only for Student.
 		Coins = role == UserRole.Student ? Math.Max(0, coins) : 0;
 		Points = role == UserRole.Student ? Math.Max(0, points) : 0;
+		Lifespan = role == UserRole.Student ? MaximumLifespan : 0;
 
 		AvatarPath = avatarPath ?? "";
 
@@ -153,6 +156,14 @@ public static class UserSession
 
 		if (!string.IsNullOrWhiteSpace(avatarPath))
 			AvatarPath = avatarPath;
+	}
+
+	public static void UpdateLifespan(int lifespan)
+	{
+		if (!IsStudent)
+			return;
+
+		Lifespan = Math.Clamp(lifespan, 0, MaximumLifespan);
 	}
 
 	public static void UpdateAvatar(string avatarPath)

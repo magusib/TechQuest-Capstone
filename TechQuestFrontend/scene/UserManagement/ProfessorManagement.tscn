@@ -2,6 +2,60 @@
 
 [ext_resource type="Script" uid="uid://bf2337smfrm5a" path="res://scene/UserManagement/ProfessorManagement.cs" id="1_3wde3"]
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="1_iqqm2"]
+[ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="3_3fyj5"]
+[ext_resource type="Texture2D" uid="uid://cyqkrvyj6vbo8" path="res://asset/style/label1.png" id="4_tljqs"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="5_l5ogn"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="6_tyypj"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="7_c4eg2"]
+[ext_resource type="Texture2D" uid="uid://c8anoohjb5tod" path="res://asset/style/buttons/orange_default.png" id="8_n0vm7"]
+[ext_resource type="Texture2D" uid="uid://tuei7ijxu7rt" path="res://asset/style/buttons/orange_pressed.png" id="9_h7ehm"]
+[ext_resource type="Texture2D" uid="uid://di6tdqmh4ggks" path="res://asset/style/buttons/orange_hover.png" id="10_ybejn"]
+[ext_resource type="Texture2D" uid="uid://rs0m0itpvfy0" path="res://asset/style/buttons/yellow_default.png" id="11_btdhr"]
+[ext_resource type="Texture2D" uid="uid://mas6pii6ysco" path="res://asset/style/buttons/yellow_pressed.png" id="12_a7mlp"]
+[ext_resource type="Texture2D" uid="uid://be2vws7bdi271" path="res://asset/style/buttons/yellow_hover.png" id="13_j7t53"]
+[ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="14_btdhr"]
+[ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="15_a7mlp"]
+[ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="16_j7t53"]
+[ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="17_a7mlp"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sfmbo"]
+texture = ExtResource("4_tljqs")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n0vm7"]
+texture = ExtResource("5_l5ogn")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h7ehm"]
+texture = ExtResource("6_tyypj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ybejn"]
+texture = ExtResource("7_c4eg2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dxfqi"]
+texture = ExtResource("8_n0vm7")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nchiq"]
+texture = ExtResource("9_h7ehm")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lkn4c"]
+texture = ExtResource("10_ybejn")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1clq0"]
+texture = ExtResource("11_btdhr")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_elfhv"]
+texture = ExtResource("12_a7mlp")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jk5hq"]
+texture = ExtResource("13_j7t53")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_btdhr"]
+texture = ExtResource("14_btdhr")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a7mlp"]
+texture = ExtResource("15_a7mlp")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j7t53"]
+texture = ExtResource("16_j7t53")
 
 [node name="ProfessorManagement" type="Control" unique_id=1731733020]
 layout_mode = 3
@@ -43,37 +97,64 @@ theme_override_constants/separation = 16
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="TitleLabel" type="Label" parent="MarginContainer/MainVBox/TopBar" unique_id=1969766100]
+[node name="TitleLabel" type="Label" parent="MarginContainer/MainVBox/TopBar" unique_id=745097889]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_3fyj5")
+theme_override_font_sizes/font_size = 23
+theme_override_styles/normal = SubResource("StyleBoxTexture_sfmbo")
 text = "User Management"
+horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Back" type="Button" parent="MarginContainer/MainVBox/TopBar" unique_id=769993113]
-custom_minimum_size = Vector2(52, 44)
+[node name="Back" type="Button" parent="MarginContainer/MainVBox/TopBar" unique_id=1158061646]
+custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_3fyj5")
+theme_override_styles/normal = SubResource("StyleBoxTexture_n0vm7")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_h7ehm")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ybejn")
 text = "Back"
 
 [node name="UserTypeContainer" type="HBoxContainer" parent="MarginContainer/MainVBox" unique_id=364178086]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 30
 
-[node name="StudentButton" type="Button" parent="MarginContainer/MainVBox/UserTypeContainer" unique_id=735586878]
-custom_minimum_size = Vector2(120, 42)
+[node name="StudentButton" type="Button" parent="MarginContainer/MainVBox/UserTypeContainer" unique_id=830617007]
+custom_minimum_size = Vector2(150, 42)
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_3fyj5")
+theme_override_styles/normal = SubResource("StyleBoxTexture_dxfqi")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_nchiq")
+theme_override_styles/hover = SubResource("StyleBoxTexture_lkn4c")
 text = "Students"
 
-[node name="ProfessorButton" type="Button" parent="MarginContainer/MainVBox/UserTypeContainer" unique_id=2093893961]
-custom_minimum_size = Vector2(120, 42)
+[node name="ProfessorButton" type="Button" parent="MarginContainer/MainVBox/UserTypeContainer" unique_id=933184280]
+custom_minimum_size = Vector2(150, 42)
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_3fyj5")
+theme_override_styles/normal = SubResource("StyleBoxTexture_1clq0")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_elfhv")
+theme_override_styles/hover = SubResource("StyleBoxTexture_jk5hq")
 text = "Professors"
 
 [node name="RegisterButton" type="Button" parent="MarginContainer/MainVBox/UserTypeContainer" unique_id=1511453620]
-custom_minimum_size = Vector2(170, 44)
+custom_minimum_size = Vector2(263, 0)
 layout_mode = 2
-offset_transform_enabled = true
 offset_transform_position = Vector2(650, 0)
+theme_override_fonts/font = ExtResource("3_3fyj5")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxTexture_btdhr")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_a7mlp")
+theme_override_styles/hover = SubResource("StyleBoxTexture_j7t53")
 text = "CREATE ACCOUNT"
 
 [node name="ProfessorPanel" type="PanelContainer" parent="MarginContainer/MainVBox" unique_id=80713733]
@@ -92,6 +173,8 @@ theme_override_constants/separation = 10
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("17_a7mlp")
+theme_override_font_sizes/font_size = 18
 placeholder_text = "Search professors by name or email..."
 
 [node name="ProfessorHeader" type="HBoxContainer" parent="MarginContainer/MainVBox/ProfessorPanel/ProfessorContent" unique_id=10097571]
@@ -102,6 +185,8 @@ theme_override_constants/separation = 8
 [node name="NameHeader" type="Label" parent="MarginContainer/MainVBox/ProfessorPanel/ProfessorContent/ProfessorHeader" unique_id=525368756]
 custom_minimum_size = Vector2(210, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("17_a7mlp")
+theme_override_font_sizes/font_size = 18
 text = "Name"
 vertical_alignment = 1
 
@@ -109,12 +194,16 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("17_a7mlp")
+theme_override_font_sizes/font_size = 18
 text = "Email"
 vertical_alignment = 1
 
 [node name="ActionHeader" type="Label" parent="MarginContainer/MainVBox/ProfessorPanel/ProfessorContent/ProfessorHeader" unique_id=2013972744]
 custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("17_a7mlp")
+theme_override_font_sizes/font_size = 18
 text = "Action"
 vertical_alignment = 1
 

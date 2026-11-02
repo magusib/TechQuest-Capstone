@@ -1,6 +1,10 @@
 [gd_scene format=3 uid="uid://j1jc80g5m0nl"]
 
 [ext_resource type="Script" uid="uid://0urru52mljj6" path="res://scene/AdventureGame/NPC/NPCInteraction/NpcInteraction.cs" id="1_fp858"]
+[ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="2_lmtay"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6iaod"]
+texture = ExtResource("2_lmtay")
 
 [node name="NpcInteraction" type="Control" unique_id=1361396695]
 layout_mode = 3
@@ -24,6 +28,7 @@ offset_right = 244.75
 offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_6iaod")
 
 [node name="Label" type="Label" parent="NPCInteractionPopUp" unique_id=176657280]
 layout_mode = 1

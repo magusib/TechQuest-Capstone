@@ -2,6 +2,53 @@
 
 [ext_resource type="Script" uid="uid://ob7pc8m4wpv7" path="res://scene/UserManagement/UserManagement.cs" id="1_ox2vg"]
 [ext_resource type="Texture2D" uid="uid://bkkg4scy0cuyk" path="res://asset/background/BGTECH.png" id="2_e8j70"]
+[ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="3_436vu"]
+[ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="3_e8j70"]
+[ext_resource type="Texture2D" uid="uid://cyqkrvyj6vbo8" path="res://asset/style/label1.png" id="4_kr3sa"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="5_sptr7"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="6_khdea"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="7_8a66k"]
+[ext_resource type="Texture2D" uid="uid://c8anoohjb5tod" path="res://asset/style/buttons/orange_default.png" id="8_bt4u3"]
+[ext_resource type="Texture2D" uid="uid://tuei7ijxu7rt" path="res://asset/style/buttons/orange_pressed.png" id="9_wop8i"]
+[ext_resource type="Texture2D" uid="uid://di6tdqmh4ggks" path="res://asset/style/buttons/orange_hover.png" id="10_qy5on"]
+[ext_resource type="Texture2D" uid="uid://rs0m0itpvfy0" path="res://asset/style/buttons/yellow_default.png" id="11_ceyqk"]
+[ext_resource type="Texture2D" uid="uid://mas6pii6ysco" path="res://asset/style/buttons/yellow_pressed.png" id="12_c7qc5"]
+[ext_resource type="Texture2D" uid="uid://be2vws7bdi271" path="res://asset/style/buttons/yellow_hover.png" id="13_aydut"]
+[ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="15_kr3sa"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bwmrf"]
+texture = ExtResource("4_kr3sa")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3onu6"]
+texture = ExtResource("5_sptr7")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y18tn"]
+texture = ExtResource("6_khdea")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gxqh5"]
+texture = ExtResource("7_8a66k")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i8mob"]
+texture = ExtResource("8_bt4u3")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mnstq"]
+texture = ExtResource("9_wop8i")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jhqyf"]
+texture = ExtResource("10_qy5on")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i7nwv"]
+texture = ExtResource("11_ceyqk")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_thmnj"]
+texture = ExtResource("12_c7qc5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u2ov0"]
+texture = ExtResource("13_aydut")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lmqwe"]
+texture = ExtResource("3_e8j70")
+region_rect = Rect2(2, 2, 92, 62)
 
 [node name="UserManagement" type="Control" unique_id=936849928]
 layout_mode = 3
@@ -44,15 +91,24 @@ layout_mode = 2
 theme_override_constants/separation = 12
 
 [node name="TitleLabel" type="Label" parent="MarginContainer/MainVBox/TopBar" unique_id=1455384538]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_436vu")
+theme_override_font_sizes/font_size = 23
+theme_override_styles/normal = SubResource("StyleBoxTexture_bwmrf")
 text = "User Management"
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Back" type="Button" parent="MarginContainer/MainVBox/TopBar" unique_id=343353968]
-custom_minimum_size = Vector2(52, 44)
+custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_436vu")
+theme_override_styles/normal = SubResource("StyleBoxTexture_3onu6")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_y18tn")
+theme_override_styles/hover = SubResource("StyleBoxTexture_gxqh5")
 text = "Back"
 
 [node name="UserTypeContainer" type="HBoxContainer" parent="MarginContainer/MainVBox" unique_id=1085778623]
@@ -60,18 +116,33 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="StudentButton" type="Button" parent="MarginContainer/MainVBox/UserTypeContainer" unique_id=1157920412]
-custom_minimum_size = Vector2(120, 42)
+custom_minimum_size = Vector2(150, 42)
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_436vu")
+theme_override_styles/normal = SubResource("StyleBoxTexture_i8mob")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_mnstq")
+theme_override_styles/hover = SubResource("StyleBoxTexture_jhqyf")
 text = "Students"
 
 [node name="ProfessorButton" type="Button" parent="MarginContainer/MainVBox/UserTypeContainer" unique_id=241481987]
-custom_minimum_size = Vector2(120, 42)
+custom_minimum_size = Vector2(150, 42)
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_436vu")
+theme_override_styles/normal = SubResource("StyleBoxTexture_i7nwv")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_thmnj")
+theme_override_styles/hover = SubResource("StyleBoxTexture_u2ov0")
 text = "Professors"
 
 [node name="StudentPanel" type="PanelContainer" parent="MarginContainer/MainVBox" unique_id=967148084]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_lmqwe")
 
 [node name="StudentContent" type="VBoxContainer" parent="MarginContainer/MainVBox/StudentPanel" unique_id=464156753]
 layout_mode = 2
@@ -82,14 +153,17 @@ layout_mode = 2
 theme_override_constants/separation = 10
 
 [node name="SearchStudentInput" type="LineEdit" parent="MarginContainer/MainVBox/StudentPanel/StudentContent/StudentToolbar" unique_id=1526617515]
-custom_minimum_size = Vector2(0, 42)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("15_kr3sa")
+theme_override_font_sizes/font_size = 18
 placeholder_text = "Search students by name or email..."
 
 [node name="SortYearLevelButton" type="OptionButton" parent="MarginContainer/MainVBox/StudentPanel/StudentContent/StudentToolbar" unique_id=1150253909]
 custom_minimum_size = Vector2(190, 42)
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 
 [node name="StudentHeader" type="HBoxContainer" parent="MarginContainer/MainVBox/StudentPanel/StudentContent" unique_id=184113229]
 custom_minimum_size = Vector2(0, 40)
@@ -99,6 +173,8 @@ theme_override_constants/separation = 8
 [node name="NameHeader" type="Label" parent="MarginContainer/MainVBox/StudentPanel/StudentContent/StudentHeader" unique_id=435751988]
 custom_minimum_size = Vector2(210, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("15_kr3sa")
+theme_override_font_sizes/font_size = 18
 text = "Name"
 vertical_alignment = 1
 
@@ -106,18 +182,24 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("15_kr3sa")
+theme_override_font_sizes/font_size = 18
 text = "Email"
 vertical_alignment = 1
 
 [node name="YearLevelHeader" type="Label" parent="MarginContainer/MainVBox/StudentPanel/StudentContent/StudentHeader" unique_id=2063203524]
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("15_kr3sa")
+theme_override_font_sizes/font_size = 18
 text = "Year Level"
 vertical_alignment = 1
 
 [node name="ActionHeader" type="Label" parent="MarginContainer/MainVBox/StudentPanel/StudentContent/StudentHeader" unique_id=2002060757]
 custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("15_kr3sa")
+theme_override_font_sizes/font_size = 18
 text = "Action"
 vertical_alignment = 1
 
