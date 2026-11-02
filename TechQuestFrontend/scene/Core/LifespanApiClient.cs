@@ -51,7 +51,14 @@ public static class LifespanApiClient
         using HttpResponseMessage response = await Client.SendAsync(request);
         string responseText = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
-            throw new InvalidOperationException(responseText.Trim('"'));
+        {
+            string detail = responseText.Trim('"');
+            if (string.IsNullOrWhiteSpace(detail))
+                detail = response.ReasonPhrase ?? "The server returned an error.";
+
+            throw new InvalidOperationException(
+                $"Lifespan API {method} {endpoint} failed with {(int)response.StatusCode}: {detail}");
+        }
 
         return JsonSerializer.Deserialize<T>(responseText, JsonOptions);
     }

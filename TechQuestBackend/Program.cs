@@ -74,8 +74,6 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<TechQuestDbContext>();
-    db.Database.Migrate();
-
     string[][] miniGames =
     {
         new[] { "Match the Pairs", "MatchThePairs" },
