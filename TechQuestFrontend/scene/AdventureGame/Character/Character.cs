@@ -143,11 +143,8 @@ public partial class Character : CharacterBody2D
 				RecoverFromWalkingAsync();
 			}
 		}
-		else if (!isActivelyWalking)
-		{
-			walkingRecoverySeconds = 0;
-			UserSession.UpdateWalkingRecoveryProgress(0);
-		}
+		// Do not reset the timer when the player stops, turns around, or jumps.
+		// The timer pauses and resumes when horizontal movement starts again.
 	}
 
 	private async void RecoverFromWalkingAsync()
