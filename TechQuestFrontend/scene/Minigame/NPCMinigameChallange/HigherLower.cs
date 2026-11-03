@@ -24,6 +24,7 @@ public partial class HigherLower : Control
 	private Label finalNpcScoreLabel;
 	private Label coinsDeductedLabel;
 	private Label pointsDeductedLabel;
+	private Label lifespanDeductedLabel;
 	private Button returnButton;
 
 	private CharacterChallengeStartDto challenge;
@@ -61,6 +62,7 @@ public partial class HigherLower : Control
 		finalNpcScoreLabel = GetNodeOrNull<Label>("GameResultPopup/ResultContainer/FinalNPCScoreLabel");
 		coinsDeductedLabel = GetNodeOrNull<Label>("GameResultPopup/ResultContainer/CoinsDeductedLabel");
 		pointsDeductedLabel = GetNodeOrNull<Label>("GameResultPopup/ResultContainer/PointsDeductedLabel");
+		lifespanDeductedLabel = GetNodeOrNull<Label>("GameResultPopup/ResultContainer/LifespanDeductedLabel");
 		returnButton = GetNodeOrNull<Button>("GameResultPopup/ResultContainer/ReturnButton");
 
 		if (higherButton != null)
@@ -211,6 +213,9 @@ public partial class HigherLower : Control
 			coinsDeductedLabel.Text = "Coins Deducted: " + result.CoinsDeducted;
 		if (pointsDeductedLabel != null)
 			pointsDeductedLabel.Text = "Points Deducted: " + result.PointsDeducted;
+		if (lifespanDeductedLabel != null)
+			lifespanDeductedLabel.Text = "Lifespan Deducted: " +
+				(result.LifespanDeducted > 0 ? "-" + result.LifespanDeducted : "0");
 		if (returnButton != null)
 			returnButton.Text = "RETURN";
 		gameResultPopup.Visible = true;

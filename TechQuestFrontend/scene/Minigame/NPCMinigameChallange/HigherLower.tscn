@@ -2,6 +2,15 @@
 
 [ext_resource type="Script" uid="uid://43pxt6ih63mk" path="res://scene/Minigame/NPCMinigameChallange/HigherLower.cs" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://do4dong2ab48c" path="res://asset/background/bg3.png" id="2_2josw"]
+[ext_resource type="Texture2D" uid="uid://dy4kovcxp1mbx" path="res://asset/style/panel.png" id="3_n7hx1"]
+[ext_resource type="Texture2D" uid="uid://dclpu3xmblprx" path="res://asset/style/UI_Flat_Banner03a.png" id="4_d8u6o"]
+[ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="5_gl368"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ji0i3"]
+texture = ExtResource("3_n7hx1")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j2bmb"]
+texture = ExtResource("4_d8u6o")
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
 content_margin_left = 24.0
@@ -19,21 +28,8 @@ corner_radius_top_right = 18
 corner_radius_bottom_right = 18
 corner_radius_bottom_left = 18
 
-[sub_resource type="StyleBoxFlat" id="StyleBox_card_current"]
-content_margin_left = 18.0
-content_margin_top = 18.0
-content_margin_right = 18.0
-content_margin_bottom = 18.0
-bg_color = Color(0.16, 0.29, 0.51, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.35, 0.75, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cd8dv"]
+texture = ExtResource("5_gl368")
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_card_next"]
 content_margin_left = 18.0
@@ -50,6 +46,12 @@ corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o1sqe"]
+texture = ExtResource("5_gl368")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0ne21"]
+texture = ExtResource("4_d8u6o")
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_button"]
 bg_color = Color(0.15, 0.48, 0.72, 1)
@@ -123,15 +125,18 @@ theme_override_constants/separation = 18
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBox_panel")
+theme_override_styles/panel = SubResource("StyleBoxTexture_ji0i3")
 
 [node name="PlayerInfoContainer" type="VBoxContainer" parent="MainContainer/ContestantsRow/PlayerPanel" unique_id=585509421]
 layout_mode = 2
 theme_override_constants/separation = 10
 
 [node name="PlayerNameLabel" type="Label" parent="MainContainer/ContestantsRow/PlayerPanel/PlayerInfoContainer" unique_id=1206195503]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 21
+theme_override_styles/normal = SubResource("StyleBoxTexture_j2bmb")
 text = "PLAYER"
 horizontal_alignment = 1
 
@@ -172,7 +177,7 @@ custom_minimum_size = Vector2(0, 180)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBox_card_current")
+theme_override_styles/panel = SubResource("StyleBoxTexture_cd8dv")
 
 [node name="CurrentNumberLabel" type="Label" parent="MainContainer/ContestantsRow/CenterGamePanel/GameContainer/NumberCardsContainer/CurrentNumberCard" unique_id=2029331154]
 layout_mode = 2
@@ -206,15 +211,18 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBox_panel")
+theme_override_styles/panel = SubResource("StyleBoxTexture_o1sqe")
 
 [node name="NPCInfoContainer" type="VBoxContainer" parent="MainContainer/ContestantsRow/NPCPanel" unique_id=1935132999]
 layout_mode = 2
 theme_override_constants/separation = 10
 
 [node name="NPCNameLabel" type="Label" parent="MainContainer/ContestantsRow/NPCPanel/NPCInfoContainer" unique_id=118974557]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 21
+theme_override_styles/normal = SubResource("StyleBoxTexture_0ne21")
 text = "NPC"
 horizontal_alignment = 1
 
@@ -305,6 +313,11 @@ horizontal_alignment = 1
 [node name="PointsDeductedLabel" type="Label" parent="GameResultPopup/ResultContainer" unique_id=544725219]
 layout_mode = 2
 text = "Points Deducted: 0"
+horizontal_alignment = 1
+
+[node name="LifespanDeductedLabel" type="Label" parent="GameResultPopup/ResultContainer" unique_id=880263672]
+layout_mode = 2
+text = "Lifespan Deducted: 0"
 horizontal_alignment = 1
 
 [node name="ReturnButton" type="Button" parent="GameResultPopup/ResultContainer" unique_id=42988192]

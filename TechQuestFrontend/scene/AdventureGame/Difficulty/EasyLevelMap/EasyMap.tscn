@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://baurpnt02vul0" path="res://scene/AdventureGame/Question/EasyMapQuestion.tscn" id="10_nm8f0"]
 [ext_resource type="Texture2D" uid="uid://bvj4skcsclk2b" path="res://asset/parallax/easy/08_Forest.png" id="10_scy6r"]
 [ext_resource type="Texture2D" uid="uid://du0qyclhlxsx4" path="res://asset/parallax/easy/07_Forest.png" id="11_lj2mp"]
+[ext_resource type="Texture2D" uid="uid://d2sqwrjsfqc1s" path="res://asset/Icons/hearticon.png" id="12_d1b2p"]
 [ext_resource type="Texture2D" uid="uid://ef667twxb3k3" path="res://asset/parallax/easy/06_Forest.png" id="12_hyxu4"]
 [ext_resource type="Texture2D" uid="uid://bb0ta7fpshg6x" path="res://asset/style/buttons/navy_default.png" id="13_g24cr"]
 [ext_resource type="Texture2D" uid="uid://cfk3nhcl6r7tf" path="res://asset/parallax/easy/05_Particles.png" id="13_nm8f0"]
@@ -58,6 +59,18 @@ texture = ExtResource("8_8wi17")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j1oov"]
 texture = ExtResource("9_g24cr")
+
+[sub_resource type="StyleBoxFlat" id="GentongOutlineEasy"]
+bg_color = Color(0.04, 0.06, 0.1, 0.9)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.95, 0.78, 0.32, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kijao"]
 texture = ExtResource("4_phw8u")
@@ -373,18 +386,6 @@ _data = {
 &"up_down": SubResource("Animation_d1b2p")
 }
 
-[sub_resource type="StyleBoxFlat" id="GentongOutlineEasy"]
-bg_color = Color(0.04, 0.06, 0.1, 0.9)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.95, 0.78, 0.32, 1)
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
-
 [node name="EasyMap" type="Node2D" unique_id=686103717]
 script = ExtResource("13_player")
 
@@ -475,40 +476,40 @@ stretch_mode = 5
 layout_mode = 2
 text = "0"
 
-[node name="LeftLifespanPanel" type="Control" parent="MapHUDLayer/MapHUD"]
-layout_mode = 0
+[node name="LeftLifespanPanel" type="Control" parent="MapHUDLayer/MapHUD" unique_id=602927934]
+anchors_preset = 0
 offset_left = 24.0
 offset_top = 250.0
 offset_right = 174.0
 offset_bottom = 670.0
 mouse_filter = 2
 
-[node name="LifespanVBox" type="VBoxContainer" parent="MapHUDLayer/MapHUD/LeftLifespanPanel"]
+[node name="LifespanVBox" type="VBoxContainer" parent="MapHUDLayer/MapHUD/LeftLifespanPanel" unique_id=1565122694]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -298.0
+offset_right = 130.0
+offset_bottom = 110.0
 grow_vertical = 2
 theme_override_constants/separation = 8
 alignment = 1
 
-[node name="HeartIcon" type="Label" parent="MapHUDLayer/MapHUD/LeftLifespanPanel/LifespanVBox"]
+[node name="HeartIcon" type="TextureRect" parent="MapHUDLayer/MapHUD/LeftLifespanPanel/LifespanVBox" unique_id=584687216]
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.25, 0.35, 1)
-theme_override_font_sizes/font_size = 34
-text = "♥"
-horizontal_alignment = 1
-vertical_alignment = 1
+texture = ExtResource("12_d1b2p")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="LifespanBottle" type="Control" parent="MapHUDLayer/MapHUD/LeftLifespanPanel/LifespanVBox"]
+[node name="LifespanBottle" type="Control" parent="MapHUDLayer/MapHUD/LeftLifespanPanel/LifespanVBox" unique_id=75573140]
 custom_minimum_size = Vector2(70, 260)
+clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 4
-clip_contents = true
 
-[node name="BottleOutline" type="Panel" parent="MapHUDLayer/MapHUD/LeftLifespanPanel/LifespanVBox/LifespanBottle"]
+[node name="BottleOutline" type="Panel" parent="MapHUDLayer/MapHUD/LeftLifespanPanel/LifespanVBox/LifespanBottle" unique_id=205485583]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -518,7 +519,7 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("GentongOutlineEasy")
 
-[node name="LifespanFill" type="ColorRect" parent="MapHUDLayer/MapHUD/LeftLifespanPanel/LifespanVBox/LifespanBottle"]
+[node name="LifespanFill" type="ColorRect" parent="MapHUDLayer/MapHUD/LeftLifespanPanel/LifespanVBox/LifespanBottle" unique_id=844459969]
 layout_mode = 0
 offset_left = 3.0
 offset_top = 3.0
@@ -527,7 +528,7 @@ offset_bottom = 257.0
 mouse_filter = 2
 color = Color(0.9, 0.16, 0.24, 1)
 
-[node name="LifespanPercentageLabel" type="Label" parent="MapHUDLayer/MapHUD/LeftLifespanPanel/LifespanVBox"]
+[node name="LifespanPercentageLabel" type="Label" parent="MapHUDLayer/MapHUD/LeftLifespanPanel/LifespanVBox" unique_id=871013374]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
@@ -535,15 +536,14 @@ text = "100%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RestoreButton" type="Button" parent="MapHUDLayer/MapHUD/LeftLifespanPanel/LifespanVBox"]
+[node name="RestoreButton" type="Button" parent="MapHUDLayer/MapHUD/LeftLifespanPanel/LifespanVBox" unique_id=370563932]
 custom_minimum_size = Vector2(130, 44)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Restore"
 
-[node name="LifespanPurchasePanel" type="PanelContainer" parent="MapHUDLayer"]
+[node name="LifespanPurchasePanel" type="PanelContainer" parent="MapHUDLayer" unique_id=1378065548]
 visible = false
-layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -553,49 +553,50 @@ offset_left = -210.0
 offset_top = -150.0
 offset_right = 210.0
 offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MapHUDLayer/LifespanPurchasePanel"]
+[node name="MarginContainer" type="MarginContainer" parent="MapHUDLayer/LifespanPurchasePanel" unique_id=649910859]
 layout_mode = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer" unique_id=1405696418]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="TitleLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer" unique_id=855572526]
 layout_mode = 2
 text = "Restore Lifespan"
 
-[node name="CurrentLifespanLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer"]
+[node name="CurrentLifespanLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer" unique_id=1120144392]
 layout_mode = 2
 text = "Current Lifespan: 100 / 100"
 
-[node name="FullRestoreTimerLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer"]
+[node name="FullRestoreTimerLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer" unique_id=1722376641]
 layout_mode = 2
 text = "Full restore: Ready / none"
 
-[node name="WalkingRestoreTimerLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer"]
+[node name="WalkingRestoreTimerLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer" unique_id=1134194689]
 layout_mode = 2
 text = "+1 while walking: 01:00"
 
-[node name="CostLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer"]
+[node name="CostLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer" unique_id=931059939]
 layout_mode = 2
 text = "Cost: 500 Coins"
 
-[node name="RestoreButton" type="Button" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer"]
+[node name="RestoreButton" type="Button" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer" unique_id=1074142770]
 layout_mode = 2
 text = "Restore Lifespan"
 
-[node name="CloseButton" type="Button" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer"]
+[node name="CloseButton" type="Button" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer" unique_id=111310559]
 layout_mode = 2
 text = "Close"
 
-[node name="NotificationLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer"]
+[node name="NotificationLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer" unique_id=236105607]
 layout_mode = 2
-text = ""
 
 [node name="AdminMapHUD" type="Control" parent="MapHUDLayer" unique_id=478903357]
 visible = false

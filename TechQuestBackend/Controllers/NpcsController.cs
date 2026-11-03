@@ -265,7 +265,8 @@ namespace TechQuestBackend.Controllers
             int userId = GetUserId();
             var existingChallenge = await _db.NpcChallenges.AsNoTracking()
                 .Where(challenge => challenge.Student!.UserId == userId &&
-                    challenge.DeploymentId == deploymentId)
+                    challenge.DeploymentId == deploymentId &&
+                    challenge.MiniGameType != "HigherLower")
                 .Select(challenge => new
                 {
                     challenge.State,
@@ -326,6 +327,63 @@ namespace TechQuestBackend.Controllers
                     challenge.DeploymentId == deploymentId, cancellationToken);
             if (existingChallenge != null)
             {
+                if (existingChallenge.MiniGameType == "HigherLower")
+                {
+                    var replacementQuestion = await _db.Questions
+                        .Include(item => item.MiniGame)
+                        .FirstOrDefaultAsync(item => item.DeploymentId == deploymentId, cancellationToken);
+                    if (replacementQuestion == null ||
+                        replacementQuestion.MiniGame == null ||
+                        !IsSupportedMiniGameType(replacementQuestion.MiniGame.GameType) ||
+                        string.IsNullOrWhiteSpace(replacementQuestion.SubjectName) ||
+                        string.IsNullOrWhiteSpace(replacementQuestion.QuestionText) ||
+                        string.IsNullOrWhiteSpace(replacementQuestion.CorrectAnswer) ||
+                        replacementQuestion.TimerSeconds < 1 ||
+                        !HasValidAnswerChoices(replacementQuestion.AnswerChoices, replacementQuestion.CorrectAnswer))
+                        return BadRequest("The NPC challenge is not fully configured.");
+
+                    existingChallenge.QuestionId = replacementQuestion.QuestionId;
+                    existingChallenge.NpcId = deployment.NpcId;
+                    existingChallenge.NpcName = deployment.Npc!.NpcName;
+                    existingChallenge.Difficulty = deployment.MapDifficulty;
+                    existingChallenge.SubjectName = replacementQuestion.SubjectName;
+                    existingChallenge.MiniGameType = replacementQuestion.MiniGame.GameType;
+                    existingChallenge.QuestionText = replacementQuestion.QuestionText;
+                    existingChallenge.AnswerChoices = replacementQuestion.AnswerChoices;
+                    existingChallenge.CorrectAnswer = replacementQuestion.CorrectAnswer;
+                    existingChallenge.AnswerTip = replacementQuestion.AnswerTip;
+                    existingChallenge.TimerSeconds = replacementQuestion.TimerSeconds;
+                    existingChallenge.AttemptId = Guid.NewGuid();
+                    existingChallenge.State = "MiniGamePending";
+                    existingChallenge.StartedAt = DateTime.UtcNow;
+                    existingChallenge.QuestionStartedAt = null;
+                    existingChallenge.CompletedAt = null;
+                    existingChallenge.MiniGameWon = null;
+                    existingChallenge.AnswerTipAwarded = false;
+                    existingChallenge.SelectedAnswer = null;
+                    existingChallenge.QuestionCorrect = null;
+                    existingChallenge.QuestionTimedOut = false;
+                    existingChallenge.CoinsChanged = 0;
+                    existingChallenge.PointsChanged = 0;
+                    existingChallenge.CharacterName = null;
+                    existingChallenge.CharacterPlayerScore = 0;
+                    existingChallenge.CharacterNpcScore = 0;
+                    existingChallenge.CharacterOutcome = null;
+                    await _db.SaveChangesAsync(cancellationToken);
+                    await transaction.CommitAsync(cancellationToken);
+                    return Ok(new StudentChallengeStartResponse
+                    {
+                        ChallengeId = existingChallenge.ChallengeId,
+                        AttemptId = existingChallenge.AttemptId,
+                        NpcId = existingChallenge.NpcId,
+                        DeploymentId = existingChallenge.DeploymentId,
+                        QuestionId = existingChallenge.QuestionId,
+                        GameType = existingChallenge.MiniGameType,
+                        TimerSeconds = existingChallenge.TimerSeconds,
+                        Difficulty = existingChallenge.Difficulty
+                    });
+                }
+
                 if (existingChallenge.State != "MiniGamePending")
                     return Conflict("This student has already completed the mini-game for this NPC challenge.");
 
