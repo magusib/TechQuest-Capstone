@@ -483,65 +483,6 @@ custom_minimum_size = Vector2(78, 36)
 layout_mode = 2
 text = "Restore"
 
-[node name="LifespanPurchasePanel" type="PanelContainer" parent="MapHUDLayer" unique_id=1787022902]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -210.0
-offset_top = -150.0
-offset_right = 210.0
-offset_bottom = 150.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="MapHUDLayer/LifespanPurchasePanel" unique_id=759301240]
-layout_mode = 2
-theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 24
-theme_override_constants/margin_bottom = 20
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer" unique_id=942204802]
-layout_mode = 2
-theme_override_constants/separation = 12
-
-[node name="TitleLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer" unique_id=530706905]
-layout_mode = 2
-text = "Restore Lifespan"
-horizontal_alignment = 1
-
-[node name="CurrentLifespanLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer" unique_id=963699927]
-layout_mode = 2
-text = "Current Lifespan: 100 / 100"
-
-[node name="FullRestoreTimerLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Full restore: Ready / none"
-
-[node name="WalkingRestoreTimerLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "+1 while walking: 01:00"
-
-[node name="CostLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer" unique_id=21867837]
-layout_mode = 2
-text = "Cost: 500 Coins"
-
-[node name="RestoreButton" type="Button" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer" unique_id=1693019177]
-layout_mode = 2
-text = "Restore Lifespan"
-
-[node name="CloseButton" type="Button" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer" unique_id=1428704111]
-layout_mode = 2
-text = "Close"
-
-[node name="NotificationLabel" type="Label" parent="MapHUDLayer/LifespanPurchasePanel/MarginContainer/VBoxContainer" unique_id=393719374]
-visible = false
-layout_mode = 2
-autowrap_mode = 2
-
 [node name="AdminMapHUD" type="Control" parent="MapHUDLayer" unique_id=478903357]
 visible = false
 layout_mode = 3
@@ -789,27 +730,6 @@ position = Vector2(1719, 389)
 
 [node name="EasyNPCSpawn03" type="Marker2D" parent="NPCSpawnPoints" unique_id=1371745690]
 position = Vector2(2359, 198)
-
-[node name="EasyNPCSpawn04" type="Marker2D" parent="NPCSpawnPoints" unique_id=1344510113]
-position = Vector2(2409, 485)
-
-[node name="EasyNPCSpawn05" type="Marker2D" parent="NPCSpawnPoints" unique_id=2057805660]
-position = Vector2(2974, 291)
-
-[node name="EasyNPCSpawn06" type="Marker2D" parent="NPCSpawnPoints" unique_id=674961678]
-position = Vector2(1971, 589)
-
-[node name="EasyNPCSpawn07" type="Marker2D" parent="NPCSpawnPoints" unique_id=1151449468]
-position = Vector2(1588, 70)
-
-[node name="EasyNPCSpawn08" type="Marker2D" parent="NPCSpawnPoints" unique_id=1054384845]
-position = Vector2(1293, -26)
-
-[node name="EasyNPCSpawn09" type="Marker2D" parent="NPCSpawnPoints" unique_id=990231978]
-position = Vector2(3626, 645)
-
-[node name="EasyNPCSpawn10" type="Marker2D" parent="NPCSpawnPoints" unique_id=1121334815]
-position = Vector2(2907, 762)
 
 [node name="Killzone" parent="." unique_id=2081880991 instance=ExtResource("22_lj2mp")]
 

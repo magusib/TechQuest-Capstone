@@ -265,6 +265,9 @@ namespace TechQuestBackend.Data
                         "CK_Npc_challenges_State",
                         "\"State\" IN ('MiniGamePending', 'QuestionReady', 'Completed')");
                 });
+                entity.Property(challenge => challenge.HintPositions)
+                    .HasColumnType("jsonb")
+                    .HasDefaultValueSql("'[]'::jsonb");
                 entity.HasKey(challenge => challenge.ChallengeId);
                 entity.Property(challenge => challenge.State).HasMaxLength(30).HasDefaultValue("MiniGamePending");
                 entity.Property(challenge => challenge.NpcName).HasMaxLength(150).IsRequired();
