@@ -36,6 +36,7 @@ namespace TechQuestBackend.Data
         public DbSet<GameResult> GameResults { get; set; }
 
         public DbSet<NpcChallenge> NpcChallenges { get; set; }
+        public DbSet<CharacterChallengeSession> CharacterChallengeSessions { get; set; }
 
         public DbSet<NpcQuizPurchaseTransaction> NpcQuizPurchaseTransactions { get; set; }
 
@@ -291,6 +292,51 @@ namespace TechQuestBackend.Data
                 entity.HasOne(challenge => challenge.Question)
                     .WithMany(question => question.NpcChallenges)
                     .HasForeignKey(challenge => challenge.QuestionId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<CharacterChallengeSession>(entity =>
+            {
+                entity.ToTable("Character_challenge_sessions", table =>
+                {
+                    table.HasCheckConstraint(
+                        "CK_CharacterChallenge_PlayerScore",
+                        "\"PlayerScore\" >= 0");
+                    table.HasCheckConstraint(
+                        "CK_CharacterChallenge_NpcScore",
+                        "\"NpcScore\" >= 0");
+                    table.HasCheckConstraint(
+                        "CK_CharacterChallenge_CoinsDeducted",
+                        "\"CoinsDeducted\" >= 0");
+                    table.HasCheckConstraint(
+                        "CK_CharacterChallenge_PointsDeducted",
+                        "\"PointsDeducted\" >= 0");
+                    table.HasCheckConstraint(
+                        "CK_CharacterChallenge_Outcome",
+                        "\"Outcome\" IS NULL OR \"Outcome\" IN ('WIN', 'LOSE', 'DRAW')");
+                    table.HasCheckConstraint(
+                        "CK_CharacterChallenge_State",
+                        "\"State\" IN ('Pending', 'Completed')");
+                });
+                entity.HasKey(session => session.CharacterChallengeSessionId);
+                entity.Property(session => session.NpcName).HasMaxLength(150).IsRequired();
+                entity.Property(session => session.CharacterName).HasMaxLength(150).IsRequired();
+                entity.Property(session => session.Outcome).HasMaxLength(10);
+                entity.Property(session => session.State).HasMaxLength(30).HasDefaultValue("Pending");
+                entity.Property(session => session.StartedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.HasIndex(session => session.AttemptId).IsUnique();
+                entity.HasIndex(session => new { session.StudentId, session.DeploymentId });
+                entity.HasOne(session => session.Student)
+                    .WithMany()
+                    .HasForeignKey(session => session.StudentId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(session => session.Deployment)
+                    .WithMany()
+                    .HasForeignKey(session => session.DeploymentId)
+                    .OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(session => session.Npc)
+                    .WithMany()
+                    .HasForeignKey(session => session.NpcId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 

@@ -50,9 +50,9 @@ public partial class HigherLower : Control
 		npcScoreLabel = GetNodeOrNull<Label>("MainContainer/ContestantsRow/NPCPanel/NPCInfoContainer/NPCScoreLabel");
 		npcPredictionLabel = GetNodeOrNull<Label>("MainContainer/ContestantsRow/NPCPanel/NPCInfoContainer/NPCPredictionLabel");
 		npcResultLabel = GetNodeOrNull<Label>("MainContainer/ContestantsRow/NPCPanel/NPCInfoContainer/NPCResultLabel");
-		currentNumberLabel = GetNodeOrNull<Label>("MainContainer/CenterGamePanel/GameContainer/NumberCardsContainer/CurrentNumberCard/CurrentNumberLabel");
-		nextNumberLabel = GetNodeOrNull<Label>("MainContainer/CenterGamePanel/GameContainer/NumberCardsContainer/NextNumberCard/NextNumberLabel");
-		actualNumberResultLabel = GetNodeOrNull<Label>("MainContainer/CenterGamePanel/GameContainer/ActualNumberResultLabel");
+		currentNumberLabel = GetNodeOrNull<Label>("MainContainer/ContestantsRow/CenterGamePanel/GameContainer/NumberCardsContainer/CurrentNumberCard/CurrentNumberLabel");
+		nextNumberLabel = GetNodeOrNull<Label>("MainContainer/ContestantsRow/CenterGamePanel/GameContainer/NumberCardsContainer/NextNumberCard/NextNumberLabel");
+		actualNumberResultLabel = GetNodeOrNull<Label>("MainContainer/ContestantsRow/CenterGamePanel/GameContainer/ActualNumberResultLabel");
 		higherButton = GetNodeOrNull<Button>("MainContainer/PredictionButtonsContainer/HigherButton");
 		lowerButton = GetNodeOrNull<Button>("MainContainer/PredictionButtonsContainer/LowerButton");
 		gameResultPopup = GetNodeOrNull<Panel>("GameResultPopup");

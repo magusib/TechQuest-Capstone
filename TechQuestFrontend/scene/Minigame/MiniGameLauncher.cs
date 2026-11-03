@@ -106,6 +106,9 @@ public static class MiniGameLauncher
 
 			CharacterChallengeStartDto challenge =
 				await MiniGameApiClient.StartCharacterChallengeAsync(deploymentId, characterName);
+			if (challenge.State == "CharacterMiniGameCompleted")
+				throw new InvalidOperationException(
+					"This NPC character challenge has already been completed. Challenge another NPC.");
 			PackedScene gameScene = GD.Load<PackedScene>(
 				"res://scene/Minigame/NPCMinigameChallange/HigherLower.tscn");
 			if (gameScene == null)

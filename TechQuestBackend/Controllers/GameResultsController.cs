@@ -341,44 +341,51 @@ namespace TechQuestBackend.Controllers
             if (profile == null)
                 return BadRequest("Student profile was not found.");
 
-            var challenge = await _db.NpcChallenges
+            var session = await _db.CharacterChallengeSessions
                 .FirstOrDefaultAsync(item => item.StudentId == profile.StudentId &&
                     item.DeploymentId == request.DeploymentId && item.AttemptId == request.AttemptId,
                     cancellationToken);
-            if (challenge == null || challenge.MiniGameType != "HigherLower")
+            if (session == null)
                 return BadRequest("This character challenge is not assigned to the student.");
 
-            if (challenge.State == "CharacterMiniGameCompleted")
+            if (session.State == "Completed")
             {
-                if (challenge.CharacterPlayerScore != request.PlayerScore ||
-                    challenge.CharacterNpcScore != request.NpcScore ||
-                    challenge.CharacterOutcome != outcome)
+                if (session.PlayerScore != request.PlayerScore ||
+                    session.NpcScore != request.NpcScore ||
+                    session.Outcome != outcome)
                     return Conflict("This character challenge was already finalized with a different result.");
 
                 await transaction.CommitAsync(cancellationToken);
-                return Ok(CreateCharacterChallengeResult(challenge, profile, true));
+                return Ok(CreateCharacterChallengeResult(session, profile, true));
             }
 
-            if (challenge.State != "CharacterMiniGamePending")
+            if (session.State != "Pending")
                 return Conflict("This character challenge is no longer active.");
 
             int coinsDeducted = outcome == "LOSE" ? Math.Min(20, profile.TotalCoins) : 0;
             int pointsDeducted = outcome == "LOSE" ? Math.Min(20, profile.TotalPoints) : 0;
             profile.TotalCoins -= coinsDeducted;
             profile.TotalPoints -= pointsDeducted;
-            challenge.CharacterPlayerScore = request.PlayerScore;
-            challenge.CharacterNpcScore = request.NpcScore;
-            challenge.CharacterOutcome = outcome;
-            challenge.CoinsChanged = -coinsDeducted;
-            challenge.PointsChanged = -pointsDeducted;
-            challenge.CompletedAt = DateTime.UtcNow;
-            challenge.State = "CharacterMiniGameCompleted";
+            session.PlayerScore = request.PlayerScore;
+            session.NpcScore = request.NpcScore;
+            session.Outcome = outcome;
+            session.CoinsDeducted = coinsDeducted;
+            session.PointsDeducted = pointsDeducted;
+            session.CompletedAt = DateTime.UtcNow;
+            session.State = "Completed";
+
+            int questionId = await _db.Questions
+                .Where(item => item.DeploymentId == request.DeploymentId)
+                .Select(item => item.QuestionId)
+                .FirstOrDefaultAsync(cancellationToken);
+            if (questionId <= 0)
+                return BadRequest("The NPC challenge question was not found.");
 
             _db.GameResults.Add(new GameResult
             {
                 StudentId = profile.StudentId,
-                QuestionId = challenge.QuestionId,
-                AttemptId = challenge.AttemptId,
+                QuestionId = questionId,
+                AttemptId = session.AttemptId,
                 CoinsDeducted = coinsDeducted,
                 PointsDeducted = pointsDeducted,
                 IsCorrect = outcome == "WIN",
@@ -386,22 +393,22 @@ namespace TechQuestBackend.Controllers
             });
             await _db.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
-            return Ok(CreateCharacterChallengeResult(challenge, profile, false));
+            return Ok(CreateCharacterChallengeResult(session, profile, false));
         }
 
         private static CharacterChallengeResultResponse CreateCharacterChallengeResult(
-            NpcChallenge challenge,
+            CharacterChallengeSession session,
             StudentProfile profile,
             bool alreadyProcessed)
         {
             return new CharacterChallengeResultResponse
             {
-                AttemptId = challenge.AttemptId,
-                Outcome = challenge.CharacterOutcome ?? "DRAW",
-                PlayerScore = challenge.CharacterPlayerScore,
-                NpcScore = challenge.CharacterNpcScore,
-                CoinsDeducted = Math.Max(0, -challenge.CoinsChanged),
-                PointsDeducted = Math.Max(0, -challenge.PointsChanged),
+                AttemptId = session.AttemptId,
+                Outcome = session.Outcome ?? "DRAW",
+                PlayerScore = session.PlayerScore,
+                NpcScore = session.NpcScore,
+                CoinsDeducted = session.CoinsDeducted,
+                PointsDeducted = session.PointsDeducted,
                 TotalCoins = profile.TotalCoins,
                 TotalPoints = profile.TotalPoints,
                 AlreadyProcessed = alreadyProcessed

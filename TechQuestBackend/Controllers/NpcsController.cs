@@ -421,18 +421,13 @@ namespace TechQuestBackend.Controllers
             if (deployment == null)
                 return NotFound("NPC deployment was not found or is no longer active.");
 
-            var existingChallenge = await _db.NpcChallenges
+            var activeSession = await _db.CharacterChallengeSessions
                 .FirstOrDefaultAsync(item => item.StudentId == profile.StudentId &&
-                    item.DeploymentId == deploymentId, cancellationToken);
-            if (existingChallenge != null)
+                    item.DeploymentId == deploymentId && item.State == "Pending", cancellationToken);
+            if (activeSession != null)
             {
-                if (existingChallenge.MiniGameType != "HigherLower" ||
-                    (existingChallenge.State != "CharacterMiniGamePending" &&
-                     existingChallenge.State != "CharacterMiniGameCompleted"))
-                    return Conflict("This NPC interaction already has an active or completed subject challenge.");
-
                 await transaction.CommitAsync(cancellationToken);
-                return Ok(CreateCharacterChallengeStartResponse(existingChallenge));
+                return Ok(CreateCharacterChallengeStartResponse(activeSession));
             }
 
             var question = await _db.Questions
@@ -440,44 +435,39 @@ namespace TechQuestBackend.Controllers
             if (question == null)
                 return BadRequest("The NPC challenge is not fully configured.");
 
-            var challenge = new NpcChallenge
+            var session = new CharacterChallengeSession
             {
                 StudentId = profile.StudentId,
                 DeploymentId = deploymentId,
-                QuestionId = question.QuestionId,
                 NpcId = deployment.NpcId,
                 NpcName = deployment.Npc!.NpcName,
-                Difficulty = deployment.MapDifficulty,
-                SubjectName = question.SubjectName ?? "",
-                MiniGameType = "HigherLower",
-                QuestionText = question.QuestionText ?? "",
-                AnswerChoices = question.AnswerChoices ?? "[]",
-                CorrectAnswer = question.CorrectAnswer ?? "",
-                AnswerTip = question.AnswerTip ?? "",
-                TimerSeconds = 0,
                 AttemptId = Guid.NewGuid(),
-                State = "CharacterMiniGamePending",
-                CharacterName = request.CharacterName?.Trim()
+                CharacterName = string.IsNullOrWhiteSpace(request.CharacterName)
+                    ? "Character"
+                    : request.CharacterName.Trim(),
+                State = "Pending"
             };
-            _db.NpcChallenges.Add(challenge);
+            _db.CharacterChallengeSessions.Add(session);
             await _db.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
-            return Ok(CreateCharacterChallengeStartResponse(challenge));
+            return Ok(CreateCharacterChallengeStartResponse(session));
         }
 
         private static CharacterChallengeStartResponse CreateCharacterChallengeStartResponse(
-            NpcChallenge challenge)
+            CharacterChallengeSession session)
         {
             return new CharacterChallengeStartResponse
             {
-                ChallengeId = challenge.ChallengeId,
-                AttemptId = challenge.AttemptId,
-                NpcId = challenge.NpcId,
-                NpcName = challenge.NpcName,
-                DeploymentId = challenge.DeploymentId,
-                CharacterName = challenge.CharacterName ?? "Character",
-                GameType = challenge.MiniGameType,
-                State = challenge.State
+                ChallengeId = session.CharacterChallengeSessionId,
+                AttemptId = session.AttemptId,
+                NpcId = session.NpcId,
+                NpcName = session.NpcName,
+                DeploymentId = session.DeploymentId,
+                CharacterName = session.CharacterName,
+                GameType = "HigherLower",
+                State = session.State == "Completed"
+                    ? "CharacterMiniGameCompleted"
+                    : "CharacterMiniGamePending"
             };
         }
 
