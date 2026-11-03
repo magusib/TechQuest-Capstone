@@ -15,6 +15,7 @@ namespace TechQuestBackend.Controllers
     [Authorize(Roles = "student")]
     public class GameResultsController : ControllerBase
     {
+        private const int CharacterChallengeLifespanPenalty = 5;
         private readonly TechQuestDbContext _db;
         private readonly IQuestProgressService _questProgressService;
 
@@ -356,7 +357,7 @@ namespace TechQuestBackend.Controllers
                     return Conflict("This character challenge was already finalized with a different result.");
 
                 await transaction.CommitAsync(cancellationToken);
-                return Ok(CreateCharacterChallengeResult(session, profile, true));
+                return Ok(CreateCharacterChallengeResult(session, profile, 0, true));
             }
 
             if (session.State != "Pending")
@@ -364,8 +365,17 @@ namespace TechQuestBackend.Controllers
 
             int coinsDeducted = outcome == "LOSE" ? Math.Min(20, profile.TotalCoins) : 0;
             int pointsDeducted = outcome == "LOSE" ? Math.Min(20, profile.TotalPoints) : 0;
+            int lifespanDeducted = outcome == "LOSE"
+                ? Math.Min(CharacterChallengeLifespanPenalty, Math.Max(0, profile.Lifespan))
+                : 0;
             profile.TotalCoins -= coinsDeducted;
             profile.TotalPoints -= pointsDeducted;
+            profile.Lifespan = Math.Max(0, profile.Lifespan - lifespanDeducted);
+            if (profile.Lifespan == 0)
+            {
+                profile.LifespanAutoRecoveryAt = DateTime.UtcNow.AddHours(3);
+                profile.LifespanWalkRecoveryAt = null;
+            }
             session.PlayerScore = request.PlayerScore;
             session.NpcScore = request.NpcScore;
             session.Outcome = outcome;
@@ -393,12 +403,13 @@ namespace TechQuestBackend.Controllers
             });
             await _db.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
-            return Ok(CreateCharacterChallengeResult(session, profile, false));
+            return Ok(CreateCharacterChallengeResult(session, profile, lifespanDeducted, false));
         }
 
         private static CharacterChallengeResultResponse CreateCharacterChallengeResult(
             CharacterChallengeSession session,
             StudentProfile profile,
+            int lifespanDeducted,
             bool alreadyProcessed)
         {
             return new CharacterChallengeResultResponse
@@ -411,6 +422,8 @@ namespace TechQuestBackend.Controllers
                 PointsDeducted = session.PointsDeducted,
                 TotalCoins = profile.TotalCoins,
                 TotalPoints = profile.TotalPoints,
+                Lifespan = profile.Lifespan,
+                LifespanDeducted = lifespanDeducted,
                 AlreadyProcessed = alreadyProcessed
             };
         }
@@ -623,6 +636,8 @@ namespace TechQuestBackend.Controllers
         public int PointsDeducted { get; set; }
         public int TotalCoins { get; set; }
         public int TotalPoints { get; set; }
+        public int Lifespan { get; set; }
+        public int LifespanDeducted { get; set; }
         public bool AlreadyProcessed { get; set; }
     }
 

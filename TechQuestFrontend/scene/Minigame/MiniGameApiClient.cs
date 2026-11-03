@@ -258,6 +258,8 @@ public class CharacterChallengeResultDto
 	public int PointsDeducted { get; set; }
 	public int TotalCoins { get; set; }
 	public int TotalPoints { get; set; }
+	public int Lifespan { get; set; }
+	public int LifespanDeducted { get; set; }
 	public bool AlreadyProcessed { get; set; }
 }
 

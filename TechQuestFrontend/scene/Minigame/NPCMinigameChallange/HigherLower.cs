@@ -184,6 +184,7 @@ public partial class HigherLower : Control
 			CharacterChallengeResultDto result = await MiniGameApiClient.SubmitCharacterChallengeAsync(
 				challenge.AttemptId, challenge.DeploymentId, playerScore, npcScore, outcome);
 			UserSession.UpdateStudentProfile(result.TotalCoins, result.TotalPoints);
+			UserSession.UpdateLifespan(result.Lifespan);
 			ShowResult(result);
 		}
 		catch (Exception exception)

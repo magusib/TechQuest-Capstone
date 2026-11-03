@@ -7,6 +7,9 @@ public partial class MapHUD : Control
 	private Label pointsLabel;
 	private Label lifespanLabel;
 	private ProgressBar lifespanProgressBar;
+	private Control lifespanBottle;
+	private Control lifespanFill;
+	private Label lifespanPercentageLabel;
 	private Button restoreLifespanButton;
 	private Control purchasePanel;
 	private Label currentLifespanLabel;
@@ -31,6 +34,11 @@ public partial class MapHUD : Control
 		lifespanLabel = GetNodeOrNull<Label>("TopRight/LifespanPanel/LifespanLabel");
 		lifespanProgressBar = GetNodeOrNull<ProgressBar>("TopRight/LifespanPanel/LifespanProgressBar");
 		restoreLifespanButton = GetNodeOrNull<Button>("TopRight/LifespanPanel/RestoreLifespanButton");
+		lifespanBottle = GetNodeOrNull<Control>("LeftLifespanPanel/LifespanVBox/LifespanBottle");
+		lifespanFill = GetNodeOrNull<Control>("LeftLifespanPanel/LifespanVBox/LifespanBottle/LifespanFill");
+		lifespanPercentageLabel = GetNodeOrNull<Label>("LeftLifespanPanel/LifespanVBox/LifespanPercentageLabel");
+		restoreLifespanButton = GetNodeOrNull<Button>("LeftLifespanPanel/LifespanVBox/RestoreButton")
+			?? GetNodeOrNull<Button>("TopRight/LifespanPanel/RestoreLifespanButton");
 		purchasePanel = GetNodeOrNull<Control>("../LifespanPurchasePanel");
 		currentLifespanLabel = GetNodeOrNull<Label>("../LifespanPurchasePanel/MarginContainer/VBoxContainer/CurrentLifespanLabel");
 		notificationLabel = GetNodeOrNull<Label>("../LifespanPurchasePanel/MarginContainer/VBoxContainer/NotificationLabel");
@@ -78,6 +86,9 @@ public partial class MapHUD : Control
 			lifespanLabel.Text = $"Lifespan: {UserSession.Lifespan} / {UserSession.MaximumLifespan}";
 		if (lifespanProgressBar != null)
 			lifespanProgressBar.Value = UserSession.Lifespan;
+		if (lifespanPercentageLabel != null)
+			lifespanPercentageLabel.Text = $"{GetLifespanPercentage()}%";
+		RefreshLifespanFill();
 		if (currentLifespanLabel != null)
 			currentLifespanLabel.Text = $"Current Lifespan: {UserSession.Lifespan} / {UserSession.MaximumLifespan}";
 		if (fullRestoreTimerLabel != null)
@@ -87,6 +98,27 @@ public partial class MapHUD : Control
 			double remainingWalkingSeconds = Math.Max(0, 60 - UserSession.WalkingRecoverySeconds);
 			walkingRestoreTimerLabel.Text = $"+1 while walking: {FormatSeconds(remainingWalkingSeconds)}";
 		}
+	}
+
+	private int GetLifespanPercentage()
+	{
+		return Math.Clamp(
+			(int)Math.Round(UserSession.Lifespan * 100.0 / UserSession.MaximumLifespan),
+			0,
+			100);
+	}
+
+	private void RefreshLifespanFill()
+	{
+		if (lifespanBottle == null || lifespanFill == null || lifespanBottle.Size.Y <= 0)
+			return;
+
+		const float inset = 3.0f;
+		float innerWidth = Math.Max(0, lifespanBottle.Size.X - inset * 2);
+		float innerHeight = Math.Max(0, lifespanBottle.Size.Y - inset * 2);
+		float fillHeight = innerHeight * GetLifespanPercentage() / 100.0f;
+		lifespanFill.Position = new Vector2(inset, inset + innerHeight - fillHeight);
+		lifespanFill.Size = new Vector2(innerWidth, fillHeight);
 	}
 
 	private static TimeSpan GetRemaining(DateTimeOffset? target)
