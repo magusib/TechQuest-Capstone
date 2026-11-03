@@ -13,6 +13,8 @@ public partial class MapHUD : Control
 	private Label notificationLabel;
 	private Label fullRestoreTimerLabel;
 	private Label walkingRestoreTimerLabel;
+	private ConfirmationDialog purchaseConfirmationDialog;
+	private AcceptDialog purchaseMessageDialog;
 	private bool purchaseInProgress;
 
 	public override void _Ready()
@@ -39,9 +41,11 @@ public partial class MapHUD : Control
 		Button restoreButton = GetNodeOrNull<Button>("../LifespanPurchasePanel/MarginContainer/VBoxContainer/RestoreButton");
 		Button closeButton = GetNodeOrNull<Button>("../LifespanPurchasePanel/MarginContainer/VBoxContainer/CloseButton");
 		if (restoreButton != null)
-			restoreButton.Pressed += PurchaseLifespan;
+			restoreButton.Pressed += ConfirmPurchaseLifespan;
 		if (closeButton != null)
 			closeButton.Pressed += () => purchasePanel?.Hide();
+
+		CreatePurchaseDialogs();
 
 		GetNode<Button>("TopLeft/HomeButton").Pressed += OnHomePressed;
 		GetNode<Button>("TopLeft/QuestButton").Pressed += OnQuestPressed;
@@ -131,6 +135,42 @@ public partial class MapHUD : Control
 		RefreshLifespanLabels();
 	}
 
+	private void CreatePurchaseDialogs()
+	{
+		purchaseConfirmationDialog = new ConfirmationDialog
+		{
+			Title = "Confirm Lifespan Purchase",
+			OkButtonText = "Yes",
+			CancelButtonText = "No"
+		};
+		purchaseConfirmationDialog.Confirmed += PurchaseLifespan;
+		AddChild(purchaseConfirmationDialog);
+
+		purchaseMessageDialog = new AcceptDialog
+		{
+			Title = "Lifespan Purchase"
+		};
+		AddChild(purchaseMessageDialog);
+	}
+
+	private void ConfirmPurchaseLifespan()
+	{
+		if (purchaseInProgress || UserSession.Lifespan >= UserSession.MaximumLifespan)
+			return;
+
+		if (UserSession.Coins < 500)
+		{
+			ShowPurchaseMessage(
+				$"Not enough coins. You need 500 Coins, but you only have {UserSession.Coins}.",
+				"Insufficient Coins");
+			return;
+		}
+
+		purchaseConfirmationDialog.DialogText =
+			$"Purchase full lifespan for 500 Coins?\n\nYour current coins: {UserSession.Coins}";
+		purchaseConfirmationDialog.PopupCentered();
+	}
+
 	private async void PurchaseLifespan()
 	{
 		if (purchaseInProgress || UserSession.Lifespan >= UserSession.MaximumLifespan)
@@ -141,26 +181,32 @@ public partial class MapHUD : Control
 		{
 			LifespanResponseDto response = await LifespanApiClient.PurchaseAsync();
 			UserSession.ApplyLifespanResponse(response);
-			if (notificationLabel != null)
-		{
-			notificationLabel.Text = "Lifespan restored successfully.";
-			notificationLabel.Show();
-		}
+			ShowPurchaseMessage("Lifespan restored successfully!", "Purchase Successful");
+			purchasePanel?.Hide();
 			RefreshCurrencyLabels();
 			RefreshLifespanLabels();
 		}
 		catch (Exception exception)
 		{
-			if (notificationLabel != null)
-			{
-				notificationLabel.Text = exception.Message;
-				notificationLabel.Show();
-			}
+			string message = exception.Message.Contains("Not enough Coins", StringComparison.OrdinalIgnoreCase)
+				? "Not enough coins to purchase full lifespan. You need 500 Coins."
+				: exception.Message;
+			ShowPurchaseMessage(message, "Purchase Failed");
 		}
 		finally
 		{
 			purchaseInProgress = false;
 		}
+	}
+
+	private void ShowPurchaseMessage(string message, string title)
+	{
+		if (purchaseMessageDialog == null)
+			return;
+
+		purchaseMessageDialog.Title = title;
+		purchaseMessageDialog.DialogText = message;
+		purchaseMessageDialog.PopupCentered();
 	}
 
 	private void OnHomePressed()

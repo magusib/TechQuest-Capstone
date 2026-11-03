@@ -172,7 +172,9 @@ namespace TechQuestBackend.Controllers
         }
 
         [HttpPost("question-attempt")]
-        public async Task<IActionResult> SubmitQuestionAttempt(QuestionAttemptRequest request)
+        public async Task<IActionResult> SubmitQuestionAttempt(
+            QuestionAttemptRequest request,
+            CancellationToken cancellationToken)
         {
             if (request.DeploymentId <= 0)
                 return BadRequest("A valid NPC deployment is required.");
@@ -210,8 +212,9 @@ namespace TechQuestBackend.Controllers
             if (challenge.State != "QuestionReady" || challenge.QuestionStartedAt == null)
                 return Conflict("The NPC question has not been started.");
 
-            bool timedOut = DateTime.UtcNow >= challenge.QuestionStartedAt.Value.AddSeconds(challenge.TimerSeconds);
-            if (!timedOut && string.IsNullOrWhiteSpace(request.SelectedAnswer))
+            bool timedOut = DateTime.UtcNow >= challenge.QuestionStartedAt.Value
+                .AddSeconds(challenge.TimerSeconds + challenge.TimeExtensionSeconds);
+            if (!timedOut && string.IsNullOrWhiteSpace(request.SelectedAnswer) && !request.Finalize)
                 return BadRequest("Select an answer before submitting.");
             string submittedAnswer = request.SelectedAnswer?.Trim() ?? "";
 
@@ -232,6 +235,16 @@ namespace TechQuestBackend.Controllers
                 GetQuestionRewards(challenge.Difficulty, isCorrect);
             int coinsDeducted = Math.Min(coinPenalty, profile.TotalCoins);
             int pointsDeducted = Math.Min(pointPenalty, profile.TotalPoints);
+
+            if (!isCorrect && !request.Finalize)
+            {
+                challenge.SelectedAnswer = selectedAnswer;
+                challenge.QuestionCorrect = false;
+                challenge.QuestionTimedOut = timedOut;
+                await _db.SaveChangesAsync(cancellationToken);
+                await transaction.CommitAsync(cancellationToken);
+                return Ok(CreateQuestionResult(challenge, profile));
+            }
 
             if (!isCorrect)
             {
@@ -299,6 +312,132 @@ namespace TechQuestBackend.Controllers
             return Ok(CreateQuestionResult(challenge, profile));
         }
 
+        [HttpPost("npc-quiz-purchase")]
+        public async Task<IActionResult> PurchaseNpcQuizOption(
+            NpcQuizPurchaseRequest request,
+            CancellationToken cancellationToken)
+        {
+            if (request.DeploymentId <= 0 || request.PurchaseId == Guid.Empty)
+                return BadRequest("A valid deployment and purchase id are required.");
+
+            string purchaseType = (request.PurchaseType ?? "").Trim().ToLowerInvariant();
+            int cost = purchaseType switch
+            {
+                "extend_time" => 10,
+                "extend_time_hint" => 20,
+                "hint" => 20,
+                _ => 0
+            };
+            if (cost == 0)
+                return BadRequest("The purchase type is invalid.");
+
+            int userId = GetUserId();
+            if (userId <= 0)
+                return Unauthorized();
+
+            await using var transaction = await _db.Database.BeginTransactionAsync(
+                IsolationLevel.ReadCommitted, cancellationToken);
+            var profile = await _db.StudentProfiles
+                .FromSqlInterpolated($"SELECT * FROM \"Student_profile\" WHERE \"UserId\" = {userId} FOR UPDATE")
+                .SingleOrDefaultAsync(cancellationToken);
+            if (profile == null)
+                return BadRequest("Student profile was not found.");
+
+            var challenge = await _db.NpcChallenges
+                .FromSqlInterpolated($"SELECT * FROM \"Npc_challenges\" WHERE \"StudentId\" = {profile.StudentId} AND \"DeploymentId\" = {request.DeploymentId} FOR UPDATE")
+                .SingleOrDefaultAsync(cancellationToken);
+            if (challenge == null)
+                return NotFound("NPC challenge was not found.");
+            if (challenge.State != "QuestionReady")
+                return Conflict("This NPC question is no longer active.");
+            var existingPurchase = await _db.NpcQuizPurchaseTransactions
+                .AsNoTracking()
+                .SingleOrDefaultAsync(item => item.StudentId == profile.StudentId &&
+                    item.PurchaseId == request.PurchaseId, cancellationToken);
+            if (existingPurchase != null)
+            {
+                await transaction.CommitAsync(cancellationToken);
+                return Ok(CreatePurchaseResponse(challenge, profile));
+            }
+
+            if (profile.TotalCoins < cost)
+                return BadRequest("Not enough Coins.");
+
+            List<int> hintPositions = JsonSerializer.Deserialize<List<int>>(challenge.HintPositions) ?? new();
+            if (purchaseType == "hint" || purchaseType == "extend_time_hint")
+            {
+                int lettersToReveal = challenge.HintPurchaseCount == 0 ? 2 : 1;
+                List<int> eligiblePositions = GetEligibleHintPositions(challenge.CorrectAnswer, hintPositions);
+                if (eligiblePositions.Count == 0)
+                    return Conflict("All eligible answer letters have already been revealed.");
+
+                for (int i = 0; i < lettersToReveal && eligiblePositions.Count > 0; i++)
+                {
+                    int selectedIndex = Random.Shared.Next(eligiblePositions.Count);
+                    hintPositions.Add(eligiblePositions[selectedIndex]);
+                    eligiblePositions.RemoveAt(selectedIndex);
+                }
+                challenge.HintPurchaseCount++;
+                challenge.HintPositions = JsonSerializer.Serialize(hintPositions);
+            }
+
+            if (purchaseType == "extend_time" || purchaseType == "extend_time_hint")
+                challenge.TimeExtensionSeconds += 30;
+
+            profile.TotalCoins -= cost;
+            _db.NpcQuizPurchaseTransactions.Add(new NpcQuizPurchaseTransaction
+            {
+                StudentId = profile.StudentId,
+                ChallengeId = challenge.ChallengeId,
+                PurchaseId = request.PurchaseId,
+                PurchaseType = purchaseType,
+                CostCoins = cost,
+                CreatedAt = DateTime.UtcNow
+            });
+
+            await _db.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+            return Ok(CreatePurchaseResponse(challenge, profile));
+        }
+
+        private static NpcQuizPurchaseResponse CreatePurchaseResponse(
+            NpcChallenge challenge,
+            StudentProfile profile)
+        {
+            List<int> positions = JsonSerializer.Deserialize<List<int>>(challenge.HintPositions) ?? new();
+            return new NpcQuizPurchaseResponse
+            {
+                TotalCoins = profile.TotalCoins,
+                TimeExtensionSeconds = challenge.TimeExtensionSeconds,
+                HintDisplay = BuildHintDisplay(challenge.CorrectAnswer, positions),
+                HintPositions = positions,
+                HintPurchaseCount = challenge.HintPurchaseCount,
+                CanPurchaseHint = GetEligibleHintPositions(challenge.CorrectAnswer, positions).Count > 0
+            };
+        }
+
+        private static List<int> GetEligibleHintPositions(string answer, List<int> revealedPositions)
+        {
+            List<int> positions = new();
+            for (int index = 0; index < answer.Length; index++)
+            {
+                if (!char.IsLetterOrDigit(answer[index]) || revealedPositions.Contains(index))
+                    continue;
+                positions.Add(index);
+            }
+            return positions;
+        }
+
+        private static string BuildHintDisplay(string answer, List<int> revealedPositions)
+        {
+            char[] display = new char[answer.Length];
+            for (int index = 0; index < answer.Length; index++)
+                display[index] = char.IsLetterOrDigit(answer[index])
+                    ? revealedPositions.Contains(index) ? answer[index] : '_'
+                    : answer[index];
+            return new string(display);
+        }
+
         private static QuestionAttemptResponse CreateQuestionResult(
             NpcChallenge challenge,
             StudentProfile profile)
@@ -309,7 +448,7 @@ namespace TechQuestBackend.Controllers
                 IsCorrect = challenge.QuestionCorrect ?? false,
                 TimedOut = challenge.QuestionTimedOut,
                 SelectedAnswer = challenge.SelectedAnswer,
-                CorrectAnswer = challenge.CorrectAnswer,
+                CorrectAnswer = challenge.State == "Completed" ? challenge.CorrectAnswer : "",
                 CoinsChanged = challenge.CoinsChanged,
                 PointsChanged = challenge.PointsChanged,
                 TotalCoins = profile.TotalCoins,
@@ -377,6 +516,7 @@ namespace TechQuestBackend.Controllers
     {
         public int DeploymentId { get; set; }
         public string? SelectedAnswer { get; set; }
+        public bool Finalize { get; set; }
     }
 
     public class QuestionAttemptResponse
@@ -391,5 +531,22 @@ namespace TechQuestBackend.Controllers
         public int TotalCoins { get; set; }
         public int TotalPoints { get; set; }
         public bool Completed { get; set; }
+    }
+
+    public class NpcQuizPurchaseRequest
+    {
+        public int DeploymentId { get; set; }
+        public Guid PurchaseId { get; set; }
+        public string PurchaseType { get; set; } = "";
+    }
+
+    public class NpcQuizPurchaseResponse
+    {
+        public int TotalCoins { get; set; }
+        public int TimeExtensionSeconds { get; set; }
+        public string HintDisplay { get; set; } = "";
+        public List<int> HintPositions { get; set; } = new();
+        public int HintPurchaseCount { get; set; }
+        public bool CanPurchaseHint { get; set; }
     }
 }

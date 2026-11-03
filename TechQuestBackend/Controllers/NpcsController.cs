@@ -417,7 +417,7 @@ namespace TechQuestBackend.Controllers
             }
 
             DateTime questionDeadline = challenge.QuestionStartedAt.Value
-                .AddSeconds(challenge.TimerSeconds);
+                .AddSeconds(challenge.TimerSeconds + challenge.TimeExtensionSeconds);
             var question = new StudentChallengeQuestionResponse
             {
                 QuestionId = challenge.QuestionId,

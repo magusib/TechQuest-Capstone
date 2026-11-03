@@ -28,6 +28,12 @@ namespace TechQuestBackend.Models
 
         public string AnswerTip { get; set; } = "";
 
+        public string HintPositions { get; set; } = "[]";
+
+        public int HintPurchaseCount { get; set; }
+
+        public int TimeExtensionSeconds { get; set; }
+
         public int TimerSeconds { get; set; }
 
         public Guid AttemptId { get; set; }

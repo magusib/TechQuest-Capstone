@@ -6,12 +6,27 @@
 [ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="2_s8a15"]
 [ext_resource type="Texture2D" uid="uid://dk37jnjagjxht" path="res://asset/Icons/exis.png" id="3_46652"]
 [ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="3_ggter"]
+[ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="7_jkcrx"]
+[ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="8_1341v"]
+[ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="9_4agd5"]
 [ext_resource type="Script" uid="uid://c8qh52xorbdj7" path="res://scene/Core/QuestObjectiveEditor.cs" id="quest_objective"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g24cr"]
 texture = ExtResource("2_iasag")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8icjc"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5godq"]
+texture = ExtResource("2_iasag")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iasag"]
+texture = ExtResource("7_jkcrx")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r7wyn"]
+texture = ExtResource("8_1341v")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0mrbm"]
+texture = ExtResource("9_4agd5")
 
 [node name="EasyMapQuest" type="Control" unique_id=1921483137]
 layout_mode = 3
@@ -23,6 +38,7 @@ grow_vertical = 2
 script = ExtResource("1_dciw5")
 
 [node name="StudentQuestPopup" type="Control" parent="." unique_id=1175924954]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -310,6 +326,7 @@ offset_right = 409.0
 offset_bottom = 255.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_5godq")
 
 [node name="StudentQuest" type="TextureRect" parent="AdminQuestAdd/QuestPanel" unique_id=803349570]
 layout_mode = 1
@@ -362,6 +379,9 @@ offset_top = -19.280003
 offset_right = 65.61597
 offset_bottom = 19.719997
 grow_horizontal = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_iasag")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_r7wyn")
+theme_override_styles/hover = SubResource("StyleBoxTexture_0mrbm")
 text = "Add Quest"
 
 [node name="QuestListPanel" type="Panel" parent="AdminQuestAdd/QuestPanel" unique_id=650107447]

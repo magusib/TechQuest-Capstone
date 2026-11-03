@@ -52,6 +52,70 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fvcs6")
 
+[node name="HintAnswerLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -258.0
+offset_top = 118.0
+offset_right = 258.0
+offset_bottom = 158.0
+text = "_ _ _ _ _"
+horizontal_alignment = 1
+
+[node name="PurchaseOverlay" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="PurchasePanel" type="PanelContainer" parent="PurchaseOverlay"]
+custom_minimum_size = Vector2(420, 300)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = -150.0
+offset_right = 210.0
+offset_bottom = 150.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PurchaseOverlay/PurchasePanel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="PurchaseOverlay/PurchasePanel/VBoxContainer"]
+layout_mode = 2
+text = "Quiz Assistance"
+horizontal_alignment = 1
+
+[node name="ExtendTimeButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer"]
+layout_mode = 2
+text = "Extend Time - 10 Coins"
+
+[node name="ExtendTimeHintButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer"]
+layout_mode = 2
+text = "Extend Time + Hint - 20 Coins"
+
+[node name="GetHintsButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer"]
+layout_mode = 2
+text = "Get Hints - 20 Coins"
+
+[node name="NoButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer"]
+layout_mode = 2
+text = "No"
+
+[node name="NotificationLabel" type="Label" parent="PurchaseOverlay/PurchasePanel/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+
 [node name="EasyMapQuestionPanel" type="Panel" parent="." unique_id=985029562]
 layout_mode = 1
 anchors_preset = 8

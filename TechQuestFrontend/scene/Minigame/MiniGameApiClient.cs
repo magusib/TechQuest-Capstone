@@ -53,7 +53,8 @@ public static class MiniGameApiClient
 
 	public static Task<QuestionAttemptResultDto> SubmitQuestionAttemptAsync(
 		int deploymentId,
-		string selectedAnswer)
+		string selectedAnswer,
+		bool finalize = false)
 	{
 		return SendAsync<QuestionAttemptResultDto>(
 			HttpMethod.Post,
@@ -61,7 +62,24 @@ public static class MiniGameApiClient
 			new QuestionAttemptRequestDto
 			{
 				DeploymentId = deploymentId,
-				SelectedAnswer = selectedAnswer
+				SelectedAnswer = selectedAnswer,
+				Finalize = finalize
+			});
+	}
+
+	public static Task<NpcQuizPurchaseResultDto> PurchaseNpcQuizOptionAsync(
+		int deploymentId,
+		Guid purchaseId,
+		string purchaseType)
+	{
+		return SendAsync<NpcQuizPurchaseResultDto>(
+			HttpMethod.Post,
+			"/GameResults/npc-quiz-purchase",
+			new NpcQuizPurchaseRequestDto
+			{
+				DeploymentId = deploymentId,
+				PurchaseId = purchaseId,
+				PurchaseType = purchaseType
 			});
 	}
 
@@ -192,6 +210,24 @@ public class QuestionAttemptRequestDto
 {
 	public int DeploymentId { get; set; }
 	public string SelectedAnswer { get; set; } = "";
+	public bool Finalize { get; set; }
+}
+
+public class NpcQuizPurchaseRequestDto
+{
+	public int DeploymentId { get; set; }
+	public Guid PurchaseId { get; set; }
+	public string PurchaseType { get; set; } = "";
+}
+
+public class NpcQuizPurchaseResultDto
+{
+	public int TotalCoins { get; set; }
+	public int TimeExtensionSeconds { get; set; }
+	public string HintDisplay { get; set; } = "";
+	public List<int> HintPositions { get; set; } = new();
+	public int HintPurchaseCount { get; set; }
+	public bool CanPurchaseHint { get; set; }
 }
 
 public class QuestionAttemptResultDto

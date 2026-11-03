@@ -37,6 +37,8 @@ namespace TechQuestBackend.Data
 
         public DbSet<NpcChallenge> NpcChallenges { get; set; }
 
+        public DbSet<NpcQuizPurchaseTransaction> NpcQuizPurchaseTransactions { get; set; }
+
         public DbSet<Leaderboard> Leaderboards { get; set; }
 
         public DbSet<LeaderboardHistory> LeaderboardHistories { get; set; }
@@ -285,6 +287,32 @@ namespace TechQuestBackend.Data
                     .WithMany(question => question.NpcChallenges)
                     .HasForeignKey(challenge => challenge.QuestionId)
                     .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<NpcQuizPurchaseTransaction>(entity =>
+            {
+                entity.ToTable("NpcQuizPurchaseTransactions", table =>
+                {
+                    table.HasCheckConstraint(
+                        "CK_NpcQuizPurchaseTransactions_CostCoins",
+                        "\"CostCoins\" > 0");
+                    table.HasCheckConstraint(
+                        "CK_NpcQuizPurchaseTransactions_PurchaseType",
+                        "\"PurchaseType\" IN ('extend_time', 'extend_time_hint', 'hint')");
+                });
+                entity.HasKey(transaction => transaction.TransactionId);
+                entity.Property(transaction => transaction.PurchaseType).HasMaxLength(40).IsRequired();
+                entity.Property(transaction => transaction.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.HasIndex(transaction => new { transaction.StudentId, transaction.PurchaseId }).IsUnique();
+                entity.HasIndex(transaction => transaction.ChallengeId);
+                entity.HasOne(transaction => transaction.Student)
+                    .WithMany()
+                    .HasForeignKey(transaction => transaction.StudentId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(transaction => transaction.Challenge)
+                    .WithMany()
+                    .HasForeignKey(transaction => transaction.ChallengeId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Leaderboard>(entity =>

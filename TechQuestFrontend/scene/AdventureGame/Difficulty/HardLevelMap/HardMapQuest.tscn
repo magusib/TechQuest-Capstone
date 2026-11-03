@@ -6,12 +6,27 @@
 [ext_resource type="Texture2D" uid="uid://dvda41g7kbc5p" path="res://asset/Icons/coins.png" id="2_s8a15"]
 [ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="3_ggter"]
 [ext_resource type="Texture2D" uid="uid://dk37jnjagjxht" path="res://asset/Icons/exis.png" id="3_pbv7h"]
+[ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="7_5godq"]
+[ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="8_sbl7h"]
+[ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="9_8l3no"]
 [ext_resource type="Script" uid="uid://c8qh52xorbdj7" path="res://scene/Core/QuestObjectiveEditor.cs" id="quest_objective"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nm8mg"]
 texture = ExtResource("2_mn4dm")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8icjc"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mn4dm"]
+texture = ExtResource("2_mn4dm")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j8dhk"]
+texture = ExtResource("7_5godq")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wiq1a"]
+texture = ExtResource("8_sbl7h")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5godq"]
+texture = ExtResource("9_8l3no")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pbv7h"]
 
@@ -405,6 +420,7 @@ offset_right = 409.0
 offset_bottom = 255.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_mn4dm")
 
 [node name="StudentQuest" type="TextureRect" parent="AdminQuestAdd/QuestPanel" unique_id=928201809]
 layout_mode = 1
@@ -455,6 +471,9 @@ offset_top = 37.0
 offset_right = -26.0
 offset_bottom = 76.0
 grow_horizontal = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_j8dhk")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_wiq1a")
+theme_override_styles/hover = SubResource("StyleBoxTexture_5godq")
 text = "Add Quest"
 
 [node name="QuestListPanel" type="Panel" parent="AdminQuestAdd/QuestPanel" unique_id=1669785429]
