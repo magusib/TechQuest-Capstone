@@ -263,7 +263,7 @@ namespace TechQuestBackend.Data
                 {
                     table.HasCheckConstraint(
                         "CK_Npc_challenges_State",
-                        "\"State\" IN ('MiniGamePending', 'QuestionReady', 'Completed')");
+                        "\"State\" IN ('MiniGamePending', 'QuestionReady', 'Completed', 'CharacterMiniGamePending', 'CharacterMiniGameCompleted')");
                 });
                 entity.Property(challenge => challenge.HintPositions)
                     .HasColumnType("jsonb")
@@ -274,6 +274,8 @@ namespace TechQuestBackend.Data
                 entity.Property(challenge => challenge.Difficulty).HasMaxLength(20).IsRequired();
                 entity.Property(challenge => challenge.SubjectName).HasMaxLength(150).IsRequired();
                 entity.Property(challenge => challenge.MiniGameType).HasMaxLength(50).IsRequired();
+                entity.Property(challenge => challenge.CharacterName).HasMaxLength(150);
+                entity.Property(challenge => challenge.CharacterOutcome).HasMaxLength(20);
                 entity.Property(challenge => challenge.AnswerChoices).HasColumnType("jsonb").IsRequired();
                 entity.Property(challenge => challenge.StartedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.HasIndex(challenge => new { challenge.StudentId, challenge.DeploymentId }).IsUnique();

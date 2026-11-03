@@ -1,0 +1,315 @@
+[gd_scene load_steps=8 format=3 uid="uid://ccntasfd7vf58"]
+
+[ext_resource type="Script" path="res://scene/Minigame/NPCMinigameChallange/HigherLower.cs" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_background"]
+bg_color = Color(0.055, 0.075, 0.13, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0.11, 0.14, 0.23, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.31, 0.42, 0.65, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+content_margin_left = 24.0
+content_margin_top = 20.0
+content_margin_right = 24.0
+content_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_card_current"]
+bg_color = Color(0.16, 0.29, 0.51, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.35, 0.75, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_card_next"]
+bg_color = Color(0.22, 0.18, 0.4, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.75, 0.5, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_popup"]
+bg_color = Color(0.08, 0.1, 0.17, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.95, 0.75, 0.25, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+content_margin_left = 32.0
+content_margin_top = 28.0
+content_margin_right = 32.0
+content_margin_bottom = 28.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_button"]
+bg_color = Color(0.15, 0.48, 0.72, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="HigherLower" type="Control" unique_id=1138326606]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_script")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_background")
+
+[node name="MainContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.04
+anchor_top = 0.05
+anchor_right = 0.96
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 18
+
+[node name="TitleLabel" type="Label" parent="MainContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.82, 0.3, 1)
+theme_override_font_sizes/font_size = 30
+text = "CHARACTER VS NPC"
+horizontal_alignment = 1
+
+[node name="ContestantsRow" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 18
+
+[node name="PlayerPanel" type="PanelContainer" parent="MainContainer/ContestantsRow"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="PlayerInfoContainer" type="VBoxContainer" parent="MainContainer/ContestantsRow/PlayerPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PlayerNameLabel" type="Label" parent="MainContainer/ContestantsRow/PlayerPanel/PlayerInfoContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+text = "PLAYER"
+horizontal_alignment = 1
+
+[node name="PlayerScoreLabel" type="Label" parent="MainContainer/ContestantsRow/PlayerPanel/PlayerInfoContainer"]
+layout_mode = 2
+text = "Score: 0"
+horizontal_alignment = 1
+
+[node name="PlayerPredictionLabel" type="Label" parent="MainContainer/ContestantsRow/PlayerPanel/PlayerInfoContainer"]
+layout_mode = 2
+text = "Prediction: -"
+autowrap_mode = 2
+horizontal_alignment = 1
+
+[node name="PlayerResultLabel" type="Label" parent="MainContainer/ContestantsRow/PlayerPanel/PlayerInfoContainer"]
+layout_mode = 2
+text = "Result: -"
+autowrap_mode = 2
+horizontal_alignment = 1
+
+[node name="CenterGamePanel" type="PanelContainer" parent="MainContainer/ContestantsRow"]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="GameContainer" type="VBoxContainer" parent="MainContainer/ContestantsRow/CenterGamePanel"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="NumberCardsContainer" type="HBoxContainer" parent="MainContainer/ContestantsRow/CenterGamePanel/GameContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 18
+
+[node name="CurrentNumberCard" type="PanelContainer" parent="MainContainer/ContestantsRow/CenterGamePanel/GameContainer/NumberCardsContainer"]
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBox_card_current")
+
+[node name="CurrentNumberLabel" type="Label" parent="MainContainer/ContestantsRow/CenterGamePanel/GameContainer/NumberCardsContainer/CurrentNumberCard"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 58
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NextNumberCard" type="PanelContainer" parent="MainContainer/ContestantsRow/CenterGamePanel/GameContainer/NumberCardsContainer"]
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBox_card_next")
+
+[node name="NextNumberLabel" type="Label" parent="MainContainer/ContestantsRow/CenterGamePanel/GameContainer/NumberCardsContainer/NextNumberCard"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.87, 1, 1)
+theme_override_font_sizes/font_size = 58
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ActualNumberResultLabel" type="Label" parent="MainContainer/ContestantsRow/CenterGamePanel/GameContainer"]
+layout_mode = 2
+text = "Choose HIGHER or LOWER"
+horizontal_alignment = 1
+
+[node name="NPCPanel" type="PanelContainer" parent="MainContainer/ContestantsRow"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="NPCInfoContainer" type="VBoxContainer" parent="MainContainer/ContestantsRow/NPCPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="NPCNameLabel" type="Label" parent="MainContainer/ContestantsRow/NPCPanel/NPCInfoContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+text = "NPC"
+horizontal_alignment = 1
+
+[node name="NPCScoreLabel" type="Label" parent="MainContainer/ContestantsRow/NPCPanel/NPCInfoContainer"]
+layout_mode = 2
+text = "Score: 0"
+horizontal_alignment = 1
+
+[node name="NPCPredictionLabel" type="Label" parent="MainContainer/ContestantsRow/NPCPanel/NPCInfoContainer"]
+layout_mode = 2
+text = "Prediction: -"
+autowrap_mode = 2
+horizontal_alignment = 1
+
+[node name="NPCResultLabel" type="Label" parent="MainContainer/ContestantsRow/NPCPanel/NPCInfoContainer"]
+layout_mode = 2
+text = "Result: -"
+autowrap_mode = 2
+horizontal_alignment = 1
+
+[node name="PredictionButtonsContainer" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="HigherButton" type="Button" parent="MainContainer/PredictionButtonsContainer"]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBox_button")
+text = "HIGHER"
+
+[node name="LowerButton" type="Button" parent="MainContainer/PredictionButtonsContainer"]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBox_button")
+text = "LOWER"
+
+[node name="GameResultPopup" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -220.0
+offset_right = 260.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBox_popup")
+
+[node name="ResultContainer" type="VBoxContainer" parent="GameResultPopup"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+
+[node name="ResultLabel" type="Label" parent="GameResultPopup/ResultContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.82, 0.3, 1)
+theme_override_font_sizes/font_size = 34
+text = "RESULT"
+horizontal_alignment = 1
+
+[node name="FinalPlayerScoreLabel" type="Label" parent="GameResultPopup/ResultContainer"]
+layout_mode = 2
+text = "Player Score: 0"
+horizontal_alignment = 1
+
+[node name="FinalNPCScoreLabel" type="Label" parent="GameResultPopup/ResultContainer"]
+layout_mode = 2
+text = "NPC Score: 0"
+horizontal_alignment = 1
+
+[node name="CoinsDeductedLabel" type="Label" parent="GameResultPopup/ResultContainer"]
+layout_mode = 2
+text = "Coins Deducted: 0"
+horizontal_alignment = 1
+
+[node name="PointsDeductedLabel" type="Label" parent="GameResultPopup/ResultContainer"]
+layout_mode = 2
+text = "Points Deducted: 0"
+horizontal_alignment = 1
+
+[node name="ReturnButton" type="Button" parent="GameResultPopup/ResultContainer"]
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBox_button")
+text = "RETURN"

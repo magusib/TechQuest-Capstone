@@ -10,6 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="8_hveeu"]
 [ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="9_pdoyj"]
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_st2v0"]
+texture = ExtResource("2_emvso")
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4bi0h"]
 texture = ExtResource("2_emvso")
 
@@ -21,6 +24,9 @@ texture = ExtResource("5_aspgg")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6x64"]
 texture = ExtResource("6_hveeu")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aspgg"]
+bg_color = Color(0, 0, 0, 0.5882353)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pdoyj"]
 texture = ExtResource("2_emvso")
@@ -52,29 +58,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fvcs6")
 
-[node name="HintAnswerLabel" type="Label" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -258.0
-offset_top = 118.0
-offset_right = 258.0
-offset_bottom = 158.0
-text = "_ _ _ _ _"
-horizontal_alignment = 1
-
-[node name="PurchaseOverlay" type="Control" parent="."]
+[node name="PurchaseOverlay" type="Control" parent="." unique_id=2136458911]
 visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="PurchasePanel" type="PanelContainer" parent="PurchaseOverlay"]
+[node name="PurchasePanel" type="PanelContainer" parent="PurchaseOverlay" unique_id=905969952]
 custom_minimum_size = Vector2(420, 300)
 layout_mode = 1
 anchors_preset = 8
@@ -86,33 +79,36 @@ offset_left = -210.0
 offset_top = -150.0
 offset_right = 210.0
 offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_st2v0")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PurchaseOverlay/PurchasePanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PurchaseOverlay/PurchasePanel" unique_id=1054405237]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="TitleLabel" type="Label" parent="PurchaseOverlay/PurchasePanel/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="PurchaseOverlay/PurchasePanel/VBoxContainer" unique_id=1157049140]
 layout_mode = 2
 text = "Quiz Assistance"
 horizontal_alignment = 1
 
-[node name="ExtendTimeButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer"]
+[node name="ExtendTimeButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer" unique_id=1574361667]
 layout_mode = 2
 text = "Extend Time - 10 Coins"
 
-[node name="ExtendTimeHintButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer"]
+[node name="ExtendTimeHintButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer" unique_id=300846218]
 layout_mode = 2
 text = "Extend Time + Hint - 20 Coins"
 
-[node name="GetHintsButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer"]
+[node name="GetHintsButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer" unique_id=2136218345]
 layout_mode = 2
 text = "Get Hints - 20 Coins"
 
-[node name="NoButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer"]
+[node name="NoButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer" unique_id=347000127]
 layout_mode = 2
 text = "No"
 
-[node name="NotificationLabel" type="Label" parent="PurchaseOverlay/PurchasePanel/VBoxContainer"]
+[node name="NotificationLabel" type="Label" parent="PurchaseOverlay/PurchasePanel/VBoxContainer" unique_id=448993485]
 layout_mode = 2
 horizontal_alignment = 1
 
@@ -124,9 +120,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -304.75
-offset_top = -195.5
+offset_top = -217.25
 offset_right = 304.75
-offset_bottom = 195.5
+offset_bottom = 217.25
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_4bi0h")
@@ -190,6 +186,42 @@ text = "Question"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="ChoiceAButton" type="Button" parent="EasyMapQuestionPanel" unique_id=740237721]
+visible = false
+layout_mode = 0
+offset_left = -258.0
+offset_top = 43.0
+offset_right = 258.0
+offset_bottom = 78.0
+text = "Choice A"
+
+[node name="ChoiceBButton" type="Button" parent="EasyMapQuestionPanel" unique_id=740237722]
+visible = false
+layout_mode = 0
+offset_left = -258.0
+offset_top = 83.0
+offset_right = 258.0
+offset_bottom = 118.0
+text = "Choice B"
+
+[node name="ChoiceCButton" type="Button" parent="EasyMapQuestionPanel" unique_id=740237723]
+visible = false
+layout_mode = 0
+offset_left = -258.0
+offset_top = 123.0
+offset_right = 258.0
+offset_bottom = 158.0
+text = "Choice C"
+
+[node name="ChoiceDButton" type="Button" parent="EasyMapQuestionPanel" unique_id=740237724]
+visible = false
+layout_mode = 0
+offset_left = -258.0
+offset_top = 163.0
+offset_right = 258.0
+offset_bottom = 198.0
+text = "Choice D"
+
 [node name="LineEdit" type="LineEdit" parent="EasyMapQuestionPanel" unique_id=1507874008]
 layout_mode = 1
 anchors_preset = 8
@@ -198,9 +230,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -258.5
-offset_top = 43.0
+offset_top = 28.0
 offset_right = 258.5
-offset_bottom = 111.0
+offset_bottom = 96.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
@@ -222,6 +254,24 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_lsak8")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_i20tr")
 theme_override_styles/hover = SubResource("StyleBoxTexture_f6x64")
 text = "Submit"
+
+[node name="HintAnswerLabel" type="Label" parent="." unique_id=1814428334]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -258.0
+offset_top = 118.0
+offset_right = 258.0
+offset_bottom = 158.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_aspgg")
+text = "_ _ _ _ _"
+horizontal_alignment = 1
 
 [node name="AnswerTipPanel" type="Panel" parent="." unique_id=521519512]
 visible = false
@@ -278,6 +328,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_slvnn")
 text = "Proceed to Question"
 
 [node name="QuestionResult" type="Control" parent="." unique_id=1661142965]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -286,7 +337,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="TimeReachPanel" type="Panel" parent="QuestionResult" unique_id=1517154237]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -360,7 +410,6 @@ grow_vertical = 0
 text = "OK"
 
 [node name="WrongAnswerPanel" type="Panel" parent="QuestionResult" unique_id=1901489918]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -434,7 +483,6 @@ grow_vertical = 0
 text = "OK"
 
 [node name="CorrectAnswerPanel" type="Panel" parent="QuestionResult" unique_id=641804413]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

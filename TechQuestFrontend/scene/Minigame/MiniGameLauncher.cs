@@ -6,6 +6,7 @@ public static class MiniGameLauncher
 {
 	private static bool isOpening;
 	private static bool isProceeding;
+	private static bool isOpeningCharacterChallenge;
 	private static StudentChallengeStartDto currentChallenge;
 
 	public static async void OpenForDeployment(Node source, int deploymentId)
@@ -84,6 +85,66 @@ public static class MiniGameLauncher
 		finally
 		{
 			isOpening = false;
+		}
+	}
+
+	public static async void OpenCharacterChallenge(Node source, int deploymentId)
+	{
+		if (isOpeningCharacterChallenge || !UserSession.IsStudent ||
+			source == null || !GodotObject.IsInstanceValid(source) || !source.IsInsideTree())
+			return;
+
+		isOpeningCharacterChallenge = true;
+		SceneTree tree = source.GetTree();
+		CanvasLayer overlayLayer = null;
+		try
+		{
+			string characterPath = await SelectedCharacterService.GetOwnedSelectedScenePathAsync();
+			string characterName = System.IO.Path.GetFileNameWithoutExtension(characterPath);
+			if (string.IsNullOrWhiteSpace(characterName))
+				characterName = "Character";
+
+			CharacterChallengeStartDto challenge =
+				await MiniGameApiClient.StartCharacterChallengeAsync(deploymentId, characterName);
+			PackedScene gameScene = GD.Load<PackedScene>(
+				"res://scene/Minigame/NPCMinigameChallange/HigherLower.tscn");
+			if (gameScene == null)
+				throw new InvalidOperationException("The HigherLower scene could not be loaded.");
+
+			Node currentScene = tree.CurrentScene;
+			if (currentScene == null)
+				throw new InvalidOperationException("The current map could not be found.");
+
+			overlayLayer = new CanvasLayer
+			{
+				Name = "HigherLowerOverlay",
+				Layer = 100,
+				ProcessMode = Node.ProcessModeEnum.Always
+			};
+			currentScene.AddChild(overlayLayer);
+
+			Node game = gameScene.Instantiate();
+			game.ProcessMode = Node.ProcessModeEnum.Always;
+			SetNestedCanvasLayersAbove(game, overlayLayer.Layer + 1);
+			overlayLayer.AddChild(game);
+			if (game is HigherLower higherLower)
+				higherLower.Configure(challenge, source);
+			else
+				throw new InvalidOperationException("HigherLower.tscn must use the HigherLower script.");
+
+			tree.Paused = true;
+		}
+		catch (Exception exception)
+		{
+			if (overlayLayer != null && GodotObject.IsInstanceValid(overlayLayer))
+				overlayLayer.QueueFree();
+			tree.Paused = false;
+			GD.PrintErr("Character challenge could not be opened: " + exception.Message);
+			ShowMessage(source, exception.Message);
+		}
+		finally
+		{
+			isOpeningCharacterChallenge = false;
 		}
 	}
 

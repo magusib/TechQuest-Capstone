@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 public abstract partial class NpcQuestionFlow : Control
 {
-    private readonly List<Button> answerButtons = new();
     private StudentChallengeQuestionDto question;
-    private Timer countdown;
+    private Panel questionPanel;
+    private Label subjectLabel;
     private Label timerLabel;
-    private Label statusLabel;
-    private Button submitButton;
-    private Button retryButton;
+    private Label questionLabel;
     private LineEdit answerInput;
+    private Button submitButton;
+    private readonly List<Button> choiceButtons = new();
     private Label hintAnswerLabel;
     private Control purchaseOverlay;
     private Label purchaseTitleLabel;
@@ -21,19 +21,33 @@ public abstract partial class NpcQuestionFlow : Control
     private Button extendTimeHintButton;
     private Button getHintsButton;
     private Button noButton;
-    private string selectedAnswer = "";
-    private string pendingAnswer = "";
+    private Control questionResult;
+    private Panel timeReachPanel;
+    private Panel wrongAnswerPanel;
+    private Panel correctAnswerPanel;
+    private Timer countdown;
     private int timeLeft;
-    private int appliedExtensionSeconds;
     private bool isSubmitting;
     private bool isFinalized;
     private bool purchaseInProgress;
+    private string selectedAnswer = "";
 
     protected abstract string Difficulty { get; }
 
     public override void _Ready()
     {
         ProcessMode = ProcessModeEnum.Always;
+        questionPanel = FindChild(Difficulty + "MapQuestionPanel", true, false) as Panel;
+        subjectLabel = questionPanel.GetNode<Label>("SubjectLabel");
+        timerLabel = questionPanel.GetNode<Label>("TimerLabel");
+        questionLabel = questionPanel.GetNode<Panel>("QuestionPanel").GetNode<Label>("QuestionLabel");
+        answerInput = questionPanel.GetNode<LineEdit>("LineEdit");
+        submitButton = questionPanel.GetNode<Button>("Button");
+        choiceButtons.Add(questionPanel.GetNode<Button>("ChoiceAButton"));
+        choiceButtons.Add(questionPanel.GetNode<Button>("ChoiceBButton"));
+        choiceButtons.Add(questionPanel.GetNode<Button>("ChoiceCButton"));
+        choiceButtons.Add(questionPanel.GetNode<Button>("ChoiceDButton"));
+
         hintAnswerLabel = GetNode<Label>("HintAnswerLabel");
         purchaseOverlay = GetNode<Control>("PurchaseOverlay");
         purchaseTitleLabel = GetNode<Label>("PurchaseOverlay/PurchasePanel/VBoxContainer/TitleLabel");
@@ -43,12 +57,23 @@ public abstract partial class NpcQuestionFlow : Control
         getHintsButton = GetNode<Button>("PurchaseOverlay/PurchasePanel/VBoxContainer/GetHintsButton");
         noButton = GetNode<Button>("PurchaseOverlay/PurchasePanel/VBoxContainer/NoButton");
 
+        questionResult = GetNode<Control>("QuestionResult");
+        timeReachPanel = GetNode<Panel>("QuestionResult/TimeReachPanel");
+        wrongAnswerPanel = GetNode<Panel>("QuestionResult/WrongAnswerPanel");
+        correctAnswerPanel = GetNode<Panel>("QuestionResult/CorrectAnswerPanel");
+
+        submitButton.Pressed += SubmitSelectedAnswer;
+        for (int index = 0; index < choiceButtons.Count; index++)
+        {
+            int capturedIndex = index;
+            choiceButtons[index].Pressed += async () => await SubmitAnswerAsync(choiceButtons[capturedIndex].Text, false);
+        }
         extendTimeButton.Pressed += () => PurchaseOptionAsync("extend_time");
         extendTimeHintButton.Pressed += () => PurchaseOptionAsync("extend_time_hint");
         getHintsButton.Pressed += () => PurchaseOptionAsync("hint");
         noButton.Pressed += FinalizeWithoutAnswerAsync;
-        purchaseOverlay.Hide();
-        hintAnswerLabel.Hide();
+
+        HideAllRuntimePanels();
         Hide();
     }
 
@@ -59,104 +84,49 @@ public abstract partial class NpcQuestionFlow : Control
             throw new InvalidOperationException("The NPC question configuration is incomplete or does not match this map.");
 
         question = assignedQuestion;
-        isFinalized = false;
-        isSubmitting = false;
-        purchaseInProgress = false;
-        selectedAnswer = "";
-        pendingAnswer = "";
-        appliedExtensionSeconds = 0;
         timeLeft = Math.Max(0, question.RemainingSeconds);
+        selectedAnswer = "";
+        isSubmitting = false;
+        isFinalized = false;
+        purchaseInProgress = false;
+        subjectLabel.Text = question.SubjectName;
+        questionLabel.Text = question.Question;
+        answerInput.Text = "";
         hintAnswerLabel.Text = "";
         hintAnswerLabel.Hide();
+        questionPanel.Show();
+        questionResult.Hide();
         purchaseOverlay.Hide();
-        BuildQuestionScreen();
+        ConfigureAnswerControls();
+        UpdateTimerLabel();
         Show();
 
+        countdown?.QueueFree();
+        countdown = new Timer { WaitTime = 1, OneShot = false, ProcessMode = ProcessModeEnum.Always };
+        countdown.Timeout += OnCountdownTimeout;
+        AddChild(countdown);
         if (timeLeft == 0)
             ShowPurchaseOptions(true);
         else
             countdown.Start();
+        await Task.CompletedTask;
     }
 
-    private void BuildQuestionScreen()
+    private void ConfigureAnswerControls()
     {
-        RemoveDynamicControls();
-        answerButtons.Clear();
-        answerInput = null;
-
-        var backdrop = new ColorRect { Color = new Color(0, 0, 0, 0.72f), MouseFilter = MouseFilterEnum.Stop };
-        backdrop.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
-        AddChild(backdrop);
-
-        var panel = new PanelContainer { CustomMinimumSize = new Vector2(700, 560), MouseFilter = MouseFilterEnum.Stop };
-        panel.SetAnchorsPreset(LayoutPreset.Center);
-        panel.OffsetLeft = -350;
-        panel.OffsetTop = -280;
-        panel.OffsetRight = 350;
-        panel.OffsetBottom = 280;
-        AddChild(panel);
-
-        var margin = new MarginContainer();
-        margin.AddThemeConstantOverride("margin_left", 24);
-        margin.AddThemeConstantOverride("margin_top", 20);
-        margin.AddThemeConstantOverride("margin_right", 24);
-        margin.AddThemeConstantOverride("margin_bottom", 20);
-        panel.AddChild(margin);
-
-        var layout = new VBoxContainer();
-        layout.AddThemeConstantOverride("separation", 12);
-        margin.AddChild(layout);
-        layout.AddChild(CreateLabel(question.SubjectName, 25, HorizontalAlignment.Center));
-
-        timerLabel = CreateLabel("", 20, HorizontalAlignment.Center);
-        layout.AddChild(timerLabel);
-        UpdateTimerLabel();
-
-        var questionLabel = CreateLabel(question.Question, 22, HorizontalAlignment.Left);
-        questionLabel.AutowrapMode = TextServer.AutowrapMode.Word;
-        questionLabel.CustomMinimumSize = new Vector2(0, 70);
-        layout.AddChild(questionLabel);
-
-        if (question.AnswerChoices != null && question.AnswerChoices.Count > 0)
+        bool hasChoices = question.AnswerChoices != null && question.AnswerChoices.Count > 0;
+        answerInput.Visible = !hasChoices;
+        for (int index = 0; index < choiceButtons.Count; index++)
         {
-            var choices = new VBoxContainer();
-            choices.AddThemeConstantOverride("separation", 8);
-            layout.AddChild(choices);
-            var buttonGroup = new ButtonGroup();
-            foreach (string choice in question.AnswerChoices)
-            {
-                var answerButton = new Button { Text = choice, ToggleMode = true, ButtonGroup = buttonGroup, CustomMinimumSize = new Vector2(0, 42) };
-                answerButton.Pressed += () => selectedAnswer = choice;
-                answerButtons.Add(answerButton);
-                choices.AddChild(answerButton);
-            }
+            bool visible = hasChoices && index < question.AnswerChoices.Count;
+            choiceButtons[index].Visible = visible;
+            if (visible)
+                choiceButtons[index].Text = question.AnswerChoices[index];
         }
-        else
-        {
-            answerInput = new LineEdit { PlaceholderText = "Type your answer here", CustomMinimumSize = new Vector2(0, 44) };
-            layout.AddChild(answerInput);
-        }
-
-        statusLabel = CreateLabel("", 16, HorizontalAlignment.Center);
-        statusLabel.AutowrapMode = TextServer.AutowrapMode.Word;
-        layout.AddChild(statusLabel);
-
-        submitButton = new Button { Text = "Submit Answer", CustomMinimumSize = new Vector2(0, 44) };
-        submitButton.Pressed += SubmitSelectedAnswer;
-        layout.AddChild(submitButton);
-
-        retryButton = new Button { Text = "Retry Submission", CustomMinimumSize = new Vector2(0, 44), Visible = false };
-        retryButton.Pressed += RetryAnswerSubmission;
-        layout.AddChild(retryButton);
-
-        countdown = new Timer { WaitTime = 1, OneShot = false, ProcessMode = ProcessModeEnum.Always };
-        countdown.Timeout += OnCountdownTimeout;
-        AddChild(countdown);
-        hintAnswerLabel.MoveToFront();
-        purchaseOverlay.MoveToFront();
+        SetAnswerControlsDisabled(false);
     }
 
-    private async void OnCountdownTimeout()
+    private void OnCountdownTimeout()
     {
         if (isSubmitting || isFinalized || purchaseOverlay.Visible)
             return;
@@ -170,54 +140,50 @@ public abstract partial class NpcQuestionFlow : Control
         }
     }
 
-    private async void SubmitSelectedAnswer() => await SubmitAnswerAsync(answerInput?.Text ?? selectedAnswer, false);
-
-    private async void RetryAnswerSubmission() => await SubmitAnswerAsync(pendingAnswer, false);
+    private async void SubmitSelectedAnswer()
+    {
+        await SubmitAnswerAsync(answerInput.Text.Trim(), false);
+    }
 
     private async Task SubmitAnswerAsync(string answer, bool finalize)
     {
         if (isSubmitting || isFinalized || purchaseInProgress)
             return;
         if (!finalize && timeLeft > 0 && string.IsNullOrWhiteSpace(answer))
-        {
-            statusLabel.Text = answerInput == null ? "Select an answer before submitting." : "Type your answer before submitting.";
             return;
-        }
 
-        pendingAnswer = answer;
         isSubmitting = true;
+        selectedAnswer = answer;
         countdown?.Stop();
         SetAnswerControlsDisabled(true);
-        statusLabel.Text = "Confirming your result with the server...";
-        retryButton.Hide();
         try
         {
-            QuestionAttemptResultDto result = await MiniGameApiClient.SubmitQuestionAttemptAsync(question.DeploymentId, answer, finalize);
-            if (result.Completed)
+            QuestionAttemptResultDto result = await MiniGameApiClient.SubmitQuestionAttemptAsync(
+                question.DeploymentId, answer, finalize);
+            if (!result.Completed)
             {
-                isFinalized = true;
-                UserSession.UpdateStudentProfile(result.TotalCoins, result.TotalPoints);
-                try
-                {
-                    LifespanResponseDto lifespan = await LifespanApiClient.GetAsync();
-                    UserSession.ApplyLifespanResponse(lifespan);
-                }
-                catch (Exception lifespanException)
-                {
-                    GD.PrintErr("Could not refresh lifespan after quiz: " + lifespanException.Message);
-                }
-                NpcMapSprite.RemoveDeploymentSprite(GetTree().CurrentScene, question.DeploymentId);
-                ShowResult(result);
+                ShowPurchaseOptions(false);
                 return;
             }
 
-            statusLabel.Text = "Incorrect answer. You may purchase a hint or choose No.";
-            ShowPurchaseOptions(false);
+            isFinalized = true;
+            UserSession.UpdateStudentProfile(result.TotalCoins, result.TotalPoints);
+            try
+            {
+                LifespanResponseDto lifespan = await LifespanApiClient.GetAsync();
+                UserSession.ApplyLifespanResponse(lifespan);
+            }
+            catch (Exception exception)
+            {
+                GD.PrintErr("Could not refresh lifespan after quiz: " + exception.Message);
+            }
+            NpcMapSprite.RemoveDeploymentSprite(GetTree().CurrentScene, question.DeploymentId);
+            ShowResult(result);
         }
         catch (Exception exception)
         {
-            statusLabel.Text = "The result could not be confirmed. " + exception.Message;
-            retryButton.Show();
+            notificationLabel.Text = exception.Message;
+            ShowPurchaseOptions(false);
         }
         finally
         {
@@ -242,11 +208,10 @@ public abstract partial class NpcQuestionFlow : Control
         notificationLabel.Text = "Processing purchase...";
         try
         {
-            NpcQuizPurchaseResultDto result = await MiniGameApiClient.PurchaseNpcQuizOptionAsync(question.DeploymentId, Guid.NewGuid(), purchaseType);
+            NpcQuizPurchaseResultDto result = await MiniGameApiClient.PurchaseNpcQuizOptionAsync(
+                question.DeploymentId, Guid.NewGuid(), purchaseType);
             UserSession.UpdateStudentProfile(result.TotalCoins, UserSession.Points);
-            int addedSeconds = result.TimeExtensionSeconds - appliedExtensionSeconds;
-            appliedExtensionSeconds = result.TimeExtensionSeconds;
-            timeLeft += Math.Max(0, addedSeconds);
+            timeLeft = 10;
             UpdateTimerLabel();
             if (!string.IsNullOrWhiteSpace(result.HintDisplay))
             {
@@ -280,6 +245,60 @@ public abstract partial class NpcQuestionFlow : Control
         purchaseOverlay.MoveToFront();
     }
 
+    private void ShowResult(QuestionAttemptResultDto result)
+    {
+        HideAllRuntimePanels();
+        questionPanel.Hide();
+        questionResult.Show();
+        Panel panel;
+        if (result.IsCorrect)
+        {
+            panel = correctAnswerPanel;
+            panel.GetNode<Label>("CorrectAnswerLabel").Text = "Correct answer: " + result.CorrectAnswer;
+            panel.GetNode<Label>("CoinsReceivedLabel").Text = "Coins: " + FormatChange(result.CoinsChanged);
+            panel.GetNode<Label>("PointsReceiveLabel").Text = "Points: " + FormatChange(result.PointsChanged);
+        }
+        else if (result.TimedOut)
+        {
+            panel = timeReachPanel;
+            panel.GetNode<Label>("CorrectAnswerLabel").Text = "Correct answer: " + result.CorrectAnswer;
+            panel.GetNode<Label>("CoinsDeductedLabel").Text = "Coins: " + FormatChange(result.CoinsChanged);
+            panel.GetNode<Label>("PointsDeductedLabel").Text = "Points: " + FormatChange(result.PointsChanged);
+        }
+        else
+        {
+            panel = wrongAnswerPanel;
+            panel.GetNode<Label>("CorrectAnswerLabel").Text = "Correct answer: " + result.CorrectAnswer;
+            panel.GetNode<Label>("CoinsDeductedLabel").Text = "Coins: " + FormatChange(result.CoinsChanged);
+            panel.GetNode<Label>("PointsDeductedLabel").Text = "Points: " + FormatChange(result.PointsChanged);
+        }
+        panel.Show();
+        foreach (Node node in panel.GetChildren())
+        {
+            if (node is Button button)
+                button.Pressed += ReturnToMap;
+        }
+    }
+
+    private void HideAllRuntimePanels()
+    {
+        questionPanel?.Hide();
+        purchaseOverlay?.Hide();
+        questionResult?.Hide();
+        timeReachPanel?.Hide();
+        wrongAnswerPanel?.Hide();
+        correctAnswerPanel?.Hide();
+        hintAnswerLabel?.Hide();
+    }
+
+    private void SetAnswerControlsDisabled(bool disabled)
+    {
+        submitButton.Disabled = disabled;
+        answerInput.Editable = !disabled;
+        foreach (Button button in choiceButtons)
+            button.Disabled = disabled;
+    }
+
     private void SetPurchaseButtonsDisabled(bool disabled)
     {
         extendTimeButton.Disabled = disabled;
@@ -288,39 +307,9 @@ public abstract partial class NpcQuestionFlow : Control
         noButton.Disabled = disabled;
     }
 
-    private void ShowResult(QuestionAttemptResultDto result)
+    private void UpdateTimerLabel()
     {
-        countdown?.Stop();
-        countdown = null;
-        RemoveDynamicControls();
-        var backdrop = new ColorRect { Color = new Color(0, 0, 0, 0.72f), MouseFilter = MouseFilterEnum.Stop };
-        backdrop.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
-        AddChild(backdrop);
-        var panel = new PanelContainer { CustomMinimumSize = new Vector2(620, 480), MouseFilter = MouseFilterEnum.Stop };
-        panel.SetAnchorsPreset(LayoutPreset.Center);
-        panel.OffsetLeft = -310;
-        panel.OffsetTop = -240;
-        panel.OffsetRight = 310;
-        panel.OffsetBottom = 240;
-        AddChild(panel);
-        var layout = new VBoxContainer();
-        layout.AddThemeConstantOverride("separation", 18);
-        var margin = new MarginContainer();
-        margin.AddThemeConstantOverride("margin_left", 28);
-        margin.AddThemeConstantOverride("margin_top", 24);
-        margin.AddThemeConstantOverride("margin_right", 28);
-        margin.AddThemeConstantOverride("margin_bottom", 24);
-        margin.AddChild(layout);
-        panel.AddChild(margin);
-        layout.AddChild(CreateLabel(result.TimedOut ? "Time is up" : result.IsCorrect ? "Correct answer!" : "Incorrect answer", 28, HorizontalAlignment.Center));
-        layout.AddChild(CreateLabel("Your answer: " + (string.IsNullOrEmpty(result.SelectedAnswer) ? "No answer" : result.SelectedAnswer), 18, HorizontalAlignment.Left));
-        layout.AddChild(CreateLabel("Correct answer: " + result.CorrectAnswer, 18, HorizontalAlignment.Left));
-        layout.AddChild(CreateLabel("Coins: " + FormatChange(result.CoinsChanged), 18, HorizontalAlignment.Left));
-        layout.AddChild(CreateLabel("Points: " + FormatChange(result.PointsChanged), 18, HorizontalAlignment.Left));
-        layout.AddChild(CreateLabel("Updated balance: " + result.TotalCoins + " coins, " + result.TotalPoints + " points", 18, HorizontalAlignment.Left));
-        var returnButton = new Button { Text = "Return to Map", CustomMinimumSize = new Vector2(0, 46) };
-        returnButton.Pressed += ReturnToMap;
-        layout.AddChild(returnButton);
+        timerLabel.Text = "Time: " + Math.Max(0, timeLeft).ToString("00");
     }
 
     private void ReturnToMap()
@@ -330,39 +319,5 @@ public abstract partial class NpcQuestionFlow : Control
         MiniGameLauncher.CompleteChallenge();
     }
 
-    private void SetAnswerControlsDisabled(bool disabled)
-    {
-        if (submitButton != null)
-            submitButton.Disabled = disabled;
-        if (answerInput != null)
-            answerInput.Editable = !disabled;
-        foreach (Button button in answerButtons)
-            button.Disabled = disabled;
-    }
-
-    private void UpdateTimerLabel()
-    {
-        if (timerLabel != null)
-            timerLabel.Text = "Time remaining: " + Math.Max(0, timeLeft) + " seconds";
-    }
-
-    private static Label CreateLabel(string text, int fontSize, HorizontalAlignment alignment)
-    {
-        var label = new Label { Text = text, HorizontalAlignment = alignment, VerticalAlignment = VerticalAlignment.Center, AutowrapMode = TextServer.AutowrapMode.Word };
-        label.AddThemeFontSizeOverride("font_size", fontSize);
-        return label;
-    }
-
     private static string FormatChange(int value) => value > 0 ? "+" + value : value.ToString();
-
-    private void RemoveDynamicControls()
-    {
-        foreach (Node child in GetChildren())
-        {
-            if (child == hintAnswerLabel || child == purchaseOverlay)
-                continue;
-            RemoveChild(child);
-            child.QueueFree();
-        }
-    }
 }

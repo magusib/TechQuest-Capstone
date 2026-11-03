@@ -106,9 +106,17 @@ public partial class NpcInteraction : Control
 
 	private void DeclineChallenge()
 	{
+		if (isLoading || interactionSource == null ||
+			!GodotObject.IsInstanceValid(interactionSource) ||
+			!interactionSource.IsInsideTree())
+			return;
+
+		Node source = interactionSource;
+		int currentDeploymentId = deploymentId;
 		requestGeneration++;
 		Hide();
 		interactionSource = null;
 		isLoading = false;
+		MiniGameLauncher.OpenCharacterChallenge(source, currentDeploymentId);
 	}
 }

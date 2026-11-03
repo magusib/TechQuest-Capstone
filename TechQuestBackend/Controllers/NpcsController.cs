@@ -391,6 +391,96 @@ namespace TechQuestBackend.Controllers
             });
         }
 
+        [HttpPost("deployments/{deploymentId:int}/character-challenge-start")]
+        [Authorize(Roles = "student")]
+        public async Task<IActionResult> StartCharacterChallenge(
+            int deploymentId,
+            CharacterChallengeStartRequest request,
+            CancellationToken cancellationToken)
+        {
+            int userId = GetUserId();
+            if (userId <= 0)
+                return Unauthorized();
+
+            await using var transaction = await _db.Database.BeginTransactionAsync(
+                IsolationLevel.ReadCommitted, cancellationToken);
+            var profile = await _db.StudentProfiles
+                .FromSqlInterpolated($"SELECT * FROM \"Student_profile\" WHERE \"UserId\" = {userId} FOR UPDATE")
+                .SingleOrDefaultAsync(cancellationToken);
+            if (profile == null)
+                return BadRequest("Student profile was not found.");
+            if (profile.Lifespan <= 0)
+                return StatusCode(StatusCodes.Status403Forbidden,
+                    "You have no remaining Lifespan. Restore it before challenging an NPC.");
+
+            var deployment = await _db.NpcDeployments
+                .Include(item => item.Npc)
+                .FirstOrDefaultAsync(item => item.DeploymentId == deploymentId &&
+                    item.Status == "Deployed" && item.Npc != null && item.Npc.Status == "active",
+                    cancellationToken);
+            if (deployment == null)
+                return NotFound("NPC deployment was not found or is no longer active.");
+
+            var existingChallenge = await _db.NpcChallenges
+                .FirstOrDefaultAsync(item => item.StudentId == profile.StudentId &&
+                    item.DeploymentId == deploymentId, cancellationToken);
+            if (existingChallenge != null)
+            {
+                if (existingChallenge.MiniGameType != "HigherLower" ||
+                    (existingChallenge.State != "CharacterMiniGamePending" &&
+                     existingChallenge.State != "CharacterMiniGameCompleted"))
+                    return Conflict("This NPC interaction already has an active or completed subject challenge.");
+
+                await transaction.CommitAsync(cancellationToken);
+                return Ok(CreateCharacterChallengeStartResponse(existingChallenge));
+            }
+
+            var question = await _db.Questions
+                .FirstOrDefaultAsync(item => item.DeploymentId == deploymentId, cancellationToken);
+            if (question == null)
+                return BadRequest("The NPC challenge is not fully configured.");
+
+            var challenge = new NpcChallenge
+            {
+                StudentId = profile.StudentId,
+                DeploymentId = deploymentId,
+                QuestionId = question.QuestionId,
+                NpcId = deployment.NpcId,
+                NpcName = deployment.Npc!.NpcName,
+                Difficulty = deployment.MapDifficulty,
+                SubjectName = question.SubjectName ?? "",
+                MiniGameType = "HigherLower",
+                QuestionText = question.QuestionText ?? "",
+                AnswerChoices = question.AnswerChoices ?? "[]",
+                CorrectAnswer = question.CorrectAnswer ?? "",
+                AnswerTip = question.AnswerTip ?? "",
+                TimerSeconds = 0,
+                AttemptId = Guid.NewGuid(),
+                State = "CharacterMiniGamePending",
+                CharacterName = request.CharacterName?.Trim()
+            };
+            _db.NpcChallenges.Add(challenge);
+            await _db.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+            return Ok(CreateCharacterChallengeStartResponse(challenge));
+        }
+
+        private static CharacterChallengeStartResponse CreateCharacterChallengeStartResponse(
+            NpcChallenge challenge)
+        {
+            return new CharacterChallengeStartResponse
+            {
+                ChallengeId = challenge.ChallengeId,
+                AttemptId = challenge.AttemptId,
+                NpcId = challenge.NpcId,
+                NpcName = challenge.NpcName,
+                DeploymentId = challenge.DeploymentId,
+                CharacterName = challenge.CharacterName ?? "Character",
+                GameType = challenge.MiniGameType,
+                State = challenge.State
+            };
+        }
+
         [HttpGet("deployments/{deploymentId:int}/student-question")]
         [Authorize(Roles = "student")]
         public async Task<IActionResult> GetStudentQuestion(int deploymentId, CancellationToken cancellationToken)
@@ -417,7 +507,9 @@ namespace TechQuestBackend.Controllers
             }
 
             DateTime questionDeadline = challenge.QuestionStartedAt.Value
-                .AddSeconds(challenge.TimerSeconds + challenge.TimeExtensionSeconds);
+                .AddSeconds(challenge.TimeExtensionSeconds > 0
+                    ? challenge.TimeExtensionSeconds
+                    : challenge.TimerSeconds);
             var question = new StudentChallengeQuestionResponse
             {
                 QuestionId = challenge.QuestionId,
@@ -1057,6 +1149,23 @@ namespace TechQuestBackend.Controllers
         public string GameType { get; set; } = "";
         public int TimerSeconds { get; set; }
         public string Difficulty { get; set; } = "";
+    }
+
+    public class CharacterChallengeStartRequest
+    {
+        public string CharacterName { get; set; } = "Character";
+    }
+
+    public class CharacterChallengeStartResponse
+    {
+        public int ChallengeId { get; set; }
+        public Guid AttemptId { get; set; }
+        public int NpcId { get; set; }
+        public string NpcName { get; set; } = "";
+        public int DeploymentId { get; set; }
+        public string CharacterName { get; set; } = "";
+        public string GameType { get; set; } = "HigherLower";
+        public string State { get; set; } = "";
     }
 
     public class StudentChallengeQuestionResponse

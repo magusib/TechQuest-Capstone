@@ -10,6 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="8_agqw3"]
 [ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="9_gm8w4"]
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a22t5"]
+texture = ExtResource("2_e150c")
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_aspgg"]
 texture = ExtResource("2_e150c")
 
@@ -52,8 +55,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_p7vec")
 
-[node name="HintAnswerLabel" type="Label" parent="."]
-visible = false
+[node name="HintAnswerLabel" type="Label" parent="." unique_id=847095259]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -64,17 +66,22 @@ offset_left = -258.0
 offset_top = 118.0
 offset_right = 258.0
 offset_bottom = 158.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 25
 text = "_ _ _ _ _"
 horizontal_alignment = 1
 
-[node name="PurchaseOverlay" type="Control" parent="."]
+[node name="PurchaseOverlay" type="Control" parent="." unique_id=1959034479]
 visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="PurchasePanel" type="PanelContainer" parent="PurchaseOverlay"]
+[node name="PurchasePanel" type="PanelContainer" parent="PurchaseOverlay" unique_id=1839222897]
 custom_minimum_size = Vector2(420, 300)
 layout_mode = 1
 anchors_preset = 8
@@ -86,33 +93,36 @@ offset_left = -210.0
 offset_top = -150.0
 offset_right = 210.0
 offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_a22t5")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PurchaseOverlay/PurchasePanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PurchaseOverlay/PurchasePanel" unique_id=2012127300]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="TitleLabel" type="Label" parent="PurchaseOverlay/PurchasePanel/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="PurchaseOverlay/PurchasePanel/VBoxContainer" unique_id=1001162343]
 layout_mode = 2
 text = "Quiz Assistance"
 horizontal_alignment = 1
 
-[node name="ExtendTimeButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer"]
+[node name="ExtendTimeButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer" unique_id=1020711117]
 layout_mode = 2
 text = "Extend Time - 10 Coins"
 
-[node name="ExtendTimeHintButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer"]
+[node name="ExtendTimeHintButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer" unique_id=502813013]
 layout_mode = 2
 text = "Extend Time + Hint - 20 Coins"
 
-[node name="GetHintsButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer"]
+[node name="GetHintsButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer" unique_id=1846055636]
 layout_mode = 2
 text = "Get Hints - 20 Coins"
 
-[node name="NoButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer"]
+[node name="NoButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer" unique_id=590516620]
 layout_mode = 2
 text = "No"
 
-[node name="NotificationLabel" type="Label" parent="PurchaseOverlay/PurchasePanel/VBoxContainer"]
+[node name="NotificationLabel" type="Label" parent="PurchaseOverlay/PurchasePanel/VBoxContainer" unique_id=1035104088]
 layout_mode = 2
 horizontal_alignment = 1
 
@@ -189,6 +199,42 @@ grow_vertical = 2
 text = "Question"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ChoiceAButton" type="Button" parent="HardMapQuestionPanel" unique_id=20662620]
+visible = false
+layout_mode = 0
+offset_left = -258.0
+offset_top = 43.0
+offset_right = 258.0
+offset_bottom = 78.0
+text = "Choice A"
+
+[node name="ChoiceBButton" type="Button" parent="HardMapQuestionPanel" unique_id=20662621]
+visible = false
+layout_mode = 0
+offset_left = -258.0
+offset_top = 83.0
+offset_right = 258.0
+offset_bottom = 118.0
+text = "Choice B"
+
+[node name="ChoiceCButton" type="Button" parent="HardMapQuestionPanel" unique_id=20662622]
+visible = false
+layout_mode = 0
+offset_left = -258.0
+offset_top = 123.0
+offset_right = 258.0
+offset_bottom = 158.0
+text = "Choice C"
+
+[node name="ChoiceDButton" type="Button" parent="HardMapQuestionPanel" unique_id=20662623]
+visible = false
+layout_mode = 0
+offset_left = -258.0
+offset_top = 163.0
+offset_right = 258.0
+offset_bottom = 198.0
+text = "Choice D"
 
 [node name="LineEdit" type="LineEdit" parent="HardMapQuestionPanel" unique_id=180482873]
 layout_mode = 1

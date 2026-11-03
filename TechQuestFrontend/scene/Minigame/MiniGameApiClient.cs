@@ -44,6 +44,36 @@ public static class MiniGameApiClient
 			"/Npcs/deployments/" + deploymentId + "/challenge-start");
 	}
 
+	public static Task<CharacterChallengeStartDto> StartCharacterChallengeAsync(
+		int deploymentId,
+		string characterName)
+	{
+		return SendAsync<CharacterChallengeStartDto>(
+			HttpMethod.Post,
+			"/Npcs/deployments/" + deploymentId + "/character-challenge-start",
+			new CharacterChallengeStartRequestDto { CharacterName = characterName });
+	}
+
+	public static Task<CharacterChallengeResultDto> SubmitCharacterChallengeAsync(
+		Guid attemptId,
+		int deploymentId,
+		int playerScore,
+		int npcScore,
+		string outcome)
+	{
+		return SendAsync<CharacterChallengeResultDto>(
+			HttpMethod.Post,
+			"/GameResults/character-challenge",
+			new CharacterChallengeRequestDto
+			{
+				AttemptId = attemptId,
+				DeploymentId = deploymentId,
+				PlayerScore = playerScore,
+				NpcScore = npcScore,
+				Outcome = outcome
+			});
+	}
+
 	public static Task<StudentChallengeQuestionDto> GetStudentQuestionAsync(int deploymentId)
 	{
 		return SendAsync<StudentChallengeQuestionDto>(
@@ -190,6 +220,45 @@ public class StudentChallengeStartDto
 	public string GameType { get; set; } = "";
 	public int TimerSeconds { get; set; }
 	public string Difficulty { get; set; } = "";
+}
+
+public class CharacterChallengeStartRequestDto
+{
+	public string CharacterName { get; set; } = "Character";
+}
+
+public class CharacterChallengeStartDto
+{
+	public int ChallengeId { get; set; }
+	public Guid AttemptId { get; set; }
+	public int NpcId { get; set; }
+	public string NpcName { get; set; } = "";
+	public int DeploymentId { get; set; }
+	public string CharacterName { get; set; } = "";
+	public string GameType { get; set; } = "HigherLower";
+	public string State { get; set; } = "";
+}
+
+public class CharacterChallengeRequestDto
+{
+	public Guid AttemptId { get; set; }
+	public int DeploymentId { get; set; }
+	public int PlayerScore { get; set; }
+	public int NpcScore { get; set; }
+	public string Outcome { get; set; } = "";
+}
+
+public class CharacterChallengeResultDto
+{
+	public Guid AttemptId { get; set; }
+	public int PlayerScore { get; set; }
+	public int NpcScore { get; set; }
+	public string Outcome { get; set; } = "";
+	public int CoinsDeducted { get; set; }
+	public int PointsDeducted { get; set; }
+	public int TotalCoins { get; set; }
+	public int TotalPoints { get; set; }
+	public bool AlreadyProcessed { get; set; }
 }
 
 public class StudentChallengeQuestionDto

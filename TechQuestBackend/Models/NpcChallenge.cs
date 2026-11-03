@@ -60,6 +60,14 @@ namespace TechQuestBackend.Models
 
         public int PointsChanged { get; set; }
 
+        public string? CharacterName { get; set; }
+
+        public int CharacterPlayerScore { get; set; }
+
+        public int CharacterNpcScore { get; set; }
+
+        public string? CharacterOutcome { get; set; }
+
         public StudentProfile? Student { get; set; }
 
         public NpcDeployment? Deployment { get; set; }

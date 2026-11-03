@@ -213,7 +213,9 @@ namespace TechQuestBackend.Controllers
                 return Conflict("The NPC question has not been started.");
 
             bool timedOut = DateTime.UtcNow >= challenge.QuestionStartedAt.Value
-                .AddSeconds(challenge.TimerSeconds + challenge.TimeExtensionSeconds);
+                .AddSeconds(challenge.TimeExtensionSeconds > 0
+                    ? challenge.TimeExtensionSeconds
+                    : challenge.TimerSeconds);
             if (!timedOut && string.IsNullOrWhiteSpace(request.SelectedAnswer) && !request.Finalize)
                 return BadRequest("Select an answer before submitting.");
             string submittedAnswer = request.SelectedAnswer?.Trim() ?? "";
@@ -312,6 +314,100 @@ namespace TechQuestBackend.Controllers
             return Ok(CreateQuestionResult(challenge, profile));
         }
 
+        [HttpPost("character-challenge")]
+        public async Task<IActionResult> SubmitCharacterChallenge(
+            CharacterChallengeRequest request,
+            CancellationToken cancellationToken)
+        {
+            if (request.AttemptId == Guid.Empty || request.DeploymentId <= 0 ||
+                request.PlayerScore < 0 || request.NpcScore < 0)
+                return BadRequest("The character challenge result is invalid.");
+
+            string outcome = (request.Outcome ?? "").Trim().ToUpperInvariant();
+            if ((request.PlayerScore > request.NpcScore && outcome != "WIN") ||
+                (request.PlayerScore < request.NpcScore && outcome != "LOSE") ||
+                (request.PlayerScore == request.NpcScore && outcome != "DRAW"))
+                return BadRequest("The challenge outcome does not match the scores.");
+
+            int userId = GetUserId();
+            if (userId <= 0)
+                return Unauthorized();
+
+            await using var transaction = await _db.Database.BeginTransactionAsync(
+                IsolationLevel.ReadCommitted, cancellationToken);
+            var profile = await _db.StudentProfiles
+                .FromSqlInterpolated($"SELECT * FROM \"Student_profile\" WHERE \"UserId\" = {userId} FOR UPDATE")
+                .SingleOrDefaultAsync(cancellationToken);
+            if (profile == null)
+                return BadRequest("Student profile was not found.");
+
+            var challenge = await _db.NpcChallenges
+                .FirstOrDefaultAsync(item => item.StudentId == profile.StudentId &&
+                    item.DeploymentId == request.DeploymentId && item.AttemptId == request.AttemptId,
+                    cancellationToken);
+            if (challenge == null || challenge.MiniGameType != "HigherLower")
+                return BadRequest("This character challenge is not assigned to the student.");
+
+            if (challenge.State == "CharacterMiniGameCompleted")
+            {
+                if (challenge.CharacterPlayerScore != request.PlayerScore ||
+                    challenge.CharacterNpcScore != request.NpcScore ||
+                    challenge.CharacterOutcome != outcome)
+                    return Conflict("This character challenge was already finalized with a different result.");
+
+                await transaction.CommitAsync(cancellationToken);
+                return Ok(CreateCharacterChallengeResult(challenge, profile, true));
+            }
+
+            if (challenge.State != "CharacterMiniGamePending")
+                return Conflict("This character challenge is no longer active.");
+
+            int coinsDeducted = outcome == "LOSE" ? Math.Min(20, profile.TotalCoins) : 0;
+            int pointsDeducted = outcome == "LOSE" ? Math.Min(20, profile.TotalPoints) : 0;
+            profile.TotalCoins -= coinsDeducted;
+            profile.TotalPoints -= pointsDeducted;
+            challenge.CharacterPlayerScore = request.PlayerScore;
+            challenge.CharacterNpcScore = request.NpcScore;
+            challenge.CharacterOutcome = outcome;
+            challenge.CoinsChanged = -coinsDeducted;
+            challenge.PointsChanged = -pointsDeducted;
+            challenge.CompletedAt = DateTime.UtcNow;
+            challenge.State = "CharacterMiniGameCompleted";
+
+            _db.GameResults.Add(new GameResult
+            {
+                StudentId = profile.StudentId,
+                QuestionId = challenge.QuestionId,
+                AttemptId = challenge.AttemptId,
+                CoinsDeducted = coinsDeducted,
+                PointsDeducted = pointsDeducted,
+                IsCorrect = outcome == "WIN",
+                PlayedAt = DateTime.UtcNow
+            });
+            await _db.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+            return Ok(CreateCharacterChallengeResult(challenge, profile, false));
+        }
+
+        private static CharacterChallengeResultResponse CreateCharacterChallengeResult(
+            NpcChallenge challenge,
+            StudentProfile profile,
+            bool alreadyProcessed)
+        {
+            return new CharacterChallengeResultResponse
+            {
+                AttemptId = challenge.AttemptId,
+                Outcome = challenge.CharacterOutcome ?? "DRAW",
+                PlayerScore = challenge.CharacterPlayerScore,
+                NpcScore = challenge.CharacterNpcScore,
+                CoinsDeducted = Math.Max(0, -challenge.CoinsChanged),
+                PointsDeducted = Math.Max(0, -challenge.PointsChanged),
+                TotalCoins = profile.TotalCoins,
+                TotalPoints = profile.TotalPoints,
+                AlreadyProcessed = alreadyProcessed
+            };
+        }
+
         [HttpPost("npc-quiz-purchase")]
         public async Task<IActionResult> PurchaseNpcQuizOption(
             NpcQuizPurchaseRequest request,
@@ -381,8 +477,8 @@ namespace TechQuestBackend.Controllers
                 challenge.HintPositions = JsonSerializer.Serialize(hintPositions);
             }
 
-            if (purchaseType == "extend_time" || purchaseType == "extend_time_hint")
-                challenge.TimeExtensionSeconds += 30;
+            challenge.QuestionStartedAt = DateTime.UtcNow;
+            challenge.TimeExtensionSeconds = 10;
 
             profile.TotalCoins -= cost;
             _db.NpcQuizPurchaseTransactions.Add(new NpcQuizPurchaseTransaction
@@ -499,6 +595,28 @@ namespace TechQuestBackend.Controllers
         public int QuestionId { get; set; }
         public string GameType { get; set; } = "";
         public bool GameWon { get; set; }
+    }
+
+    public class CharacterChallengeRequest
+    {
+        public Guid AttemptId { get; set; }
+        public int DeploymentId { get; set; }
+        public int PlayerScore { get; set; }
+        public int NpcScore { get; set; }
+        public string Outcome { get; set; } = "";
+    }
+
+    public class CharacterChallengeResultResponse
+    {
+        public Guid AttemptId { get; set; }
+        public int PlayerScore { get; set; }
+        public int NpcScore { get; set; }
+        public string Outcome { get; set; } = "";
+        public int CoinsDeducted { get; set; }
+        public int PointsDeducted { get; set; }
+        public int TotalCoins { get; set; }
+        public int TotalPoints { get; set; }
+        public bool AlreadyProcessed { get; set; }
     }
 
     public class MiniGameAttemptResponse
