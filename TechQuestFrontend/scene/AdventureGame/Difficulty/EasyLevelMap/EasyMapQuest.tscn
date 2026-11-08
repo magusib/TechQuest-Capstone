@@ -9,6 +9,15 @@
 [ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="7_jkcrx"]
 [ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="8_1341v"]
 [ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="9_4agd5"]
+[ext_resource type="Texture2D" uid="uid://dpdvfnixajfkn" path="res://asset/style/panel2.png" id="10_1341v"]
+[ext_resource type="Texture2D" uid="uid://dy4kovcxp1mbx" path="res://asset/style/panel.png" id="12_3xawy"]
+[ext_resource type="Texture2D" uid="uid://dwbjksunhepdp" path="res://asset/style/name_plate2.png" id="12_7pj1b"]
+[ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="13_vm7qy"]
+[ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="13_wh8xi"]
+[ext_resource type="Texture2D" uid="uid://dh3bjxtef3qy4" path="res://asset/style/name_plate.png" id="14_crwsf"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="15_77x8n"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="16_nfjqi"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="17_iyndn"]
 [ext_resource type="Script" uid="uid://c8qh52xorbdj7" path="res://scene/Core/QuestObjectiveEditor.cs" id="quest_objective"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g24cr"]
@@ -28,6 +37,47 @@ texture = ExtResource("8_1341v")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0mrbm"]
 texture = ExtResource("9_4agd5")
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jkcrx"]
+texture = ExtResource("10_1341v")
+region_rect = Rect2(1, 1, 48, 51)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v0bjp"]
+texture = ExtResource("12_7pj1b")
+region_rect = Rect2(1, 1, 48, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5ndqt"]
+texture = ExtResource("15_77x8n")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cq2s4"]
+texture = ExtResource("16_nfjqi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sukfs"]
+texture = ExtResource("17_iyndn")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t3ciy"]
+texture = ExtResource("7_jkcrx")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m8dvh"]
+texture = ExtResource("8_1341v")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t3l1a"]
+texture = ExtResource("9_4agd5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ed1si"]
+texture = ExtResource("12_3xawy")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oaf2p"]
+texture = ExtResource("14_crwsf")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ul2hb"]
+texture = ExtResource("7_jkcrx")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pyflq"]
+texture = ExtResource("8_1341v")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fxitb"]
+texture = ExtResource("9_4agd5")
+
 [node name="EasyMapQuest" type="Control" unique_id=1921483137]
 layout_mode = 3
 anchors_preset = 15
@@ -38,7 +88,6 @@ grow_vertical = 2
 script = ExtResource("1_dciw5")
 
 [node name="StudentQuestPopup" type="Control" parent="." unique_id=1175924954]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -386,9 +435,9 @@ text = "Add Quest"
 
 [node name="QuestListPanel" type="Panel" parent="AdminQuestAdd/QuestPanel" unique_id=650107447]
 layout_mode = 0
-offset_left = 12.0
+offset_left = 20.0
 offset_top = 92.0
-offset_right = 397.0
+offset_right = 792.0
 offset_bottom = 452.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="AdminQuestAdd/QuestPanel/QuestListPanel" unique_id=629604322]
@@ -404,7 +453,7 @@ horizontal_scroll_mode = 0
 layout_mode = 0
 offset_left = 11.0
 offset_top = 19.0
-offset_right = 373.0
+offset_right = 761.0
 offset_bottom = 78.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_8icjc")
 
@@ -412,50 +461,56 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_8icjc")
 layout_mode = 0
 offset_left = 4.0
 offset_top = 2.0
-offset_right = 359.0
+offset_right = 742.0
 offset_bottom = 51.0
 
 [node name="QuestTitleLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestListPanel/QuestItem/Panel" unique_id=124281107]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -51.5
-offset_top = -21.5
-offset_right = 51.5
-offset_bottom = 1.5
+offset_left = -175.0
+offset_right = 175.0
+offset_bottom = 23.0
 grow_horizontal = 2
-grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="QuestDescriptionLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestListPanel/QuestItem/Panel" unique_id=440896835]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 16.0
-offset_right = 350.0
+offset_right = 732.0
 offset_bottom = 46.0
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="QuestAddPanel" type="Panel" parent="AdminQuestAdd/QuestPanel" unique_id=1633837115]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -3.0
-offset_top = -143.5
-offset_right = 382.0
-offset_bottom = 216.5
+offset_left = -285.0
+offset_top = -180.0
+offset_right = 285.0
+offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_jkcrx")
 
 [node name="AddQuestLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel" unique_id=782624908]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 23.0
+offset_bottom = 30.0
 grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("13_vm7qy")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_v0bjp")
 text = "Add New Quest"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -478,23 +533,41 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 8
 
-[node name="QuestTitleLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent" unique_id=36258271]
-custom_minimum_size = Vector2(0, 55)
+[node name="QuestTitleLabel" type="VBoxContainer" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent" unique_id=36258271]
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
-text = "QuestTitle"
-vertical_alignment = 1
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="Caption" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/QuestTitleLabel" unique_id=266767245]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("13_wh8xi")
+theme_override_font_sizes/font_size = 18
+text = "Quest title"
 
 [node name="QuestTitle" type="LineEdit" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/QuestTitleLabel" unique_id=1015758352]
-layout_mode = 0
-
-[node name="DescriptionLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent" unique_id=2032516764]
-custom_minimum_size = Vector2(0, 105)
+custom_minimum_size = Vector2(0, 34)
 layout_mode = 2
-text = "Quest Description"
-vertical_alignment = 1
+size_flags_horizontal = 3
+placeholder_text = "Enter quest title"
+
+[node name="DescriptionLabel" type="VBoxContainer" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent" unique_id=2032516764]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="Caption" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/DescriptionLabel" unique_id=1203843687]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("13_wh8xi")
+theme_override_font_sizes/font_size = 18
+text = "Quest description"
 
 [node name="Description" type="LineEdit" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/DescriptionLabel" unique_id=1347799656]
-layout_mode = 0
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Describe what the player must do"
 
 [node name="QuestObjectiveEditor" type="VBoxContainer" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent" unique_id=1826319669]
 layout_mode = 2
@@ -509,6 +582,8 @@ layout_mode = 2
 [node name="ObjectiveLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/QuestObjectiveEditor/ObjectiveRow" unique_id=371935103]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("13_wh8xi")
+theme_override_font_sizes/font_size = 18
 text = "Objective"
 vertical_alignment = 1
 
@@ -523,6 +598,8 @@ layout_mode = 2
 [node name="TargetQuantityLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/QuestObjectiveEditor/TargetQuantityRow" unique_id=406146303]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("13_wh8xi")
+theme_override_font_sizes/font_size = 18
 text = "Target quantity"
 vertical_alignment = 1
 
@@ -540,6 +617,8 @@ layout_mode = 2
 [node name="MiniGameLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/QuestObjectiveEditor/MiniGameRow" unique_id=1117099752]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("13_wh8xi")
+theme_override_font_sizes/font_size = 18
 text = "Mini-game"
 vertical_alignment = 1
 
@@ -551,40 +630,60 @@ size_flags_horizontal = 3
 layout_mode = 2
 text = "Require a successful mini-game"
 
-[node name="CoinsRewardLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent" unique_id=1857359259]
-custom_minimum_size = Vector2(0, 70)
+[node name="CoinsRewardLabel" type="VBoxContainer" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent" unique_id=1857359259]
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
-text = "Coins Reward"
-vertical_alignment = 1
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="Caption" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/CoinsRewardLabel" unique_id=1344896889]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("13_wh8xi")
+theme_override_font_sizes/font_size = 18
+text = "Coins reward"
 
 [node name="CoinsReward" type="LineEdit" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/CoinsRewardLabel" unique_id=2096936788]
-layout_mode = 0
-alignment = 1
-
-[node name="PointsRewardLabel" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent" unique_id=427262218]
-custom_minimum_size = Vector2(0, 70)
+custom_minimum_size = Vector2(0, 34)
 layout_mode = 2
-text = "Points Reward"
-vertical_alignment = 1
+size_flags_horizontal = 3
+placeholder_text = "0"
+
+[node name="PointsRewardLabel" type="VBoxContainer" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent" unique_id=427262218]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="Caption" type="Label" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/PointsRewardLabel" unique_id=1692372917]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("13_wh8xi")
+theme_override_font_sizes/font_size = 18
+text = "Points reward"
 
 [node name="PointsReward" type="LineEdit" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent/PointsRewardLabel" unique_id=1306673935]
-layout_mode = 0
-alignment = 1
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "0"
 
-[node name="SaveButton" type="Button" parent="AdminQuestAdd/QuestPanel/QuestAddPanel" unique_id=424820769]
-layout_mode = 0
-offset_left = 51.0
-offset_top = 535.0
-offset_right = 144.0
-offset_bottom = 566.0
+[node name="SaveButton" type="Button" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent" unique_id=424820769]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("13_vm7qy")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_5ndqt")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_cq2s4")
+theme_override_styles/hover = SubResource("StyleBoxTexture_sukfs")
 text = "Save"
 
-[node name="CloseButton" type="Button" parent="AdminQuestAdd/QuestPanel/QuestAddPanel" unique_id=1735106248]
-layout_mode = 0
-offset_left = 198.0
-offset_top = 535.0
-offset_right = 296.0
-offset_bottom = 566.0
+[node name="CloseButton" type="Button" parent="AdminQuestAdd/QuestPanel/QuestAddPanel/QuestFormScroll/QuestFormContent" unique_id=1735106248]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("13_vm7qy")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_t3ciy")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_m8dvh")
+theme_override_styles/hover = SubResource("StyleBoxTexture_t3l1a")
 text = "Close"
 
 [node name="RewardPopup" type="Panel" parent="." unique_id=870851661]
@@ -601,19 +700,21 @@ offset_right = 190.5
 offset_bottom = 141.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_ed1si")
 
 [node name="RewardLabel" type="Label" parent="RewardPopup" unique_id=1711778334]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.056
-offset_left = -89.0
-offset_top = 14.5
-offset_right = 92.0
-offset_bottom = 25.936
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
 grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("13_vm7qy")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_oaf2p")
 text = "Congrats! You Received"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="RewardContainer" type="VBoxContainer" parent="RewardPopup" unique_id=1925413272]
 layout_mode = 1
@@ -672,10 +773,15 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -34.75
+offset_left = -61.0
 offset_top = -40.0
-offset_right = 34.75
+offset_right = 61.0
 offset_bottom = -9.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_fonts/font = ExtResource("13_vm7qy")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_ul2hb")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_pyflq")
+theme_override_styles/hover = SubResource("StyleBoxTexture_fxitb")
 text = "OK"

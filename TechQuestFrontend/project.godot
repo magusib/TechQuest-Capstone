@@ -15,6 +15,10 @@ run/main_scene="uid://dwfhp46edi4dg"
 config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+MobileUiCompatibility="*res://scene/Core/MobileUiCompatibility.cs"
+
 [display]
 
 window/size/viewport_width=1280

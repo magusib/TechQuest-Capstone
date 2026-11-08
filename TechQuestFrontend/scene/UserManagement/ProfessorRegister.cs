@@ -19,14 +19,14 @@ public partial class ProfessorRegister : Control
 	private Button backButton;
 	private Button backToLoginButton;
 
-	private Window forgotPasswordPopup;
+	private Panel forgotPasswordPopup;
 	private LineEdit forgotEmailInput;
 	private LineEdit newPasswordInput;
 	private LineEdit confirmNewPasswordInput;
 	private Button forgotSaveButton;
 	private Button forgotCancelButton;
 
-	private Window otpPopup;
+	private Panel otpPopup;
 	private LineEdit otpInput;
 	private Button otpConfirmButton;
 	private Button otpResendButton;
@@ -57,14 +57,14 @@ public partial class ProfessorRegister : Control
 
 		backButton = GetNode<Button>("BackButton");
 
-		forgotPasswordPopup = GetNode<Window>("ForgotPasswordPopup");
+		forgotPasswordPopup = GetNode<Panel>("ForgotPasswordPopup");
 		forgotEmailInput = GetNode<LineEdit>("ForgotPasswordPopup/EmailInput");
 		newPasswordInput = GetNode<LineEdit>("ForgotPasswordPopup/NewPasswordInput");
 		confirmNewPasswordInput = GetNode<LineEdit>("ForgotPasswordPopup/ConfirmPasswordInput");
 		forgotSaveButton = GetNode<Button>("ForgotPasswordPopup/SaveButton");
 		forgotCancelButton = GetNode<Button>("ForgotPasswordPopup/CancelButton");
 
-		otpPopup = GetNode<Window>("OTPPopup");
+		otpPopup = GetNode<Panel>("OTPPopup");
 		otpInput = GetNode<LineEdit>("OTPPopup/OTPInput");
 		otpConfirmButton = GetNode<Button>("OTPPopup/ConfirmButton");
 		otpResendButton = GetNode<Button>("OTPPopup/ResendButton");
@@ -184,16 +184,16 @@ public partial class ProfessorRegister : Control
 	private void OpenForgotPasswordPopup()
 	{
 		forgotPasswordPopup.Visible = true;
-		forgotPasswordPopup.Popup();
-		forgotPasswordPopup.PopupCentered();
+		forgotPasswordPopup.MoveToFront();
+		forgotPasswordPopup.Show();
 		forgotPasswordPopup.GrabFocus();
 	}
 
 	private void OpenOTPPopup()
 	{
 		otpPopup.Visible = true;
-		otpPopup.Popup();
-		otpPopup.PopupCentered();
+		otpPopup.MoveToFront();
+		otpPopup.Show();
 		otpPopup.GrabFocus();
 	}
 

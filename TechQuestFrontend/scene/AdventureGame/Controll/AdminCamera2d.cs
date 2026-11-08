@@ -18,8 +18,17 @@ public partial class AdminCamera2d : Camera2D
 			return;
 		}
 
+		if (IsTextInputFocused())
+			return;
+
 		Vector2 direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		GlobalPosition += direction * CameraSpeed * (float)delta;
+	}
+
+	private bool IsTextInputFocused()
+	{
+		Control focusedControl = GetViewport().GuiGetFocusOwner() as Control;
+		return focusedControl is LineEdit || focusedControl is TextEdit;
 	}
 
 	private void UpdateCameraState()

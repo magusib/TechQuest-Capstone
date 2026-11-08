@@ -12,7 +12,7 @@ public partial class MatchThePairs : Control
 	[Export] public int NumberOfPairs { get; set; } = 4;
 	[Export] public float MismatchDelay { get; set; } = 0.8f;
 	[Export] public int PointsPerMatchedPair { get; set; } = 10;
-	[Export] public int GameDurationSeconds { get; set; } = 30;
+	[Export] public int GameDurationSeconds { get; set; } = 15;
 	[Export] public int FailureCoinPenalty { get; set; } = 5;
 	[Export] public PackedScene MemoryCardScene { get; set; }
 
@@ -39,7 +39,7 @@ public partial class MatchThePairs : Control
 	private int deploymentId;
 	private string gameType = "MatchThePairs";
 	private int timeLeft;
-	private int timerSeconds = 30;
+	private int timerSeconds = 15;
 	private int score;
 	private int matchedPairs;
 	private bool gameEnded;
@@ -98,7 +98,7 @@ public partial class MatchThePairs : Control
 		npcId = assignedNpcId;
 		questionId = assignedQuestionId;
 		gameType = assignedGameType;
-		timerSeconds = 30;
+		timerSeconds = 15;
 		attemptId = assignedAttemptId;
 	}
 

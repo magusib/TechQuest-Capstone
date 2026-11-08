@@ -41,7 +41,9 @@ namespace TechQuestBackend.Controllers
             if (User.IsInRole("admin"))
             {
                 int userId = GetUserId();
-                questQuery = questQuery.Where(q => q.CreatedBy == userId);
+                questQuery = questQuery.Where(q =>
+                    q.CreatedBy == userId &&
+                    (!q.EndDate.HasValue || q.EndDate.Value >= now));
             }
             else
             {

@@ -394,10 +394,21 @@ offset_top = 250.0
 offset_right = 432.0
 offset_bottom = 378.0
 
-[node name="ForgotPasswordPopup" type="Window" parent="." unique_id=685239190]
+[node name="ForgotPasswordPopup" type="Panel" parent="." unique_id=685239190]
 visible = false
-size = Vector2i(616, 504)
-theme_override_styles/embedded_border = SubResource("StyleBoxTexture_fd3hy")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -308.0
+offset_top = -252.0
+offset_right = 308.0
+offset_bottom = 252.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_fd3hy")
 
 [node name="Title" type="Label" parent="ForgotPasswordPopup" unique_id=719955930]
 layout_mode = 1
@@ -512,10 +523,21 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_ncr5o")
 theme_override_styles/hover = SubResource("StyleBoxTexture_7gtmp")
 text = "Cancel"
 
-[node name="OTPPopup" type="Window" parent="." unique_id=688739218]
+[node name="OTPPopup" type="Panel" parent="." unique_id=688739218]
 visible = false
-size = Vector2i(558, 459)
-theme_override_styles/embedded_border = SubResource("StyleBoxTexture_mn80l")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -279.0
+offset_top = -229.5
+offset_right = 279.0
+offset_bottom = 229.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_mn80l")
 
 [node name="Label" type="Label" parent="OTPPopup" unique_id=758620260]
 layout_mode = 1

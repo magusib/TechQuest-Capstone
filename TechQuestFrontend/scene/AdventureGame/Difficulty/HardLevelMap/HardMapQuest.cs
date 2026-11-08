@@ -63,13 +63,6 @@ public partial class HardMapQuest : Control
 		objectiveEditor = adminQuestAddPanel.GetNode<QuestObjectiveEditor>(
 			"QuestFormScroll/QuestFormContent/QuestObjectiveEditor");
 
-		var questForm = adminQuestAddPanel.GetNode<VBoxContainer>(
-			"QuestFormScroll/QuestFormContent");
-		AddQuestFieldToForm(questForm, "QuestTitleLabel", 64);
-		AddQuestFieldToForm(questForm, "DescriptionLabel", 64);
-		AddQuestFieldToForm(questForm, "CoinsRewardLabel", 64);
-		AddQuestFieldToForm(questForm, "PointsRewardLabel", 64);
-
 		adminQuestItemTemplate = adminQuestAdd.FindChild("QuestItem", true, false) as Control;
 		adminQuestItemTemplate.Hide();
 
@@ -240,34 +233,6 @@ public partial class HardMapQuest : Control
 		}
 	}
 
-	private void AddQuestFieldToForm(VBoxContainer form, string fieldName, float minimumHeight)
-	{
-		Control field = adminQuestAddPanel.FindChild(fieldName, true, false) as Control
-			?? throw new InvalidOperationException($"Quest form field '{fieldName}' was not found.");
-		string inputName = fieldName == "QuestTitleLabel" ? "QuestTitle" :
-			fieldName == "DescriptionLabel" ? "Description" :
-			fieldName == "CoinsRewardLabel" ? "CoinsReward" : "PointsReward";
-		Control input = field.FindChild(inputName, true, false) as Control;
-		field.Reparent(form, false);
-		field.CustomMinimumSize = new Vector2(0, minimumHeight);
-		field.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-
-		if (field is Label label)
-			label.VerticalAlignment = VerticalAlignment.Top;
-
-		if (input != null)
-		{
-			input.AnchorLeft = 0;
-			input.AnchorTop = 0;
-			input.AnchorRight = 1;
-			input.AnchorBottom = 0;
-			input.OffsetLeft = 2;
-			input.OffsetTop = 28;
-			input.OffsetRight = -8;
-			input.OffsetBottom = 59;
-		}
-	}
-
 	private async void LoadAdminQuests()
 	{
 		foreach (Node child in adminQuestListContainer.GetChildren())
@@ -276,7 +241,10 @@ public partial class HardMapQuest : Control
 		try
 		{
 			objectiveEditor.SetMiniGames(await NpcApiClient.GetMiniGamesAsync());
-			var quests = QuestApiClient.GetAvailableQuestsForDifficulty(DifficultyName);
+			var now = DateTime.UtcNow;
+			var quests = QuestApiClient.GetAvailableQuestsForDifficulty(DifficultyName)
+				.FindAll(quest => !quest.EndDate.HasValue ||
+					DateTime.SpecifyKind(quest.EndDate.Value, DateTimeKind.Utc) >= now);
 			if (quests.Count == 0)
 			{
 				var emptyLabel = new Label();

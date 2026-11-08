@@ -177,7 +177,7 @@ metadata/_aseprite_wizard_config_ = {
 metadata/_aseprite_wizard_source_file_hash_ = "ea4c7acfe87adb95bbab55ad8b825690"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=533666770]
-position = Vector2(0, 13)
+position = Vector2(0, 10)
 shape = SubResource("CircleShape2D_cffms")
 
 [node name="HighlightSprite" type="Sprite2D" parent="." unique_id=1494814330]

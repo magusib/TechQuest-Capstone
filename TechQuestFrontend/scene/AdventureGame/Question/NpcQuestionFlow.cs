@@ -315,6 +315,7 @@ public abstract partial class NpcQuestionFlow : Control
     private void ReturnToMap()
     {
         countdown?.Stop();
+        answerInput?.ReleaseFocus();
         Hide();
         MiniGameLauncher.CompleteChallenge();
     }

@@ -94,23 +94,25 @@ public partial class AdminShop : Control
 		deleteConfirmation =
 			GetNode<ConfirmationDialog>("DeleteItemConfirmation");
 
-		// Native image file picker.
-		imageDialog = new FileDialog
+		if (OS.GetName() != "Android")
 		{
-			Title = "Choose Shop Item Image",
-			FileMode = FileDialog.FileModeEnum.OpenFile,
-			Access = FileDialog.AccessEnum.Filesystem,
-			UseNativeDialog = true,
-			Filters = new string[]
+			imageDialog = new FileDialog
 			{
-				"*.png ; PNG Images",
-				"*.jpg ; JPG Images",
-                "*.jpeg ; JPEG Images"
-			}
-		};
+				Title = "Choose Shop Item Image",
+				FileMode = FileDialog.FileModeEnum.OpenFile,
+				Access = FileDialog.AccessEnum.Filesystem,
+				UseNativeDialog = true,
+				Filters = new string[]
+				{
+					"*.png ; PNG Images",
+					"*.jpg ; JPG Images",
+                    "*.jpeg ; JPEG Images"
+				}
+			};
 
-		AddChild(imageDialog);
-		imageDialog.FileSelected += OnImageSelected;
+			AddChild(imageDialog);
+			imageDialog.FileSelected += OnImageSelected;
+		}
 
 		GetNode<Button>(
             "ShopPanel/CategoryButtons/CharacterButton"
@@ -272,7 +274,8 @@ public partial class AdminShop : Control
 
 	private void SelectImage()
 	{
-		imageDialog.PopupCentered();
+		if (imageDialog != null)
+			imageDialog.PopupCentered();
 	}
 
 	private void OnImageSelected(string path)

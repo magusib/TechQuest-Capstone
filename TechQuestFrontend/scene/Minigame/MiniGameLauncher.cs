@@ -50,6 +50,7 @@ public static class MiniGameLauncher
 
 			Node game = gameScene.Instantiate();
 			game.ProcessMode = Node.ProcessModeEnum.Always;
+			PrepareGameViewport(game);
 			SetNestedCanvasLayersAbove(game, overlayLayer.Layer + 1);
 			currentChallenge = challenge;
 			int assignedDeploymentId = challenge.DeploymentId;
@@ -128,6 +129,7 @@ public static class MiniGameLauncher
 
 			Node game = gameScene.Instantiate();
 			game.ProcessMode = Node.ProcessModeEnum.Always;
+			PrepareGameViewport(game);
 			SetNestedCanvasLayersAbove(game, overlayLayer.Layer + 1);
 			overlayLayer.AddChild(game);
 			if (game is HigherLower higherLower)
@@ -336,6 +338,12 @@ public static class MiniGameLauncher
 
 			SetNestedCanvasLayersAbove(child, minimumLayer);
 		}
+	}
+
+	private static void PrepareGameViewport(Node game)
+	{
+		if (game is Control control)
+			control.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
 	}
 
 	private static void ShowMessage(Node source, string message)

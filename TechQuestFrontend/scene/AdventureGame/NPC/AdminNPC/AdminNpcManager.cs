@@ -78,15 +78,18 @@ public abstract partial class AdminNpcManager : Control
 		deployDialog.Confirmed += DeploySelectedNpc;
 		undeployDialog.Confirmed += UndeploySelectedNpc;
 
-		fileDialog = new FileDialog
+		if (OS.GetName() != "Android")
 		{
-			Title = "Choose Local NPC Image Asset",
-			FileMode = FileDialog.FileModeEnum.OpenFile,
-			Access = FileDialog.AccessEnum.Resources,
-			Filters = new string[] { "*.png ; PNG Images", "*.jpg ; JPG Images", "*.jpeg ; JPEG Images" }
-		};
-		AddChild(fileDialog);
-		fileDialog.FileSelected += OnImageSelected;
+			fileDialog = new FileDialog
+			{
+				Title = "Choose Local NPC Image Asset",
+				FileMode = FileDialog.FileModeEnum.OpenFile,
+				Access = FileDialog.AccessEnum.Resources,
+				Filters = new string[] { "*.png ; PNG Images", "*.jpg ; JPG Images", "*.jpeg ; JPEG Images" }
+			};
+			AddChild(fileDialog);
+			fileDialog.FileSelected += OnImageSelected;
+		}
 
 	}
 
@@ -550,7 +553,8 @@ public abstract partial class AdminNpcManager : Control
 
 	private void OpenImagePicker()
 	{
-		fileDialog.PopupCentered(new Vector2I(720, 520));
+		if (fileDialog != null)
+			fileDialog.PopupCentered(new Vector2I(720, 520));
 	}
 
 	private void OnAnimationSceneSelected(long index)

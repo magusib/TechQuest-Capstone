@@ -23,6 +23,8 @@ public partial class FallingDuck : Node2D
 	private Label coinPenaltyLabel;
 	private Button restartButton;
 	private Button retryButton;
+	private Control touchControls;
+	private Sprite2D background;
 	private Control resultOverlay;
 	private Timer countdownTimer;
 	private float spawnTime;
@@ -56,7 +58,20 @@ public partial class FallingDuck : Node2D
 		coinPenaltyLabel = GetNode<Label>("HUD/MainUI/ResultOverlay/ResultPanel/ResultLayout/CoinPenaltyLabel");
 		restartButton = GetNode<Button>("HUD/MainUI/ResultOverlay/ResultPanel/ResultLayout/PlayAgainButton");
 		retryButton = GetNode<Button>("HUD/MainUI/ResultOverlay/ResultPanel/ResultLayout/RetryResultButton");
+		touchControls = GetNodeOrNull<Control>("HUD/MainUI/TouchControls");
+		background = GetNodeOrNull<Sprite2D>("Background");
 		countdownTimer = GetNode<Timer>("CountdownTimer");
+
+		bool isAndroid = OS.GetName() == "Android";
+		if (touchControls != null)
+			touchControls.Visible = isAndroid;
+		if (background != null)
+		{
+			Vector2 viewportSize = GetViewportRect().Size;
+			background.Scale = new Vector2(
+				Mathf.Max(1f, viewportSize.X / 1280f),
+				Mathf.Max(1f, viewportSize.Y / 720f));
+		}
 
 		Button closeButton = GetNode<Button>("HUD/MainUI/HeaderPanel/HeaderLayout/CloseButton");
 		Button proceedButton = GetNode<Button>("HUD/MainUI/ResultOverlay/ResultPanel/ResultLayout/ResultCloseButton");

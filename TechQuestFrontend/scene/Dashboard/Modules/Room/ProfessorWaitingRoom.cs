@@ -65,39 +65,41 @@ public partial class ProfessorWaitingRoom : Control
 		avatarTemplate = avatarGrid.GetChild<Control>(0);
 		avatarTemplate.Visible = false;
 
-		// IMPORT: Choose an Excel or CSV quiz file.
-		importDialog = new FileDialog
+		if (OS.GetName() != "Android")
 		{
-			Title = "Choose Quiz File",
-			FileMode = FileDialog.FileModeEnum.OpenFile,
-			Access = FileDialog.AccessEnum.Filesystem,
-			UseNativeDialog = true,
-			Filters = new string[]
+			// Desktop file pickers are intentionally not created on Android.
+			importDialog = new FileDialog
 			{
-				"*.xlsx ; Excel Quiz",
-                "*.csv ; CSV Quiz"
-			}
-		};
+				Title = "Choose Quiz File",
+				FileMode = FileDialog.FileModeEnum.OpenFile,
+				Access = FileDialog.AccessEnum.Filesystem,
+				UseNativeDialog = true,
+				Filters = new string[]
+				{
+					"*.xlsx ; Excel Quiz",
+                    "*.csv ; CSV Quiz"
+				}
+			};
 
-		AddChild(importDialog);
-		importDialog.FileSelected += OnQuizFileSelected;
+			AddChild(importDialog);
+			importDialog.FileSelected += OnQuizFileSelected;
 
-		// EXPORT: Save the Excel quiz template.
-		exportDialog = new FileDialog
-		{
-			Title = "Save Quiz Template",
-			FileMode = FileDialog.FileModeEnum.SaveFile,
-			Access = FileDialog.AccessEnum.Filesystem,
-			UseNativeDialog = true,
-			Filters = new string[]
+			exportDialog = new FileDialog
 			{
-                "*.xlsx ; Excel Template"
-			},
-			CurrentFile = "TechQuest-Quiz-Template.xlsx"
-		};
+				Title = "Save Quiz Template",
+				FileMode = FileDialog.FileModeEnum.SaveFile,
+				Access = FileDialog.AccessEnum.Filesystem,
+				UseNativeDialog = true,
+				Filters = new string[]
+				{
+                    "*.xlsx ; Excel Template"
+				},
+				CurrentFile = "TechQuest-Quiz-Template.xlsx"
+			};
 
-		AddChild(exportDialog);
-		exportDialog.FileSelected += OnTemplateSavePathSelected;
+			AddChild(exportDialog);
+			exportDialog.FileSelected += OnTemplateSavePathSelected;
+		}
 
 		messageDialog = new AcceptDialog
 		{
@@ -111,9 +113,9 @@ public partial class ProfessorWaitingRoom : Control
 
 		backButton.Pressed += OnBackPressed;
 		uploadQuizButton.Pressed += uploadPopup.Show;
-		downloadFormatButton.Pressed += () => exportDialog.PopupCentered();
+		downloadFormatButton.Pressed += () => exportDialog?.PopupCentered();
 		resultsButton.Pressed += OnResultsPressed;
-		uploadFileButton.Pressed += () => importDialog.PopupCentered();
+		uploadFileButton.Pressed += () => importDialog?.PopupCentered();
 		uploadButton.Pressed += OnUploadPressed;
 		cancelButton.Pressed += () => uploadPopup.Hide();
 

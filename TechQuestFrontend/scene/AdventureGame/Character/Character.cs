@@ -55,7 +55,10 @@ public partial class Character : CharacterBody2D
 		// =========================
 		// MOVEMENT
 		// =========================
-		float direction = Input.GetAxis("move_left", "move_right");
+		bool textInputFocused = IsTextInputFocused();
+		float direction = textInputFocused
+			? 0
+			: Input.GetAxis("move_left", "move_right");
 
 		if (direction != 0)
 		{
@@ -85,7 +88,7 @@ public partial class Character : CharacterBody2D
 		// =========================
 		// JUMP
 		// =========================
-		if (Input.IsActionJustPressed("jump") && IsOnFloor())
+		if (!textInputFocused && Input.IsActionJustPressed("jump") && IsOnFloor())
 		{
 			Velocity = new Vector2(
 				Velocity.X,
@@ -145,6 +148,12 @@ public partial class Character : CharacterBody2D
 		}
 		// Do not reset the timer when the player stops, turns around, or jumps.
 		// The timer pauses and resumes when horizontal movement starts again.
+	}
+
+	private bool IsTextInputFocused()
+	{
+		Control focusedControl = GetViewport().GuiGetFocusOwner() as Control;
+		return focusedControl is LineEdit || focusedControl is TextEdit;
 	}
 
 	private async void RecoverFromWalkingAsync()

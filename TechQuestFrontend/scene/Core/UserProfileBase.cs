@@ -37,7 +37,11 @@ public partial class UserProfileBase : Control
 
 		if (uploadButton != null)
 		{
-			uploadButton.Visible = UserSession.IsAdmin || UserSession.IsProfessor;
+			// Godot's desktop FileDialog/Filesystem access is not available in
+			// the Android build. Keep the profile screen usable and avoid opening
+			// a native desktop picker from a touch button.
+			uploadButton.Visible = (UserSession.IsAdmin || UserSession.IsProfessor)
+				&& OS.GetName() != "Android";
 			uploadButton.Pressed += OpenAvatarPicker;
 		}
 
@@ -76,7 +80,8 @@ public partial class UserProfileBase : Control
 
 	private void OpenAvatarPicker()
 	{
-		if (!UserSession.IsAdmin && !UserSession.IsProfessor)
+		if ((!UserSession.IsAdmin && !UserSession.IsProfessor)
+			|| OS.GetName() == "Android")
 			return;
 
 		FileDialog dialog = new()
