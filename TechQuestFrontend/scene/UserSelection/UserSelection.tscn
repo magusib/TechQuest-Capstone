@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="13_i7tql"]
 [ext_resource type="Texture2D" uid="uid://ccp6phfbab71x" path="res://asset/style/buttons/purple_pressed.png" id="14_46eqy"]
 [ext_resource type="Texture2D" uid="uid://b2a73j458kdvc" path="res://asset/style/buttons/purple_hover.png" id="15_ab6tm"]
+[ext_resource type="PackedScene" uid="uid://clrqjm8rq7nof" path="res://scene/AdventureGame/Controll/ButtonSound.tscn" id="19_6sr6x"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4cfjs"]
 texture = ExtResource("4_qfmqg")
@@ -153,3 +154,6 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_6wmdr")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_djljo")
 theme_override_styles/hover = SubResource("StyleBoxTexture_5r6os")
 text = "Back"
+
+[node name="ButtonSound" parent="." unique_id=1764595472 instance=ExtResource("19_6sr6x")]
+RootPath = NodePath("..")

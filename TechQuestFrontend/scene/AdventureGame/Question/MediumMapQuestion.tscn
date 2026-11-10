@@ -4,7 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="2_5san4"]
 [ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="3_d8c0w"]
 [ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="3_u21r3"]
+[ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="3_uk7r5"]
 [ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="4_d8c0w"]
+[ext_resource type="Texture2D" uid="uid://dwbjksunhepdp" path="res://asset/style/name_plate2.png" id="4_mtsrt"]
 [ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="5_y2eqd"]
 [ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="7_6iaod"]
 [ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="8_w2pd4"]
@@ -12,6 +14,9 @@
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_aspgg"]
 texture = ExtResource("2_5san4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_50p45"]
+texture = ExtResource("4_mtsrt")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o61l1"]
 texture = ExtResource("2_5san4")
@@ -24,6 +29,9 @@ texture = ExtResource("4_d8c0w")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vwc5r"]
 texture = ExtResource("5_y2eqd")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gm8w4"]
+bg_color = Color(0, 0, 0, 0.5882353)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y2eqd"]
 texture = ExtResource("2_5san4")
@@ -54,24 +62,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_p2pip")
-
-[node name="HintAnswerLabel" type="Label" parent="." unique_id=1546618681]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -258.0
-offset_top = 118.0
-offset_right = 258.0
-offset_bottom = 158.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 25
-text = "_ _ _ _ _"
-horizontal_alignment = 1
 
 [node name="PurchaseOverlay" type="Control" parent="." unique_id=652128987]
 visible = false
@@ -104,6 +94,9 @@ theme_override_constants/separation = 12
 
 [node name="TitleLabel" type="Label" parent="PurchaseOverlay/PurchasePanel/VBoxContainer" unique_id=408165488]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_uk7r5")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_50p45")
 text = "Quiz Assistance"
 horizontal_alignment = 1
 
@@ -135,9 +128,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -304.75
-offset_top = -195.5
+offset_top = -217.25
 offset_right = 304.75
-offset_bottom = 195.5
+offset_bottom = 217.25
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_o61l1")
@@ -198,9 +191,9 @@ offset_bottom = 36.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Question"
-autowrap_mode = 2
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="ChoiceAButton" type="Button" parent="MediumMapQuestionPanel" unique_id=181820220]
 visible = false
@@ -246,9 +239,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -258.5
-offset_top = 43.0
+offset_top = 28.0
 offset_right = 258.5
-offset_bottom = 111.0
+offset_bottom = 96.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
@@ -270,6 +263,24 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_agqw3")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_gm8w4")
 theme_override_styles/hover = SubResource("StyleBoxTexture_vwc5r")
 text = "Submit"
+
+[node name="HintAnswerLabel" type="Label" parent="." unique_id=1546618681]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -258.0
+offset_top = 118.0
+offset_right = 258.0
+offset_bottom = 158.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_gm8w4")
+text = "_ _ _ _ _"
+horizontal_alignment = 1
 
 [node name="AnswerTipPanel" type="Panel" parent="." unique_id=668482658]
 visible = false
@@ -325,6 +336,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_uk7r5")
 text = "Proceed to Question"
 
 [node name="QuestionResult" type="Control" parent="." unique_id=1963868415]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

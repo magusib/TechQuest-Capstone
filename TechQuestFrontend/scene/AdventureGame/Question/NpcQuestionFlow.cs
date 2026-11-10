@@ -256,21 +256,24 @@ public abstract partial class NpcQuestionFlow : Control
             panel = correctAnswerPanel;
             panel.GetNode<Label>("CorrectAnswerLabel").Text = "Correct answer: " + result.CorrectAnswer;
             panel.GetNode<Label>("CoinsReceivedLabel").Text = "Coins: " + FormatChange(result.CoinsChanged);
-            panel.GetNode<Label>("PointsReceiveLabel").Text = "Points: " + FormatChange(result.PointsChanged);
+            panel.GetNode<Label>("PointsReceiveLabel").Text =
+                "Points: " + FormatChange(result.PointsChanged) + "\nLifespan deducted: 0";
         }
         else if (result.TimedOut)
         {
             panel = timeReachPanel;
             panel.GetNode<Label>("CorrectAnswerLabel").Text = "Correct answer: " + result.CorrectAnswer;
             panel.GetNode<Label>("CoinsDeductedLabel").Text = "Coins: " + FormatChange(result.CoinsChanged);
-            panel.GetNode<Label>("PointsDeductedLabel").Text = "Points: " + FormatChange(result.PointsChanged);
+            panel.GetNode<Label>("PointsDeductedLabel").Text =
+                "Points: " + FormatChange(result.PointsChanged) + "\nLifespan deducted: 10";
         }
         else
         {
             panel = wrongAnswerPanel;
             panel.GetNode<Label>("CorrectAnswerLabel").Text = "Correct answer: " + result.CorrectAnswer;
             panel.GetNode<Label>("CoinsDeductedLabel").Text = "Coins: " + FormatChange(result.CoinsChanged);
-            panel.GetNode<Label>("PointsDeductedLabel").Text = "Points: " + FormatChange(result.PointsChanged);
+            panel.GetNode<Label>("PointsDeductedLabel").Text =
+                "Points: " + FormatChange(result.PointsChanged) + "\nLifespan deducted: 10";
         }
         panel.Show();
         foreach (Node node in panel.GetChildren())

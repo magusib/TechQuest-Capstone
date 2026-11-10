@@ -38,6 +38,7 @@
 [ext_resource type="Texture2D" uid="uid://b2a73j458kdvc" path="res://asset/style/buttons/purple_hover.png" id="18_0mhs7"]
 [ext_resource type="Texture2D" uid="uid://clep5ogkc4als" path="res://asset/sprites/mediumasset.png" id="19_v3p3h"]
 [ext_resource type="PackedScene" uid="uid://hm7qptifm2g1" path="res://scene/AdventureGame/Controll/MediumPlatform.tscn" id="22_5yhs8"]
+[ext_resource type="AudioStream" uid="uid://bk11li8ucc0gr" path="res://Audio/medium1.wav" id="41_0ne21"]
 [ext_resource type="PackedScene" uid="uid://b10ujek4307ji" path="res://scene/AdventureGame/Controll/MobileControls.tscn" id="mobile_controls"]
 [ext_resource type="Script" uid="uid://c4m48lqvo52v2" path="res://scene/AdventureGame/NPC/AdminNPC/NpcDeploymentRenderer.cs" id="npc_deployment_renderer"]
 
@@ -809,7 +810,7 @@ visible = false
 position = Vector2(599, 294)
 
 [node name="Camera2D" type="Camera2D" parent="Character1" unique_id=1762428344]
-position = Vector2(-1, -28)
+position = Vector2(1, -26)
 zoom = Vector2(4, 3)
 position_smoothing_enabled = true
 
@@ -878,49 +879,49 @@ script = ExtResource("npc_deployment_renderer")
 Difficulty = "Medium"
 
 [node name="MediumNPCSpawn01" type="Marker2D" parent="NPCSpawnPoints" unique_id=826897738]
-position = Vector2(1272, 389)
+position = Vector2(1272, 400)
 
 [node name="MediumNPCSpawn02" type="Marker2D" parent="NPCSpawnPoints" unique_id=1403164571]
-position = Vector2(1592, 390)
+position = Vector2(1592, 400)
 
 [node name="MediumNPCSpawn03" type="Marker2D" parent="NPCSpawnPoints" unique_id=11895690]
-position = Vector2(1997, 389)
+position = Vector2(2000, 400)
 
 [node name="MediumNPCSpawn04" type="Marker2D" parent="NPCSpawnPoints" unique_id=1866063527]
-position = Vector2(2274, 256)
+position = Vector2(2272, 272)
 
 [node name="MediumNPCSpawn05" type="Marker2D" parent="NPCSpawnPoints" unique_id=1033612967]
-position = Vector2(2404, 294)
+position = Vector2(2400, 304)
 
 [node name="MediumNPCSpawn06" type="Marker2D" parent="NPCSpawnPoints" unique_id=901748146]
-position = Vector2(2333, 485)
+position = Vector2(2336, 496)
 
 [node name="MediumNPCSpawn07" type="Marker2D" parent="NPCSpawnPoints" unique_id=1734168872]
-position = Vector2(2844, 542)
+position = Vector2(2840, 560)
 
 [node name="MediumNPCSpawn08" type="Marker2D" parent="NPCSpawnPoints" unique_id=1922606403]
-position = Vector2(3590, 452)
+position = Vector2(3592, 464)
 
 [node name="MediumNPCSpawn09" type="Marker2D" parent="NPCSpawnPoints" unique_id=1412864506]
-position = Vector2(3552, 638)
+position = Vector2(3552, 656)
 
 [node name="MediumNPCSpawn10" type="Marker2D" parent="NPCSpawnPoints" unique_id=1051040165]
-position = Vector2(3022, -29)
+position = Vector2(3024, -16)
 
 [node name="MediumNPCSpawn11" type="Marker2D" parent="NPCSpawnPoints" unique_id=581556858]
-position = Vector2(4066, -109)
+position = Vector2(4064, -80)
 
 [node name="MediumNPCSpawn12" type="Marker2D" parent="NPCSpawnPoints" unique_id=1708882137]
-position = Vector2(4128, 189)
+position = Vector2(4128, 208)
 
 [node name="MediumNPCSpawn13" type="Marker2D" parent="NPCSpawnPoints" unique_id=1586523150]
-position = Vector2(1280, -393)
+position = Vector2(1280, -368)
 
 [node name="MediumNPCSpawn14" type="Marker2D" parent="NPCSpawnPoints" unique_id=441016006]
-position = Vector2(1690, -98)
+position = Vector2(1688, -80)
 
 [node name="MediumNPCSpawn15" type="Marker2D" parent="NPCSpawnPoints" unique_id=835725427]
-position = Vector2(2917, -74)
+position = Vector2(2912, -48)
 
 [node name="Killzone" parent="." unique_id=2081880991 instance=ExtResource("17_d6k4o")]
 
@@ -987,3 +988,8 @@ position = Vector2(461, 37)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MediumPlatform/MediumPlatform9" unique_id=1933047508]
 libraries/ = SubResource("AnimationLibrary_hhrpk")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=241635711]
+stream = ExtResource("41_0ne21")
+autoplay = true
+bus = &"Music"

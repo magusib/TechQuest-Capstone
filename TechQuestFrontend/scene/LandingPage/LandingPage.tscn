@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="6_6wmdr"]
 [ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="7_7jleb"]
 [ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="8_6wmdr"]
+[ext_resource type="PackedScene" uid="uid://clrqjm8rq7nof" path="res://scene/AdventureGame/Controll/ButtonSound.tscn" id="10_djljo"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_70yj7"]
 texture = ExtResource("3_j5tnn")
@@ -84,3 +85,6 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_1b5o1")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_djljo")
 theme_override_styles/hover = SubResource("StyleBoxTexture_61esm")
 text = "Exit"
+
+[node name="ButtonSound" parent="." unique_id=1764595472 instance=ExtResource("10_djljo")]
+RootPath = NodePath("..")

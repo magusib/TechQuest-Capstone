@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://bb0ta7fpshg6x" path="res://asset/style/buttons/navy_default.png" id="20_be0cp"]
 [ext_resource type="Texture2D" uid="uid://dh200awrt2vr6" path="res://asset/style/buttons/navy_pressed.png" id="21_fsx1h"]
 [ext_resource type="Texture2D" uid="uid://bl41b4avx37o6" path="res://asset/style/buttons/navy_hover.png" id="22_qf0q2"]
+[ext_resource type="PackedScene" uid="uid://clrqjm8rq7nof" path="res://scene/AdventureGame/Controll/ButtonSound.tscn" id="23_n32i3"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qfmqg"]
 texture = ExtResource("3_nt8ub")
@@ -848,3 +849,6 @@ oversampling_override = 1.0
 position = Vector2i(0, 36)
 
 [node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=558005373]
+
+[node name="ButtonSound" parent="." unique_id=1764595472 instance=ExtResource("23_n32i3")]
+RootPath = NodePath("..")

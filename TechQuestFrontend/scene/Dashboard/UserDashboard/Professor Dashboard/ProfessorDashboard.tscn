@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://cdy3upgkc6uxf" path="res://asset/Icons/Menu.png" id="14_qs01i"]
 [ext_resource type="PackedScene" path="res://scene/Dashboard/UserDashboard/Professor Dashboard/ProfessorProfile.tscn" id="15_a6i8o"]
 [ext_resource type="PackedScene" uid="uid://cmwvves4q23wy" path="res://scene/Dashboard/Modules/Tutorial/ProfessorTutorial.tscn" id="17_tutorial"]
+[ext_resource type="AudioStream" uid="uid://dfpbvbjmureyd" path="res://Audio/Background.mp3" id="19_dbnod"]
 [ext_resource type="Script" uid="uid://ccjsvxw8gbe5s" path="res://scene/Dashboard/UserDashboard/Professor Dashboard/ProfessorDashboard.cs" id="ProfessorDashboardScript"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qmu3"]
@@ -303,13 +304,13 @@ stretch_mode = 5
 layout_mode = 0
 offset_left = 140.0
 offset_top = 65.0
-offset_right = 336.0
+offset_right = 298.0
 offset_bottom = 107.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("12_kewjt")
 theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxTexture_furx4")
-text = "Professor Name"
+text = "Professor "
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -370,8 +371,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -195.0
-offset_bottom = -43.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = -203.0
+offset_bottom = -47.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -400,3 +403,8 @@ layout_mode = 1
 [node name="ProfessorTutorialPopup" parent="." unique_id=880115066 instance=ExtResource("17_tutorial")]
 visible = false
 layout_mode = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1111544381]
+stream = ExtResource("19_dbnod")
+autoplay = true
+bus = &"Background"

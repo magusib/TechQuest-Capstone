@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://bb0ta7fpshg6x" path="res://asset/style/buttons/navy_default.png" id="19_e6til"]
 [ext_resource type="Texture2D" uid="uid://dh200awrt2vr6" path="res://asset/style/buttons/navy_pressed.png" id="20_lcfga"]
 [ext_resource type="Texture2D" uid="uid://bl41b4avx37o6" path="res://asset/style/buttons/navy_hover.png" id="21_bqfmw"]
+[ext_resource type="PackedScene" uid="uid://clrqjm8rq7nof" path="res://scene/AdventureGame/Controll/ButtonSound.tscn" id="22_h8otq"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w7i7m"]
 texture = ExtResource("3_c4d7h")
@@ -509,3 +510,6 @@ text = "Cancel"
 [node name="MessageDialog" type="AcceptDialog" parent="." unique_id=671115836]
 
 [node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=135173548]
+
+[node name="ButtonSound" parent="." unique_id=1764595472 instance=ExtResource("22_h8otq")]
+RootPath = NodePath("..")

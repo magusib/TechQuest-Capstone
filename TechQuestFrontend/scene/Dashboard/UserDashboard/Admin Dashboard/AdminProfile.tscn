@@ -1,4 +1,4 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://8kf4ikvu53b3"]
 
 [ext_resource type="Script" uid="uid://c7higuh1432sx" path="res://scene/Dashboard/UserDashboard/Admin Dashboard/AdminProfile.cs" id="1_kn8ht"]
 [ext_resource type="Texture2D" uid="uid://s3wgaw46w4f5" path="res://asset/style/LargeBackground.png" id="2_nt5lt"]
@@ -113,6 +113,7 @@ offset_left = 319.0
 offset_top = 128.0
 offset_right = 479.0
 offset_bottom = 158.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_styles/normal = SubResource("StyleBoxTexture_44frp")
 text = "Last Name"
 horizontal_alignment = 1
@@ -124,6 +125,7 @@ offset_left = 11.0
 offset_top = 170.0
 offset_right = 540.0
 offset_bottom = 200.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_styles/normal = SubResource("StyleBoxTexture_0275c")
 text = "Email"
 horizontal_alignment = 1

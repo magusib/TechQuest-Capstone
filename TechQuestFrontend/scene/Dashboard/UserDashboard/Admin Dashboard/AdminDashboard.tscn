@@ -15,8 +15,9 @@
 [ext_resource type="Texture2D" uid="uid://bl8mxxxkc2g5y" path="res://asset/Icons/points.png" id="13_ngh7r"]
 [ext_resource type="Texture2D" uid="uid://dclpu3xmblprx" path="res://asset/style/UI_Flat_Banner03a.png" id="13_x5f5y"]
 [ext_resource type="Texture2D" uid="uid://cdy3upgkc6uxf" path="res://asset/Icons/Menu.png" id="14_3ixja"]
-[ext_resource type="PackedScene" path="res://scene/Dashboard/UserDashboard/Admin Dashboard/AdminProfile.tscn" id="15_e1aig"]
+[ext_resource type="PackedScene" uid="uid://8kf4ikvu53b3" path="res://scene/Dashboard/UserDashboard/Admin Dashboard/AdminProfile.tscn" id="15_e1aig"]
 [ext_resource type="PackedScene" uid="uid://du1wjyf2tggkf" path="res://scene/Dashboard/Modules/Tutorial/AdminTutorial.tscn" id="17_tutorial"]
+[ext_resource type="AudioStream" uid="uid://dfpbvbjmureyd" path="res://Audio/Background.mp3" id="19_x5f5y"]
 [ext_resource type="Script" uid="uid://ddchqti08tx3j" path="res://scene/Dashboard/UserDashboard/Admin Dashboard/AdminDashboard.cs" id="AdminDashboardScript"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1aig"]
@@ -309,7 +310,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("12_p3dgv")
 theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxTexture_a6i8o")
-text = "Admin Name"
+text = "Admin "
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -370,8 +371,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -193.0
-offset_bottom = -42.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = -203.0
+offset_bottom = -47.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -402,3 +405,8 @@ layout_mode = 1
 [node name="AdminTutorialPopup" parent="." unique_id=189311027 instance=ExtResource("17_tutorial")]
 visible = false
 layout_mode = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2048862530]
+stream = ExtResource("19_x5f5y")
+autoplay = true
+bus = &"Background"

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://clrqjm8rq7nof"]
+
+[ext_resource type="Script" uid="uid://dl5n8ryghx6w8" path="res://scene/AdventureGame/Controll/ButtonSound.cs" id="1_pe8l6"]
+
+[node name="ButtonSound" type="Node" unique_id=1764595472]
+script = ExtResource("1_pe8l6")

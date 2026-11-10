@@ -53,16 +53,20 @@ public partial class UserProfileBase : Control
 		try
 		{
 			AccountProfileDto profile = await AccountApiClient.GetProfileAsync();
-			if (firstNameLabel != null) firstNameLabel.Text = profile.FirstName;
-			if (lastNameLabel != null) lastNameLabel.Text = profile.LastName;
-			if (emailLabel != null) emailLabel.Text = profile.Email;
-			if (yearLevelLabel != null)
+			if (!GodotObject.IsInstanceValid(this) || !IsInsideTree())
+				return;
+
+			if (GodotObject.IsInstanceValid(firstNameLabel)) firstNameLabel.Text = profile.FirstName;
+			if (GodotObject.IsInstanceValid(lastNameLabel)) lastNameLabel.Text = profile.LastName;
+			if (GodotObject.IsInstanceValid(emailLabel)) emailLabel.Text = profile.Email;
+			if (GodotObject.IsInstanceValid(yearLevelLabel))
 				yearLevelLabel.Text = profile.YearLevel?.ToString() ?? "Not set";
 
 			UserSession.UpdateYearLevel(profile.YearLevel);
 			UserSession.UpdateAvatar(profile.Avatar);
 			Texture2D texture = await AccountApiClient.LoadAvatarAsync(profile.Avatar);
-			if (GodotObject.IsInstanceValid(avatarHolder) && texture != null)
+			if (GodotObject.IsInstanceValid(this) && IsInsideTree()
+				&& GodotObject.IsInstanceValid(avatarHolder) && texture != null)
 				avatarHolder.Texture = texture;
 		}
 		catch (Exception error)

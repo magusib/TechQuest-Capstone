@@ -3,7 +3,9 @@
 [ext_resource type="Script" uid="uid://ccdpd8gokag3y" path="res://scene/AdventureGame/Question/EasyMapQuestion.cs" id="1_fvcs6"]
 [ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="2_emvso"]
 [ext_resource type="FontFile" uid="uid://ctrj4fsjxyrtw" path="res://asset/style/fonts/KalegoDemoRegular-V4vrZ.ttf" id="3_6babw"]
+[ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="3_pdoyj"]
 [ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="4_2awba"]
+[ext_resource type="Texture2D" uid="uid://dwbjksunhepdp" path="res://asset/style/name_plate2.png" id="4_5yidw"]
 [ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="5_aspgg"]
 [ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="6_hveeu"]
 [ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="7_aspgg"]
@@ -12,6 +14,9 @@
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_st2v0"]
 texture = ExtResource("2_emvso")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_txea8"]
+texture = ExtResource("4_5yidw")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4bi0h"]
 texture = ExtResource("2_emvso")
@@ -89,6 +94,9 @@ theme_override_constants/separation = 12
 
 [node name="TitleLabel" type="Label" parent="PurchaseOverlay/PurchasePanel/VBoxContainer" unique_id=1157049140]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_pdoyj")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_txea8")
 text = "Quiz Assistance"
 horizontal_alignment = 1
 
@@ -183,9 +191,9 @@ offset_bottom = 36.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Question"
-autowrap_mode = 2
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="ChoiceAButton" type="Button" parent="EasyMapQuestionPanel" unique_id=740237721]
 visible = false

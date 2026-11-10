@@ -4,6 +4,7 @@ using System;
 public abstract partial class DashboardBase : Control
 {
 	private ConfirmationDialog logoutConfirmationDialog;
+	private bool responsiveLayoutConnected;
 
 	// Existing Dashboard nodes
 	protected TextureButton HomeButton;
@@ -81,6 +82,8 @@ public abstract partial class DashboardBase : Control
 
 	protected void SetupCommonDisplay()
 	{
+		SetupResponsiveLayout();
+
 		if (PlayerName != null)
 			PlayerName.Text = UserSession.FullName;
 
@@ -99,6 +102,111 @@ public abstract partial class DashboardBase : Control
 			PointsLabel.Text = UserSession.Points.ToString();
 
 		SetAvatar();
+	}
+
+	/// <summary>
+	/// Keeps the desktop-authored dashboard usable on narrow/portrait screens.
+	/// The scenes intentionally keep their original 1280x720 artwork positions;
+	/// only a narrow viewport gets this alternate arrangement.
+	/// </summary>
+	private void SetupResponsiveLayout()
+	{
+		if (!responsiveLayoutConnected)
+		{
+			GetViewport().SizeChanged += ApplyResponsiveLayout;
+			responsiveLayoutConnected = true;
+		}
+
+		ApplyResponsiveLayout();
+	}
+
+	private void ApplyResponsiveLayout()
+	{
+		if (!IsInsideTree())
+			return;
+
+		Vector2 viewport = GetViewportRect().Size;
+		bool narrow = viewport.X < 900f || viewport.Y < 600f;
+		if (!narrow)
+			return;
+
+		float width = Mathf.Max(viewport.X, 320f);
+		float height = Mathf.Max(viewport.Y, 480f);
+		float margin = Mathf.Clamp(width * 0.03f, 10f, 24f);
+		float navSize = Mathf.Clamp((width - margin * 2f - 25f) / 6f, 48f, 68f);
+		float navY = Mathf.Max(110f, height - navSize - margin);
+
+		// Compact header: avatar/name on the left and menu on the right.
+		Control topBar = GetNodeOrNull<Control>("TopBar");
+		Control avatarPanel = GetNodeOrNull<Control>("TopBar/AvatarPanel");
+		Place(topBar, new Vector2(margin, margin), new Vector2(width - margin * 2f, 82f));
+		Place(avatarPanel, Vector2.Zero, new Vector2(Mathf.Min(width - 80f, 250f), 82f));
+		Place(Avatar, new Vector2(4f, 4f), new Vector2(70f, 70f));
+		Place(PlayerName, new Vector2(78f, 20f), new Vector2(Mathf.Min(160f, width - 170f), 42f));
+		Place(MenuButton, new Vector2(width - margin * 2f - 58f, 8f), new Vector2(58f, 64f));
+
+		// All dashboard actions share one touch-friendly bottom navigation row.
+		Control[] panels =
+		{
+			GetNodeOrNull<Control>("HomePanel"),
+			GetNodeOrNull<Control>("RoomPanel"),
+			GetNodeOrNull<Control>("LeaderboardPanel"),
+			GetNodeOrNull<Control>("ShopPanel"),
+			GetNodeOrNull<Control>("CharacterPanel"),
+			GetNodeOrNull<Control>("TutorialPanel")
+		};
+		BaseButton[] buttons = { HomeButton, RoomButton, LeaderboardButton, ShopButton, CharacterButton, TutorialButton };
+		for (int i = 0; i < panels.Length; i++)
+		{
+			float x = margin + i * (navSize + 5f);
+			Place(panels[i], new Vector2(x, navY), new Vector2(navSize, navSize));
+			FitButton(panels[i], buttons[i]);
+		}
+
+		// Difficulty cards remain available, but are resized and stacked inside
+		// the safe area so they cannot cover the header or bottom navigation.
+		Control difficulty = GetNodeOrNull<Control>("DificultySelectionButton2");
+		Place(difficulty, Vector2.Zero, viewport);
+		TextureButton[] maps = { EasyButton, MediumButton, HardButton };
+		float safeTop = 108f;
+		float safeBottom = navY - 12f;
+		float availableHeight = Mathf.Max(90f, safeBottom - safeTop);
+		bool portrait = height > width * 1.15f;
+		if (portrait)
+		{
+			float cardHeight = Mathf.Min(availableHeight / 3f - 8f, 118f);
+			float cardWidth = Mathf.Min(width - margin * 2f, 360f);
+			float cardX = (width - cardWidth) / 2f;
+			for (int i = 0; i < maps.Length; i++)
+				Place(maps[i], new Vector2(cardX, safeTop + i * (cardHeight + 8f)), new Vector2(cardWidth, cardHeight));
+		}
+		else
+		{
+			float cardWidth = Mathf.Min((width - margin * 2f - 16f) / 3f, 300f);
+			float cardHeight = Mathf.Min(availableHeight - 8f, 150f);
+			float startX = (width - (cardWidth * 3f + 16f * 2f)) / 2f;
+			for (int i = 0; i < maps.Length; i++)
+				Place(maps[i], new Vector2(startX + i * (cardWidth + 16f), safeTop + (availableHeight - cardHeight) / 2f), new Vector2(cardWidth, cardHeight));
+		}
+	}
+
+	private static void Place(Control control, Vector2 position, Vector2 size)
+	{
+		if (control == null)
+			return;
+
+		control.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.TopLeft);
+		control.Position = position;
+		control.Size = size;
+	}
+
+	private static void FitButton(Control panel, BaseButton button)
+	{
+		if (button is not Control control)
+			return;
+
+		control.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect, Control.LayoutPresetMode.Minsize, 4);
+		control.MouseFilter = Control.MouseFilterEnum.Stop;
 	}
 
 	private async void SetAvatar()

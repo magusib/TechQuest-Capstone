@@ -9,6 +9,7 @@ public partial class Character : CharacterBody2D
 
 	private float gravity;
 	private AnimatedSprite2D animatedSprite;
+	private AudioStreamPlayer jumpAudio;
 	private Label nameLabel;
 	private double walkingRecoverySeconds;
 	private bool walkingRecoveryInProgress;
@@ -20,6 +21,11 @@ public partial class Character : CharacterBody2D
 			.AsSingle();
 
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		jumpAudio = new AudioStreamPlayer
+		{
+			Stream = GD.Load<AudioStream>("res://Audio/Jump.wav")
+		};
+		AddChild(jumpAudio);
 		nameLabel = new Label
 		{
 			Text = UserSession.FullName,
@@ -94,6 +100,8 @@ public partial class Character : CharacterBody2D
 				Velocity.X,
 				JUMP_VELOCITY
 			);
+
+			jumpAudio.Play();
 
 			// Play jump animation
 			animatedSprite.Play("Jump");
