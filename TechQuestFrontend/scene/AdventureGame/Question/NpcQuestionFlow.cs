@@ -49,6 +49,8 @@ public abstract partial class NpcQuestionFlow : Control
         choiceButtons.Add(questionPanel.GetNode<Button>("ChoiceDButton"));
 
         hintAnswerLabel = GetNode<Label>("HintAnswerLabel");
+        hintAnswerLabel.ZIndex = 20;
+        hintAnswerLabel.MouseFilter = Control.MouseFilterEnum.Ignore;
         purchaseOverlay = GetNode<Control>("PurchaseOverlay");
         purchaseTitleLabel = GetNode<Label>("PurchaseOverlay/PurchasePanel/VBoxContainer/TitleLabel");
         notificationLabel = GetNode<Label>("PurchaseOverlay/PurchasePanel/VBoxContainer/NotificationLabel");
@@ -211,12 +213,13 @@ public abstract partial class NpcQuestionFlow : Control
             NpcQuizPurchaseResultDto result = await MiniGameApiClient.PurchaseNpcQuizOptionAsync(
                 question.DeploymentId, Guid.NewGuid(), purchaseType);
             UserSession.UpdateStudentProfile(result.TotalCoins, UserSession.Points);
-            timeLeft = 10;
+            timeLeft = Math.Max(0, result.TimeExtensionSeconds);
             UpdateTimerLabel();
             if (!string.IsNullOrWhiteSpace(result.HintDisplay))
             {
-                hintAnswerLabel.Text = result.HintDisplay;
+                hintAnswerLabel.Text = result.HintDisplay.Trim();
                 hintAnswerLabel.Show();
+                hintAnswerLabel.MoveToFront();
             }
             purchaseOverlay.Hide();
             SetAnswerControlsDisabled(false);

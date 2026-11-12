@@ -102,15 +102,15 @@ horizontal_alignment = 1
 
 [node name="ExtendTimeButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer" unique_id=1574361667]
 layout_mode = 2
-text = "Extend Time - 10 Coins"
+text = "Extend Time - 5 Coins"
 
 [node name="ExtendTimeHintButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer" unique_id=300846218]
 layout_mode = 2
-text = "Extend Time + Hint - 20 Coins"
+text = "Extend Time + Hint - 10 Coins"
 
 [node name="GetHintsButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer" unique_id=2136218345]
 layout_mode = 2
-text = "Get Hints - 20 Coins"
+text = "Get Hints - 10 Coins"
 
 [node name="NoButton" type="Button" parent="PurchaseOverlay/PurchasePanel/VBoxContainer" unique_id=347000127]
 layout_mode = 2
@@ -278,7 +278,9 @@ offset_bottom = 158.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 25
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_aspgg")
+z_index = 20
 text = "_ _ _ _ _"
 horizontal_alignment = 1
 

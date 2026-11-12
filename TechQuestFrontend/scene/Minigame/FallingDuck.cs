@@ -277,7 +277,7 @@ public partial class FallingDuck : Node2D
 		timeLeft--;
 		timerLabel.Text = timeLeft.ToString();
 		if (timeLeft <= 0)
-			FinishGame(false);
+			FinishGame(true);
 	}
 
 	private void FinishGame(bool won)

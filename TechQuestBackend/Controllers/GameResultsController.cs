@@ -66,7 +66,9 @@ namespace TechQuestBackend.Controllers
         }
 
         [HttpPost("mini-game-attempt")]
-        public async Task<IActionResult> SubmitMiniGameAttempt(MiniGameAttemptRequest request)
+        public async Task<IActionResult> SubmitMiniGameAttempt(
+            MiniGameAttemptRequest request,
+            CancellationToken cancellationToken)
         {
             if (request.AttemptId == Guid.Empty)
                 return BadRequest("A valid attempt identifier is required.");
@@ -78,11 +80,13 @@ namespace TechQuestBackend.Controllers
             if (userId <= 0)
                 return Unauthorized();
 
-            await using var transaction = await _db.Database.BeginTransactionAsync(IsolationLevel.ReadCommitted);
+            await using var transaction = await _db.Database.BeginTransactionAsync(
+                IsolationLevel.ReadCommitted,
+                cancellationToken);
 
             var profile = await _db.StudentProfiles
                 .FromSqlInterpolated($"SELECT * FROM \"Student_profile\" WHERE \"UserId\" = {userId} FOR UPDATE")
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync(cancellationToken);
             if (profile == null)
                 return BadRequest("Student profile was not found.");
 
@@ -107,13 +111,16 @@ namespace TechQuestBackend.Controllers
                     return Conflict("This mini-game attempt was already recorded with a different result.");
 
                 var priorResult = await _db.GameResults.AsNoTracking()
-                    .FirstOrDefaultAsync(result => result.AttemptId == request.AttemptId);
-                await transaction.CommitAsync();
+                    .FirstOrDefaultAsync(result => result.AttemptId == request.AttemptId, cancellationToken);
+                await transaction.CommitAsync(cancellationToken);
                 return Ok(new MiniGameAttemptResponse
                 {
                     AttemptId = request.AttemptId,
                     GameWon = challenge.MiniGameWon.Value,
+                    EarnedCoins = priorResult?.EarnedCoins ?? 0,
+                    EarnedPoints = priorResult?.EarnedPoints ?? 0,
                     CoinsDeducted = priorResult?.CoinsDeducted ?? 0,
+                    PointsDeducted = priorResult?.PointsDeducted ?? 0,
                     TotalCoins = profile.TotalCoins,
                     TotalPoints = profile.TotalPoints,
                     AnswerTip = challenge.AnswerTip,
@@ -124,12 +131,14 @@ namespace TechQuestBackend.Controllers
             if (challenge.State != "MiniGamePending")
                 return Conflict("The NPC challenge is not waiting for a mini-game result.");
 
+            const int miniGameWinReward = 15;
+            int earnedCoins = request.GameWon ? miniGameWinReward : 0;
             int coinsDeducted = 0;
             if (!request.GameWon)
             {
                 coinsDeducted = Math.Min(5, profile.TotalCoins);
-                profile.TotalCoins -= coinsDeducted;
             }
+            profile.TotalCoins = profile.TotalCoins - coinsDeducted + earnedCoins;
 
             challenge.MiniGameWon = request.GameWon;
             challenge.AnswerTipAwarded = true;
@@ -141,14 +150,15 @@ namespace TechQuestBackend.Controllers
                 1,
                 miniGameType: challenge.MiniGameType,
                 miniGameId: question.MiniGameId,
-                successful: request.GameWon);
+                successful: request.GameWon,
+                cancellationToken: cancellationToken);
 
             var result = new GameResult
             {
                 StudentId = profile.StudentId,
                 QuestionId = question.QuestionId,
                 AttemptId = request.AttemptId,
-                EarnedCoins = 0,
+                EarnedCoins = earnedCoins,
                 EarnedPoints = 0,
                 CoinsDeducted = coinsDeducted,
                 PointsDeducted = 0,
@@ -157,14 +167,17 @@ namespace TechQuestBackend.Controllers
             };
 
             _db.GameResults.Add(result);
-            await _db.SaveChangesAsync();
-            await transaction.CommitAsync();
+            await _db.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
 
             return Ok(new MiniGameAttemptResponse
             {
                 AttemptId = request.AttemptId,
                 GameWon = result.IsCorrect,
+                EarnedCoins = result.EarnedCoins,
+                EarnedPoints = result.EarnedPoints,
                 CoinsDeducted = result.CoinsDeducted,
+                PointsDeducted = result.PointsDeducted,
                 TotalCoins = profile.TotalCoins,
                 TotalPoints = profile.TotalPoints,
                 AnswerTip = challenge.AnswerTip,
@@ -363,8 +376,8 @@ namespace TechQuestBackend.Controllers
             if (session.State != "Pending")
                 return Conflict("This character challenge is no longer active.");
 
-            int coinsDeducted = outcome == "LOSE" ? Math.Min(20, profile.TotalCoins) : 0;
-            int pointsDeducted = outcome == "LOSE" ? Math.Min(20, profile.TotalPoints) : 0;
+            int coinsDeducted = outcome == "LOSE" ? Math.Min(10, profile.TotalCoins) : 0;
+            int pointsDeducted = outcome == "LOSE" ? Math.Min(10, profile.TotalPoints) : 0;
             int lifespanDeducted = outcome == "LOSE"
                 ? Math.Min(CharacterChallengeLifespanPenalty, Math.Max(0, profile.Lifespan))
                 : 0;
@@ -439,9 +452,9 @@ namespace TechQuestBackend.Controllers
             string purchaseType = (request.PurchaseType ?? "").Trim().ToLowerInvariant();
             int cost = purchaseType switch
             {
-                "extend_time" => 10,
-                "extend_time_hint" => 20,
-                "hint" => 20,
+                "extend_time" => 5,
+                "extend_time_hint" => 10,
+                "hint" => 10,
                 _ => 0
             };
             if (cost == 0)
@@ -498,7 +511,7 @@ namespace TechQuestBackend.Controllers
             }
 
             challenge.QuestionStartedAt = DateTime.UtcNow;
-            challenge.TimeExtensionSeconds = 10;
+            challenge.TimeExtensionSeconds = 15;
 
             profile.TotalCoins -= cost;
             _db.NpcQuizPurchaseTransactions.Add(new NpcQuizPurchaseTransaction
@@ -578,11 +591,11 @@ namespace TechQuestBackend.Controllers
             bool correct)
         {
             if (string.Equals(difficulty, "Easy", StringComparison.OrdinalIgnoreCase))
-                return correct ? (15, 20, 0, 0) : (0, 0, 5, 10);
+                return correct ? (20, 20, 0, 0) : (0, 0, 5, 10);
             if (string.Equals(difficulty, "Medium", StringComparison.OrdinalIgnoreCase))
-                return correct ? (20, 30, 0, 0) : (0, 0, 8, 15);
+                return correct ? (30, 30, 0, 0) : (0, 0, 8, 15);
             if (string.Equals(difficulty, "Hard", StringComparison.OrdinalIgnoreCase))
-                return correct ? (30, 50, 0, 0) : (0, 0, 10, 20);
+                return correct ? (50, 50, 0, 0) : (0, 0, 10, 20);
 
             throw new InvalidOperationException("The NPC deployment has an unsupported difficulty.");
         }
@@ -645,7 +658,10 @@ namespace TechQuestBackend.Controllers
     {
         public Guid AttemptId { get; set; }
         public bool GameWon { get; set; }
+        public int EarnedCoins { get; set; }
+        public int EarnedPoints { get; set; }
         public int CoinsDeducted { get; set; }
+        public int PointsDeducted { get; set; }
         public int TotalCoins { get; set; }
         public int TotalPoints { get; set; }
         public string AnswerTip { get; set; } = "";
