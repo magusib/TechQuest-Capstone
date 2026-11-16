@@ -85,6 +85,7 @@ grow_vertical = 2
 script = ExtResource("1_qox3y")
 
 [node name="MediumNPCPanel" type="Panel" parent="." unique_id=504163558]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -359,7 +360,6 @@ ok_button_text = "Yes"
 dialog_text = "Do  you want to Undeploy this NPC?"
 
 [node name="MediumMapNPCManagement" type="Panel" parent="." unique_id=1023539817]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -392,51 +392,132 @@ text = "Medium Map NPC Management"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SubjectLabel" type="Label" parent="MediumMapNPCManagement" unique_id=1831529773]
+[node name="QuestionFormScrollContainer" type="ScrollContainer" parent="MediumMapNPCManagement" unique_id=818928893]
 layout_mode = 0
-offset_left = 30.0
-offset_top = 64.0
-offset_right = 245.0
-offset_bottom = 148.0
+offset_left = 24.0
+offset_top = 62.0
+offset_right = 496.0
+offset_bottom = 632.0
+horizontal_scroll_mode = 0
+
+[node name="QuestionForm" type="VBoxContainer" parent="MediumMapNPCManagement/QuestionFormScrollContainer" unique_id=1754869748]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SubjectLabel" type="Label" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm" unique_id=1831529773]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Subject Name"
 
-[node name="Subject" type="OptionButton" parent="MediumMapNPCManagement/SubjectLabel" unique_id=955022070]
+[node name="Subject" type="OptionButton" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm/SubjectLabel" unique_id=955022070]
 layout_mode = 0
 offset_top = 31.0
 offset_right = 463.0
 offset_bottom = 67.0
 alignment = 1
 
-[node name="MinigameLabel" type="Label" parent="MediumMapNPCManagement" unique_id=1491968986]
-layout_mode = 0
-offset_left = 30.0
-offset_top = 139.0
-offset_right = 175.0
-offset_bottom = 181.5
+[node name="MinigameLabel" type="Label" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm" unique_id=1491968986]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Choose Mini Game"
 
-[node name="MinigameOptions" type="OptionButton" parent="MediumMapNPCManagement/MinigameLabel" unique_id=1286511687]
+[node name="MinigameOptions" type="OptionButton" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm/MinigameLabel" unique_id=1286511687]
 layout_mode = 0
 offset_top = 28.0
 offset_right = 452.0
 offset_bottom = 60.0
 alignment = 1
 
-[node name="QuestionLabel" type="Label" parent="MediumMapNPCManagement" unique_id=279454062]
-layout_mode = 0
-offset_left = 30.0
-offset_top = 205.0
-offset_right = 101.0
-offset_bottom = 249.5
+[node name="QuestionLabel" type="Label" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm" unique_id=279454062]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Question"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Question" type="LineEdit" parent="MediumMapNPCManagement/QuestionLabel" unique_id=1389838500]
+[node name="Question" type="LineEdit" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm/QuestionLabel" unique_id=1389838500]
 layout_mode = 0
 offset_top = 32.0
 offset_right = 450.0
 offset_bottom = 87.0
+
+[node name="QuestionChoicesSpacer" type="Control" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm" unique_id=1568085961]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+
+[node name="Choices" type="VBoxContainer" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm" unique_id=698105786]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="ChoiceALabel" type="Label" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=460864883]
+layout_mode = 2
+text = "Choice A"
+
+[node name="ChoiceA" type="LineEdit" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=634609924]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+
+[node name="ChoiceBLabel" type="Label" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=329151704]
+layout_mode = 2
+text = "Choice B"
+
+[node name="ChoiceB" type="LineEdit" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=1980576722]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+
+[node name="ChoiceCLabel" type="Label" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=479459922]
+layout_mode = 2
+text = "Choice C"
+
+[node name="ChoiceC" type="LineEdit" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=1920044669]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+
+[node name="ChoiceDLabel" type="Label" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=797849686]
+layout_mode = 2
+text = "Choice D"
+
+[node name="ChoiceD" type="LineEdit" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=1604672933]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+
+[node name="CorrectAnswerLabel" type="Label" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=108015946]
+layout_mode = 2
+text = "Correct answer"
+
+[node name="CorrectAnswer" type="OptionButton" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=1592501056]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AnswerTipLabel" type="Label" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm" unique_id=1247909147]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Answer Tip"
+
+[node name="AnswerTip" type="LineEdit" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm/AnswerTipLabel" unique_id=1064030620]
+layout_mode = 0
+offset_top = 27.0
+offset_right = 444.0
+offset_bottom = 72.0
+
+[node name="TimerLabel" type="Label" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm" unique_id=1306031071]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Timer (seconds)"
+
+[node name="Time" type="LineEdit" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm/TimerLabel" unique_id=711175913]
+layout_mode = 0
+offset_top = 27.0
+offset_right = 448.0
+offset_bottom = 65.0
+placeholder_text = "30"
 
 [node name="AnswerChoicesLabel" type="Label" parent="MediumMapNPCManagement" unique_id=2014102003]
 visible = false
@@ -454,6 +535,7 @@ offset_right = 448.0
 offset_bottom = 63.0
 
 [node name="CorrectAnswerLabel" type="Label" parent="MediumMapNPCManagement" unique_id=1247909146]
+visible = false
 layout_mode = 0
 offset_left = 30.0
 offset_top = 306.0
@@ -466,35 +548,6 @@ layout_mode = 0
 offset_top = 27.0
 offset_right = 444.0
 offset_bottom = 63.0
-
-[node name="AnswerTipLabel" type="Label" parent="MediumMapNPCManagement" unique_id=1247909147]
-layout_mode = 0
-offset_left = 30.0
-offset_top = 377.0
-offset_right = 126.0
-offset_bottom = 400.0
-text = "Answer Tip"
-
-[node name="AnswerTip" type="LineEdit" parent="MediumMapNPCManagement/AnswerTipLabel" unique_id=1064030620]
-layout_mode = 0
-offset_top = 27.0
-offset_right = 444.0
-offset_bottom = 72.0
-
-[node name="TimerLabel" type="Label" parent="MediumMapNPCManagement" unique_id=1306031071]
-layout_mode = 0
-offset_left = 30.0
-offset_top = 454.0
-offset_right = 152.0
-offset_bottom = 477.0
-text = "Timer (seconds)"
-
-[node name="Time" type="LineEdit" parent="MediumMapNPCManagement/TimerLabel" unique_id=711175913]
-layout_mode = 0
-offset_top = 27.0
-offset_right = 448.0
-offset_bottom = 65.0
-placeholder_text = "30"
 
 [node name="SaveButton" type="Button" parent="MediumMapNPCManagement" unique_id=1196297886]
 layout_mode = 1

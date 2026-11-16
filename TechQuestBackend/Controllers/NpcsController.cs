@@ -835,7 +835,11 @@ namespace TechQuestBackend.Controllers
                 MiniGameId = null,
                 SubjectName = "",
                 QuestionText = "",
-                CorrectAnswer = "",
+                // Keep the deployment placeholder compatible with the database
+                // multiple-choice constraint. Admin configuration replaces these
+                // empty choices and the answer key before students can start it.
+                AnswerChoices = JsonSerializer.Serialize(new[] { "", "", "", "" }),
+                CorrectAnswer = "A",
                 AnswerTip = "",
                 CreatedAt = DateTime.UtcNow,
                 CreatedBy = GetUserId()

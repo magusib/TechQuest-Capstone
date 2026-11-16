@@ -315,40 +315,17 @@ public abstract partial class AdminNpcManager : Control
 	{
 		configurationPopup = GetNode<Control>(Difficulty + "MapNPCManagement");
 		configurationPopup.Hide();
-		configurationPopup.Size = new Vector2(520, 700);
 		configurationTitle = configurationPopup.GetNode<Label>("NPCManagementLabel");
-		subjectInput = configurationPopup.GetNode<OptionButton>("SubjectLabel/Subject");
-		miniGameInput = configurationPopup.GetNode<OptionButton>("MinigameLabel/MinigameOptions");
-		questionInput = configurationPopup.GetNode<LineEdit>("QuestionLabel/Question");
-		configurationPopup.GetNode<Control>("AnswerChoicesLabel").Hide();
-		configurationPopup.GetNode<Control>("CorrectAnswerLabel").Hide();
-		correctAnswerInput = new OptionButton { Name = "CorrectAnswer", SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
-		foreach (string key in new[] { "A", "B", "C", "D" })
-			correctAnswerInput.AddItem(key);
-		var scroll = new ScrollContainer
-		{
-			Name = "MultipleChoiceScrollContainer",
-			Position = new Vector2(30, 245),
-			Size = new Vector2(450, 215),
-			HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled
-		};
-		var choices = new VBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
-		choices.AddThemeConstantOverride("separation", 6);
+		subjectInput = configurationPopup.GetNode<OptionButton>("QuestionFormScrollContainer/QuestionForm/SubjectLabel/Subject");
+		miniGameInput = configurationPopup.GetNode<OptionButton>("QuestionFormScrollContainer/QuestionForm/MinigameLabel/MinigameOptions");
+		questionInput = configurationPopup.GetNode<LineEdit>("QuestionFormScrollContainer/QuestionForm/QuestionLabel/Question");
+		answerTipInput = configurationPopup.GetNode<LineEdit>("QuestionFormScrollContainer/QuestionForm/AnswerTipLabel/AnswerTip");
+		timerInput = configurationPopup.GetNode<LineEdit>("QuestionFormScrollContainer/QuestionForm/TimerLabel/Time");
+		correctAnswerInput = configurationPopup.GetNode<OptionButton>("QuestionFormScrollContainer/QuestionForm/Choices/CorrectAnswer");
+		choiceInputs.Clear();
 		for (int index = 0; index < 4; index++)
-		{
-			choices.AddChild(new Label { Text = $"Choice {(char)('A' + index)}" });
-			var input = new LineEdit { Name = $"Choice{(char)('A' + index)}", CustomMinimumSize = new Vector2(0, 34) };
-			choiceInputs.Add(input);
-			choices.AddChild(input);
-		}
-		choices.AddChild(new Label { Text = "Correct answer" });
-		choices.AddChild(correctAnswerInput);
-		scroll.AddChild(choices);
-		configurationPopup.AddChild(scroll);
-		configurationPopup.GetNode<Control>("AnswerTipLabel").Position = new Vector2(30, 470);
-		configurationPopup.GetNode<Control>("TimerLabel").Position = new Vector2(30, 545);
-		answerTipInput = configurationPopup.GetNode<LineEdit>("AnswerTipLabel/AnswerTip");
-		timerInput = configurationPopup.GetNode<LineEdit>("TimerLabel/Time");
+			choiceInputs.Add(configurationPopup.GetNode<LineEdit>(
+				$"QuestionFormScrollContainer/QuestionForm/Choices/Choice{(char)('A' + index)}"));
 		saveConfigurationButton = configurationPopup.GetNode<Button>("SaveButton");
 		Button cancelButton = configurationPopup.GetNode<Button>("CancelButton");
 		cancelButton.Pressed += () => configurationPopup.Hide();

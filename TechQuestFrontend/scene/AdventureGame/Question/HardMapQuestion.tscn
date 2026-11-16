@@ -265,6 +265,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_5yidw")
 text = "Submit"
 
 [node name="HintAnswerLabel" type="Label" parent="." unique_id=847095259]
+z_index = 20
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -277,10 +278,9 @@ offset_right = 258.0
 offset_bottom = 158.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 25
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxFlat_babmv")
-z_index = 20
 text = "_ _ _ _ _"
 horizontal_alignment = 1
 

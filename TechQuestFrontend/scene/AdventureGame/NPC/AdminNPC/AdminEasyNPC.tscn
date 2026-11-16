@@ -392,7 +392,23 @@ text = "Easy Map NPC Management"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SubjectLabel" type="Label" parent="EasyMapNPCManagement" unique_id=1869310951]
+[node name="QuestionFormScrollContainer" type="ScrollContainer" parent="EasyMapNPCManagement"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 62.0
+offset_right = 496.0
+offset_bottom = 632.0
+horizontal_scroll_mode = 0
+
+[node name="QuestionForm" type="VBoxContainer" parent="EasyMapNPCManagement/QuestionFormScrollContainer"]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SubjectLabel" type="Label" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm" unique_id=1869310951]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_horizontal = 3
 layout_mode = 0
 offset_left = 30.0
 offset_top = 64.0
@@ -400,14 +416,17 @@ offset_right = 245.0
 offset_bottom = 148.0
 text = "Subject Name"
 
-[node name="Subject" type="OptionButton" parent="EasyMapNPCManagement/SubjectLabel" unique_id=1027204946]
+[node name="Subject" type="OptionButton" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm/SubjectLabel" unique_id=1027204946]
 layout_mode = 0
 offset_top = 31.0
 offset_right = 463.0
 offset_bottom = 67.0
 alignment = 1
 
-[node name="MinigameLabel" type="Label" parent="EasyMapNPCManagement" unique_id=1936866845]
+[node name="MinigameLabel" type="Label" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm" unique_id=1936866845]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_horizontal = 3
 layout_mode = 0
 offset_left = 30.0
 offset_top = 139.0
@@ -415,14 +434,17 @@ offset_right = 175.0
 offset_bottom = 181.5
 text = "Choose Mini Game"
 
-[node name="MinigameOptions" type="OptionButton" parent="EasyMapNPCManagement/MinigameLabel" unique_id=399282216]
+[node name="MinigameOptions" type="OptionButton" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm/MinigameLabel" unique_id=399282216]
 layout_mode = 0
 offset_top = 28.0
 offset_right = 452.0
 offset_bottom = 60.0
 alignment = 1
 
-[node name="QuestionLabel" type="Label" parent="EasyMapNPCManagement" unique_id=1477563219]
+[node name="QuestionLabel" type="Label" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm" unique_id=1477563219]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
 layout_mode = 0
 offset_left = 30.0
 offset_top = 205.0
@@ -432,7 +454,7 @@ text = "Question"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Question" type="LineEdit" parent="EasyMapNPCManagement/QuestionLabel" unique_id=1696469400]
+[node name="Question" type="LineEdit" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm/QuestionLabel" unique_id=1696469400]
 layout_mode = 0
 offset_top = 32.0
 offset_right = 450.0
@@ -454,6 +476,7 @@ offset_right = 448.0
 offset_bottom = 63.0
 
 [node name="CorrectAnswerLabel" type="Label" parent="EasyMapNPCManagement" unique_id=183876399]
+visible = false
 layout_mode = 0
 offset_left = 30.0
 offset_top = 308.0
@@ -467,7 +490,59 @@ offset_top = 27.0
 offset_right = 444.0
 offset_bottom = 63.0
 
-[node name="AnswerTipLabel" type="Label" parent="EasyMapNPCManagement" unique_id=183876398]
+[node name="QuestionChoicesSpacer" type="Control" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+
+[node name="Choices" type="VBoxContainer" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="ChoiceALabel" type="Label" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices"]
+layout_mode = 2
+text = "Choice A"
+
+[node name="ChoiceA" type="LineEdit" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices"]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+
+[node name="ChoiceBLabel" type="Label" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices"]
+layout_mode = 2
+text = "Choice B"
+
+[node name="ChoiceB" type="LineEdit" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices"]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+
+[node name="ChoiceCLabel" type="Label" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices"]
+layout_mode = 2
+text = "Choice C"
+
+[node name="ChoiceC" type="LineEdit" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices"]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+
+[node name="ChoiceDLabel" type="Label" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices"]
+layout_mode = 2
+text = "Choice D"
+
+[node name="ChoiceD" type="LineEdit" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices"]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+
+[node name="CorrectAnswerLabel" type="Label" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices"]
+layout_mode = 2
+text = "Correct answer"
+
+[node name="CorrectAnswer" type="OptionButton" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AnswerTipLabel" type="Label" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm" unique_id=183876398]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_horizontal = 3
 layout_mode = 0
 offset_left = 30.0
 offset_top = 381.0
@@ -475,13 +550,16 @@ offset_right = 126.0
 offset_bottom = 404.0
 text = "Answer Tip"
 
-[node name="AnswerTip" type="LineEdit" parent="EasyMapNPCManagement/AnswerTipLabel" unique_id=294797952]
+[node name="AnswerTip" type="LineEdit" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm/AnswerTipLabel" unique_id=294797952]
 layout_mode = 0
 offset_top = 27.0
 offset_right = 444.0
 offset_bottom = 72.0
 
-[node name="TimerLabel" type="Label" parent="EasyMapNPCManagement" unique_id=719009369]
+[node name="TimerLabel" type="Label" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm" unique_id=719009369]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_horizontal = 3
 layout_mode = 0
 offset_left = 30.0
 offset_top = 471.0
@@ -489,7 +567,7 @@ offset_right = 152.0
 offset_bottom = 494.0
 text = "Timer (seconds)"
 
-[node name="Time" type="LineEdit" parent="EasyMapNPCManagement/TimerLabel" unique_id=442062694]
+[node name="Time" type="LineEdit" parent="EasyMapNPCManagement/QuestionFormScrollContainer/QuestionForm/TimerLabel" unique_id=442062694]
 layout_mode = 0
 offset_top = 27.0
 offset_right = 448.0
