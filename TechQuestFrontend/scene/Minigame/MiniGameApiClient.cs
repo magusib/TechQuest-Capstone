@@ -186,6 +186,7 @@ public class MiniGameAttemptResultDto
 {
 	public Guid AttemptId { get; set; }
 	public bool GameWon { get; set; }
+	public int EarnedCoins { get; set; }
 	public int CoinsDeducted { get; set; }
 	public int TotalCoins { get; set; }
 	public int TotalPoints { get; set; }

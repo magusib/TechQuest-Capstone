@@ -136,9 +136,8 @@ namespace TechQuestBackend.Controllers
                 string.IsNullOrWhiteSpace(request.Question) ||
                 string.IsNullOrWhiteSpace(request.CorrectAnswer))
                 return BadRequest("Subject, question, and correct answer are required.");
-            if (request.AnswerChoices != null &&
-                !HasValidAnswerChoices(JsonSerializer.Serialize(request.AnswerChoices), request.CorrectAnswer))
-                return BadRequest("If answer choices are provided, include at least two choices and the correct answer.");
+            if (!HasValidAnswerChoices(JsonSerializer.Serialize(request.AnswerChoices), request.CorrectAnswer))
+                return BadRequest("Exactly four answer choices are required, and the correct answer must be A, B, C, or D.");
 
             if (request.TimerSeconds < 1)
                 return BadRequest("Timer must be at least one second.");
@@ -592,9 +591,8 @@ namespace TechQuestBackend.Controllers
                 string.IsNullOrWhiteSpace(request.Question) ||
                 string.IsNullOrWhiteSpace(request.CorrectAnswer))
                 return BadRequest("Subject, question, and correct answer are required.");
-            if (request.AnswerChoices != null &&
-                !HasValidAnswerChoices(JsonSerializer.Serialize(request.AnswerChoices), request.CorrectAnswer))
-                return BadRequest("If answer choices are provided, include at least two choices and the correct answer.");
+            if (!HasValidAnswerChoices(JsonSerializer.Serialize(request.AnswerChoices), request.CorrectAnswer))
+                return BadRequest("Exactly four answer choices are required, and the correct answer must be A, B, C, or D.");
 
             if (request.TimerSeconds < 1)
                 return BadRequest("Timer must be at least one second.");
@@ -1041,9 +1039,11 @@ namespace TechQuestBackend.Controllers
                 return false;
 
             List<string> normalized = NormalizeAnswerChoices(choices);
-            return normalized.Count == 0 ||
-                (normalized.Count >= 2 &&
-                    normalized.Contains(correctAnswer.Trim(), StringComparer.OrdinalIgnoreCase));
+            string key = correctAnswer.Trim().ToUpperInvariant();
+            return normalized.Count == 4 &&
+                normalized.All(choice => !string.IsNullOrWhiteSpace(choice)) &&
+                normalized.Distinct(StringComparer.OrdinalIgnoreCase).Count() == 4 &&
+                (key == "A" || key == "B" || key == "C" || key == "D");
         }
 
         private static List<string> NormalizeAnswerChoices(List<string> choices)
@@ -1051,7 +1051,6 @@ namespace TechQuestBackend.Controllers
             return choices
                 .Where(choice => !string.IsNullOrWhiteSpace(choice))
                 .Select(choice => choice.Trim())
-                .Distinct(StringComparer.OrdinalIgnoreCase)
                 .ToList();
         }
 

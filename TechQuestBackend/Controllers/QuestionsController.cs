@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -33,16 +34,16 @@ namespace TechQuestBackend.Controllers
 
             if (User.IsInRole("student"))
             {
-                return Ok(await query.OrderBy(q => q.QuestionId)
-                    .Select(q => new StudentQuestionResponse
-                    {
-                        QuestionId = q.QuestionId,
-                        NpcId = q.NpcId,
-                        MiniGameId = q.MiniGameId,
-                        SubjectName = q.SubjectName,
-                        QuestionText = q.QuestionText
-                    })
-                    .ToListAsync());
+                var questions = await query.OrderBy(q => q.QuestionId).ToListAsync();
+                return Ok(questions.Select(q => new StudentQuestionResponse
+                {
+                    QuestionId = q.QuestionId,
+                    NpcId = q.NpcId,
+                    MiniGameId = q.MiniGameId,
+                    SubjectName = q.SubjectName,
+                    QuestionText = q.QuestionText,
+                    AnswerChoices = JsonSerializer.Deserialize<List<string>>(q.AnswerChoices) ?? new()
+                }));
             }
 
             return Ok(await query.OrderBy(q => q.QuestionId).ToListAsync());
@@ -52,12 +53,10 @@ namespace TechQuestBackend.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Create(QuestionRequest request)
         {
-            if (string.IsNullOrWhiteSpace(request.SubjectName) ||
-                string.IsNullOrWhiteSpace(request.Question) ||
-                string.IsNullOrWhiteSpace(request.CorrectAnswer))
-            {
-                return BadRequest("Subject, question, and correct answer are required.");
-            }
+            if (string.IsNullOrWhiteSpace(request.SubjectName) || string.IsNullOrWhiteSpace(request.Question))
+                return BadRequest("Subject and question are required.");
+            if (!IsValidMultipleChoice(request.AnswerChoices, request.CorrectAnswer))
+                return BadRequest("Exactly four answer choices are required, and the correct answer must be A, B, C, or D.");
 
             if (!request.NpcId.HasValue && !request.MiniGameId.HasValue)
                 return BadRequest("Question must be linked to an NPC, a mini-game, or both.");
@@ -74,7 +73,8 @@ namespace TechQuestBackend.Controllers
                 MiniGameId = request.MiniGameId,
                 SubjectName = request.SubjectName.Trim(),
                 QuestionText = request.Question.Trim(),
-                CorrectAnswer = request.CorrectAnswer.Trim(),
+                AnswerChoices = JsonSerializer.Serialize(request.AnswerChoices!.Select(choice => choice.Trim()).ToList()),
+                CorrectAnswer = request.CorrectAnswer.Trim().ToUpperInvariant(),
                 CreatedAt = DateTime.UtcNow,
                 CreatedBy = GetUserId()
             };
@@ -88,6 +88,14 @@ namespace TechQuestBackend.Controllers
         {
             return int.TryParse(User.FindFirstValue("userId"), out int userId) ? userId : 0;
         }
+
+        private static bool IsValidMultipleChoice(List<string>? choices, string correctAnswer)
+        {
+            if (choices == null || choices.Count != 4 || choices.Any(string.IsNullOrWhiteSpace))
+                return false;
+            string key = correctAnswer.Trim().ToUpperInvariant();
+            return key is "A" or "B" or "C" or "D";
+        }
     }
 
     public class QuestionRequest
@@ -96,6 +104,7 @@ namespace TechQuestBackend.Controllers
         public int? MiniGameId { get; set; }
         public string SubjectName { get; set; } = "";
         public string Question { get; set; } = "";
+        public List<string>? AnswerChoices { get; set; }
         public string CorrectAnswer { get; set; } = "";
     }
 
@@ -106,5 +115,6 @@ namespace TechQuestBackend.Controllers
         public int? MiniGameId { get; set; }
         public string SubjectName { get; set; } = "";
         public string QuestionText { get; set; } = "";
+        public List<string> AnswerChoices { get; set; } = new();
     }
 }

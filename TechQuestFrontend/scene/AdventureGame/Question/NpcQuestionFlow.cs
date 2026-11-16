@@ -31,6 +31,7 @@ public abstract partial class NpcQuestionFlow : Control
     private bool isFinalized;
     private bool purchaseInProgress;
     private string selectedAnswer = "";
+    private int selectedChoiceIndex = -1;
 
     protected abstract string Difficulty { get; }
 
@@ -47,6 +48,7 @@ public abstract partial class NpcQuestionFlow : Control
         choiceButtons.Add(questionPanel.GetNode<Button>("ChoiceBButton"));
         choiceButtons.Add(questionPanel.GetNode<Button>("ChoiceCButton"));
         choiceButtons.Add(questionPanel.GetNode<Button>("ChoiceDButton"));
+        ConfigureScrollableQuestionPanel();
 
         hintAnswerLabel = GetNode<Label>("HintAnswerLabel");
         hintAnswerLabel.ZIndex = 20;
@@ -68,7 +70,7 @@ public abstract partial class NpcQuestionFlow : Control
         for (int index = 0; index < choiceButtons.Count; index++)
         {
             int capturedIndex = index;
-            choiceButtons[index].Pressed += async () => await SubmitAnswerAsync(choiceButtons[capturedIndex].Text, false);
+            choiceButtons[index].Pressed += () => SelectChoice(capturedIndex);
         }
         extendTimeButton.Pressed += () => PurchaseOptionAsync("extend_time");
         extendTimeHintButton.Pressed += () => PurchaseOptionAsync("extend_time_hint");
@@ -88,6 +90,7 @@ public abstract partial class NpcQuestionFlow : Control
         question = assignedQuestion;
         timeLeft = Math.Max(0, question.RemainingSeconds);
         selectedAnswer = "";
+        selectedChoiceIndex = -1;
         isSubmitting = false;
         isFinalized = false;
         purchaseInProgress = false;
@@ -116,16 +119,44 @@ public abstract partial class NpcQuestionFlow : Control
 
     private void ConfigureAnswerControls()
     {
-        bool hasChoices = question.AnswerChoices != null && question.AnswerChoices.Count > 0;
-        answerInput.Visible = !hasChoices;
+        bool hasChoices = question.AnswerChoices != null && question.AnswerChoices.Count == 4;
+        answerInput.Visible = false;
         for (int index = 0; index < choiceButtons.Count; index++)
         {
-            bool visible = hasChoices && index < question.AnswerChoices.Count;
+            bool visible = hasChoices;
             choiceButtons[index].Visible = visible;
             if (visible)
-                choiceButtons[index].Text = question.AnswerChoices[index];
+                choiceButtons[index].Text = $"{(char)('A' + index)}. {question.AnswerChoices[index]}";
+                choiceButtons[index].ButtonPressed = false;
         }
         SetAnswerControlsDisabled(false);
+    }
+
+    private void ConfigureScrollableQuestionPanel()
+    {
+        Panel contentPanel = questionPanel.GetNode<Panel>("QuestionPanel");
+        var scroll = new ScrollContainer
+        {
+            Name = "QuestionScrollContainer",
+            Position = new Vector2(18, 10),
+            Size = new Vector2(484, 202),
+            HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled
+        };
+        var layout = new VBoxContainer { Name = "QuestionChoices", SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
+        layout.AddThemeConstantOverride("separation", 10);
+        questionPanel.AddChild(scroll);
+        scroll.AddChild(layout);
+        questionLabel.Reparent(layout);
+        questionLabel.CustomMinimumSize = new Vector2(0, 70);
+        questionLabel.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+        foreach (Button button in choiceButtons)
+        {
+            button.ToggleMode = true;
+            button.Reparent(layout);
+            button.CustomMinimumSize = new Vector2(0, 42);
+            button.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+        }
+        contentPanel.Hide();
     }
 
     private void OnCountdownTimeout()
@@ -144,7 +175,24 @@ public abstract partial class NpcQuestionFlow : Control
 
     private async void SubmitSelectedAnswer()
     {
-        await SubmitAnswerAsync(answerInput.Text.Trim(), false);
+        if (selectedChoiceIndex < 0)
+        {
+            notificationLabel.Text = "Select one answer before submitting.";
+            notificationLabel.Show();
+            return;
+        }
+        await SubmitAnswerAsync(((char)('A' + selectedChoiceIndex)).ToString(), false);
+    }
+
+    private void SelectChoice(int index)
+    {
+        if (isSubmitting || isFinalized || index < 0 || index >= choiceButtons.Count)
+            return;
+        selectedChoiceIndex = index;
+        selectedAnswer = ((char)('A' + index)).ToString();
+        for (int buttonIndex = 0; buttonIndex < choiceButtons.Count; buttonIndex++)
+            choiceButtons[buttonIndex].ButtonPressed = buttonIndex == index;
+        notificationLabel.Hide();
     }
 
     private async Task SubmitAnswerAsync(string answer, bool finalize)

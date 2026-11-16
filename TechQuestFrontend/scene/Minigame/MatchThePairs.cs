@@ -307,9 +307,11 @@ public partial class MatchThePairs : Control
 			answerTipLabel.Text = string.IsNullOrWhiteSpace(result.AnswerTip)
 				? "No answer tip has been configured for this NPC."
 				: "Answer tip: " + result.AnswerTip;
-			coinPenaltyLabel.Text = result.CoinsDeducted > 0
-				? result.CoinsDeducted + " coins deducted. Coins remaining: " + result.TotalCoins
-				: "No coins deducted.";
+			coinPenaltyLabel.Text = result.EarnedCoins > 0
+				? "Coins Earned: " + result.EarnedCoins + ". Total coins: " + result.TotalCoins
+				: result.CoinsDeducted > 0
+					? result.CoinsDeducted + " coins deducted. Coins remaining: " + result.TotalCoins
+					: "Coins Earned: 0. Total coins: " + result.TotalCoins;
 			resultMessage.Text = "Mini-game result confirmed.";
 			if (questionId > 0)
 			{

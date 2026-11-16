@@ -41,13 +41,14 @@ public abstract partial class AdminNpcManager : Control
 	private Control configurationPopup;
 	private OptionButton subjectInput;
 	private LineEdit questionInput;
-	private LineEdit correctAnswerInput;
+	private OptionButton correctAnswerInput;
 	private LineEdit answerTipInput;
 	private LineEdit timerInput;
 	private Label configurationTitle;
 	private OptionButton miniGameInput;
 	private Button saveConfigurationButton;
 	private NpcConfigurationDto editingConfiguration;
+	private readonly List<LineEdit> choiceInputs = new();
 
 	public override void _Ready()
 	{
@@ -314,12 +315,38 @@ public abstract partial class AdminNpcManager : Control
 	{
 		configurationPopup = GetNode<Control>(Difficulty + "MapNPCManagement");
 		configurationPopup.Hide();
+		configurationPopup.Size = new Vector2(520, 700);
 		configurationTitle = configurationPopup.GetNode<Label>("NPCManagementLabel");
 		subjectInput = configurationPopup.GetNode<OptionButton>("SubjectLabel/Subject");
 		miniGameInput = configurationPopup.GetNode<OptionButton>("MinigameLabel/MinigameOptions");
 		questionInput = configurationPopup.GetNode<LineEdit>("QuestionLabel/Question");
 		configurationPopup.GetNode<Control>("AnswerChoicesLabel").Hide();
-		correctAnswerInput = configurationPopup.GetNode<LineEdit>("CorrectAnswerLabel/CorrectAnswer");
+		configurationPopup.GetNode<Control>("CorrectAnswerLabel").Hide();
+		correctAnswerInput = new OptionButton { Name = "CorrectAnswer", SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
+		foreach (string key in new[] { "A", "B", "C", "D" })
+			correctAnswerInput.AddItem(key);
+		var scroll = new ScrollContainer
+		{
+			Name = "MultipleChoiceScrollContainer",
+			Position = new Vector2(30, 245),
+			Size = new Vector2(450, 215),
+			HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled
+		};
+		var choices = new VBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
+		choices.AddThemeConstantOverride("separation", 6);
+		for (int index = 0; index < 4; index++)
+		{
+			choices.AddChild(new Label { Text = $"Choice {(char)('A' + index)}" });
+			var input = new LineEdit { Name = $"Choice{(char)('A' + index)}", CustomMinimumSize = new Vector2(0, 34) };
+			choiceInputs.Add(input);
+			choices.AddChild(input);
+		}
+		choices.AddChild(new Label { Text = "Correct answer" });
+		choices.AddChild(correctAnswerInput);
+		scroll.AddChild(choices);
+		configurationPopup.AddChild(scroll);
+		configurationPopup.GetNode<Control>("AnswerTipLabel").Position = new Vector2(30, 470);
+		configurationPopup.GetNode<Control>("TimerLabel").Position = new Vector2(30, 545);
 		answerTipInput = configurationPopup.GetNode<LineEdit>("AnswerTipLabel/AnswerTip");
 		timerInput = configurationPopup.GetNode<LineEdit>("TimerLabel/Time");
 		saveConfigurationButton = configurationPopup.GetNode<Button>("SaveButton");
@@ -343,7 +370,9 @@ public abstract partial class AdminNpcManager : Control
 				deployment.DeploymentId + ")";
 			SelectSubject(configuration.SubjectName);
 			questionInput.Text = configuration.Question;
-			correctAnswerInput.Text = configuration.CorrectAnswer;
+		for (int index = 0; index < choiceInputs.Count; index++)
+			choiceInputs[index].Text = index < configuration.AnswerChoices.Count ? configuration.AnswerChoices[index] : "";
+		correctAnswerInput.Select(Math.Max(0, "ABCD".IndexOf(configuration.CorrectAnswer.Trim().ToUpperInvariant())));
 			answerTipInput.Text = configuration.AnswerTip;
 			timerInput.Text = configuration.TimerSeconds.ToString();
 			miniGameInput.Clear();
@@ -445,9 +474,9 @@ public abstract partial class AdminNpcManager : Control
 
 		if (subjectInput.Selected <= 0 ||
 			string.IsNullOrWhiteSpace(questionInput.Text) ||
-			string.IsNullOrWhiteSpace(correctAnswerInput.Text))
+			choiceInputs.Any(input => string.IsNullOrWhiteSpace(input.Text)))
 		{
-			ShowMessage("Subject, question, and correct answer are required.");
+			ShowMessage("Subject, question, and all four choices are required.");
 			return;
 		}
 
@@ -463,8 +492,8 @@ public abstract partial class AdminNpcManager : Control
 		int miniGameId = miniGameInput.GetItemId(miniGameInput.Selected);
 		editingConfiguration.MiniGameId = miniGameId > 0 ? miniGameId : null;
 		editingConfiguration.Question = questionInput.Text.Trim();
-		editingConfiguration.AnswerChoices = new List<string>();
-		editingConfiguration.CorrectAnswer = correctAnswerInput.Text.Trim();
+		editingConfiguration.AnswerChoices = choiceInputs.Select(input => input.Text.Trim()).ToList();
+		editingConfiguration.CorrectAnswer = correctAnswerInput.GetItemText(correctAnswerInput.Selected);
 		editingConfiguration.AnswerTip = answerTipInput.Text.Trim();
 		editingConfiguration.TimerSeconds = timerSeconds;
 		try
