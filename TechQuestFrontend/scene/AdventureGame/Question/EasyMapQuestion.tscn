@@ -18,16 +18,16 @@ texture = ExtResource("2_emvso")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_txea8"]
 texture = ExtResource("4_5yidw")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4bi0h"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g70qi"]
 texture = ExtResource("2_emvso")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lsak8"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_32ymf"]
 texture = ExtResource("4_2awba")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i20tr"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vcxet"]
 texture = ExtResource("5_aspgg")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6x64"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jq4y3"]
 texture = ExtResource("6_hveeu")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aspgg"]
@@ -120,30 +120,30 @@ text = "No"
 layout_mode = 2
 horizontal_alignment = 1
 
-[node name="EasyMapQuestionPanel" type="Panel" parent="." unique_id=985029562]
+[node name="EasyMapQuestionPanel" type="Panel" parent="." unique_id=1336179324]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -304.75
-offset_top = -217.25
-offset_right = 304.75
-offset_bottom = 217.25
+offset_left = -408.375
+offset_top = -274.625
+offset_right = 408.375
+offset_bottom = 274.625
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_4bi0h")
+theme_override_styles/panel = SubResource("StyleBoxTexture_g70qi")
 
-[node name="SubjectLabel" type="Label" parent="EasyMapQuestionPanel" unique_id=755472535]
+[node name="SubjectLabel" type="Label" parent="EasyMapQuestionPanel" unique_id=1463077435]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -78.875
-offset_top = 14.0
-offset_right = 78.875
-offset_bottom = 53.0
+offset_left = -290.0
+offset_top = 15.625
+offset_right = -132.25
+offset_bottom = 54.625
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("3_6babw")
 theme_override_font_sizes/font_size = 20
@@ -151,43 +151,43 @@ text = "Subject Name"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TimerLabel" type="Label" parent="EasyMapQuestionPanel" unique_id=180050475]
+[node name="TimerLabel" type="Label" parent="EasyMapQuestionPanel" unique_id=197090783]
 layout_mode = 0
-offset_left = 421.75
-offset_top = 15.5
-offset_right = 584.5
-offset_bottom = 58.0
+offset_left = 619.375
+offset_top = 13.625
+offset_right = 782.125
+offset_bottom = 56.125
 theme_override_fonts/font = ExtResource("3_6babw")
 theme_override_font_sizes/font_size = 20
 text = "Time"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="QuestionPanel" type="Panel" parent="EasyMapQuestionPanel" unique_id=60980900]
+[node name="QuestionPanel" type="Panel" parent="EasyMapQuestionPanel" unique_id=820783283]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -258.875
-offset_top = -116.25
-offset_right = 258.875
-offset_bottom = 0.25
+offset_left = -365.0
+offset_top = -195.0
+offset_right = 363.0
+offset_bottom = -88.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="QuestionLabel" type="Label" parent="EasyMapQuestionPanel/QuestionPanel" unique_id=740237720]
+[node name="QuestionLabel" type="Label" parent="EasyMapQuestionPanel/QuestionPanel" unique_id=1480037997]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -238.0
-offset_top = -37.0
-offset_right = 236.0
-offset_bottom = 36.0
+offset_left = -352.0
+offset_top = -34.25
+offset_right = 354.0
+offset_bottom = 38.75
 grow_horizontal = 2
 grow_vertical = 2
 text = "Question"
@@ -195,58 +195,42 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="ChoiceAButton" type="Button" parent="EasyMapQuestionPanel" unique_id=740237721]
-visible = false
-layout_mode = 0
-offset_left = -258.0
-offset_top = 43.0
-offset_right = 258.0
-offset_bottom = 78.0
-text = "Choice A"
-
-[node name="ChoiceBButton" type="Button" parent="EasyMapQuestionPanel" unique_id=740237722]
-visible = false
-layout_mode = 0
-offset_left = -258.0
-offset_top = 83.0
-offset_right = 258.0
-offset_bottom = 118.0
-text = "Choice B"
-
-[node name="ChoiceCButton" type="Button" parent="EasyMapQuestionPanel" unique_id=740237723]
-visible = false
-layout_mode = 0
-offset_left = -258.0
-offset_top = 123.0
-offset_right = 258.0
-offset_bottom = 158.0
-text = "Choice C"
-
-[node name="ChoiceDButton" type="Button" parent="EasyMapQuestionPanel" unique_id=740237724]
-visible = false
-layout_mode = 0
-offset_left = -258.0
-offset_top = 163.0
-offset_right = 258.0
-offset_bottom = 198.0
-text = "Choice D"
-
-[node name="LineEdit" type="LineEdit" parent="EasyMapQuestionPanel" unique_id=1507874008]
+[node name="VBoxContainer" type="VBoxContainer" parent="EasyMapQuestionPanel" unique_id=311121385]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -258.5
-offset_top = 28.0
-offset_right = 258.5
-offset_bottom = 96.0
+offset_left = -354.0
+offset_top = -65.8125
+offset_right = 354.0
+offset_bottom = 164.1875
 grow_horizontal = 2
 grow_vertical = 2
-alignment = 1
+theme_override_constants/separation = 10
 
-[node name="Button" type="Button" parent="EasyMapQuestionPanel" unique_id=1335001460]
+[node name="ChoiceAButton" type="Button" parent="EasyMapQuestionPanel/VBoxContainer" unique_id=363450240]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "Choice A"
+
+[node name="ChoiceBButton" type="Button" parent="EasyMapQuestionPanel/VBoxContainer" unique_id=1292776056]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "Choice B"
+
+[node name="ChoiceCButton" type="Button" parent="EasyMapQuestionPanel/VBoxContainer" unique_id=713481093]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "Choice C"
+
+[node name="ChoiceDButton" type="Button" parent="EasyMapQuestionPanel/VBoxContainer" unique_id=1341299593]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "Choice D"
+
+[node name="Button" type="Button" parent="EasyMapQuestionPanel" unique_id=570372732]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -259,28 +243,28 @@ offset_right = 59.75
 offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_styles/normal = SubResource("StyleBoxTexture_lsak8")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_i20tr")
-theme_override_styles/hover = SubResource("StyleBoxTexture_f6x64")
+theme_override_styles/normal = SubResource("StyleBoxTexture_32ymf")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_vcxet")
+theme_override_styles/hover = SubResource("StyleBoxTexture_jq4y3")
 text = "Submit"
 
 [node name="HintAnswerLabel" type="Label" parent="." unique_id=1814428334]
+z_index = 20
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -258.0
-offset_top = 118.0
-offset_right = 258.0
-offset_bottom = 158.0
+offset_left = -256.0
+offset_top = 176.0
+offset_right = 260.0
+offset_bottom = 216.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 25
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxFlat_aspgg")
-z_index = 20
 text = "_ _ _ _ _"
 horizontal_alignment = 1
 

@@ -85,7 +85,6 @@ grow_vertical = 2
 script = ExtResource("1_qox3y")
 
 [node name="MediumNPCPanel" type="Panel" parent="." unique_id=504163558]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -360,6 +359,7 @@ ok_button_text = "Yes"
 dialog_text = "Do  you want to Undeploy this NPC?"
 
 [node name="MediumMapNPCManagement" type="Panel" parent="." unique_id=1023539817]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -397,7 +397,7 @@ layout_mode = 0
 offset_left = 24.0
 offset_top = 62.0
 offset_right = 496.0
-offset_bottom = 632.0
+offset_bottom = 520.0
 horizontal_scroll_mode = 0
 
 [node name="QuestionForm" type="VBoxContainer" parent="MediumMapNPCManagement/QuestionFormScrollContainer" unique_id=1754869748]
@@ -436,8 +436,6 @@ custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Question"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="Question" type="LineEdit" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm/QuestionLabel" unique_id=1389838500]
 layout_mode = 0
@@ -490,7 +488,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Correct answer"
 
-[node name="CorrectAnswer" type="OptionButton" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=1592501056]
+[node name="CorrectAnswer" type="LineEdit" parent="MediumMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=1592501056]
 layout_mode = 2
 size_flags_horizontal = 3
 

@@ -391,15 +391,15 @@ text = "Hard Map NPC Management"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="QuestionFormScrollContainer" type="ScrollContainer" parent="HardMapNPCManagement"]
+[node name="QuestionFormScrollContainer" type="ScrollContainer" parent="HardMapNPCManagement" unique_id=194875591]
 layout_mode = 0
 offset_left = 24.0
 offset_top = 62.0
 offset_right = 496.0
-offset_bottom = 632.0
+offset_bottom = 520.0
 horizontal_scroll_mode = 0
 
-[node name="QuestionForm" type="VBoxContainer" parent="HardMapNPCManagement/QuestionFormScrollContainer"]
+[node name="QuestionForm" type="VBoxContainer" parent="HardMapNPCManagement/QuestionFormScrollContainer" unique_id=473299233]
 custom_minimum_size = Vector2(450, 0)
 layout_mode = 2
 theme_override_constants/separation = 8
@@ -408,11 +408,6 @@ theme_override_constants/separation = 8
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 size_flags_horizontal = 3
-layout_mode = 0
-offset_left = 30.0
-offset_top = 64.0
-offset_right = 245.0
-offset_bottom = 148.0
 text = "Subject Name"
 
 [node name="Subject" type="OptionButton" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/SubjectLabel" unique_id=1263405458]
@@ -426,11 +421,6 @@ alignment = 1
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 size_flags_horizontal = 3
-layout_mode = 0
-offset_left = 30.0
-offset_top = 139.0
-offset_right = 175.0
-offset_bottom = 181.5
 text = "Choose Mini Game"
 
 [node name="MinigameOptions" type="OptionButton" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/MinigameLabel" unique_id=261050007]
@@ -444,20 +434,87 @@ alignment = 1
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_horizontal = 3
-layout_mode = 0
-offset_left = 30.0
-offset_top = 201.0
-offset_right = 101.0
-offset_bottom = 245.5
 text = "Question"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="Question" type="LineEdit" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/QuestionLabel" unique_id=1401184322]
 layout_mode = 0
 offset_top = 37.0
 offset_right = 450.0
 offset_bottom = 92.0
+
+[node name="QuestionChoicesSpacer" type="Control" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm" unique_id=2122393036]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+
+[node name="Choices" type="VBoxContainer" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm" unique_id=1540758323]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="ChoiceALabel" type="Label" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=296985094]
+layout_mode = 2
+text = "Choice A"
+
+[node name="ChoiceA" type="LineEdit" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=816272639]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+
+[node name="ChoiceBLabel" type="Label" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=2087913298]
+layout_mode = 2
+text = "Choice B"
+
+[node name="ChoiceB" type="LineEdit" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=961703984]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+
+[node name="ChoiceCLabel" type="Label" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=1717576737]
+layout_mode = 2
+text = "Choice C"
+
+[node name="ChoiceC" type="LineEdit" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=223733896]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+
+[node name="ChoiceDLabel" type="Label" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=1466626511]
+layout_mode = 2
+text = "Choice D"
+
+[node name="ChoiceD" type="LineEdit" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=2099933098]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+
+[node name="CorrectAnswerLabel" type="Label" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=1083118055]
+layout_mode = 2
+text = "Correct answer"
+
+[node name="CorrectAnswer" type="LineEdit" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices" unique_id=1024426964]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AnswerTipLabel" type="Label" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm" unique_id=157899165]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Answer Tip"
+
+[node name="AnswerTip" type="LineEdit" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/AnswerTipLabel" unique_id=2064178832]
+layout_mode = 0
+offset_top = 27.0
+offset_right = 444.0
+offset_bottom = 72.0
+
+[node name="TimerLabel" type="Label" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm" unique_id=1462909225]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Timer (seconds)"
+
+[node name="Time" type="LineEdit" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/TimerLabel" unique_id=947640273]
+layout_mode = 0
+offset_top = 27.0
+offset_right = 448.0
+offset_bottom = 65.0
+placeholder_text = "30"
 
 [node name="AnswerChoicesLabel" type="Label" parent="HardMapNPCManagement" unique_id=2014102005]
 visible = false
@@ -488,81 +545,6 @@ layout_mode = 0
 offset_top = 27.0
 offset_right = 444.0
 offset_bottom = 63.0
-
-[node name="QuestionChoicesSpacer" type="Control" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm"]
-custom_minimum_size = Vector2(0, 4)
-layout_mode = 2
-
-[node name="Choices" type="VBoxContainer" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 6
-
-[node name="ChoiceALabel" type="Label" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices"]
-layout_mode = 2
-text = "Choice A"
-[node name="ChoiceA" type="LineEdit" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices"]
-custom_minimum_size = Vector2(0, 34)
-layout_mode = 2
-[node name="ChoiceBLabel" type="Label" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices"]
-layout_mode = 2
-text = "Choice B"
-[node name="ChoiceB" type="LineEdit" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices"]
-custom_minimum_size = Vector2(0, 34)
-layout_mode = 2
-[node name="ChoiceCLabel" type="Label" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices"]
-layout_mode = 2
-text = "Choice C"
-[node name="ChoiceC" type="LineEdit" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices"]
-custom_minimum_size = Vector2(0, 34)
-layout_mode = 2
-[node name="ChoiceDLabel" type="Label" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices"]
-layout_mode = 2
-text = "Choice D"
-[node name="ChoiceD" type="LineEdit" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices"]
-custom_minimum_size = Vector2(0, 34)
-layout_mode = 2
-[node name="CorrectAnswerLabel" type="Label" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices"]
-layout_mode = 2
-text = "Correct answer"
-[node name="CorrectAnswer" type="OptionButton" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/Choices"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="AnswerTipLabel" type="Label" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm" unique_id=157899165]
-custom_minimum_size = Vector2(0, 70)
-layout_mode = 2
-size_flags_horizontal = 3
-layout_mode = 0
-offset_left = 30.0
-offset_top = 369.0
-offset_right = 126.0
-offset_bottom = 392.0
-text = "Answer Tip"
-
-[node name="AnswerTip" type="LineEdit" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/AnswerTipLabel" unique_id=2064178832]
-layout_mode = 0
-offset_top = 27.0
-offset_right = 444.0
-offset_bottom = 72.0
-
-[node name="TimerLabel" type="Label" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm" unique_id=1462909225]
-custom_minimum_size = Vector2(0, 70)
-layout_mode = 2
-size_flags_horizontal = 3
-layout_mode = 0
-offset_left = 30.0
-offset_top = 450.0
-offset_right = 152.0
-offset_bottom = 473.0
-text = "Timer (seconds)"
-
-[node name="Time" type="LineEdit" parent="HardMapNPCManagement/QuestionFormScrollContainer/QuestionForm/TimerLabel" unique_id=947640273]
-layout_mode = 0
-offset_top = 27.0
-offset_right = 448.0
-offset_bottom = 65.0
-placeholder_text = "30"
 
 [node name="SaveButton" type="Button" parent="HardMapNPCManagement" unique_id=774897803]
 layout_mode = 1

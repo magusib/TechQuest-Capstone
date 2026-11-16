@@ -56,7 +56,7 @@ namespace TechQuestBackend.Controllers
             if (string.IsNullOrWhiteSpace(request.SubjectName) || string.IsNullOrWhiteSpace(request.Question))
                 return BadRequest("Subject and question are required.");
             if (!IsValidMultipleChoice(request.AnswerChoices, request.CorrectAnswer))
-                return BadRequest("Exactly four answer choices are required, and the correct answer must be A, B, C, or D.");
+                return BadRequest("Exactly four answer choices are required, and the correct answer must match one of them.");
 
             if (!request.NpcId.HasValue && !request.MiniGameId.HasValue)
                 return BadRequest("Question must be linked to an NPC, a mini-game, or both.");
@@ -74,7 +74,7 @@ namespace TechQuestBackend.Controllers
                 SubjectName = request.SubjectName.Trim(),
                 QuestionText = request.Question.Trim(),
                 AnswerChoices = JsonSerializer.Serialize(request.AnswerChoices!.Select(choice => choice.Trim()).ToList()),
-                CorrectAnswer = request.CorrectAnswer.Trim().ToUpperInvariant(),
+                CorrectAnswer = request.CorrectAnswer.Trim(),
                 CreatedAt = DateTime.UtcNow,
                 CreatedBy = GetUserId()
             };
@@ -93,8 +93,9 @@ namespace TechQuestBackend.Controllers
         {
             if (choices == null || choices.Count != 4 || choices.Any(string.IsNullOrWhiteSpace))
                 return false;
-            string key = correctAnswer.Trim().ToUpperInvariant();
-            return key is "A" or "B" or "C" or "D";
+            string expected = correctAnswer.Trim();
+            return !string.IsNullOrWhiteSpace(expected) &&
+                choices.Contains(expected, StringComparer.OrdinalIgnoreCase);
         }
     }
 

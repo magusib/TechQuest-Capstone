@@ -137,7 +137,7 @@ namespace TechQuestBackend.Controllers
                 string.IsNullOrWhiteSpace(request.CorrectAnswer))
                 return BadRequest("Subject, question, and correct answer are required.");
             if (!HasValidAnswerChoices(JsonSerializer.Serialize(request.AnswerChoices), request.CorrectAnswer))
-                return BadRequest("Exactly four answer choices are required, and the correct answer must be A, B, C, or D.");
+                return BadRequest("Exactly four answer choices are required, and the correct answer must match one of them.");
 
             if (request.TimerSeconds < 1)
                 return BadRequest("Timer must be at least one second.");
@@ -592,7 +592,7 @@ namespace TechQuestBackend.Controllers
                 string.IsNullOrWhiteSpace(request.CorrectAnswer))
                 return BadRequest("Subject, question, and correct answer are required.");
             if (!HasValidAnswerChoices(JsonSerializer.Serialize(request.AnswerChoices), request.CorrectAnswer))
-                return BadRequest("Exactly four answer choices are required, and the correct answer must be A, B, C, or D.");
+                return BadRequest("Exactly four answer choices are required, and the correct answer must match one of them.");
 
             if (request.TimerSeconds < 1)
                 return BadRequest("Timer must be at least one second.");
@@ -1043,11 +1043,12 @@ namespace TechQuestBackend.Controllers
                 return false;
 
             List<string> normalized = NormalizeAnswerChoices(choices);
-            string key = correctAnswer.Trim().ToUpperInvariant();
+            string expected = correctAnswer.Trim();
             return normalized.Count == 4 &&
                 normalized.All(choice => !string.IsNullOrWhiteSpace(choice)) &&
                 normalized.Distinct(StringComparer.OrdinalIgnoreCase).Count() == 4 &&
-                (key == "A" || key == "B" || key == "C" || key == "D");
+                !string.IsNullOrWhiteSpace(expected) &&
+                normalized.Contains(expected, StringComparer.OrdinalIgnoreCase);
         }
 
         private static List<string> NormalizeAnswerChoices(List<string> choices)

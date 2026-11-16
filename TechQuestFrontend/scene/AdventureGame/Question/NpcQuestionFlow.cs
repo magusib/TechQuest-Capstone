@@ -44,11 +44,16 @@ public abstract partial class NpcQuestionFlow : Control
         questionLabel = questionPanel.GetNode<Panel>("QuestionPanel").GetNode<Label>("QuestionLabel");
         answerInput = questionPanel.GetNode<LineEdit>("LineEdit");
         submitButton = questionPanel.GetNode<Button>("Button");
-        choiceButtons.Add(questionPanel.GetNode<Button>("ChoiceAButton"));
-        choiceButtons.Add(questionPanel.GetNode<Button>("ChoiceBButton"));
-        choiceButtons.Add(questionPanel.GetNode<Button>("ChoiceCButton"));
-        choiceButtons.Add(questionPanel.GetNode<Button>("ChoiceDButton"));
-        ConfigureScrollableQuestionPanel();
+        VBoxContainer choicesContainer = questionPanel.GetNode<VBoxContainer>("VBoxContainer");
+        choiceButtons.Add(choicesContainer.GetNode<Button>("ChoiceAButton"));
+        choiceButtons.Add(choicesContainer.GetNode<Button>("ChoiceBButton"));
+        choiceButtons.Add(choicesContainer.GetNode<Button>("ChoiceCButton"));
+        choiceButtons.Add(choicesContainer.GetNode<Button>("ChoiceDButton"));
+        foreach (Button choiceButton in choiceButtons)
+        {
+            choiceButton.ToggleMode = true;
+            choiceButton.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+        }
 
         hintAnswerLabel = GetNode<Label>("HintAnswerLabel");
         hintAnswerLabel.ZIndex = 20;
@@ -126,37 +131,12 @@ public abstract partial class NpcQuestionFlow : Control
             bool visible = hasChoices;
             choiceButtons[index].Visible = visible;
             if (visible)
+            {
                 choiceButtons[index].Text = $"{(char)('A' + index)}. {question.AnswerChoices[index]}";
+            }
                 choiceButtons[index].ButtonPressed = false;
         }
         SetAnswerControlsDisabled(false);
-    }
-
-    private void ConfigureScrollableQuestionPanel()
-    {
-        Panel contentPanel = questionPanel.GetNode<Panel>("QuestionPanel");
-        var scroll = new ScrollContainer
-        {
-            Name = "QuestionScrollContainer",
-            Position = new Vector2(18, 10),
-            Size = new Vector2(484, 202),
-            HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled
-        };
-        var layout = new VBoxContainer { Name = "QuestionChoices", SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
-        layout.AddThemeConstantOverride("separation", 10);
-        questionPanel.AddChild(scroll);
-        scroll.AddChild(layout);
-        questionLabel.Reparent(layout);
-        questionLabel.CustomMinimumSize = new Vector2(0, 70);
-        questionLabel.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-        foreach (Button button in choiceButtons)
-        {
-            button.ToggleMode = true;
-            button.Reparent(layout);
-            button.CustomMinimumSize = new Vector2(0, 42);
-            button.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-        }
-        contentPanel.Hide();
     }
 
     private void OnCountdownTimeout()
@@ -181,7 +161,7 @@ public abstract partial class NpcQuestionFlow : Control
             notificationLabel.Show();
             return;
         }
-        await SubmitAnswerAsync(((char)('A' + selectedChoiceIndex)).ToString(), false);
+        await SubmitAnswerAsync(question.AnswerChoices[selectedChoiceIndex], false);
     }
 
     private void SelectChoice(int index)
@@ -189,7 +169,7 @@ public abstract partial class NpcQuestionFlow : Control
         if (isSubmitting || isFinalized || index < 0 || index >= choiceButtons.Count)
             return;
         selectedChoiceIndex = index;
-        selectedAnswer = ((char)('A' + index)).ToString();
+        selectedAnswer = question.AnswerChoices[index];
         for (int buttonIndex = 0; buttonIndex < choiceButtons.Count; buttonIndex++)
             choiceButtons[buttonIndex].ButtonPressed = buttonIndex == index;
         notificationLabel.Hide();

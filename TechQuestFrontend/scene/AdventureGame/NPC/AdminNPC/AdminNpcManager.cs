@@ -41,7 +41,7 @@ public abstract partial class AdminNpcManager : Control
 	private Control configurationPopup;
 	private OptionButton subjectInput;
 	private LineEdit questionInput;
-	private OptionButton correctAnswerInput;
+	private LineEdit correctAnswerInput;
 	private LineEdit answerTipInput;
 	private LineEdit timerInput;
 	private Label configurationTitle;
@@ -321,7 +321,7 @@ public abstract partial class AdminNpcManager : Control
 		questionInput = configurationPopup.GetNode<LineEdit>("QuestionFormScrollContainer/QuestionForm/QuestionLabel/Question");
 		answerTipInput = configurationPopup.GetNode<LineEdit>("QuestionFormScrollContainer/QuestionForm/AnswerTipLabel/AnswerTip");
 		timerInput = configurationPopup.GetNode<LineEdit>("QuestionFormScrollContainer/QuestionForm/TimerLabel/Time");
-		correctAnswerInput = configurationPopup.GetNode<OptionButton>("QuestionFormScrollContainer/QuestionForm/Choices/CorrectAnswer");
+		correctAnswerInput = configurationPopup.GetNode<LineEdit>("QuestionFormScrollContainer/QuestionForm/Choices/CorrectAnswer");
 		choiceInputs.Clear();
 		for (int index = 0; index < 4; index++)
 			choiceInputs.Add(configurationPopup.GetNode<LineEdit>(
@@ -349,7 +349,7 @@ public abstract partial class AdminNpcManager : Control
 			questionInput.Text = configuration.Question;
 		for (int index = 0; index < choiceInputs.Count; index++)
 			choiceInputs[index].Text = index < configuration.AnswerChoices.Count ? configuration.AnswerChoices[index] : "";
-		correctAnswerInput.Select(Math.Max(0, "ABCD".IndexOf(configuration.CorrectAnswer.Trim().ToUpperInvariant())));
+		correctAnswerInput.Text = configuration.CorrectAnswer;
 			answerTipInput.Text = configuration.AnswerTip;
 			timerInput.Text = configuration.TimerSeconds.ToString();
 			miniGameInput.Clear();
@@ -451,9 +451,10 @@ public abstract partial class AdminNpcManager : Control
 
 		if (subjectInput.Selected <= 0 ||
 			string.IsNullOrWhiteSpace(questionInput.Text) ||
-			choiceInputs.Any(input => string.IsNullOrWhiteSpace(input.Text)))
+			choiceInputs.Any(input => string.IsNullOrWhiteSpace(input.Text)) ||
+			string.IsNullOrWhiteSpace(correctAnswerInput.Text))
 		{
-			ShowMessage("Subject, question, and all four choices are required.");
+			ShowMessage("Subject, question, all four choices, and the correct answer are required.");
 			return;
 		}
 
@@ -470,7 +471,7 @@ public abstract partial class AdminNpcManager : Control
 		editingConfiguration.MiniGameId = miniGameId > 0 ? miniGameId : null;
 		editingConfiguration.Question = questionInput.Text.Trim();
 		editingConfiguration.AnswerChoices = choiceInputs.Select(input => input.Text.Trim()).ToList();
-		editingConfiguration.CorrectAnswer = correctAnswerInput.GetItemText(correctAnswerInput.Selected);
+		editingConfiguration.CorrectAnswer = correctAnswerInput.Text.Trim();
 		editingConfiguration.AnswerTip = answerTipInput.Text.Trim();
 		editingConfiguration.TimerSeconds = timerSeconds;
 		try
