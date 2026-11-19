@@ -21,7 +21,7 @@ namespace TechQuestBackend.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "professor,admin")]
+        [Authorize(Roles = "professor")]
         public async Task<IActionResult> Get()
         {
             int userId = GetUserId();
@@ -40,7 +40,7 @@ namespace TechQuestBackend.Controllers
         }
 
         [HttpGet("{roomId:int}")]
-        [Authorize(Roles = "professor,admin,student")]
+        [Authorize(Roles = "professor,student")]
         public async Task<IActionResult> GetById(int roomId)
         {
             var room = await _db.MultiplayerRooms
@@ -58,7 +58,7 @@ namespace TechQuestBackend.Controllers
         }
 
         [HttpGet("code/{roomCode}")]
-        [Authorize(Roles = "professor,admin,student")]
+        [Authorize(Roles = "professor,student")]
         public async Task<IActionResult> GetByCode(string roomCode)
         {
             string normalizedCode = NormalizeRoomCode(roomCode);
@@ -128,7 +128,7 @@ namespace TechQuestBackend.Controllers
         }
 
         [HttpDelete("{roomId:int}")]
-        [Authorize(Roles = "professor,admin")]
+        [Authorize(Roles = "professor")]
         public async Task<IActionResult> Delete(int roomId)
         {
             var room = await _db.MultiplayerRooms.SingleOrDefaultAsync(r => r.RoomId == roomId);
@@ -186,7 +186,7 @@ namespace TechQuestBackend.Controllers
         }
 
         [HttpGet("{roomId:int}/participants")]
-        [Authorize(Roles = "professor,admin,student")]
+        [Authorize(Roles = "professor,student")]
         public async Task<IActionResult> GetParticipants(int roomId)
         {
             var room = await _db.MultiplayerRooms
@@ -226,6 +226,8 @@ namespace TechQuestBackend.Controllers
                 return Forbid();
             if (request.Questions == null || request.Questions.Count == 0)
                 return BadRequest("At least one question is required.");
+            if (request.MaxAttempts < 1)
+                return BadRequest("Maximum quiz attempts must be a positive whole number.");
 
             int userId = GetUserId();
             var upload = await _db.ProfessorUploads
@@ -243,21 +245,88 @@ namespace TechQuestBackend.Controllers
 
             upload.FileName = request.FileName ?? "Room quiz";
             upload.TimerSeconds = Math.Max(1, request.TimerSeconds);
+            upload.MaxAttempts = request.MaxAttempts;
             upload.QuestionsJson = JsonSerializer.Serialize(request.Questions);
             upload.UploadedAt = DateTime.UtcNow;
             await _db.SaveChangesAsync();
-            return Ok();
+            return Ok(new { maxAttempts = upload.MaxAttempts });
+        }
+
+        [HttpPost("{roomId:int}/attempts")]
+        [Authorize(Roles = "student")]
+        public async Task<IActionResult> StartAttempt(int roomId, StartRoomQuizAttemptRequest request)
+        {
+            if (request.ClientRequestId == Guid.Empty)
+                return BadRequest("A client request ID is required.");
+
+            var room = await _db.MultiplayerRooms.SingleOrDefaultAsync(r => r.RoomId == roomId);
+            if (room == null)
+                return NotFound("Room was not found.");
+            if (!await IsRoomParticipantAsync(roomId, GetUserId()))
+                return Forbid();
+
+            var profile = await _db.StudentProfiles.SingleOrDefaultAsync(s => s.UserId == GetUserId());
+            if (profile == null)
+                return BadRequest("Student profile was not found.");
+
+            await using var transaction = await _db.Database.BeginTransactionAsync(System.Data.IsolationLevel.ReadCommitted);
+            // Serialize starts for this quiz so two simultaneous requests cannot both pass the limit.
+            await _db.Database.ExecuteSqlInterpolatedAsync($"SELECT \"UploadId\" FROM \"Professor_uploads\" WHERE \"RoomId\" = {roomId} FOR UPDATE");
+
+            var existing = await _db.RoomQuizAttempts.SingleOrDefaultAsync(a =>
+                a.RoomId == roomId && a.StudentId == profile.StudentId && a.ClientRequestId == request.ClientRequestId);
+            if (existing != null)
+            {
+                await transaction.CommitAsync();
+                return Ok(new { attemptId = existing.RoomQuizAttemptId });
+            }
+
+            var upload = await _db.ProfessorUploads.SingleOrDefaultAsync(item => item.RoomId == roomId);
+            if (upload == null)
+                return NotFound("No quiz has been uploaded for this room.");
+
+            int attemptCount = await _db.RoomQuizAttempts.CountAsync(a =>
+                a.RoomId == roomId && a.StudentId == profile.StudentId);
+            if (attemptCount >= upload.MaxAttempts)
+            {
+                await transaction.RollbackAsync();
+                return Conflict(new
+                {
+                    code = "quiz_attempt_limit_reached",
+                    message = "You have reached the maximum number of attempts allowed for this quiz. You can no longer start this room."
+                });
+            }
+
+            var attempt = new RoomQuizAttempt
+            {
+                RoomId = roomId,
+                StudentId = profile.StudentId,
+                ClientRequestId = request.ClientRequestId
+            };
+            _db.RoomQuizAttempts.Add(attempt);
+            await _db.SaveChangesAsync();
+            await transaction.CommitAsync();
+            return Ok(new { attemptId = attempt.RoomQuizAttemptId });
         }
 
         [HttpGet("{roomId:int}/quiz")]
-        [Authorize(Roles = "professor,admin,student")]
-        public async Task<IActionResult> GetQuiz(int roomId)
+        [Authorize(Roles = "professor,student")]
+        public async Task<IActionResult> GetQuiz(int roomId, int? attemptId)
         {
             var room = await _db.MultiplayerRooms.SingleOrDefaultAsync(r => r.RoomId == roomId);
             if (room == null)
                 return NotFound("Room was not found.");
             if (!CanAccessRoom(room))
                 return Forbid();
+
+            if (User.IsInRole("student"))
+            {
+                int userId = GetUserId();
+                var profile = await _db.StudentProfiles.AsNoTracking().SingleOrDefaultAsync(s => s.UserId == userId);
+                if (profile == null || !attemptId.HasValue || !await _db.RoomQuizAttempts.AnyAsync(a =>
+                    a.RoomQuizAttemptId == attemptId.Value && a.RoomId == roomId && a.StudentId == profile.StudentId))
+                    return Forbid();
+            }
 
             var upload = await _db.ProfessorUploads
                 .AsNoTracking()
@@ -280,13 +349,15 @@ namespace TechQuestBackend.Controllers
                 int swapIndex = Random.Shared.Next(questionIndex + 1);
                 (questions[questionIndex], questions[swapIndex]) = (questions[swapIndex], questions[questionIndex]);
             }
-            return Ok(new { TimerSeconds = upload.TimerSeconds, Questions = questions });
+            return Ok(new { TimerSeconds = upload.TimerSeconds, MaxAttempts = upload.MaxAttempts, Questions = questions });
         }
 
         [HttpPost("{roomId:int}/results")]
         [Authorize(Roles = "student")]
         public async Task<IActionResult> SaveResult(int roomId, RoomResultRequest request)
         {
+            if (request.AttemptId <= 0)
+                return BadRequest("A quiz attempt is required.");
             if (request.Score < 0)
                 return BadRequest("Score cannot be negative.");
             if (request.TotalQuestions < 0)
@@ -307,12 +378,17 @@ namespace TechQuestBackend.Controllers
             if (profile == null)
                 return BadRequest("Student profile was not found.");
 
+            var attempt = await _db.RoomQuizAttempts
+                .SingleOrDefaultAsync(a => a.RoomQuizAttemptId == request.AttemptId && a.RoomId == roomId && a.StudentId == profile.StudentId);
+            if (attempt == null)
+                return BadRequest("The quiz attempt was not found.");
+
             var result = await _db.RoomResults
-                .SingleOrDefaultAsync(r => r.RoomId == roomId && r.StudentId == profile.StudentId);
+                .SingleOrDefaultAsync(r => r.RoomQuizAttemptId == attempt.RoomQuizAttemptId);
 
             if (result == null)
             {
-                result = new RoomResult { RoomId = roomId, StudentId = profile.StudentId };
+                result = new RoomResult { RoomId = roomId, StudentId = profile.StudentId, RoomQuizAttemptId = attempt.RoomQuizAttemptId };
                 _db.RoomResults.Add(result);
 
                 if (request.TotalQuestions > 0 && request.Score < request.TotalQuestions)
@@ -329,6 +405,7 @@ namespace TechQuestBackend.Controllers
             result.TotalQuestions = request.TotalQuestions;
             result.AnswersJson = JsonSerializer.Serialize(request.Answers ?? new());
             result.CompletedAt = DateTime.UtcNow;
+            attempt.CompletedAt ??= result.CompletedAt;
             await _db.SaveChangesAsync();
             return Ok(result);
         }
@@ -358,7 +435,7 @@ namespace TechQuestBackend.Controllers
         }
 
         [HttpGet("{roomId:int}/results")]
-        [Authorize(Roles = "professor,admin")]
+        [Authorize(Roles = "professor")]
         public async Task<IActionResult> GetResults(int roomId)
         {
             var room = await _db.MultiplayerRooms.SingleOrDefaultAsync(r => r.RoomId == roomId);
@@ -443,8 +520,7 @@ namespace TechQuestBackend.Controllers
         private bool CanAccessRoom(MultiplayerRoom room)
         {
             string role = User.FindFirstValue("role") ?? "";
-            if (string.Equals(role, "admin", StringComparison.OrdinalIgnoreCase) ||
-                string.Equals(role, "student", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(role, "student", StringComparison.OrdinalIgnoreCase))
                 return true;
 
             return room.CreatedBy == GetUserId();
@@ -470,6 +546,7 @@ namespace TechQuestBackend.Controllers
 
     public class RoomResultRequest
     {
+        public int AttemptId { get; set; }
         public int Score { get; set; }
         public int TotalQuestions { get; set; }
         public List<RoomAnswerRequest> Answers { get; set; } = new();
@@ -479,7 +556,13 @@ namespace TechQuestBackend.Controllers
     {
         public string? FileName { get; set; }
         public int TimerSeconds { get; set; } = 30;
+        public int MaxAttempts { get; set; } = 3;
         public List<RoomQuizQuestionRequest> Questions { get; set; } = new();
+    }
+
+    public class StartRoomQuizAttemptRequest
+    {
+        public Guid ClientRequestId { get; set; }
     }
 
     public class RoomQuizQuestionRequest

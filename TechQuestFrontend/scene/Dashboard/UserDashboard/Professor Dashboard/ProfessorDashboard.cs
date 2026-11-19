@@ -6,7 +6,7 @@ public partial class ProfessorDashboard : DashboardBase
 	{
 		if (!RequireRole(UserRole.Professor))
 		{
-			NavigateTo(UserSelectionPath);
+			FeatureAccessGuard.ShowAccessRestricted(this, FeatureAccessGuard.DashboardMessage, true);
 			return;
 		}
 
@@ -29,9 +29,11 @@ public partial class ProfessorDashboard : DashboardBase
 		SetButtonEnabled(ShopButton, true);
 		SetButtonEnabled(TutorialButton, true);
 
-		SetButtonEnabled(EasyButton, false);
-		SetButtonEnabled(MediumButton, false);
-		SetButtonEnabled(HardButton, false);
-		SetButtonEnabled(CharacterButton, false);
+		// Keep restricted actions clickable so the shared access popup explains
+		// the restriction instead of silently disabling the control.
+		SetButtonEnabled(EasyButton, true);
+		SetButtonEnabled(MediumButton, true);
+		SetButtonEnabled(HardButton, true);
+		SetButtonEnabled(CharacterButton, true);
 	}
 }

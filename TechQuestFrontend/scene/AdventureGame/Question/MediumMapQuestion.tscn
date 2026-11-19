@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="4_d8c0w"]
 [ext_resource type="Texture2D" uid="uid://dwbjksunhepdp" path="res://asset/style/name_plate2.png" id="4_mtsrt"]
 [ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="5_y2eqd"]
+[ext_resource type="Texture2D" uid="uid://cfytc0v6b4xy1" path="res://asset/style/window.png" id="6_mtsrt"]
 [ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="7_6iaod"]
 [ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="8_w2pd4"]
 [ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="9_uk7r5"]
@@ -18,16 +19,56 @@ texture = ExtResource("2_5san4")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_50p45"]
 texture = ExtResource("4_mtsrt")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o61l1"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qxmvc"]
 texture = ExtResource("2_5san4")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_agqw3"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dhmor"]
+texture = ExtResource("6_mtsrt")
+region_rect = Rect2(1, 1, 72, 63)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xwcxa"]
+texture = ExtResource("7_6iaod")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q7sq3"]
+texture = ExtResource("8_w2pd4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mf573"]
+texture = ExtResource("9_uk7r5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bigee"]
+texture = ExtResource("7_6iaod")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fbtdi"]
+texture = ExtResource("8_w2pd4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5xaft"]
+texture = ExtResource("9_uk7r5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ytccs"]
+texture = ExtResource("7_6iaod")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wl3kc"]
+texture = ExtResource("8_w2pd4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5ue0i"]
+texture = ExtResource("9_uk7r5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_34wbm"]
+texture = ExtResource("7_6iaod")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o8xnx"]
+texture = ExtResource("8_w2pd4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7l4fm"]
+texture = ExtResource("9_uk7r5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yjpd3"]
 texture = ExtResource("3_u21r3")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gm8w4"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pfmd8"]
 texture = ExtResource("4_d8c0w")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vwc5r"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_44sje"]
 texture = ExtResource("5_y2eqd")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gm8w4"]
@@ -122,7 +163,7 @@ text = "No"
 layout_mode = 2
 horizontal_alignment = 1
 
-[node name="MediumMapQuestionPanel" type="Panel" parent="." unique_id=688917744]
+[node name="MediumMapQuestionPanel" type="Panel" parent="." unique_id=1607067594]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -135,9 +176,9 @@ offset_right = 408.375
 offset_bottom = 274.625
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_o61l1")
+theme_override_styles/panel = SubResource("StyleBoxTexture_qxmvc")
 
-[node name="SubjectLabel" type="Label" parent="MediumMapQuestionPanel" unique_id=577000379]
+[node name="SubjectLabel" type="Label" parent="MediumMapQuestionPanel" unique_id=1924288665]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -153,7 +194,7 @@ text = "Subject Name"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TimerLabel" type="Label" parent="MediumMapQuestionPanel" unique_id=1881423737]
+[node name="TimerLabel" type="Label" parent="MediumMapQuestionPanel" unique_id=349108240]
 layout_mode = 0
 offset_left = 619.375
 offset_top = 13.625
@@ -165,7 +206,7 @@ text = "Time"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="QuestionPanel" type="Panel" parent="MediumMapQuestionPanel" unique_id=244162136]
+[node name="QuestionPanel" type="Panel" parent="MediumMapQuestionPanel" unique_id=10145896]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -178,26 +219,30 @@ offset_right = 363.0
 offset_bottom = -88.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_dhmor")
 
-[node name="QuestionLabel" type="Label" parent="MediumMapQuestionPanel/QuestionPanel" unique_id=181820219]
+[node name="QuestionLabel" type="Label" parent="MediumMapQuestionPanel/QuestionPanel" unique_id=293572253]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -352.0
-offset_top = -34.25
-offset_right = 354.0
-offset_bottom = 38.75
+offset_left = -343.0
+offset_top = -21.25
+offset_right = 344.0
+offset_bottom = 44.75
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_d8c0w")
+theme_override_font_sizes/font_size = 18
 text = "Question"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MediumMapQuestionPanel" unique_id=723799887]
+[node name="VBoxContainer" type="VBoxContainer" parent="MediumMapQuestionPanel" unique_id=1393887298]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -212,27 +257,47 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 10
 
-[node name="ChoiceAButton" type="Button" parent="MediumMapQuestionPanel/VBoxContainer" unique_id=181820220]
+[node name="ChoiceAButton" type="Button" parent="MediumMapQuestionPanel/VBoxContainer" unique_id=802344329]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_d8c0w")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_xwcxa")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_q7sq3")
+theme_override_styles/hover = SubResource("StyleBoxTexture_mf573")
 text = "Choice A"
 
-[node name="ChoiceBButton" type="Button" parent="MediumMapQuestionPanel/VBoxContainer" unique_id=181820221]
+[node name="ChoiceBButton" type="Button" parent="MediumMapQuestionPanel/VBoxContainer" unique_id=1731741492]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_d8c0w")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_bigee")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_fbtdi")
+theme_override_styles/hover = SubResource("StyleBoxTexture_5xaft")
 text = "Choice B"
 
-[node name="ChoiceCButton" type="Button" parent="MediumMapQuestionPanel/VBoxContainer" unique_id=181820222]
+[node name="ChoiceCButton" type="Button" parent="MediumMapQuestionPanel/VBoxContainer" unique_id=1315222614]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_d8c0w")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_ytccs")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_wl3kc")
+theme_override_styles/hover = SubResource("StyleBoxTexture_5ue0i")
 text = "Choice C"
 
-[node name="ChoiceDButton" type="Button" parent="MediumMapQuestionPanel/VBoxContainer" unique_id=181820223]
+[node name="ChoiceDButton" type="Button" parent="MediumMapQuestionPanel/VBoxContainer" unique_id=899906525]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_d8c0w")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_34wbm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_o8xnx")
+theme_override_styles/hover = SubResource("StyleBoxTexture_7l4fm")
 text = "Choice D"
 
-[node name="Button" type="Button" parent="MediumMapQuestionPanel" unique_id=2091289342]
+[node name="Button" type="Button" parent="MediumMapQuestionPanel" unique_id=765394125]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -245,9 +310,9 @@ offset_right = 59.75
 offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_styles/normal = SubResource("StyleBoxTexture_agqw3")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_gm8w4")
-theme_override_styles/hover = SubResource("StyleBoxTexture_vwc5r")
+theme_override_styles/normal = SubResource("StyleBoxTexture_yjpd3")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_pfmd8")
+theme_override_styles/hover = SubResource("StyleBoxTexture_44sje")
 text = "Submit"
 
 [node name="HintAnswerLabel" type="Label" parent="." unique_id=1546618681]

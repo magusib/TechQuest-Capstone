@@ -25,6 +25,9 @@ public partial class AdminAvatarShop : Control
 
 	public override void _Ready()
 	{
+		if (!FeatureAccessGuard.Require(this, FeatureAccessGuard.Shop, FeatureAccessGuard.DashboardMessage))
+			return;
+
 		itemGrid =
 			GetNodeOrNull<GridContainer>("ShopPanel/ScrollContainer/ItemGrid")
 			?? GetNodeOrNull<GridContainer>("ScrollContainer/ItemGrid")

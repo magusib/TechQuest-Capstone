@@ -21,6 +21,9 @@ public partial class StudentRoomResult : Control
 
 	public override void _Ready()
 	{
+		if (!FeatureAccessGuard.Require(this, FeatureAccessGuard.Room, FeatureAccessGuard.DashboardMessage))
+			return;
+
 		subjectLabel = GetNode<Label>("RoomResult/VBoxContainer/SubjectNameLabel");
 		studentLabel = GetNode<Label>("RoomResult/VBoxContainer/StudentNameLabel");
 		scoreLabel = GetNode<Label>("RoomResult/VBoxContainer/ScoreLabel");

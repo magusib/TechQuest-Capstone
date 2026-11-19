@@ -18,9 +18,6 @@
 [ext_resource type="Texture2D" uid="uid://de8m8exy7pwis" path="res://asset/style/buttons/white_default.png" id="16_pd7sh"]
 [ext_resource type="Texture2D" uid="uid://dq5qspnbcspkv" path="res://asset/style/buttons/white_pressed.png" id="17_v2la2"]
 [ext_resource type="Texture2D" uid="uid://bjjjun4th25ea" path="res://asset/style/buttons/white_hover.png" id="18_t8v8f"]
-[ext_resource type="Texture2D" uid="uid://dsi454hvjo25p" path="res://asset/style/buttons/slate_default.png" id="19_5toov"]
-[ext_resource type="Texture2D" uid="uid://ejmylisq3jm5" path="res://asset/style/buttons/slate_pressed.png" id="20_aqdwg"]
-[ext_resource type="Texture2D" uid="uid://7h7pdiyc62hs" path="res://asset/style/buttons/slate_hover.png" id="21_lj8cm"]
 [ext_resource type="Texture2D" uid="uid://dclpu3xmblprx" path="res://asset/style/UI_Flat_Banner03a.png" id="22_aqdwg"]
 [ext_resource type="Texture2D" uid="uid://b4fvn8y1h3i1k" path="res://asset/style/buttons/maroon_default.png" id="23_lj8cm"]
 [ext_resource type="Texture2D" uid="uid://coi1wu2nu2526" path="res://asset/style/buttons/maroon_pressed.png" id="24_hg6xa"]
@@ -75,13 +72,13 @@ texture = ExtResource("17_v2la2")
 texture = ExtResource("18_t8v8f")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rql4u"]
-texture = ExtResource("19_5toov")
+texture = ExtResource("26_f4skk")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pd7sh"]
-texture = ExtResource("20_aqdwg")
+texture = ExtResource("27_xxxpd")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v2la2"]
-texture = ExtResource("21_lj8cm")
+texture = ExtResource("28_6ckvr")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hg6xa"]
 texture = ExtResource("3_h0pkt")
@@ -304,9 +301,9 @@ offset_left = 948.0
 offset_top = 149.0
 offset_right = 1169.0
 offset_bottom = 205.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("13_5l67f")
 theme_override_styles/normal = SubResource("StyleBoxTexture_rql4u")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_pd7sh")
@@ -322,9 +319,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -225.0
-offset_top = -225.0
+offset_top = -275.0
 offset_right = 225.0
-offset_bottom = 225.0
+offset_bottom = 275.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_hg6xa")
@@ -334,15 +331,15 @@ layout_mode = 0
 offset_left = 7.0
 offset_top = 7.0
 offset_right = 442.0
-offset_bottom = 443.0
+offset_bottom = 543.0
 
 [node name="UploadQuizContainer" type="VBoxContainer" parent="UploadQuizPopup" unique_id=1066095243]
 layout_mode = 0
 offset_left = 24.0
 offset_top = 19.0
 offset_right = 430.0
-offset_bottom = 425.0
-theme_override_constants/separation = 30
+offset_bottom = 525.0
+theme_override_constants/separation = 16
 
 [node name="UplaodQuizLabel" type="Label" parent="UploadQuizPopup/UploadQuizContainer" unique_id=1063105584]
 custom_minimum_size = Vector2(0, 35)
@@ -382,6 +379,33 @@ text = "Timer"
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_u4qy6")
 placeholder_text = "5 seconds or 5 minutes"
+
+[node name="AttemptLimitLabel" type="Label" parent="UploadQuizPopup/UploadQuizContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("13_5l67f")
+theme_override_font_sizes/font_size = 20
+text = "Maximum Quiz Attempts"
+
+[node name="AttemptLimitInput" type="LineEdit" parent="UploadQuizPopup/UploadQuizContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_u4qy6")
+placeholder_text = "Enter a positive whole number"
+virtual_keyboard_type = 2
+
+[node name="AttemptLimitDescription" type="Label" parent="UploadQuizPopup/UploadQuizContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.15, 0.15, 0.15, 1)
+theme_override_fonts/font = ExtResource("7_u4qy6")
+text = "Set how many times a student can attempt this quiz."
+autowrap_mode = 2
+
+[node name="UploadLoadingIndicator" type="ProgressBar" parent="UploadQuizPopup/UploadQuizContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+show_percentage = false
+value = 50.0
 
 [node name="ButtonContainer" type="HBoxContainer" parent="UploadQuizPopup/UploadQuizContainer" unique_id=1180774843]
 layout_mode = 2

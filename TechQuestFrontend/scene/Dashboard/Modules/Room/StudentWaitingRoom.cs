@@ -15,15 +15,21 @@ public partial class StudentWaitingRoom : Control
 	private Control avatarTemplate;
 	private float refreshElapsed;
 	private bool refreshing;
+	private bool starting;
+	private AcceptDialog attemptLimitPopup;
 
 	public override void _Ready()
 	{
+		if (!FeatureAccessGuard.Require(this, FeatureAccessGuard.Room, FeatureAccessGuard.DashboardMessage))
+			return;
+
 		subjectLabel = GetNode<Label>("Header/SubjectLabel");
 		roomCode = GetNode<Label>("Header/RoomCodePanel/RoomCode");
 		studentCountLabel = GetNode<Label>("Header/StudentCountLabel");
 		backButton = GetNode<Button>("Header/Button");
 		startButton = GetNode<Button>("StartButton");
 		changeAvatarButton = GetNode<Button>("ChangeAvatarButton");
+		attemptLimitPopup = GetNode<AcceptDialog>("QuizAttemptLimitPopup");
 		avatarGrid = GetNode<GridContainer>("AvatarPanel/StudentScrool/AvatarGridContianer");
 		avatarTemplate = avatarGrid.GetChild<Control>(0);
 		avatarTemplate.Visible = false;
@@ -53,9 +59,33 @@ public partial class StudentWaitingRoom : Control
 		GetTree().ChangeSceneToFile("res://scene/Dashboard/Modules/Room/StudentRoom.tscn");
 	}
 
-	private void OnStartPressed()
+	private async void OnStartPressed()
 	{
-		GetTree().ChangeSceneToFile("res://scene/Dashboard/Modules/Room/StudentQuizSession.tscn");
+		if (starting)
+			return;
+
+		starting = true;
+		startButton.Disabled = true;
+		try
+		{
+			RoomQuizAttemptDto attempt = await RoomApiClient.StartAttemptAsync(
+				MultiplayerRoomState.RoomId, Guid.NewGuid());
+			MultiplayerRoomState.AttemptId = attempt.AttemptId;
+			GetTree().ChangeSceneToFile("res://scene/Dashboard/Modules/Room/StudentQuizSession.tscn");
+		}
+		catch (RoomApiException exception) when (exception.ErrorCode == "quiz_attempt_limit_reached")
+		{
+			attemptLimitPopup.PopupCentered();
+		}
+		catch (Exception exception)
+		{
+			GD.PrintErr($"Start room failed: {exception.Message}");
+		}
+		finally
+		{
+			starting = false;
+			startButton.Disabled = false;
+		}
 	}
 
 	private void OnChangeAvatarPressed()

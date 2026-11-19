@@ -16,6 +16,9 @@ public partial class StudentCharacter : Control
 
 	public override void _Ready()
 	{
+		if (!FeatureAccessGuard.Require(this, FeatureAccessGuard.Character, FeatureAccessGuard.DashboardMessage))
+			return;
+
 		characterContainer = GetNode<HBoxContainer>("CharacterPanel/MainContainer/CharacterArea/CharacterScroll/CharacterContainer");
 		itemTemplate = GetNode<PanelContainer>("StudentCharacterItem");
 		storylinePopup = GetNode<Panel>("CharacterStorylinePopup");

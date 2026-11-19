@@ -4,3 +4,39 @@ GET {{TechQuestBackend_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+# Room quiz endpoints require a JWT from a Professor or Student login.
+@token = replace-with-jwt
+@roomId = 1
+@clientRequestId = 00000000-0000-0000-0000-000000000001
+
+### Save a room quiz (Professor)
+POST {{TechQuestBackend_HostAddress}}/api/MultiplayerRooms/{{roomId}}/quiz
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "fileName": "quiz.xlsx",
+  "timerSeconds": 60,
+  "maxAttempts": 3,
+  "questions": [
+    {
+      "type": "Multiple Choice",
+      "subjectName": "Demo",
+      "question": "2 + 2 = ?",
+      "choiceA": "3",
+      "choiceB": "4",
+      "choiceC": "5",
+      "choiceD": "6",
+      "correctAnswer": "B"
+    }
+  ]
+}
+
+### Start a room quiz attempt (Student)
+POST {{TechQuestBackend_HostAddress}}/api/MultiplayerRooms/{{roomId}}/attempts
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "clientRequestId": "{{clientRequestId}}"
+}

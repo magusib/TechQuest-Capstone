@@ -11,6 +11,9 @@ public partial class StudentRoom : Control
 
 	public override void _Ready()
 	{
+		if (!FeatureAccessGuard.Require(this, FeatureAccessGuard.Room, FeatureAccessGuard.DashboardMessage))
+			return;
+
 		backButton = GetNode<Button>("BackButton");
 		joinRoomButton = GetNode<Button>("JoinRoomButton");
 		codeInput = GetNode<LineEdit>("CodeInput");

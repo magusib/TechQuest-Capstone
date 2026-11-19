@@ -11,6 +11,9 @@ public partial class ProfessorAvatarShop : Control
 
 	public override void _Ready()
 	{
+		if (!FeatureAccessGuard.Require(this, FeatureAccessGuard.Shop, FeatureAccessGuard.DashboardMessage))
+			return;
+
 		backButton = GetNode<Button>("BackButton");
 		backButton.Pressed += OnBackPressed;
 		itemGrid = GetNode<GridContainer>("ShopPanel/ScrollContainer/ItemGrid");

@@ -20,6 +20,8 @@ public partial class ProfessorWaitingRoom : Control
 	private Button cancelButton;
 	private Label fileLabel;
 	private LineEdit timerInput;
+	private LineEdit attemptLimitInput;
+	private ProgressBar uploadLoadingIndicator;
 	private Panel uploadPopup;
 	private GridContainer avatarGrid;
 	private Control avatarTemplate;
@@ -30,9 +32,13 @@ public partial class ProfessorWaitingRoom : Control
 	private string selectedQuizPath = "";
 	private float refreshElapsed;
 	private bool refreshing;
+	private bool uploadInProgress;
 
 	public override void _Ready()
 	{
+		if (!FeatureAccessGuard.Require(this, FeatureAccessGuard.Room, FeatureAccessGuard.DashboardMessage))
+			return;
+
 		subjectLabel = GetNode<Label>("Header/SubjectLabel");
 		roomCode = GetNode<Label>("Header/RoomCodePanel/RoomCode");
 		studentCountLabel = GetNode<Label>("Header/StudentCountLabel");
@@ -48,6 +54,8 @@ public partial class ProfessorWaitingRoom : Control
 		timerInput = GetNode<LineEdit>(
             "UploadQuizPopup/UploadQuizContainer/TimerInput"
 		);
+		attemptLimitInput = GetNode<LineEdit>("UploadQuizPopup/UploadQuizContainer/AttemptLimitInput");
+		uploadLoadingIndicator = GetNode<ProgressBar>("UploadQuizPopup/UploadQuizContainer/UploadLoadingIndicator");
 		uploadFileButton = GetNode<Button>(
             "UploadQuizPopup/UploadQuizContainer/UploadFileButton"
 		);
@@ -120,6 +128,8 @@ public partial class ProfessorWaitingRoom : Control
 		cancelButton.Pressed += () => uploadPopup.Hide();
 
 		_ = RefreshParticipantsAsync();
+		attemptLimitInput.Text = "3";
+		uploadLoadingIndicator.Visible = false;
 	}
 
 	public override void _Process(double delta)
@@ -214,6 +224,9 @@ public partial class ProfessorWaitingRoom : Control
 
 	private async void OnUploadPressed()
 	{
+		if (uploadInProgress)
+			return;
+
 		if (string.IsNullOrWhiteSpace(selectedQuizPath))
 		{
 			ShowMessage(
@@ -232,6 +245,15 @@ public partial class ProfessorWaitingRoom : Control
 			);
 			return;
 		}
+
+		if (!int.TryParse(attemptLimitInput.Text.Trim(), out int maxAttempts) || maxAttempts < 1)
+		{
+			ShowMessage("Upload error", "Maximum quiz attempts must be a positive whole number.");
+			return;
+		}
+
+		uploadInProgress = true;
+		SetUploadControlsEnabled(false);
 
 		try
 		{
@@ -274,6 +296,7 @@ public partial class ProfessorWaitingRoom : Control
 				MultiplayerRoomState.RoomId,
 				uploadedFileName,
 				timerSeconds,
+				maxAttempts,
 				questions
 			);
 
@@ -289,6 +312,22 @@ public partial class ProfessorWaitingRoom : Control
 		{
 			ShowMessage("Upload error", exception.Message);
 		}
+		finally
+		{
+			uploadInProgress = false;
+			SetUploadControlsEnabled(true);
+		}
+	}
+
+	private void SetUploadControlsEnabled(bool enabled)
+	{
+		uploadButton.Disabled = !enabled;
+		uploadButton.Text = enabled ? "Upload" : "Uploading...";
+		cancelButton.Disabled = !enabled;
+		uploadFileButton.Disabled = !enabled;
+		attemptLimitInput.Editable = enabled;
+		timerInput.Editable = enabled;
+		uploadLoadingIndicator.Visible = !enabled;
 	}
 
 	private bool TryParseTimerSeconds(

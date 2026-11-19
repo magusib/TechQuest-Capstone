@@ -13,6 +13,9 @@ public partial class ProfessorRoomResult : Control
 
 	public override void _Ready()
 	{
+		if (!FeatureAccessGuard.Require(this, FeatureAccessGuard.Room, FeatureAccessGuard.DashboardMessage))
+			return;
+
 		resultsContainer = GetNode<VBoxContainer>("RoomResultPanel/ScrollContainer/RoomResultContainer");
 		subjectLabel = GetNode<Label>("RoomResultPanel/ScrollContainer/RoomResultContainer/SubjectNameLabel");
 		roomCodeLabel = GetNode<Label>("RoomResultPanel/ScrollContainer/RoomResultContainer/RoomCodeLabel");

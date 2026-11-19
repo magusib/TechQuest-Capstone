@@ -10,7 +10,6 @@ public abstract partial class NpcQuestionFlow : Control
     private Label subjectLabel;
     private Label timerLabel;
     private Label questionLabel;
-    private LineEdit answerInput;
     private Button submitButton;
     private readonly List<Button> choiceButtons = new();
     private Label hintAnswerLabel;
@@ -42,7 +41,6 @@ public abstract partial class NpcQuestionFlow : Control
         subjectLabel = questionPanel.GetNode<Label>("SubjectLabel");
         timerLabel = questionPanel.GetNode<Label>("TimerLabel");
         questionLabel = questionPanel.GetNode<Panel>("QuestionPanel").GetNode<Label>("QuestionLabel");
-        answerInput = questionPanel.GetNode<LineEdit>("LineEdit");
         submitButton = questionPanel.GetNode<Button>("Button");
         VBoxContainer choicesContainer = questionPanel.GetNode<VBoxContainer>("VBoxContainer");
         choiceButtons.Add(choicesContainer.GetNode<Button>("ChoiceAButton"));
@@ -101,7 +99,6 @@ public abstract partial class NpcQuestionFlow : Control
         purchaseInProgress = false;
         subjectLabel.Text = question.SubjectName;
         questionLabel.Text = question.Question;
-        answerInput.Text = "";
         hintAnswerLabel.Text = "";
         hintAnswerLabel.Hide();
         questionPanel.Show();
@@ -125,7 +122,6 @@ public abstract partial class NpcQuestionFlow : Control
     private void ConfigureAnswerControls()
     {
         bool hasChoices = question.AnswerChoices != null && question.AnswerChoices.Count == 4;
-        answerInput.Visible = false;
         for (int index = 0; index < choiceButtons.Count; index++)
         {
             bool visible = hasChoices;
@@ -328,7 +324,6 @@ public abstract partial class NpcQuestionFlow : Control
     private void SetAnswerControlsDisabled(bool disabled)
     {
         submitButton.Disabled = disabled;
-        answerInput.Editable = !disabled;
         foreach (Button button in choiceButtons)
             button.Disabled = disabled;
     }
@@ -349,7 +344,6 @@ public abstract partial class NpcQuestionFlow : Control
     private void ReturnToMap()
     {
         countdown?.Stop();
-        answerInput?.ReleaseFocus();
         Hide();
         MiniGameLauncher.CompleteChallenge();
     }

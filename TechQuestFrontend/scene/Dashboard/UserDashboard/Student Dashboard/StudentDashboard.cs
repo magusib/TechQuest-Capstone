@@ -6,7 +6,7 @@ public partial class StudentDashboard : DashboardBase
 	{
 		if (!RequireRole(UserRole.Student))
 		{
-			NavigateTo(UserSelectionPath);
+			FeatureAccessGuard.ShowAccessRestricted(this, FeatureAccessGuard.DashboardMessage, true);
 			return;
 		}
 

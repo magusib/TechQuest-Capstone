@@ -24,3 +24,9 @@ offset_top = 56.0
 offset_right = 126.0
 offset_bottom = 95.0
 text = "Back"
+
+[node name="AdminRoomAccessPopup" type="AcceptDialog" parent="." unique_id=3063131766]
+title = "Access Restricted"
+dialog_text = "Room access is not available for Admin accounts. Only Professors and Students can access the Room."
+ok_button_text = "OK"
+size = Vector2i(560, 240)

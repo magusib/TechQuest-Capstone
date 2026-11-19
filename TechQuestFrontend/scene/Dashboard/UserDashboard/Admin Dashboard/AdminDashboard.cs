@@ -6,7 +6,7 @@ public partial class AdminDashboard : DashboardBase
 	{
 		if (!RequireRole(UserRole.Admin))
 		{
-			NavigateTo(UserSelectionPath);
+			FeatureAccessGuard.ShowAccessRestricted(this, FeatureAccessGuard.DashboardMessage, true);
 			return;
 		}
 
@@ -26,9 +26,9 @@ public partial class AdminDashboard : DashboardBase
 		SetButtonEnabled(ShopButton, true);
 		SetButtonEnabled(TutorialButton, true);
 
-		// Character Dashboard is Student-only.
-		// Admin character management is handled through Shop Management.
-		SetButtonEnabled(CharacterButton, false);
+		// Character Dashboard is Student-only. Keep the control clickable so
+		// unauthorized attempts receive the shared access popup.
+		SetButtonEnabled(CharacterButton, true);
 
 		SetButtonEnabled(EasyButton, true);
 		SetButtonEnabled(MediumButton, true);

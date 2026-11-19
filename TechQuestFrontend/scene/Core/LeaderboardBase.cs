@@ -11,6 +11,9 @@ public partial class LeaderboardBase : Control
 
 	public override void _Ready()
 	{
+		if (!FeatureAccessGuard.Require(this, FeatureAccessGuard.Leaderboard, FeatureAccessGuard.DashboardMessage))
+			return;
+
 		request = new HttpRequest();
 		AddChild(request);
 		request.RequestCompleted += OnRequestCompleted;

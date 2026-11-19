@@ -246,3 +246,9 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_dpd51")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_5ijy3")
 theme_override_styles/hover = SubResource("StyleBoxTexture_rfluu")
 text = "Start"
+
+[node name="QuizAttemptLimitPopup" type="AcceptDialog" parent="." unique_id=3063131765]
+title = "Quiz Attempt Limit Reached"
+dialog_text = "You have reached the maximum number of attempts allowed for this quiz. You can no longer start this room."
+ok_button_text = "OK"
+size = Vector2i(520, 220)

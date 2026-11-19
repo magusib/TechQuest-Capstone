@@ -11,6 +11,7 @@ public static class MultiplayerRoomState
 	public static List<RoomQuizQuestionDto> Questions { get; set; } = new();
 	public static List<RoomAnswerDto> Answers { get; set; } = new();
 	public static int Score { get; set; }
+	public static int AttemptId { get; set; }
 	public static bool ReturnToWaitingRoom { get; set; }
 
 	public static void SetRoom(int roomId, string roomCode, string roomName, int studentId = 0)
@@ -29,6 +30,7 @@ public static class MultiplayerRoomState
 		Questions = questions ?? new List<RoomQuizQuestionDto>();
 		Answers = new List<RoomAnswerDto>();
 		Score = 0;
+		AttemptId = 0;
 	}
 
 	public static void Clear()
@@ -69,7 +71,13 @@ public class RoomParticipantDto
 public class RoomQuizDto
 {
 	public int TimerSeconds { get; set; }
+	public int MaxAttempts { get; set; }
 	public List<RoomQuizQuestionDto> Questions { get; set; } = new();
+}
+
+public class RoomQuizAttemptDto
+{
+	public int AttemptId { get; set; }
 }
 
 public class RoomQuizQuestionDto

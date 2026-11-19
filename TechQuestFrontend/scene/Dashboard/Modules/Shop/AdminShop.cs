@@ -31,6 +31,9 @@ public partial class AdminShop : Control
 
 	public override void _Ready()
 	{
+		if (!FeatureAccessGuard.Require(this, FeatureAccessGuard.Shop, FeatureAccessGuard.DashboardMessage))
+			return;
+
 		backButton =
 			GetNodeOrNull<Button>("BackButton")
 			?? GetNodeOrNull<Button>("ShopPanel/BackButton")

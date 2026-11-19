@@ -8,6 +8,8 @@ namespace TechQuestBackend.Models
 
         public int StudentId { get; set; }
 
+        public int? RoomQuizAttemptId { get; set; }
+
         public int Score { get; set; }
 
         public int TotalQuestions { get; set; }
@@ -19,5 +21,7 @@ namespace TechQuestBackend.Models
         public MultiplayerRoom? Room { get; set; }
 
         public StudentProfile? Student { get; set; }
+
+        public RoomQuizAttempt? RoomQuizAttempt { get; set; }
     }
 }

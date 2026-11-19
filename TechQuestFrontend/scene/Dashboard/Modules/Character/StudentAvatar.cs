@@ -14,6 +14,9 @@ public partial class StudentAvatar : Control
 
 	public override void _Ready()
 	{
+		if (!FeatureAccessGuard.Require(this, FeatureAccessGuard.Character, FeatureAccessGuard.DashboardMessage))
+			return;
+
 		avatarContainer = GetNode<HBoxContainer>("AvatarPanel/MainContainer/AvatarArea/AvatarScroll/AvatarContainer");
 		itemTemplate = GetNode<PanelContainer>("StudentAvatarItem");
 		carouselArrows = GetNode<HBoxContainer>("AvatarPanel/MainContainer/CarouselArrows");

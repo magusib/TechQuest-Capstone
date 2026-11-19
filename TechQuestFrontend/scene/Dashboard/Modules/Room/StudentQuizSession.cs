@@ -23,6 +23,9 @@ public partial class StudentQuizSession : Control
 
 	public override void _Ready()
 	{
+		if (!FeatureAccessGuard.Require(this, FeatureAccessGuard.Room, FeatureAccessGuard.DashboardMessage))
+			return;
+
 		subjectLabel = GetNode<Label>("QuestionHeaderPanel/SubjectNameLabel");
 		questionNumberLabel = GetNode<Label>("QuestionHeaderPanel/NumberOfQuestionLabel");
 		timerLabel = GetNode<Label>("QuestionHeaderPanel/TimerLabel");
@@ -77,7 +80,7 @@ public partial class StudentQuizSession : Control
 	{
 		try
 		{
-			RoomQuizDto quiz = await RoomApiClient.GetQuizAsync(MultiplayerRoomState.RoomId);
+			RoomQuizDto quiz = await RoomApiClient.GetQuizAsync(MultiplayerRoomState.RoomId, MultiplayerRoomState.AttemptId);
 			MultiplayerRoomState.SetQuiz(quiz.TimerSeconds, quiz.Questions);
 			if (MultiplayerRoomState.Questions.Count == 0)
 			{
@@ -220,6 +223,7 @@ public partial class StudentQuizSession : Control
 		{
 			await RoomApiClient.SaveResultAsync(
 				MultiplayerRoomState.RoomId,
+				MultiplayerRoomState.AttemptId,
 				MultiplayerRoomState.Score,
 				MultiplayerRoomState.Questions.Count,
 				MultiplayerRoomState.Answers);

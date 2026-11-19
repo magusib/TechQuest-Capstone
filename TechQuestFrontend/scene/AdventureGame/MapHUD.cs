@@ -22,6 +22,13 @@ public partial class MapHUD : Control
 
 	public override void _Ready()
 	{
+		if (!FeatureAccessGuard.Require(this, FeatureAccessGuard.Difficulty, FeatureAccessGuard.DifficultyMessage))
+		{
+			Visible = false;
+			SetProcess(false);
+			return;
+		}
+
 		Visible = UserSession.IsStudent;
 		if (!UserSession.IsStudent)
 		{

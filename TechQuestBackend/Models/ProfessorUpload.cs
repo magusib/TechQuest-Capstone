@@ -12,6 +12,8 @@ namespace TechQuestBackend.Models
 
         public int TimerSeconds { get; set; } = 30;
 
+        public int MaxAttempts { get; set; } = 3;
+
         public string QuestionsJson { get; set; } = "[]";
 
         public DateTime UploadedAt { get; set; } = DateTime.UtcNow;

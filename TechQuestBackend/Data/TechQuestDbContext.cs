@@ -60,6 +60,8 @@ namespace TechQuestBackend.Data
 
         public DbSet<RoomResult> RoomResults { get; set; }
 
+        public DbSet<RoomQuizAttempt> RoomQuizAttempts { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -502,6 +504,7 @@ namespace TechQuestBackend.Data
                     .HasColumnType("jsonb")
                     .HasDefaultValueSql("'[]'::jsonb");
                 entity.Property(p => p.TimerSeconds).HasDefaultValue(30);
+                entity.Property(p => p.MaxAttempts).HasDefaultValue(3);
                 entity.Property(p => p.UploadedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.HasOne(p => p.Professor)
                     .WithMany()
@@ -521,7 +524,7 @@ namespace TechQuestBackend.Data
             {
                 entity.ToTable("Room_result");
                 entity.HasKey(r => r.RoomResultId);
-                entity.HasIndex(r => new { r.RoomId, r.StudentId }).IsUnique();
+                entity.HasIndex(r => new { r.RoomId, r.StudentId, r.RoomQuizAttemptId }).IsUnique();
                 entity.Property(r => r.Score).HasDefaultValue(0);
                 entity.Property(r => r.TotalQuestions).HasDefaultValue(0);
                 entity.Property(r => r.AnswersJson)
@@ -537,6 +540,27 @@ namespace TechQuestBackend.Data
                 entity.HasOne(r => r.Student)
                     .WithMany(s => s.RoomResults)
                     .HasForeignKey(r => r.StudentId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(r => r.RoomQuizAttempt)
+                    .WithMany(attempt => attempt.Results)
+                    .HasForeignKey(r => r.RoomQuizAttemptId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<RoomQuizAttempt>(entity =>
+            {
+                entity.ToTable("Room_quiz_attempts");
+                entity.HasKey(a => a.RoomQuizAttemptId);
+                entity.HasIndex(a => new { a.RoomId, a.StudentId, a.ClientRequestId }).IsUnique();
+                entity.HasIndex(a => new { a.RoomId, a.StudentId });
+                entity.Property(a => a.StartedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.HasOne(a => a.Room)
+                    .WithMany(room => room.QuizAttempts)
+                    .HasForeignKey(a => a.RoomId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(a => a.Student)
+                    .WithMany()
+                    .HasForeignKey(a => a.StudentId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
         }

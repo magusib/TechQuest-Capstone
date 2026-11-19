@@ -353,6 +353,15 @@ public abstract partial class DashboardBase : Control
 		return false;
 	}
 
+	protected bool RequireFeature(string feature, string message = FeatureAccessGuard.DashboardMessage)
+	{
+		if (FeatureAccessGuard.IsAuthorized(feature))
+			return true;
+
+		FeatureAccessGuard.ShowAccessRestricted(this, message);
+		return false;
+	}
+
 	// ---------------------------------------------------------
 	// Common button handlers
 	// ---------------------------------------------------------
@@ -364,6 +373,9 @@ public abstract partial class DashboardBase : Control
 
 	protected virtual void OnHomePressed()
 	{
+		if (!RequireFeature(FeatureAccessGuard.Home))
+			return;
+
 		switch (UserSession.Role)
 		{
 			case UserRole.Student:
@@ -386,6 +398,9 @@ public abstract partial class DashboardBase : Control
 
 	protected virtual void OnRoomPressed()
 	{
+		if (!RequireFeature(FeatureAccessGuard.Room))
+			return;
+
 		switch (UserSession.Role)
 		{
 			case UserRole.Student:
@@ -404,6 +419,9 @@ public abstract partial class DashboardBase : Control
 
 	protected virtual void OnLeaderboardPressed()
 	{
+		if (!RequireFeature(FeatureAccessGuard.Leaderboard))
+			return;
+
 		switch (UserSession.Role)
 		{
 			case UserRole.Student:
@@ -422,6 +440,9 @@ public abstract partial class DashboardBase : Control
 
 	protected virtual void OnShopPressed()
 	{
+		if (!RequireFeature(FeatureAccessGuard.Shop))
+			return;
+
 		switch (UserSession.Role)
 		{
 			case UserRole.Student:
@@ -440,7 +461,7 @@ public abstract partial class DashboardBase : Control
 
 	protected virtual void OnCharacterPressed()
 	{
-		if (!RequireRole(UserRole.Student))
+		if (!RequireFeature(FeatureAccessGuard.Character))
 			return;
 
 		NavigateTo(StudentCharacterPath);
@@ -448,6 +469,9 @@ public abstract partial class DashboardBase : Control
 
 	protected virtual void OnTutorialPressed()
 	{
+		if (!RequireFeature(FeatureAccessGuard.Tutorial))
+			return;
+
 		// Each dashboard embeds its tutorial as a popup. Keep the tutorial on
 		// the dashboard for every role instead of routing Admin/Professor to a
 		// separate scene.
@@ -482,8 +506,7 @@ public abstract partial class DashboardBase : Control
 
 	protected virtual void OnEasyPressed()
 	{
-		if (UserSession.Role != UserRole.Student &&
-			UserSession.Role != UserRole.Admin)
+		if (!RequireFeature(FeatureAccessGuard.Difficulty, FeatureAccessGuard.DifficultyMessage))
 			return;
 
 		NavigateTo(EasyMapPath);
@@ -491,8 +514,7 @@ public abstract partial class DashboardBase : Control
 
 	protected virtual void OnMediumPressed()
 	{
-		if (UserSession.Role != UserRole.Student &&
-			UserSession.Role != UserRole.Admin)
+		if (!RequireFeature(FeatureAccessGuard.Difficulty, FeatureAccessGuard.DifficultyMessage))
 			return;
 
 		NavigateTo(MediumMapPath);
@@ -500,8 +522,7 @@ public abstract partial class DashboardBase : Control
 
 	protected virtual void OnHardPressed()
 	{
-		if (UserSession.Role != UserRole.Student &&
-			UserSession.Role != UserRole.Admin)
+		if (!RequireFeature(FeatureAccessGuard.Difficulty, FeatureAccessGuard.DifficultyMessage))
 			return;
 
 		NavigateTo(HardMapPath);

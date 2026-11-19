@@ -63,25 +63,32 @@ public static class RoomApiClient
 		return SendAsync<List<RoomParticipantDto>>(HttpMethod.Get, $"/MultiplayerRooms/{roomId}/participants");
 	}
 
-	public static Task SaveQuizAsync(int roomId, string fileName, int timerSeconds, List<RoomQuizQuestionDto> questions)
+	public static Task SaveQuizAsync(int roomId, string fileName, int timerSeconds, int maxAttempts, List<RoomQuizQuestionDto> questions)
 	{
 		return SendAsync<object>(HttpMethod.Post, $"/MultiplayerRooms/{roomId}/quiz", new
 		{
 			fileName,
 			timerSeconds,
+			maxAttempts,
 			questions
 		});
 	}
 
-	public static Task<RoomQuizDto> GetQuizAsync(int roomId)
+	public static Task<RoomQuizAttemptDto> StartAttemptAsync(int roomId, Guid clientRequestId)
 	{
-		return SendAsync<RoomQuizDto>(HttpMethod.Get, $"/MultiplayerRooms/{roomId}/quiz");
+		return SendAsync<RoomQuizAttemptDto>(HttpMethod.Post, $"/MultiplayerRooms/{roomId}/attempts", new { clientRequestId });
 	}
 
-	public static Task SaveResultAsync(int roomId, int score, int totalQuestions, List<RoomAnswerDto> answers)
+	public static Task<RoomQuizDto> GetQuizAsync(int roomId, int attemptId)
+	{
+		return SendAsync<RoomQuizDto>(HttpMethod.Get, $"/MultiplayerRooms/{roomId}/quiz?attemptId={attemptId}");
+	}
+
+	public static Task SaveResultAsync(int roomId, int attemptId, int score, int totalQuestions, List<RoomAnswerDto> answers)
 	{
 		return SendAsync<object>(HttpMethod.Post, $"/MultiplayerRooms/{roomId}/results", new
 		{
+			attemptId,
 			score,
 			totalQuestions,
 			answers
@@ -119,7 +126,10 @@ public static class RoomApiClient
 		string responseText = await response.Content.ReadAsStringAsync();
 
 		if (!response.IsSuccessStatusCode)
-			throw new InvalidOperationException(GetApiErrorMessage(responseText, response.ReasonPhrase));
+		{
+			string errorCode = GetApiErrorCode(responseText);
+			throw new RoomApiException(GetApiErrorMessage(responseText, response.ReasonPhrase), (int)response.StatusCode, errorCode);
+		}
 
 		if (typeof(T) == typeof(object) || string.IsNullOrWhiteSpace(responseText))
 			return default;
@@ -153,6 +163,34 @@ public static class RoomApiClient
 
 		return responseText;
 	}
+
+	private static string GetApiErrorCode(string responseText)
+	{
+		try
+		{
+			using JsonDocument document = JsonDocument.Parse(responseText);
+			return document.RootElement.TryGetProperty("code", out JsonElement code)
+				? code.GetString() ?? ""
+				: "";
+		}
+		catch
+		{
+			return "";
+		}
+	}
+}
+
+public sealed class RoomApiException : InvalidOperationException
+{
+	public RoomApiException(string message, int statusCode, string errorCode)
+		: base(message)
+	{
+		StatusCode = statusCode;
+		ErrorCode = errorCode;
+	}
+
+	public int StatusCode { get; }
+	public string ErrorCode { get; }
 }
 
 public class RoomResultSummaryDto

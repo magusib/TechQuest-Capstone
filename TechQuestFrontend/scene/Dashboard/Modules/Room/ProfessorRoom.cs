@@ -35,6 +35,9 @@ public partial class ProfessorRoom : Control
 
 	public override void _Ready()
 	{
+		if (!FeatureAccessGuard.Require(this, FeatureAccessGuard.Room, FeatureAccessGuard.DashboardMessage))
+			return;
+
 		// ========================================================
 		// MAIN UI
 		// ========================================================

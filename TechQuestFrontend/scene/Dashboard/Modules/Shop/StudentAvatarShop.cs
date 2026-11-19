@@ -14,6 +14,9 @@ public partial class StudentAvatarShop : Control
 
 	public override void _Ready()
 	{
+		if (!FeatureAccessGuard.Require(this, FeatureAccessGuard.Shop, FeatureAccessGuard.DashboardMessage))
+			return;
+
 		itemGrid = GetNode<GridContainer>("ShopPanel/ScrollContainer/ItemGrid");
 		coinLabel = GetNode<Label>("ShopPanel/CoinLabel");
 		shopTitle = GetNode<Label>("ShopPanel/ShopTitle");

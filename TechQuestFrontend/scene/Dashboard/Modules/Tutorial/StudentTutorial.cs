@@ -7,6 +7,9 @@ public partial class StudentTutorial : Control
 
 	public override void _Ready()
 	{
+		if (!FeatureAccessGuard.Require(this, FeatureAccessGuard.Tutorial, FeatureAccessGuard.DashboardMessage))
+			return;
+
 		backButton = GetNode<Button>("MainPanel/HeaderPanel/BackButton");
 
 		backButton.Pressed += OnBackPressed;

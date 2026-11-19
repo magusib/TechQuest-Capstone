@@ -19,5 +19,7 @@ namespace TechQuestBackend.Models
         public ICollection<RoomParticipant> Participants { get; set; } = new List<RoomParticipant>();
 
         public ICollection<RoomResult> Results { get; set; } = new List<RoomResult>();
+
+        public ICollection<RoomQuizAttempt> QuizAttempts { get; set; } = new List<RoomQuizAttempt>();
     }
 }

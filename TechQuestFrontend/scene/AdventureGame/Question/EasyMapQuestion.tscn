@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="4_2awba"]
 [ext_resource type="Texture2D" uid="uid://dwbjksunhepdp" path="res://asset/style/name_plate2.png" id="4_5yidw"]
 [ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="5_aspgg"]
+[ext_resource type="Texture2D" uid="uid://cfytc0v6b4xy1" path="res://asset/style/window.png" id="6_5yidw"]
 [ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="6_hveeu"]
 [ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="7_aspgg"]
 [ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="8_hveeu"]
@@ -20,6 +21,46 @@ texture = ExtResource("4_5yidw")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g70qi"]
 texture = ExtResource("2_emvso")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nj53p"]
+texture = ExtResource("6_5yidw")
+region_rect = Rect2(1, 1, 72, 63)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ntl5j"]
+texture = ExtResource("7_aspgg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hljpq"]
+texture = ExtResource("8_hveeu")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r2myp"]
+texture = ExtResource("9_pdoyj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0t2wh"]
+texture = ExtResource("7_aspgg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_em7q0"]
+texture = ExtResource("8_hveeu")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g3hdm"]
+texture = ExtResource("9_pdoyj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qlopq"]
+texture = ExtResource("7_aspgg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w0fn8"]
+texture = ExtResource("8_hveeu")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ou8iu"]
+texture = ExtResource("9_pdoyj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2qoyr"]
+texture = ExtResource("7_aspgg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lkjex"]
+texture = ExtResource("8_hveeu")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_liu7o"]
+texture = ExtResource("9_pdoyj")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_32ymf"]
 texture = ExtResource("4_2awba")
@@ -176,6 +217,7 @@ offset_right = 363.0
 offset_bottom = -88.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_nj53p")
 
 [node name="QuestionLabel" type="Label" parent="EasyMapQuestionPanel/QuestionPanel" unique_id=1480037997]
 layout_mode = 1
@@ -184,12 +226,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -352.0
-offset_top = -34.25
-offset_right = 354.0
-offset_bottom = 38.75
+offset_left = -343.0
+offset_top = -21.25
+offset_right = 344.0
+offset_bottom = 44.75
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_6babw")
+theme_override_font_sizes/font_size = 18
 text = "Question"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -213,21 +258,41 @@ theme_override_constants/separation = 10
 [node name="ChoiceAButton" type="Button" parent="EasyMapQuestionPanel/VBoxContainer" unique_id=363450240]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_6babw")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_ntl5j")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_hljpq")
+theme_override_styles/hover = SubResource("StyleBoxTexture_r2myp")
 text = "Choice A"
 
 [node name="ChoiceBButton" type="Button" parent="EasyMapQuestionPanel/VBoxContainer" unique_id=1292776056]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_6babw")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_0t2wh")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_em7q0")
+theme_override_styles/hover = SubResource("StyleBoxTexture_g3hdm")
 text = "Choice B"
 
 [node name="ChoiceCButton" type="Button" parent="EasyMapQuestionPanel/VBoxContainer" unique_id=713481093]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_6babw")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_qlopq")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_w0fn8")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ou8iu")
 text = "Choice C"
 
 [node name="ChoiceDButton" type="Button" parent="EasyMapQuestionPanel/VBoxContainer" unique_id=1341299593]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_6babw")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_2qoyr")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_lkjex")
+theme_override_styles/hover = SubResource("StyleBoxTexture_liu7o")
 text = "Choice D"
 
 [node name="Button" type="Button" parent="EasyMapQuestionPanel" unique_id=570372732]
