@@ -55,7 +55,9 @@ public partial class StudentRoomResult : Control
 		int reportedTotal = MultiplayerRoomState.Questions.Count;
 		try
 		{
-			RoomResultDto result = await RoomApiClient.GetMyResultAsync(MultiplayerRoomState.RoomId);
+			RoomResultDto result = await RoomApiClient.GetMyResultAsync(
+				MultiplayerRoomState.RoomId,
+				MultiplayerRoomState.AttemptId);
 			reportedScore = result.Score;
 			reportedTotal = result.TotalQuestions;
 			MultiplayerRoomState.Score = reportedScore;

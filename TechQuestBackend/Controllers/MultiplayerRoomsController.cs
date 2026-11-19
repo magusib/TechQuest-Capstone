@@ -412,7 +412,7 @@ namespace TechQuestBackend.Controllers
 
         [HttpGet("{roomId:int}/results/me")]
         [Authorize(Roles = "student")]
-        public async Task<IActionResult> GetMyResult(int roomId)
+        public async Task<IActionResult> GetMyResult(int roomId, int? attemptId)
         {
             int userId = GetUserId();
             if (!await IsRoomParticipantAsync(roomId, userId))
@@ -421,8 +421,12 @@ namespace TechQuestBackend.Controllers
             if (profile == null)
                 return BadRequest("Student profile was not found.");
 
+            if (!attemptId.HasValue || !await _db.RoomQuizAttempts.AnyAsync(a =>
+                a.RoomQuizAttemptId == attemptId.Value && a.RoomId == roomId && a.StudentId == profile.StudentId))
+                return BadRequest("A valid quiz attempt is required.");
+
             var result = await _db.RoomResults.AsNoTracking()
-                .SingleOrDefaultAsync(item => item.RoomId == roomId && item.StudentId == profile.StudentId);
+                .SingleOrDefaultAsync(item => item.RoomQuizAttemptId == attemptId.Value);
             if (result == null)
                 return NotFound("Quiz result was not found.");
 

@@ -95,9 +95,9 @@ public static class RoomApiClient
 		});
 	}
 
-	public static Task<RoomResultDto> GetMyResultAsync(int roomId)
+	public static Task<RoomResultDto> GetMyResultAsync(int roomId, int attemptId)
 	{
-		return SendAsync<RoomResultDto>(HttpMethod.Get, $"/MultiplayerRooms/{roomId}/results/me");
+		return SendAsync<RoomResultDto>(HttpMethod.Get, $"/MultiplayerRooms/{roomId}/results/me?attemptId={attemptId}");
 	}
 
 	public static Task<List<RoomResultSummaryDto>> GetResultsAsync(int roomId)

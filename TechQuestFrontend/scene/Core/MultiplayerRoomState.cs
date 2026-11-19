@@ -30,7 +30,6 @@ public static class MultiplayerRoomState
 		Questions = questions ?? new List<RoomQuizQuestionDto>();
 		Answers = new List<RoomAnswerDto>();
 		Score = 0;
-		AttemptId = 0;
 	}
 
 	public static void Clear()
@@ -43,6 +42,7 @@ public static class MultiplayerRoomState
 		Questions.Clear();
 		Answers.Clear();
 		Score = 0;
+		AttemptId = 0;
 		ReturnToWaitingRoom = false;
 	}
 }
