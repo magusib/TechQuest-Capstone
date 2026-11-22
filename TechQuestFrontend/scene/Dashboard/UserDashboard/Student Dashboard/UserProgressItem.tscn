@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scene/Dashboard/UserDashboard/Student Dashboard/UserProgressItem.cs" id="1_item"]
+
+[node name="ProgressItem" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 150)
+script = ExtResource("1_item")
+
+[node name="CardMargin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="CardVBox" type="VBoxContainer" parent="CardMargin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SubjectLabel" type="Label" parent="CardMargin/CardVBox"]
+layout_mode = 2
+
+[node name="QuestionLabel" type="RichTextLabel" parent="CardMargin/CardVBox"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="CorrectAnswerLabel" type="RichTextLabel" parent="CardMargin/CardVBox"]
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="StatusLabel" type="Label" parent="CardMargin/CardVBox"]
+layout_mode = 2
+
+[node name="RewardsContainer" type="HBoxContainer" parent="CardMargin/CardVBox"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="CoinsEarnedLabel" type="Label" parent="CardMargin/CardVBox/RewardsContainer"]
+layout_mode = 2
+
+[node name="PointsEarnedLabel" type="Label" parent="CardMargin/CardVBox/RewardsContainer"]
+layout_mode = 2

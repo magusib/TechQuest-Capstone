@@ -218,7 +218,9 @@ offset_bottom = 329.0
 theme_override_constants/separation = 20
 
 [node name="QuestionLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/MultipleChoicesPanel/MultipleChoicesContainer" unique_id=682958801]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+autowrap_mode = 3
 theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Question "
 horizontal_alignment = 1
@@ -266,7 +268,9 @@ offset_bottom = 329.0
 theme_override_constants/separation = 20
 
 [node name="QuestionLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/TrueOrFalsePanel/TrueOrFalseContainer" unique_id=458208044]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+autowrap_mode = 3
 theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Question "
 horizontal_alignment = 1
@@ -304,7 +308,9 @@ offset_bottom = 329.0
 theme_override_constants/separation = 20
 
 [node name="QuestionLabel" type="Label" parent="QuizReview/ScrollContainer/VBoxContainer/IdentificationPanel/IdentificationContainer" unique_id=2144214690]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+autowrap_mode = 3
 theme_override_fonts/font = ExtResource("6_wr0b7")
 text = "Question "
 horizontal_alignment = 1

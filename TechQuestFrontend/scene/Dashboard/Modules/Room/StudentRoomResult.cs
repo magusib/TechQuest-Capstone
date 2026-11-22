@@ -18,6 +18,7 @@ public partial class StudentRoomResult : Control
 	private Panel trueFalseTemplate;
 	private Panel identificationTemplate;
 	private AcceptDialog alertDialog;
+	private ConfirmationDialog backConfirmationDialog;
 
 	public override void _Ready()
 	{
@@ -39,6 +40,13 @@ public partial class StudentRoomResult : Control
 		identificationTemplate = GetNode<Panel>("QuizReview/ScrollContainer/VBoxContainer/IdentificationPanel");
 		alertDialog = new AcceptDialog { Title = "Quiz result" };
 		AddChild(alertDialog);
+		backConfirmationDialog = new ConfirmationDialog
+		{
+			Title = "Leave room result?",
+			DialogText = "Are you sure you want to go back to the waiting room?"
+		};
+		AddChild(backConfirmationDialog);
+		backConfirmationDialog.Confirmed += NavigateToWaitingRoom;
 
 		multipleChoiceTemplate.Visible = false;
 		trueFalseTemplate.Visible = false;
@@ -183,7 +191,13 @@ public partial class StudentRoomResult : Control
 
 	private void OnBackPressed()
 	{
-		GetTree().ChangeSceneToFile("res://scene/Dashboard/UserDashboard/Student Dashboard/StudentDashboard.tscn");
+		backConfirmationDialog.PopupCentered();
+	}
+
+	private void NavigateToWaitingRoom()
+	{
+		MultiplayerRoomState.ReturnToWaitingRoom = false;
+		GetTree().ChangeSceneToFile("res://scene/Dashboard/Modules/Room/StudentWaitingRoom.tscn");
 	}
 
 }

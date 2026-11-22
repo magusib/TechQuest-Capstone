@@ -4,6 +4,13 @@ GET {{TechQuestBackend_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+### Completed Adventure Game progress for the authenticated student
+# Set the bearer token before sending this request.
+GET {{TechQuestBackend_HostAddress}}/api/UserProgress?difficulty=Easy
+Authorization: Bearer {{studentToken}}
+
+###
 # Room quiz endpoints require a JWT from a Professor or Student login.
 @token = replace-with-jwt
 @roomId = 1

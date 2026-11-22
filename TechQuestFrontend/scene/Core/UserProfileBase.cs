@@ -10,6 +10,7 @@ public partial class UserProfileBase : Control
 	private Label lastNameLabel;
 	private Label emailLabel;
 	private Label yearLevelLabel;
+	private Button userProgressButton;
 
 	protected virtual string DashboardScenePath => "";
 
@@ -22,6 +23,12 @@ public partial class UserProfileBase : Control
 		lastNameLabel = GetNodeOrNull<Label>("MainPanel/InformationPanel/LastnameLabel");
 		emailLabel = GetNodeOrNull<Label>("MainPanel/InformationPanel/EmailLabel");
 		yearLevelLabel = GetNodeOrNull<Label>("MainPanel/InformationPanel/YearLevelLabel");
+		userProgressButton = GetNodeOrNull<Button>("MainPanel/UserProgressButton");
+		if (userProgressButton != null)
+		{
+			userProgressButton.Visible = UserSession.IsStudent;
+			userProgressButton.Pressed += OpenUserProgress;
+		}
 
 		if (backButton != null)
 			backButton.Pressed += OnBackPressed;
@@ -129,5 +136,20 @@ public partial class UserProfileBase : Control
 
 		if (!string.IsNullOrWhiteSpace(DashboardScenePath))
 			GetTree().ChangeSceneToFile(DashboardScenePath);
+	}
+
+	private void OpenUserProgress()
+	{
+		if (!UserSession.IsStudent || GetParent() == null)
+			return;
+
+		PackedScene scene = GD.Load<PackedScene>("res://scene/Dashboard/UserDashboard/Student Dashboard/UserProgress.tscn");
+		if (scene == null)
+			return;
+
+		Control progress = scene.Instantiate<Control>();
+		GetParent().AddChild(progress);
+		Hide();
+		progress.MoveToFront();
 	}
 }

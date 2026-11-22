@@ -32,6 +32,8 @@ texture = ExtResource("3_8yr05")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8yr05"]
 texture = ExtResource("5_4p7hf")
 
+[sub_resource type="SystemFont" id="SystemFont_78dty"]
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cah6h"]
 texture = ExtResource("4_8yr05")
 
@@ -88,6 +90,8 @@ texture = ExtResource("23_p5gww")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4p7hf"]
 texture = ExtResource("24_na6te")
+
+[sub_resource type="SystemFont" id="SystemFont_dpt8v"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dpt8v"]
 texture = ExtResource("14_35jv5")
@@ -195,12 +199,16 @@ offset_top = 35.0
 offset_right = 936.0
 offset_bottom = 169.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_aumap")
+theme_override_fonts/font = SubResource("SystemFont_78dty")
 theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = SubResource("StyleBoxTexture_cah6h")
 text = "Question"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 3
+max_lines_visible = 4
 
 [node name="MultipleChoicesContainer" type="VBoxContainer" parent="QuizPanel" unique_id=308870127]
 layout_mode = 1
@@ -334,8 +342,9 @@ alignment = 1
 custom_minimum_size = Vector2(0, 70)
 custom_maximum_size = Vector2(700, -1)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_aumap")
+theme_override_fonts/font = SubResource("SystemFont_dpt8v")
 theme_override_font_sizes/font_size = 18
+alignment = 1
 
 [node name="SubmitButton" type="Button" parent="QuizPanel/IdentificationContainer" unique_id=2094689871]
 custom_minimum_size = Vector2(0, 50)

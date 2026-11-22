@@ -421,7 +421,7 @@ offset_top = 15.0
 offset_right = 118.0
 offset_bottom = 70.0
 grow_horizontal = 2
-text = "Opsss your time out"
+text = "Opsss Your Time Out"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -494,7 +494,7 @@ offset_top = 15.0
 offset_right = 118.0
 offset_bottom = 70.0
 grow_horizontal = 2
-text = "OPSSS Mali Ka"
+text = "Opss Incorect Answer"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -567,7 +567,7 @@ offset_top = 15.0
 offset_right = 118.0
 offset_bottom = 70.0
 grow_horizontal = 2
-text = "Nakss tama yan sya"
+text = "Yay Correct Answer"
 horizontal_alignment = 1
 vertical_alignment = 1
 

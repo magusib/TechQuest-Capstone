@@ -189,3 +189,11 @@ icon = ExtResource("8_w0nmt")
 flat = true
 icon_alignment = 1
 expand_icon = true
+
+[node name="UserProgressButton" type="Button" parent="MainPanel" unique_id=188320011]
+layout_mode = 0
+offset_left = -180.0
+offset_top = 178.0
+offset_right = 180.0
+offset_bottom = 228.0
+text = "USER PROGRESS"

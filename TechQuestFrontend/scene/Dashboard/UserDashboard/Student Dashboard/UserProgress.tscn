@@ -1,0 +1,130 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scene/Dashboard/UserDashboard/Student Dashboard/UserProgress.cs" id="1_progress"]
+
+[node name="UserProgress" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_progress")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.03, 0.05, 0.1, 0.82)
+mouse_filter = 2
+
+[node name="MainPanel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -330.0
+offset_right = 500.0
+offset_bottom = 330.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainMargin" type="MarginContainer" parent="MainPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="MainVBox" type="VBoxContainer" parent="MainPanel/MainMargin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Header" type="HBoxContainer" parent="MainPanel/MainMargin/MainVBox"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MainPanel/MainMargin/MainVBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "USER PROGRESS"
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="MainPanel/MainMargin/MainVBox/Header"]
+custom_minimum_size = Vector2(100, 42)
+layout_mode = 2
+text = "CLOSE"
+
+[node name="DifficultyNavigation" type="HBoxContainer" parent="MainPanel/MainMargin/MainVBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="EasyButton" type="Button" parent="MainPanel/MainMargin/MainVBox/DifficultyNavigation"]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "EASY"
+
+[node name="MediumButton" type="Button" parent="MainPanel/MainMargin/MainVBox/DifficultyNavigation"]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "MEDIUM"
+
+[node name="HardButton" type="Button" parent="MainPanel/MainMargin/MainVBox/DifficultyNavigation"]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "HARD"
+
+[node name="DifficultyScreens" type="Control" parent="MainPanel/MainMargin/MainVBox"]
+custom_minimum_size = Vector2(0, 470)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="EasyScreen" type="ScrollContainer" parent="MainPanel/MainMargin/MainVBox/DifficultyScreens"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EasyContent" type="VBoxContainer" parent="MainPanel/MainMargin/MainVBox/DifficultyScreens/EasyScreen"]
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="MediumScreen" type="ScrollContainer" parent="MainPanel/MainMargin/MainVBox/DifficultyScreens"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MediumContent" type="VBoxContainer" parent="MainPanel/MainMargin/MainVBox/DifficultyScreens/MediumScreen"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="HardScreen" type="ScrollContainer" parent="MainPanel/MainMargin/MainVBox/DifficultyScreens"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HardContent" type="VBoxContainer" parent="MainPanel/MainMargin/MainVBox/DifficultyScreens/HardScreen"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
