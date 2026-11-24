@@ -226,14 +226,23 @@ namespace TechQuestBackend.Controllers
             if (challenge.State != "QuestionReady" || challenge.QuestionStartedAt == null)
                 return Conflict("The NPC question has not been started.");
 
-            bool timedOut = request.Finalize && string.IsNullOrWhiteSpace(request.SelectedAnswer)
+            string submittedAnswer = request.SelectedAnswer?.Trim() ?? "";
+            // When a wrong answer was already submitted, the follow-up "No"
+            // from the help prompt finalizes that same answer. Do not turn it
+            // into a timeout just because the follow-up request has no answer.
+            if (request.Finalize && string.IsNullOrWhiteSpace(submittedAnswer) &&
+                !string.IsNullOrWhiteSpace(challenge.SelectedAnswer))
+            {
+                submittedAnswer = challenge.SelectedAnswer.Trim();
+            }
+
+            bool timedOut = request.Finalize && string.IsNullOrWhiteSpace(submittedAnswer)
                 || DateTime.UtcNow >= challenge.QuestionStartedAt.Value
                     .AddSeconds(challenge.TimeExtensionSeconds > 0
                         ? challenge.TimeExtensionSeconds
                         : challenge.TimerSeconds);
-            if (!timedOut && string.IsNullOrWhiteSpace(request.SelectedAnswer) && !request.Finalize)
+            if (!timedOut && string.IsNullOrWhiteSpace(submittedAnswer) && !request.Finalize)
                 return BadRequest("Select an answer before submitting.");
-            string submittedAnswer = request.SelectedAnswer?.Trim() ?? "";
 
             if (!timedOut)
             {
