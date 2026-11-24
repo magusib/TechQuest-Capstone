@@ -226,10 +226,11 @@ namespace TechQuestBackend.Controllers
             if (challenge.State != "QuestionReady" || challenge.QuestionStartedAt == null)
                 return Conflict("The NPC question has not been started.");
 
-            bool timedOut = DateTime.UtcNow >= challenge.QuestionStartedAt.Value
-                .AddSeconds(challenge.TimeExtensionSeconds > 0
-                    ? challenge.TimeExtensionSeconds
-                    : challenge.TimerSeconds);
+            bool timedOut = request.Finalize && string.IsNullOrWhiteSpace(request.SelectedAnswer)
+                || DateTime.UtcNow >= challenge.QuestionStartedAt.Value
+                    .AddSeconds(challenge.TimeExtensionSeconds > 0
+                        ? challenge.TimeExtensionSeconds
+                        : challenge.TimerSeconds);
             if (!timedOut && string.IsNullOrWhiteSpace(request.SelectedAnswer) && !request.Finalize)
                 return BadRequest("Select an answer before submitting.");
             string submittedAnswer = request.SelectedAnswer?.Trim() ?? "";

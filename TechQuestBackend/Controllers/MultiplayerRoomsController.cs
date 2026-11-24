@@ -33,7 +33,8 @@ namespace TechQuestBackend.Controllers
 
             var roomEntities = await query
                 .Include(r => r.Participants)
-                .OrderBy(r => r.CreatedAt)
+                .OrderByDescending(r => r.CreatedAt)
+                .ThenByDescending(r => r.RoomId)
                 .ToListAsync();
 
             return Ok(roomEntities.Select(ToRoomSummary));

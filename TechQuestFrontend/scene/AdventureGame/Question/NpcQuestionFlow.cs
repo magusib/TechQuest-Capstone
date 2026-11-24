@@ -219,7 +219,7 @@ public abstract partial class NpcQuestionFlow : Control
 
     private async void FinalizeWithoutAnswerAsync()
     {
-        if (purchaseInProgress || isFinalized)
+        if (isSubmitting || purchaseInProgress || isFinalized)
             return;
         purchaseOverlay.Hide();
         await SubmitAnswerAsync("", true);

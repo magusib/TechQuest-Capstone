@@ -1,8 +1,62 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://cvv4gwxyt67ls"]
 
-[ext_resource type="Script" path="res://scene/Dashboard/UserDashboard/Student Dashboard/UserProgress.cs" id="1_progress"]
+[ext_resource type="Script" uid="uid://l5hvwst615qx" path="res://scene/Dashboard/UserDashboard/Student Dashboard/UserProgress.cs" id="1_progress"]
+[ext_resource type="Texture2D" uid="uid://4kraosl2m556" path="res://asset/background/ptc.png" id="2_to808"]
+[ext_resource type="Texture2D" uid="uid://c6vowbgt1ichy" path="res://asset/style/UI_Flat_Frame02a.png" id="3_lx56c"]
+[ext_resource type="FontFile" uid="uid://mbeq3x0ja308" path="res://asset/style/fonts/RocabeTrialRegular-OGMep.ttf" id="4_4bfnh"]
+[ext_resource type="Texture2D" uid="uid://cbuq6qdvtiede" path="res://asset/style/buttons/red_default.png" id="5_6s1wu"]
+[ext_resource type="Texture2D" uid="uid://b57y8d4ix2n5" path="res://asset/style/buttons/red_pressed.png" id="6_avn4r"]
+[ext_resource type="Texture2D" uid="uid://dnjwb8wxmf2hy" path="res://asset/style/buttons/red_hover.png" id="7_mb10d"]
+[ext_resource type="Texture2D" uid="uid://dm4ssri8pmko6" path="res://asset/style/buttons/forest_default.png" id="8_nay1p"]
+[ext_resource type="Texture2D" uid="uid://c72jiqu2a0mtk" path="res://asset/style/buttons/forest_pressed.png" id="9_46cge"]
+[ext_resource type="Texture2D" uid="uid://lh287ib153v0" path="res://asset/style/buttons/forest_hover.png" id="10_4dc4x"]
+[ext_resource type="Texture2D" uid="uid://c68p5837dgq1h" path="res://asset/style/buttons/silver_default.png" id="11_4dc4x"]
+[ext_resource type="Texture2D" uid="uid://bt5x1gldix2el" path="res://asset/style/buttons/silver_pressed.png" id="12_5r02x"]
+[ext_resource type="Texture2D" uid="uid://sti0vq4faxs2" path="res://asset/style/buttons/silver_hover.png" id="13_gc1f4"]
+[ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="14_x0hgb"]
+[ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="15_ygngp"]
+[ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="16_p2l87"]
 
-[node name="UserProgress" type="Control"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1vivr"]
+texture = ExtResource("3_lx56c")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o1p1e"]
+texture = ExtResource("5_6s1wu")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xqu6o"]
+texture = ExtResource("6_avn4r")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hbp2d"]
+texture = ExtResource("7_mb10d")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rhn7i"]
+texture = ExtResource("8_nay1p")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7ja61"]
+texture = ExtResource("9_46cge")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7h1en"]
+texture = ExtResource("10_4dc4x")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5r02x"]
+texture = ExtResource("11_4dc4x")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gc1f4"]
+texture = ExtResource("12_5r02x")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x0hgb"]
+texture = ExtResource("13_gc1f4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ygngp"]
+texture = ExtResource("14_x0hgb")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p2l87"]
+texture = ExtResource("15_ygngp")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_goisx"]
+texture = ExtResource("16_p2l87")
+
+[node name="UserProgress" type="Control" unique_id=1110068561]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,17 +65,19 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_progress")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=2096673046]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.03, 0.05, 0.1, 0.82)
 mouse_filter = 2
+texture = ExtResource("2_to808")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="MainPanel" type="PanelContainer" parent="."]
+[node name="MainPanel" type="PanelContainer" parent="." unique_id=841742787]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -34,60 +90,82 @@ offset_right = 500.0
 offset_bottom = 330.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_1vivr")
 
-[node name="MainMargin" type="MarginContainer" parent="MainPanel"]
+[node name="MainMargin" type="MarginContainer" parent="MainPanel" unique_id=1669124721]
 layout_mode = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 20
 
-[node name="MainVBox" type="VBoxContainer" parent="MainPanel/MainMargin"]
+[node name="MainVBox" type="VBoxContainer" parent="MainPanel/MainMargin" unique_id=2042121888]
 layout_mode = 2
 theme_override_constants/separation = 14
 
-[node name="Header" type="HBoxContainer" parent="MainPanel/MainMargin/MainVBox"]
+[node name="Header" type="HBoxContainer" parent="MainPanel/MainMargin/MainVBox" unique_id=1904458843]
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="MainPanel/MainMargin/MainVBox/Header"]
+[node name="TitleLabel" type="Label" parent="MainPanel/MainMargin/MainVBox/Header" unique_id=1131069434]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_4bfnh")
+theme_override_font_sizes/font_size = 20
 text = "USER PROGRESS"
 horizontal_alignment = 1
 
-[node name="CloseButton" type="Button" parent="MainPanel/MainMargin/MainVBox/Header"]
+[node name="CloseButton" type="Button" parent="MainPanel/MainMargin/MainVBox/Header" unique_id=125475776]
 custom_minimum_size = Vector2(100, 42)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_4bfnh")
+theme_override_styles/normal = SubResource("StyleBoxTexture_o1p1e")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_xqu6o")
+theme_override_styles/hover = SubResource("StyleBoxTexture_hbp2d")
 text = "CLOSE"
 
-[node name="DifficultyNavigation" type="HBoxContainer" parent="MainPanel/MainMargin/MainVBox"]
+[node name="DifficultyNavigation" type="HBoxContainer" parent="MainPanel/MainMargin/MainVBox" unique_id=1165425734]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="EasyButton" type="Button" parent="MainPanel/MainMargin/MainVBox/DifficultyNavigation"]
+[node name="EasyButton" type="Button" parent="MainPanel/MainMargin/MainVBox/DifficultyNavigation" unique_id=1517051453]
 custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_4bfnh")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_rhn7i")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_7ja61")
+theme_override_styles/hover = SubResource("StyleBoxTexture_7h1en")
 text = "EASY"
 
-[node name="MediumButton" type="Button" parent="MainPanel/MainMargin/MainVBox/DifficultyNavigation"]
+[node name="MediumButton" type="Button" parent="MainPanel/MainMargin/MainVBox/DifficultyNavigation" unique_id=1103896022]
 custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_4bfnh")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_5r02x")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_gc1f4")
+theme_override_styles/hover = SubResource("StyleBoxTexture_x0hgb")
 text = "MEDIUM"
 
-[node name="HardButton" type="Button" parent="MainPanel/MainMargin/MainVBox/DifficultyNavigation"]
+[node name="HardButton" type="Button" parent="MainPanel/MainMargin/MainVBox/DifficultyNavigation" unique_id=1091815674]
 custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_4bfnh")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_ygngp")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_p2l87")
+theme_override_styles/hover = SubResource("StyleBoxTexture_goisx")
 text = "HARD"
 
-[node name="DifficultyScreens" type="Control" parent="MainPanel/MainMargin/MainVBox"]
+[node name="DifficultyScreens" type="Control" parent="MainPanel/MainMargin/MainVBox" unique_id=1114712514]
 custom_minimum_size = Vector2(0, 470)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="EasyScreen" type="ScrollContainer" parent="MainPanel/MainMargin/MainVBox/DifficultyScreens"]
+[node name="EasyScreen" type="ScrollContainer" parent="MainPanel/MainMargin/MainVBox/DifficultyScreens" unique_id=522669703]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -95,13 +173,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="EasyContent" type="VBoxContainer" parent="MainPanel/MainMargin/MainVBox/DifficultyScreens/EasyScreen"]
-custom_minimum_size = Vector2(0, 0)
+[node name="EasyContent" type="VBoxContainer" parent="MainPanel/MainMargin/MainVBox/DifficultyScreens/EasyScreen" unique_id=1787614154]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 12
 
-[node name="MediumScreen" type="ScrollContainer" parent="MainPanel/MainMargin/MainVBox/DifficultyScreens"]
+[node name="MediumScreen" type="ScrollContainer" parent="MainPanel/MainMargin/MainVBox/DifficultyScreens" unique_id=2020468090]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -110,12 +187,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MediumContent" type="VBoxContainer" parent="MainPanel/MainMargin/MainVBox/DifficultyScreens/MediumScreen"]
+[node name="MediumContent" type="VBoxContainer" parent="MainPanel/MainMargin/MainVBox/DifficultyScreens/MediumScreen" unique_id=712259430]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 12
 
-[node name="HardScreen" type="ScrollContainer" parent="MainPanel/MainMargin/MainVBox/DifficultyScreens"]
+[node name="HardScreen" type="ScrollContainer" parent="MainPanel/MainMargin/MainVBox/DifficultyScreens" unique_id=310249951]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -124,7 +201,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HardContent" type="VBoxContainer" parent="MainPanel/MainMargin/MainVBox/DifficultyScreens/HardScreen"]
+[node name="HardContent" type="VBoxContainer" parent="MainPanel/MainMargin/MainVBox/DifficultyScreens/HardScreen" unique_id=424331313]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 12

@@ -1,47 +1,66 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://bbcq0hgdqkbp"]
 
-[ext_resource type="Script" path="res://scene/Dashboard/UserDashboard/Student Dashboard/UserProgressItem.cs" id="1_item"]
+[ext_resource type="Script" uid="uid://bnowcr0q5ya1w" path="res://scene/Dashboard/UserDashboard/Student Dashboard/UserProgressItem.cs" id="1_item"]
 
-[node name="ProgressItem" type="PanelContainer"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_217ni"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="ProgressItem" type="PanelContainer" unique_id=331211695]
 custom_minimum_size = Vector2(0, 150)
+theme_override_styles/panel = SubResource("StyleBoxFlat_217ni")
 script = ExtResource("1_item")
 
-[node name="CardMargin" type="MarginContainer" parent="."]
+[node name="CardMargin" type="MarginContainer" parent="." unique_id=1216991526]
 layout_mode = 2
 theme_override_constants/margin_left = 18
 theme_override_constants/margin_top = 14
 theme_override_constants/margin_right = 18
 theme_override_constants/margin_bottom = 14
 
-[node name="CardVBox" type="VBoxContainer" parent="CardMargin"]
+[node name="CardVBox" type="VBoxContainer" parent="CardMargin" unique_id=649665817]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="SubjectLabel" type="Label" parent="CardMargin/CardVBox"]
+[node name="SubjectLabel" type="Label" parent="CardMargin/CardVBox" unique_id=2144400388]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 
-[node name="QuestionLabel" type="RichTextLabel" parent="CardMargin/CardVBox"]
+[node name="QuestionLabel" type="RichTextLabel" parent="CardMargin/CardVBox" unique_id=399605894]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
 bbcode_enabled = true
 fit_content = true
 scroll_active = false
 
-[node name="CorrectAnswerLabel" type="RichTextLabel" parent="CardMargin/CardVBox"]
+[node name="CorrectAnswerLabel" type="RichTextLabel" parent="CardMargin/CardVBox" unique_id=742787623]
 layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
 bbcode_enabled = true
 fit_content = true
 scroll_active = false
 
-[node name="StatusLabel" type="Label" parent="CardMargin/CardVBox"]
+[node name="StatusLabel" type="Label" parent="CardMargin/CardVBox" unique_id=1743809084]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 
-[node name="RewardsContainer" type="HBoxContainer" parent="CardMargin/CardVBox"]
+[node name="RewardsContainer" type="HBoxContainer" parent="CardMargin/CardVBox" unique_id=1546421341]
 layout_mode = 2
 theme_override_constants/separation = 24
 
-[node name="CoinsEarnedLabel" type="Label" parent="CardMargin/CardVBox/RewardsContainer"]
+[node name="CoinsEarnedLabel" type="Label" parent="CardMargin/CardVBox/RewardsContainer" unique_id=1286934178]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 
-[node name="PointsEarnedLabel" type="Label" parent="CardMargin/CardVBox/RewardsContainer"]
+[node name="PointsEarnedLabel" type="Label" parent="CardMargin/CardVBox/RewardsContainer" unique_id=982788695]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)

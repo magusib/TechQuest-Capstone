@@ -6,7 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://cyqkrvyj6vbo8" path="res://asset/style/label1.png" id="4_r6fcj"]
 [ext_resource type="Texture2D" uid="uid://dd6q1g1w7dqjt" path="res://asset/style/LineEdit.png" id="5_2bplj"]
 [ext_resource type="Texture2D" uid="uid://dclpu3xmblprx" path="res://asset/style/UI_Flat_Banner03a.png" id="6_36akd"]
+[ext_resource type="Texture2D" uid="uid://dq8g0d1s2rs8r" path="res://asset/style/buttons/black_default.png" id="8_r6fcj"]
 [ext_resource type="Texture2D" uid="uid://15txwm2nnpi8" path="res://asset/style/ButtonClose2.png" id="8_w0nmt"]
+[ext_resource type="Texture2D" uid="uid://bl6bxinbi2lwi" path="res://asset/style/buttons/black_pressed.png" id="9_2bplj"]
+[ext_resource type="Texture2D" uid="uid://cebaqb3eoerag" path="res://asset/style/buttons/black_hover.png" id="10_36akd"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oi5a0"]
 texture = ExtResource("2_ltfgj")
@@ -28,6 +31,15 @@ texture = ExtResource("6_36akd")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t3ypx"]
 texture = ExtResource("6_36akd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4oq05"]
+texture = ExtResource("8_r6fcj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e0sg4"]
+texture = ExtResource("9_2bplj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_japfd"]
+texture = ExtResource("10_36akd")
 
 [node name="StudentProfilePopup" type="Control" unique_id=473532987]
 layout_mode = 3
@@ -191,9 +203,21 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="UserProgressButton" type="Button" parent="MainPanel" unique_id=188320011]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
 offset_left = -180.0
-offset_top = 178.0
+offset_top = -98.0
 offset_right = 180.0
-offset_bottom = 228.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_2jtuw")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_4oq05")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_e0sg4")
+theme_override_styles/hover = SubResource("StyleBoxTexture_japfd")
 text = "USER PROGRESS"
